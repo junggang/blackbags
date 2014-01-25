@@ -14,11 +14,6 @@ def login():
 	try : 
 		if request.method  == "POST":  
 			# userTable에 접속한 사람을 추가한다
-			name    = request.form['name']
-			passwd  = request.form['password']
-
-			if name : 
-				session['username'] = name
 
 			return 
 
@@ -34,14 +29,8 @@ def joinUpdate():
 	# 만약 아직 속한 game channel에 없다면 유저는 대기 화면을 보는 상태 유지하면서 1초 후에 다시 확인 시도
 	try : 
 		if request.method  == "POST":  
-			# userTable에 접속한 사람을 추가한다
-			name    = request.form['name']
-			passwd  = request.form['password']
 
-			if name : 
-				session['username'] = name
-
-			return redirect(url_for('index'))
+			return 
 
 	except KeyError, err:
 		print 'error  ->  : ' ,err 
