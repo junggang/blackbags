@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{fee5aebf-8503-4205-b70b-c5f06f5c6502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scene">
+      <UniqueIdentifier>{7e384acf-4be3-48bc-8283-81321525aecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scene\MainScene">
+      <UniqueIdentifier>{b2a06d3e-6b26-4a18-912d-f02bae4e50fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer">
+      <UniqueIdentifier>{71d07af9-1b36-44ab-8df8-dfa6c564f026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer\Main">
+      <UniqueIdentifier>{b7492dff-1996-42dc-9fa0-9e70a241236f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Logic">
+      <UniqueIdentifier>{16f833f9-9f51-4086-a98a-19b945e68826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Logic\GameManager">
+      <UniqueIdentifier>{ed150ade-6484-4801-af10-0a3001ee851c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Logic\GameLogic">
+      <UniqueIdentifier>{d24c84cf-52f1-4f67-8dad-43e3b41a34f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scene\ResultScene">
+      <UniqueIdentifier>{54eccf71-7976-4517-8837-e2d298bedacb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer\Result">
+      <UniqueIdentifier>{7fdff93d-bac2-4923-9154-4e0a6ae6b9a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scene\GameSettingScene">
+      <UniqueIdentifier>{f06ac9a6-20b1-438f-b9dc-34591a98d3f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer\GameSetting">
+      <UniqueIdentifier>{91f68ffc-89aa-44d1-a329-95979b178de5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scene\PlayScene">
+      <UniqueIdentifier>{8877ceed-dc9b-4cf0-8ad2-45ed58f6df2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer\Play">
+      <UniqueIdentifier>{cde6cbf5-0d45-4d72-9953-7937198da078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scene\HelpScene">
+      <UniqueIdentifier>{e02ce843-4eee-44a1-a0e6-9d703b2c7f03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer\Help">
+      <UniqueIdentifier>{cfd165ea-a4f3-4b14-9269-c92cb9704d49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scene\PlayerNameSettingScene">
+      <UniqueIdentifier>{7930f1c5-0bb1-4223-917c-c4ee2386e864}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MainScene.cpp">
+      <Filter>Classes\Scene\MainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BackgroundLayer.cpp">
+      <Filter>Classes\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MainTitleLayer.cpp">
+      <Filter>Classes\Layer\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MainMenuLayer.cpp">
+      <Filter>Classes\Layer\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ResultScene.cpp">
+      <Filter>Classes\Scene\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ResultScoreLayer.cpp">
+      <Filter>Classes\Layer\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ResultTitleLayer.cpp">
+      <Filter>Classes\Layer\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameManager.cpp">
+      <Filter>Classes\Logic\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameLogic.cpp">
+      <Filter>Classes\Logic\GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameSettingScene.cpp">
+      <Filter>Classes\Scene\GameSettingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingTitleLayer.cpp">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingCharacterLayer.cpp">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingMapLayer.cpp">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayScene.cpp">
+      <Filter>Classes\Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TimerLayer.cpp">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerLayer.cpp">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameBoardLayer.cpp">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameEndLayer.cpp">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelpButtonLayer.cpp">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelpWindowLayer.cpp">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerNameSettingLayer.cpp">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelpScene.cpp">
+      <Filter>Classes\Scene\HelpScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelpTutorialLayer.cpp">
+      <Filter>Classes\Layer\Help</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StartAndHelpButtonLayer.cpp">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CMO_dot.cpp">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CMO_item.cpp">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CMO_line.cpp">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CMO_tile.cpp">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerNameSettingScene.cpp">
+      <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MainScene.h">
+      <Filter>Classes\Scene\MainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\config.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BackgroundLayer.h">
+      <Filter>Classes\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MainTitleLayer.h">
+      <Filter>Classes\Layer\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MainMenuLayer.h">
+      <Filter>Classes\Layer\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ResultScene.h">
+      <Filter>Classes\Scene\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ResultScoreLayer.h">
+      <Filter>Classes\Layer\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ResultTitleLayer.h">
+      <Filter>Classes\Layer\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameManager.h">
+      <Filter>Classes\Logic\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameLogic.h">
+      <Filter>Classes\Logic\GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameSettingScene.h">
+      <Filter>Classes\Scene\GameSettingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingTitleLayer.h">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingCharacterLayer.h">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingMapLayer.h">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayScene.h">
+      <Filter>Classes\Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TimerLayer.h">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerLayer.h">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameBoardLayer.h">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameEndLayer.h">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelpButtonLayer.h">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelpWindowLayer.h">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerNameSettingLayer.h">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelpScene.h">
+      <Filter>Classes\Scene\HelpScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelpTutorialLayer.h">
+      <Filter>Classes\Layer\Help</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StartAndHelpButtonLayer.h">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CMO_dot.h">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CMO_item.h">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CMO_line.h">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CMO_tile.h">
+      <Filter>Classes\Layer\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerNameSettingScene.h">
+      <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Memo.txt">
+      <Filter>Utility</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
