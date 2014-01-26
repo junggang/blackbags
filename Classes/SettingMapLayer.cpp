@@ -53,6 +53,8 @@ bool CSettingMapLayer::init()
 	pCheck->setPosition(ccp(0, 0) );
 	pCheck->setVisible(false);
 	this->addChild(pCheck, 0);
+
+	return true;
 }
 
 void CSettingMapLayer::SelectMapCallBack( CCObject* pSender )
@@ -75,7 +77,7 @@ void CSettingMapLayer::update(void)
 {
 	float tempX, tempY;
 
-	switch(CGameManager::GetInstance()->GetSelectedMapSize() )
+	switch (CGameManager::GetInstance()->GetSelectedMapSize() )
 	{
 	case MS_NOT_SELECTED:
 		pCheck->setVisible(false);

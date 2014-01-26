@@ -5,6 +5,7 @@
 #include "SettingCharacterLayer.h"
 #include "StartAndHelpButtonLayer.h"
 #include "GameManager.h"
+#include "SettingOtherPlayerStatusLayer.h"
 
 USING_NS_CC;
 
@@ -39,6 +40,10 @@ bool CGameSettingScene::init(void)
 	// StartButton and HelpButton layer
 	CStartAndHelpButtonLayer* StartAndHelpButtonLayer = CStartAndHelpButtonLayer::create();
 	this->addChild(StartAndHelpButtonLayer, 1);
+
+	// PlayerStatusLayer
+	CSettingOtherPlayerStatusLayer* OtherPlayerStatus = CSettingOtherPlayerStatusLayer::create();
+	this->addChild(OtherPlayerStatus);
 
 	this->scheduleUpdate();
 

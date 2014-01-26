@@ -73,11 +73,22 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
-	// 조심해!! 현재 캐릭터 선택 / 취소가 체크박스 로직이 아니라 클릭했다 손을 떼면 취소되는 형태
-	// 적당한 API가 있을 것 같은데.. 좀 더 뒤져봐야겠다.
-	// 해결책 : 오버라이딩으로 새 클래스 구현하면 된답니다.
-	// 어떤 버튼이 클릭되었는지를 알아본다.
 	int selectedCharacterId = static_cast<CCMenuItem*>(pSender)->getTag();
+
+	// 버튼 터치로 캐릭터 선택 / 취소 구현
+	CCMenuItemImage* touchedButton = static_cast<CCMenuItemImage*>(pSender);
+	if (touchedButton != nullptr)
+	{
+		// 버튼이 선택되어 있으면 취소, 선택되어 있지 않으면 선택한다.
+		if ( CGameManager::GetInstance()->isCharacterSelected(selectedCharacterId) )
+		{
+			touchedButton->unselected();
+		}
+		else
+		{
+			touchedButton->selected();
+		}
+	}
 
 	CGameManager::GetInstance()->SelectCharacter(selectedCharacterId);
 	

@@ -44,6 +44,7 @@ bool CStartAndHelpButtonLayer::init()
 	// add StartButtonMenu to Layer
 	this->addChild(StartButtonMenu);
 
+	return true;
 }
 
 void CStartAndHelpButtonLayer::StartButtonCallBack( CCObject* pSender )

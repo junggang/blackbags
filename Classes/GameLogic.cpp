@@ -80,6 +80,7 @@ bool CGameLogic::init()
 			m_Character[0].m_CharacterPlayImage = "image/CHARACTER_1_Play.png";
 			m_Character[0].m_CharacterResultImage = "image/PLAYER_face1.png";
 			m_Character[0].m_CharacterVoice = "Sound/PLAYER_1_good.mp3";
+			m_Character[0].m_isCharacterSelected = false;
 			break;
 		case 1:
 			m_Character[1].m_CharacterName = "Blue";
@@ -87,7 +88,8 @@ bool CGameLogic::init()
 			m_Character[1].m_CharacterSettingImage = "image/CHARACTER_2_Play.png";
 			m_Character[1].m_CharacterPlayImage = "image/CHARACTER_2_Play.png";
 			m_Character[1].m_CharacterResultImage = "image/PLAYER_face2.png";
-			m_Character[1].m_CharacterVoice = "Sound/PLAYER_2_good.mp3";			
+			m_Character[1].m_CharacterVoice = "Sound/PLAYER_2_good.mp3";
+			m_Character[1].m_isCharacterSelected = false;
 			break;
 		case 2:
 			m_Character[2].m_CharacterName = "Red";
@@ -96,6 +98,7 @@ bool CGameLogic::init()
 			m_Character[2].m_CharacterPlayImage = "image/CHARACTER_3_Play.png";
 			m_Character[2].m_CharacterResultImage = "image/PLAYER_face3.png";
 			m_Character[2].m_CharacterVoice = "Sound/PLAYER_3_good.mp3";
+			m_Character[2].m_isCharacterSelected = false;
 			break;
 		case 3:
 			m_Character[3].m_CharacterName = "Yellow";
@@ -103,7 +106,8 @@ bool CGameLogic::init()
 			m_Character[3].m_CharacterSettingImage = "image/CHARACTER_4_Play.png";
 			m_Character[3].m_CharacterPlayImage = "image/CHARACTER_4_Play.png";
 			m_Character[3].m_CharacterResultImage = "image/PLAYER_face4.png";
-			m_Character[3].m_CharacterVoice = "Sound/PLAYER_4_good.mp3";	
+			m_Character[3].m_CharacterVoice = "Sound/PLAYER_4_good.mp3";
+			m_Character[3].m_isCharacterSelected = false;
 			break;
 
 		}
@@ -446,6 +450,7 @@ bool CGameLogic::SetPlayerCharacterId( int characterId )
 		{
 			m_PlayerData[i]->m_CharacterId = -1;
 			m_PlayerData[i]->m_PlayerId = -1;
+			m_Character[i].m_isCharacterSelected = false;
 			--m_PlayerNumber;
 
 			return false;
@@ -459,6 +464,7 @@ bool CGameLogic::SetPlayerCharacterId( int characterId )
 		{
 			m_PlayerData[i]->m_PlayerId = i;
 			m_PlayerData[i]->m_CharacterId = characterId;
+			m_Character[i].m_isCharacterSelected = true;
 			++m_PlayerNumber;
 
 			return true;
@@ -583,7 +589,7 @@ void CGameLogic::CreateMap()
 	MapSize mapSize;
 
 	// MapSelect에서 MapSize를 만들어 낸다
-	switch(m_SelectedMapSize)
+	switch (m_SelectedMapSize)
 	{
 	case MS_6X5:
 		mapSize.m_Width = 6;
@@ -798,7 +804,7 @@ bool CGameLogic::EventHandle(IndexedPosition indexedPosition)
 int CGameLogic::GetPlayerIdByTurn( int currentTurn )
 {
 	PlayerData* currentPlayer = m_FirstPlayer;
-	for(int i = 0;i<currentTurn;i++)
+	for (int i = 0;i<currentTurn;i++)
 	{
 		currentPlayer = currentPlayer->m_nextPlayer;
 	}

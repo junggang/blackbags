@@ -23,7 +23,7 @@ bool CGameBoardLayer::init()
 	int rowNum = 0;
 	int columnNum = 0;
 
-	switch(CGameManager::GetInstance()->GetSelectedMapSize() )
+	switch (CGameManager::GetInstance()->GetSelectedMapSize() )
 	{
 	case MS_6X5:
 		rowNum = 5;
@@ -50,7 +50,7 @@ bool CGameBoardLayer::init()
 
 	for (int i = 1; i < rowNum * 2 + 2; ++i)
 	{
-		for(int j = 1; j < columnNum * 2 + 2; ++j)
+		for (int j = 1; j < columnNum * 2 + 2; ++j)
 		{
 			IndexedPosition pos;
 			pos.m_PosI = i;
@@ -129,25 +129,25 @@ void CGameBoardLayer::DrawLine()
 	
 	//이제 두개를 비교합니다.
 	//행이 같은 경우
-	if(startIndex.m_PosI == endIndex.m_PosI)
+	if (startIndex.m_PosI == endIndex.m_PosI)
 	{
-		if(endIndex.m_PosJ - startIndex.m_PosJ == 2)
+		if (endIndex.m_PosJ - startIndex.m_PosJ == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI, endIndex.m_PosJ - 1) );
 		}
-		else if(startIndex.m_PosJ - endIndex.m_PosJ == 2)
+		else if (startIndex.m_PosJ - endIndex.m_PosJ == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI, startIndex.m_PosJ - 1) );
 		}
 	}
 	//열이 같은 경우
-	else if(startIndex.m_PosJ == endIndex.m_PosJ)
+	else if (startIndex.m_PosJ == endIndex.m_PosJ)
 	{
-		if(endIndex.m_PosI - startIndex.m_PosI == 2)
+		if (endIndex.m_PosI - startIndex.m_PosI == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(endIndex.m_PosI - 1, startIndex.m_PosJ) );
 		}
-		else if(startIndex.m_PosI - endIndex.m_PosI == 2)
+		else if (startIndex.m_PosI - endIndex.m_PosI == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI - 1, startIndex.m_PosJ) );
 		}

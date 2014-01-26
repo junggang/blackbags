@@ -19,6 +19,5 @@ bool CSettingTitleLayer::init()
 	pTitle->setPosition(ccp(visibleSize.width/2, visibleSize.height - pTitle->getContentSize().height) );
 	this->addChild(pTitle, 0);
 
-	// test
 	return true;
 }

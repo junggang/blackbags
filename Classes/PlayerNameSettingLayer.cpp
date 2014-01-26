@@ -30,6 +30,8 @@ bool CPlayerNameSettingLayer::init()
 	// set position
 	label->setPosition(ccp(visibleSize.width/2, visibleSize.height/2 - 100));
 	this->addChild(label);
+
+	return true;
 }
 
 void CPlayerNameSettingLayer::ShowKeyboard( cocos2d::CCIMEKeyboardNotificationInfo & info )
@@ -56,7 +58,7 @@ void CPlayerNameSettingLayer::TouchKeyboard( cocos2d::CCSet *pTouches, cocos2d::
 	CCTextFieldTTF *textfield = (CCTextFieldTTF *)this->getChildByTag(100);
 	CCRect rect = textfield->boundingBox();
 
-	if(rect.containsPoint(point)) {
+	if (rect.containsPoint(point)) {
 		textfield->attachWithIME();
 	}
 }

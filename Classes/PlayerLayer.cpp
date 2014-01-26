@@ -29,7 +29,7 @@ bool CPlayerLayer::init()
 
 	//그림을 매번 불러올 순 없으니 일단 플레이 순서대로 캐릭터를 배열하고, 그 아이디를 저장해 놓도록 한다.
 	/*
-	for(int i = 0; i<CGameManager::GetInstance()->GetPlayerNumber();i++)
+	for (int i = 0; i<CGameManager::GetInstance()->GetPlayerNumber();i++)
 	{
 		if (CGameManager::GetInstance()->GetPlayerIdByTurn(i)!=-1)
 		{
@@ -49,10 +49,10 @@ bool CPlayerLayer::init()
 	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist");
 	
 	//m_Player[i]에 해당하나는 캐릭터를 이어준다. 여기서 i는 playerID를 뜻한다.
-	for(int i = 0; i<MAX_PLAYER_NUM; ++i)
+	for (int i = 0; i<MAX_PLAYER_NUM; ++i)
 	{
 		//생성되지 않은 플레이어라면 넘긴다.
-		if(CGameManager::GetInstance()->GetCharacterId(i)==-1)
+		if (CGameManager::GetInstance()->GetCharacterId(i)==-1)
 			continue;
 
 		int position = CGameManager::GetInstance()->GetPlayerTurn(i);

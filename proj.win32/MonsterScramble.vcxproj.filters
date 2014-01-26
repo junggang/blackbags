@@ -156,6 +156,9 @@
     <ClCompile Include="..\Classes\PlayerNameSettingScene.cpp">
       <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\SettingOtherPlayerStatusLayer.cpp">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -256,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PlayerNameSettingScene.h">
       <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingOtherPlayerStatusLayer.h">
+      <Filter>Classes\Layer\GameSetting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
