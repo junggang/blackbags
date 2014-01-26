@@ -50,6 +50,7 @@ public:
 	int  GetPlayerIdByTurn(int currentTurn);
 	const std::string& GetCharacterPlayFaceById(int playerIdx);
 	int  GetPlayerTurn(int playerId);
+	int  GetCurrentPlayerId();
 
 	void StartGame();
 	

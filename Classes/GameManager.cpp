@@ -319,3 +319,15 @@ int CGameManager::GetPlayerTurn( int playerId )
 		return CGameLogic::GetInstance()->GetPlayerTurnById(playerId);
 	}
 }
+
+int CGameManager::GetCurrentPlayerId()
+{
+	if (m_IsOnlineGame)
+	{
+
+	}
+	else
+	{
+		return CGameLogic::GetInstance()->GetPlayerIdByCurrentTurn();
+	}
+}
