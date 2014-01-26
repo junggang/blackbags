@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 import redis
+import json
 from flask import Flask,url_for, session, escape, request, redirect ,render_template
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 #################################################
 #				matching thread 관련				#
 #################################################
+
 # matching thread는 서버가 시작되면 같이 실행된다.
 # 리스트에 있는 사람들이 바뀔 때마다 현재 리스트에 있는 사람들을 가지고 게임 채널 생성하고 채널 테이블을 레디스에 생성
 
@@ -50,7 +54,7 @@ def PCUpdateGameResult(gameChannelId):
 
 # game data를 string으로 바꾸고 반대로 파싱하는 함수 필요
 # client에 전송할 때 http를 사용하니까 string이어야 하는데 
-# 응답 속도를 빠르게 하려면 redis에 저장할 때도 string 형태로 저장해 두는 게 좋을지도
+# 응답 속도를 빠르게 하려면 redis에 저장할 때도 string 형태로 저장해 두는 게 좋을지도 json?
 # gameData는 struct 구조로 작성하거나 dic 구조로 작성
 def makeString(gameData):
 	resultString
@@ -115,7 +119,18 @@ def selectCharacter():
 	# 업데이트 결과를 redis에 저장하고, 요청을 보낸 유저에게는 변경된 게임 데이터를 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			return
+			
+			playerSession = 
+
+			channelId = (json.loads(redis.get(playerSession)))['gameChannel']
+			gameData = json.loads(redis.get(channelId))
+
+			# 입력 반영 
+			
+			jsonData = json.dumps(gameData)
+			redis.set(channelId, jsonData)
+			
+			return jsonData
 
 	except KeyError, err:
 		print 'error  ->  : ' ,err 
