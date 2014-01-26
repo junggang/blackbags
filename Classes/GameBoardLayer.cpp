@@ -209,4 +209,6 @@ void CGameBoardLayer::update(float dt)
 	{
 		mapObjects->objectAtIndex(i)->update(dt);
 	}
+
+	
 }

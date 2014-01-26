@@ -307,3 +307,15 @@ MO_TYPE CGameManager::IsConnected(IndexedPosition indexedPosition)
 		return CGameLogic::GetInstance()->IsConnected(indexedPosition);
 	}
 }
+
+int CGameManager::GetPlayerTurn( int playerId )
+{
+	if (m_IsOnlineGame)
+	{
+
+	}
+	else
+	{
+		return CGameLogic::GetInstance()->GetPlayerTurnById(playerId);
+	}
+}
