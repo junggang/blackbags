@@ -42,8 +42,8 @@ bool CGameSettingScene::init(void)
 	this->addChild(StartAndHelpButtonLayer, 1);
 
 	// PlayerStatusLayer
-	CSettingOtherPlayerStatusLayer* OtherPlayerStatus = CSettingOtherPlayerStatusLayer::create();
-	this->addChild(OtherPlayerStatus);
+// 	CSettingOtherPlayerStatusLayer* OtherPlayerStatus = CSettingOtherPlayerStatusLayer::create();
+// 	this->addChild(OtherPlayerStatus);
 
 	this->scheduleUpdate();
 
