@@ -56,6 +56,9 @@ bool CPlayerLayer::init()
 	//addChild«ÿ¡ÿ¥Ÿ.
 	for(int playerId=0;playerId<MAX_PLAYER_NUM;++playerId)
 	{
+		if (CGameManager::GetInstance()->GetCharacterId(playerId)==-1)
+			continue;
+
 		m_pSpriteBatchNode->addChild(m_Player[playerId]);
 	}
 

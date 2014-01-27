@@ -130,7 +130,6 @@ private:
 
 	MapSelect				m_SelectedMapSize;
 	int						m_PlayerNumber;
-	int						m_CurrentTurn;
 
 	// 플레이어 데이터를 가지고 있는 구조체
 	std::array<PlayerData*, MAX_PLAYER_NUM> m_PlayerData;
