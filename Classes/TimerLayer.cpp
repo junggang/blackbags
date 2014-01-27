@@ -23,7 +23,6 @@ bool CTimerLayer::init()
 	m_progressTimeBar->setPercentage(100.f);
 	m_progressTimeBar->setMidpoint(ccp(0, 0.5));   
 	m_progressTimeBar->setBarChangeRate(ccp(1, 0));
-	m_progressTimeBar->setType(kCCProgressTimerTypeRadial);
 
 	this->addChild(m_progressTimeBar,0);
 
@@ -32,6 +31,7 @@ bool CTimerLayer::init()
 	CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
 	m_progressTimeBar->runAction(progressToZero);
 
+	return true;
 }
 
 void CTimerLayer::update( float dt )

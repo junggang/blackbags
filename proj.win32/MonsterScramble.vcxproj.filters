@@ -159,6 +159,9 @@
     <ClCompile Include="..\Classes\HelpPopupLayer.cpp">
       <Filter>Classes\Layer\Help</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\HomeMenuLayer.cpp">
+      <Filter>Classes\Layer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -262,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\HelpPopuplLayer.h">
       <Filter>Classes\Layer\Help</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HomeMenuLayer.h">
+      <Filter>Classes\Layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

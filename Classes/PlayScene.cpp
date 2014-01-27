@@ -7,6 +7,7 @@
 #include "PlayerLayer.h"
 #include "TimerLayer.h"
 #include "GameManager.h"
+#include "HomeMenuLayer.h"
 
 USING_NS_CC;
 
@@ -38,6 +39,9 @@ bool CPlayScene::init(void)
 
 	CCLayer* helpWindow = CHelpWindowLayer::create();
 	this->addChild(helpWindow, 2);
+
+	menu = CHomeMenuLayer::create();
+	this->addChild(menu,2);
 
 	//매프레임마다 update함수 호출하도록 설정
 	//this->schedule(schedule_selector(CPlayScene::update) );
