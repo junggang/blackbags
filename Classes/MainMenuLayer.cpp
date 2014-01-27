@@ -1,4 +1,5 @@
 #include "MainMenuLayer.h"
+#include "SettingScene.h"
 
 //for test
 #include "ResultScene.h"
@@ -52,6 +53,22 @@ bool CMainMenuLayer::init()
 
 	// create menu, it's an autorelease object
 	pMenu = CCMenu::create(pMultiplay, NULL);
+	pMenu->setPosition(CCPointZero);
+	this->addChild(pMenu, 1);
+
+	CCMenuItemImage *pSetting = CCMenuItemImage::create(
+										"image/MAIN_setting.png",
+										"image/MAIN_setting_selected.png",
+										this,
+										menu_selector(CMainMenuLayer::settingCallback)
+										);
+    
+	tempYPos -= pSetting->getContentSize().height;
+
+	pSetting->setPosition(ccp(origin.x + visibleSize.width/2, tempYPos) );
+
+	// create menu, it's an autorelease object
+	pMenu = CCMenu::create(pSetting, NULL);
 	pMenu->setPosition(CCPointZero);
 	this->addChild(pMenu, 1);
 
@@ -110,6 +127,20 @@ void CMainMenuLayer::multiplayCallback(CCObject* pSender)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
     CCDirector::sharedDirector()->end(); //multiplay load
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
+#endif
+}
+
+void CMainMenuLayer::settingCallback(CCObject* pSender)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
+#else
+	//for test
+	CCScene* newScene = CSettingScene::create();
+	CCDirector::sharedDirector()->pushScene( newScene );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif

@@ -21,6 +21,7 @@ public:
 	CREATE_FUNC(CMO_tile);
 
 private:
+	void changeImage();
 	IndexedPosition		m_Index;
 	cocos2d::CCSprite*	pTile;
 	cocos2d::CCSprite*	pItem;

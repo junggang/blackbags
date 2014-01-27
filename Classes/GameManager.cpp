@@ -331,3 +331,15 @@ int CGameManager::GetCurrentPlayerId()
 		return CGameLogic::GetInstance()->GetPlayerIdByCurrentTurn();
 	}
 }
+
+int	CGameManager::GetTileAnimationTurn(IndexedPosition indexedPosition)
+{
+	if (m_IsOnlineGame)
+	{
+
+	}
+	else
+	{
+		return CGameLogic::GetInstance()->GetTileAnimationTurn(indexedPosition);
+	}
+}

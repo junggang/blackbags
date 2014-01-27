@@ -58,6 +58,12 @@
     <Filter Include="Classes\Scene\PlayerNameSettingScene">
       <UniqueIdentifier>{7930f1c5-0bb1-4223-917c-c4ee2386e864}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Layer\Setting">
+      <UniqueIdentifier>{5da11e78-0ecc-4bcd-ab47-8ddf8792d1e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scene\SettingScene">
+      <UniqueIdentifier>{486899ec-b7e8-4650-a1ff-3f88f717f424}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -161,6 +167,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\HomeMenuLayer.cpp">
       <Filter>Classes\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingMenuLayer.cpp">
+      <Filter>Classes\Layer\Setting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingScene.cpp">
+      <Filter>Classes\Scene\SettingScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +280,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\HomeMenuLayer.h">
       <Filter>Classes\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingMenuLayer.h">
+      <Filter>Classes\Layer\Setting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingScene.h">
+      <Filter>Classes\Scene\SettingScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

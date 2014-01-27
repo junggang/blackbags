@@ -9,6 +9,7 @@ public:
 	// a selector callback
 	void newgameCallback(CCObject* pSender);
 	void multiplayCallback(CCObject* pSender);
+	void settingCallback(CCObject* pSender);
 	void creditCallback(CCObject* pSender);
     void exitCallback(CCObject* pSender);
 
