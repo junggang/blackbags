@@ -64,6 +64,18 @@
     <Filter Include="Classes\Scene\SettingScene">
       <UniqueIdentifier>{486899ec-b7e8-4650-a1ff-3f88f717f424}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Scene\IntroScene">
+      <UniqueIdentifier>{ef92bd89-ef69-4f7c-bd09-bff30969e681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scene\CreditScene">
+      <UniqueIdentifier>{5ef3cbdb-3101-4704-9326-35ba61e2ab96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer\Intro">
+      <UniqueIdentifier>{38822135-313e-4de9-be5a-c0d63d97a174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer\Credit">
+      <UniqueIdentifier>{3fb5f408-f3e6-495c-ae7f-09b24c7e78df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -173,6 +185,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\SettingScene.cpp">
       <Filter>Classes\Scene\SettingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\IntroScene.cpp">
+      <Filter>Classes\Scene\IntroScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CreditScene.cpp">
+      <Filter>Classes\Scene\CreditScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\IntroLayer.cpp">
+      <Filter>Classes\Layer\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CreditLayer.cpp">
+      <Filter>Classes\Layer\Credit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +310,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\SettingScene.h">
       <Filter>Classes\Scene\SettingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IntroScene.h">
+      <Filter>Classes\Scene\IntroScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CreditScene.h">
+      <Filter>Classes\Scene\CreditScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IntroLayer.h">
+      <Filter>Classes\Layer\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CreditLayer.h">
+      <Filter>Classes\Layer\Credit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

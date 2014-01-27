@@ -1,5 +1,6 @@
 #include "MainMenuLayer.h"
 #include "SettingScene.h"
+#include "CreditScene.h"
 
 //for test
 #include "ResultScene.h"
@@ -153,8 +154,8 @@ void CMainMenuLayer::creditCallback(CCObject* pSender)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
 	//for test
-	CCScene* newScene = CResultScene::create();
-	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+	CCScene* newScene = CCreditScene::create();
+	CCDirector::sharedDirector()->pushScene( newScene );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
