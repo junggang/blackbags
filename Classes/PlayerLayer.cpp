@@ -51,7 +51,7 @@ bool CPlayerLayer::init()
 	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist");
 	
 	//m_Player[playerId]에 해당하나는 캐릭터를 이어준다. 
-	for (int playerId = 0; i<MAX_PLAYER_NUM; ++i)
+	for (int playerId = 0; playerId<MAX_PLAYER_NUM; ++playerId)
 	{
 		//생성되지 않은 플레이어라면 넘긴다.
 		if (CGameManager::GetInstance()->GetCharacterId(playerId)==-1)
@@ -88,7 +88,7 @@ bool CPlayerLayer::init()
 		default:
 			break;
 		}
-		CCLOG("Id: %d, turn:%d",i,position);
+		CCLOG("Id: %d, turn:%d",playerId,position);
 		
 	}
 
@@ -104,12 +104,15 @@ void CPlayerLayer::update( float dt )
 	if(m_CurrentPlayerId != -1)
 		m_Player[m_CurrentPlayerId]->pauseSchedulerAndActions();
 
+
 	//현재 턴에 해당하는 캐릭터의 애니메이션을 재생한다.
 	//애니메이션은 업데이트할 때마다 새로 생성해줘야 함.
 	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
 	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist");
 
 	m_CurrentPlayerId = CGameManager::GetInstance()->GetCurrentPlayerId();
+
+	CCLOG("currentId = %d, it's turn = %d",m_CurrentPlayerId,CGameManager::GetInstance()->GetPlayerTurn(m_CurrentPlayerId));
 
 	m_CharacterAni = CCAnimation::create();
 	m_CharacterAni->setDelayPerUnit(0.5f);
