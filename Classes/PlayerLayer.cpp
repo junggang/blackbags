@@ -12,6 +12,8 @@ bool CPlayerLayer::init()
 		return false;
 	}
 
+	m_CurrentPlayerId = -1;
+
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 	//위치 선정부터 한다. 위치는 턴 순서대로이다.
@@ -60,40 +62,24 @@ bool CPlayerLayer::init()
 		switch (CGameManager::GetInstance()->GetCharacterId(i))
 		{
 		case 0:
-			m_Animation[i] = CCAnimation::create();
-			m_Animation[i]->setDelayPerUnit(0.5f);
-			m_Animation[i]->addSpriteFrame(cache->spriteFrameByName("CHARACTER_1_Ani0.png"));
-			m_Animation[i]->addSpriteFrame(cache->spriteFrameByName("CHARACTER_1_Ani1.png"));
 			m_Player[i] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_1_Ani0.png"));
 			m_Player[i]->setPosition(m_UIposition[position]);
 			m_pSpriteBatchNode->addChild(m_Player[i]);
 			//addChild(m_pSpriteBatchNode);
 			break;
 		case 1:
-			m_Animation[i] = CCAnimation::create();
-			m_Animation[i]->setDelayPerUnit(0.5f);
-			m_Animation[i]->addSpriteFrame(cache->spriteFrameByName("CHARACTER_2_Ani1.png"));
-			m_Animation[i]->addSpriteFrame(cache->spriteFrameByName("CHARACTER_2_Ani2.png"));
 			m_Player[i] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_2_Ani1.png"));
 			m_Player[i]->setPosition(m_UIposition[position]);
 			m_pSpriteBatchNode->addChild(m_Player[i]);
 			//addChild(m_pSpriteBatchNode);
 			break;
-		case 2:
-			m_Animation[i] = CCAnimation::create();
-			m_Animation[i]->setDelayPerUnit(0.5f);
-			m_Animation[i]->addSpriteFrame(cache->spriteFrameByName("CHARACTER_3_Ani2.png"));
-			m_Animation[i]->addSpriteFrame(cache->spriteFrameByName("CHARACTER_3_Ani1.png"));
+		case 2:			
 			m_Player[i] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_3_Ani1.png"));
 			m_Player[i]->setPosition(m_UIposition[position]);
 			m_pSpriteBatchNode->addChild(m_Player[i]);
 			//addChild(m_pSpriteBatchNode);
 			break;
 		case 3:
-			m_Animation[i] = CCAnimation::create();
-			m_Animation[i]->setDelayPerUnit(0.5f);
-			m_Animation[i]->addSpriteFrame(cache->spriteFrameByName("CHARACTER_4_Ani1.png"));
-			m_Animation[i]->addSpriteFrame(cache->spriteFrameByName("CHARACTER_4_Ani2.png"));
 			m_Player[i] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_4_Ani1.png"));
 			m_Player[i]->setPosition(m_UIposition[position]);
 			m_pSpriteBatchNode->addChild(m_Player[i]);
@@ -105,6 +91,7 @@ bool CPlayerLayer::init()
 		
 	}
 
+	update(0);
 
 	return true;
 
@@ -112,5 +99,40 @@ bool CPlayerLayer::init()
 
 void CPlayerLayer::update( float dt )
 {
-	
+	//일단 이 전에 실행중이던 애니메이션은 중지한다.
+	if(m_CurrentPlayerId != -1)
+		m_Player[m_CurrentPlayerId]->pauseSchedulerAndActions();
+
+	//현재 턴에 해당하는 캐릭터의 애니메이션을 재생한다.
+	//애니메이션은 업데이트할 때마다 새로 생성해줘야 함.
+	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist");
+
+	m_CurrentPlayerId = CGameManager::GetInstance()->GetCurrentPlayerId();
+
+	m_CharacterAni = CCAnimation::create();
+	m_CharacterAni->setDelayPerUnit(0.5f);
+
+	switch(CGameManager::GetInstance()->GetCharacterId(m_CurrentPlayerId))
+	{
+	case 0:
+		m_CharacterAni->addSpriteFrame(cache->spriteFrameByName("CHARACTER_1_Ani0.png"));
+		m_CharacterAni->addSpriteFrame(cache->spriteFrameByName("CHARACTER_1_Ani1.png"));
+		break;
+	case 1:
+		m_CharacterAni->addSpriteFrame(cache->spriteFrameByName("CHARACTER_2_Ani1.png"));
+		m_CharacterAni->addSpriteFrame(cache->spriteFrameByName("CHARACTER_2_Ani2.png"));
+		break;
+	case 2:
+		m_CharacterAni->addSpriteFrame(cache->spriteFrameByName("CHARACTER_3_Ani1.png"));
+		m_CharacterAni->addSpriteFrame(cache->spriteFrameByName("CHARACTER_3_Ani2.png"));
+		break;
+	case 3:
+		m_CharacterAni->addSpriteFrame(cache->spriteFrameByName("CHARACTER_4_Ani1.png"));
+		m_CharacterAni->addSpriteFrame(cache->spriteFrameByName("CHARACTER_4_Ani2.png"));
+		break;
+	}
+
+	CCRepeatForever* repeatAction = CCRepeatForever::create(CCAnimate::create(m_CharacterAni));
+	m_Player[m_CurrentPlayerId]->runAction(repeatAction);	
 }
