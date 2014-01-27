@@ -110,16 +110,34 @@ void CMO_line::update( float delta )
 	{
 		m_Connected = true;
 
-		//기존의 이미지는 삭제하고
-		int width = pLine->getContentSize().width;
-		int height = pLine->getContentSize().height;
-		this->removeChild(pLine, true);
+		//애니메이션 등록
+		CCAnimation *lineAnimation = CCAnimation::create();
+		lineAnimation->setDelayPerUnit(0.2);
 
-		//바뀐 이미지로 추가
-		pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx + 2].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
-		setAnchorPoint();
-		pLine->setPosition( ccp(0.0f, 0.0f) );
-		this->addChild(pLine, 0);
+		if (m_ImageFileIdx % 2 == 0)
+		{
+			//vertical
+			lineAnimation->addSpriteFrameWithFileName("image/test_line_vertical_00.png");
+			lineAnimation->addSpriteFrameWithFileName("image/test_line_vertical_01.png");
+			lineAnimation->addSpriteFrameWithFileName("image/test_line_vertical_02.png");
+			lineAnimation->addSpriteFrameWithFileName("image/test_line_vertical_03.png");
+		}
+		else
+		{
+			//horizontal
+			lineAnimation->addSpriteFrameWithFileName("image/test_line_horizontal_00.png");
+			lineAnimation->addSpriteFrameWithFileName("image/test_line_horizontal_01.png");
+			lineAnimation->addSpriteFrameWithFileName("image/test_line_horizontal_02.png");
+			lineAnimation->addSpriteFrameWithFileName("image/test_line_horizontal_03.png");
+		}
+
+		CCAnimate *lineAnimate = CCAnimate::create(lineAnimation);
+
+		//애니메이션 재생이 끝난 후에 그어진 선 이미지로 교체하는 함수를 호출
+		CCFiniteTimeAction *pAction = CCSequence::create(lineAnimate, 
+			CCCallFunc::create(this, callfunc_selector(CMO_line::changeImage)), NULL);
+
+		pLine->runAction(pAction);
 	} 
 }
 
@@ -135,4 +153,19 @@ void CMO_line::setAnchorPoint()
 		//horizontal
 		pLine->setAnchorPoint( ccp(0.0f, 0.5f) );
 	}
+}
+
+void CMO_line::changeImage()
+{
+	//기존의 이미지는 삭제하고
+	int width = pLine->getContentSize().width;
+	int height = pLine->getContentSize().height;
+
+	this->removeChild(pLine, true);
+		
+	//애니메이션 종료 후 화면에 표시될 이미지 등록
+	pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx + 2].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
+	setAnchorPoint();
+	pLine->setPosition( ccp(0.0f, 0.0f) );
+	this->addChild(pLine, 0);
 }

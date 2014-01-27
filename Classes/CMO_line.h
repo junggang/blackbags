@@ -24,6 +24,7 @@ public:
 
 private:
 	void setAnchorPoint();
+	void changeImage();
 
 	IndexedPosition		m_Index;
 	cocos2d::CCSprite*	pLine;
