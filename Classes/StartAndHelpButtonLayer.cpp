@@ -1,10 +1,12 @@
 #include "StartAndHelpButtonLayer.h"
+#include "HelpPopuplLayer.h"
 #include "PlayScene.h"
 #include "HelpScene.h"
 #include "GameManager.h"
-#include "PlayerNameSettingScene.h"
 
 USING_NS_CC;
+
+const int HelpPopupLayerId = 1000;
 
 bool CStartAndHelpButtonLayer::init()
 {
@@ -28,6 +30,11 @@ bool CStartAndHelpButtonLayer::init()
 
 	StartButtonMenu->setPosition(visibleSize.width/2, visibleSize.height/2 + 200);
 
+	StartButtonMenu->alignItemsHorizontally();
+
+	// add StartButtonMenu to Layer
+	this->addChild(StartButtonMenu);
+
 	// Help Button
 	CCMenuItemImage *HelpButton = CCMenuItemImage::create(
 		"image/icon_help.png",
@@ -36,13 +43,14 @@ bool CStartAndHelpButtonLayer::init()
 		menu_selector(CStartAndHelpButtonLayer::HelpButtonCallBack)
 		);
 
-	// 조심해! 지금은 그냥 StartButton 옆에 띄운다
-	StartButtonMenu->addChild(HelpButton);
+	CCMenu	*HelpButtonMenu = CCMenu::create(HelpButton, NULL);
+
+	HelpButtonMenu->setPosition(visibleSize.width - HelpButton->getContentSize().width,
+								visibleSize.height - HelpButton->getContentSize().height);
 
 	StartButtonMenu->alignItemsHorizontally();
-	
-	// add StartButtonMenu to Layer
-	this->addChild(StartButtonMenu);
+
+	this->addChild(HelpButtonMenu);
 
 	return true;
 }
@@ -66,11 +74,17 @@ void CStartAndHelpButtonLayer::HelpButtonCallBack( CCObject* pSender )
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
-	// 조심해! 여기 Change Scene 대신 팝업 레이어로 바꿔야 해!
-	//CCScene* newScene = CHelpScene::create();
-	// test : NameSettingScene 기능 테스트를 위해
-	CCScene* newScene = CPlayerNameSettingScene::create();
-	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+	// 현재 신을 정지시킴
+	// CCDirector::sharedDirector()->pause();
+	// 팝업 레이어 생성
+	CHelpPopupLayer* newLayer = CHelpPopupLayer::create();
+	
+	if (newLayer != NULL)
+	{
+		newLayer->setTag(HelpPopupLayerId);
+		this->addChild(newLayer);
+	}
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
 #endif
