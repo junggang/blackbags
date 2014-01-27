@@ -29,28 +29,15 @@ bool CPlayerLayer::init()
 	m_UIposition[3].x =m_VisibleSize.width -  DEFAULT_CHARACTER_MARGIN_H;
 	m_UIposition[3].y = DEFAULT_CHARACTER_MARGIN_V;
 
-	//그림을 매번 불러올 순 없으니 일단 플레이 순서대로 캐릭터를 배열하고, 그 아이디를 저장해 놓도록 한다.
-	/*
-	for (int i = 0; i<CGameManager::GetInstance()->GetPlayerNumber();i++)
-	{
-		if (CGameManager::GetInstance()->GetPlayerIdByTurn(i)!=-1)
-		{
-			m_Character[i] = CGameManager::GetInstance()->GetPlayerIdByTurn(i);
-			CCSprite* pTitle = CCSprite::create(CGameManager::GetInstance()->GetCharacterPlayFaceById(m_Character[i]).c_str());
-			pTitle->setPosition(m_UIposition[i]);
-			this->addChild(pTitle, 0);
-		}
-	}
-	*/
-
 	//CCSpriteBatchNode를 사용하여 리소스를 준비한다.
 	m_pSpriteBatchNode = CCSpriteBatchNode::create("image/CharacterPlayAnimation.png");
 	addChild(m_pSpriteBatchNode,0);
-
+	
+	
 	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
 	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist");
 	
-	//m_Player[playerId]에 해당하나는 캐릭터를 이어준다. 
+	//일단 각 플레이어의 캐릭터가 어디에 위치할 지만 정한다.
 	for (int playerId = 0; playerId<MAX_PLAYER_NUM; ++playerId)
 	{
 		//생성되지 않은 플레이어라면 넘긴다.
@@ -59,39 +46,20 @@ bool CPlayerLayer::init()
 
 		int position = CGameManager::GetInstance()->GetPlayerTurn(playerId);
 
-		switch (CGameManager::GetInstance()->GetCharacterId(playerId))
-		{
-		case 0:
-			m_Player[playerId] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_1_Ani0.png"));
-			m_Player[playerId]->setPosition(m_UIposition[position]);
-			m_pSpriteBatchNode->addChild(m_Player[playerId]);
-			//addChild(m_pSpriteBatchNode);
-			break;
-		case 1:
-			m_Player[playerId] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_2_Ani1.png"));
-			m_Player[playerId]->setPosition(m_UIposition[position]);
-			m_pSpriteBatchNode->addChild(m_Player[playerId]);
-			//addChild(m_pSpriteBatchNode);
-			break;
-		case 2:			
-			m_Player[playerId] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_3_Ani1.png"));
-			m_Player[playerId]->setPosition(m_UIposition[position]);
-			m_pSpriteBatchNode->addChild(m_Player[playerId]);
-			//addChild(m_pSpriteBatchNode);
-			break;
-		case 3:
-			m_Player[playerId] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_4_Ani1.png"));
-			m_Player[playerId]->setPosition(m_UIposition[position]);
-			m_pSpriteBatchNode->addChild(m_Player[playerId]);
-			//addChild(m_pSpriteBatchNode);
-			break;
-		default:
-			break;
-		}
-		CCLOG("Id: %d, turn:%d",playerId,position);
-		
+		m_Player[playerId] = CCSprite::create();
+		m_Player[playerId]->setPosition(m_UIposition[position]);
 	}
 
+	//캐릭터의 첫번째 프레임으로 모든 UI를 준비한다.
+	SetWaitingCharacters();
+	
+	//addChild해준다.
+	for(int playerId=0;playerId<MAX_PLAYER_NUM;++playerId)
+	{
+		m_pSpriteBatchNode->addChild(m_Player[playerId]);
+	}
+
+	//현재 턴(첫번째 턴)부터 애니메이션이 재생될 수 있도록 update()를 한 번 해준다.
 	update(0);
 
 	return true;
@@ -100,10 +68,13 @@ bool CPlayerLayer::init()
 
 void CPlayerLayer::update( float dt )
 {
-	//일단 이 전에 실행중이던 애니메이션은 중지한다.
+	//일단 이 전에 실행중이던 애니메이션은 중지하고, 모든 캐릭터를 첫번째 프레임으로 돌려 놓는다.
+	//pause를 했으므로, 반드시 resume을 이용해야 한다.
 	if(m_CurrentPlayerId != -1)
+	{
+		SetWaitingCharacters();
 		m_Player[m_CurrentPlayerId]->pauseSchedulerAndActions();
-
+	}
 
 	//현재 턴에 해당하는 캐릭터의 애니메이션을 재생한다.
 	//애니메이션은 업데이트할 때마다 새로 생성해줘야 함.
@@ -139,4 +110,35 @@ void CPlayerLayer::update( float dt )
 
 	CCRepeatForever* repeatAction = CCRepeatForever::create(CCAnimate::create(m_CharacterAni));
 	m_Player[m_CurrentPlayerId]->runAction(repeatAction);	
+	m_Player[m_CurrentPlayerId]->resumeSchedulerAndActions();
+
+}
+
+void CPlayerLayer::SetWaitingCharacters()
+{
+	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist","image/CharacterPlayAnimation.png");
+
+	for(int playerId = 0; playerId<MAX_PLAYER_NUM;++playerId)
+	{
+		if (CGameManager::GetInstance()->GetCharacterId(playerId)==-1)
+			continue;
+		switch (CGameManager::GetInstance()->GetCharacterId(playerId))
+		{
+		case 0:
+			m_Player[playerId]->setDisplayFrame(cache->spriteFrameByName("CHARACTER_1_Ani0.png"));
+			break;
+		case 1:
+			m_Player[playerId]->setDisplayFrame(cache->spriteFrameByName("CHARACTER_2_Ani1.png"));
+			break;
+		case 2:
+			m_Player[playerId]->setDisplayFrame(cache->spriteFrameByName("CHARACTER_3_Ani1.png"));
+			break;
+		case 3:
+			m_Player[playerId]->setDisplayFrame(cache->spriteFrameByName("CHARACTER_4_Ani1.png"));
+			break;
+		default:
+			break;
+		}
+	}	
 }
