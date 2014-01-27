@@ -50,44 +50,45 @@ bool CPlayerLayer::init()
 	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
 	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist");
 	
-	//m_Player[i]에 해당하나는 캐릭터를 이어준다. 여기서 i는 playerID를 뜻한다.
-	for (int i = 0; i<MAX_PLAYER_NUM; ++i)
+	//m_Player[playerId]에 해당하나는 캐릭터를 이어준다. 
+	for (int playerId = 0; i<MAX_PLAYER_NUM; ++i)
 	{
 		//생성되지 않은 플레이어라면 넘긴다.
-		if (CGameManager::GetInstance()->GetCharacterId(i)==-1)
+		if (CGameManager::GetInstance()->GetCharacterId(playerId)==-1)
 			continue;
 
-		int position = CGameManager::GetInstance()->GetPlayerTurn(i);
+		int position = CGameManager::GetInstance()->GetPlayerTurn(playerId);
 
-		switch (CGameManager::GetInstance()->GetCharacterId(i))
+		switch (CGameManager::GetInstance()->GetCharacterId(playerId))
 		{
 		case 0:
-			m_Player[i] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_1_Ani0.png"));
-			m_Player[i]->setPosition(m_UIposition[position]);
-			m_pSpriteBatchNode->addChild(m_Player[i]);
+			m_Player[playerId] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_1_Ani0.png"));
+			m_Player[playerId]->setPosition(m_UIposition[position]);
+			m_pSpriteBatchNode->addChild(m_Player[playerId]);
 			//addChild(m_pSpriteBatchNode);
 			break;
 		case 1:
-			m_Player[i] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_2_Ani1.png"));
-			m_Player[i]->setPosition(m_UIposition[position]);
-			m_pSpriteBatchNode->addChild(m_Player[i]);
+			m_Player[playerId] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_2_Ani1.png"));
+			m_Player[playerId]->setPosition(m_UIposition[position]);
+			m_pSpriteBatchNode->addChild(m_Player[playerId]);
 			//addChild(m_pSpriteBatchNode);
 			break;
 		case 2:			
-			m_Player[i] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_3_Ani1.png"));
-			m_Player[i]->setPosition(m_UIposition[position]);
-			m_pSpriteBatchNode->addChild(m_Player[i]);
+			m_Player[playerId] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_3_Ani1.png"));
+			m_Player[playerId]->setPosition(m_UIposition[position]);
+			m_pSpriteBatchNode->addChild(m_Player[playerId]);
 			//addChild(m_pSpriteBatchNode);
 			break;
 		case 3:
-			m_Player[i] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_4_Ani1.png"));
-			m_Player[i]->setPosition(m_UIposition[position]);
-			m_pSpriteBatchNode->addChild(m_Player[i]);
+			m_Player[playerId] = CCSprite::createWithSpriteFrame(cache->spriteFrameByName("CHARACTER_4_Ani1.png"));
+			m_Player[playerId]->setPosition(m_UIposition[position]);
+			m_pSpriteBatchNode->addChild(m_Player[playerId]);
 			//addChild(m_pSpriteBatchNode);
 			break;
 		default:
 			break;
 		}
+		CCLOG("Id: %d, turn:%d",i,position);
 		
 	}
 
