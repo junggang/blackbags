@@ -1,6 +1,8 @@
 #pragma once
 #include "cocos2d.h"
 #include "SettingMapLayer.h"
+#include "SettingCharacterLayer.h"
+#include "SettingOtherPlayerStatusLayer.h"
 
 class CGameSettingScene : public cocos2d::CCScene
 {
@@ -12,6 +14,8 @@ public:
 	CREATE_FUNC(CGameSettingScene);
 
 private:
-	CSettingMapLayer* SettingMaplayer;
+	CSettingCharacterLayer* SettingCharacterLayer;
+	CSettingMapLayer* SettingMapLayer;
+	CSettingOtherPlayerStatusLayer* OtherPlayerStatusLayer;
 };
 

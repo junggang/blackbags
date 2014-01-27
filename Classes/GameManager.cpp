@@ -145,7 +145,7 @@ void CGameManager::SelectCharacter( int characterId )
 	}
 	else
 	{
-		SetUpdateFlag(CGameLogic::GetInstance()->SetPlayerCharacterId( characterId ) );
+		SetUpdateFlag( CGameLogic::GetInstance()->SetPlayerCharacterId( characterId ) );
 	}
 }
 

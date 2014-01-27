@@ -80,7 +80,8 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 	if (touchedButton != nullptr)
 	{
 		// 버튼이 선택되어 있으면 취소, 선택되어 있지 않으면 선택한다.
-		if ( CGameManager::GetInstance()->isCharacterSelected(selectedCharacterId) )
+		bool isSelected = CGameManager::GetInstance()->isCharacterSelected(selectedCharacterId);
+		if ( isSelected )
 		{
 			touchedButton->unselected();
 		}

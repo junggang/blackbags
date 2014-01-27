@@ -2,10 +2,9 @@
 #include "BackgroundLayer.h"
 #include "GameSettingScene.h"
 #include "SettingTitleLayer.h"
-#include "SettingCharacterLayer.h"
 #include "StartAndHelpButtonLayer.h"
 #include "GameManager.h"
-#include "SettingOtherPlayerStatusLayer.h"
+
 
 USING_NS_CC;
 
@@ -30,20 +29,20 @@ bool CGameSettingScene::init(void)
 	this->addChild(SettingTitleLayer, 1);
 
 	// Character Select Table layer
-	CSettingCharacterLayer* SettingCharacterLayer = CSettingCharacterLayer::create();
+	SettingCharacterLayer = CSettingCharacterLayer::create();
 	this->addChild(SettingCharacterLayer, 1);
 
 	// map select table layer
-	SettingMaplayer = CSettingMapLayer::create();
-	this->addChild(SettingMaplayer, 1);
+	SettingMapLayer = CSettingMapLayer::create();
+	this->addChild(SettingMapLayer, 1);
 
 	// StartButton and HelpButton layer
 	CStartAndHelpButtonLayer* StartAndHelpButtonLayer = CStartAndHelpButtonLayer::create();
 	this->addChild(StartAndHelpButtonLayer, 1);
 
 	// PlayerStatusLayer
-// 	CSettingOtherPlayerStatusLayer* OtherPlayerStatus = CSettingOtherPlayerStatusLayer::create();
-// 	this->addChild(OtherPlayerStatus);
+	OtherPlayerStatusLayer = CSettingOtherPlayerStatusLayer::create();
+	this->addChild(OtherPlayerStatusLayer, 1);
 
 	this->scheduleUpdate();
 
@@ -58,8 +57,9 @@ void CGameSettingScene::update(float dt)
 	{
 		//여기에 각 레이어들을 업데이트하는 코드를 넣음
 		//각 레이어별로 업데이트 함수 만들어야 함
-		SettingMaplayer->update();
-
+		SettingCharacterLayer->update(dt);
+		SettingMapLayer->update();
+		OtherPlayerStatusLayer->update();
 		//업데이트된 내용을 모두 받아와서 갱신했으므로 flag는 원래대로 false로 만든다
 		CGameManager::GetInstance()->SetUpdateFlag(false);
 	}

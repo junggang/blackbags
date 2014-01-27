@@ -135,9 +135,6 @@
     <ClCompile Include="..\Classes\HelpScene.cpp">
       <Filter>Classes\Scene\HelpScene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelpTutorialLayer.cpp">
-      <Filter>Classes\Layer\Help</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\StartAndHelpButtonLayer.cpp">
       <Filter>Classes\Layer\GameSetting</Filter>
     </ClCompile>
@@ -158,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\SettingOtherPlayerStatusLayer.cpp">
       <Filter>Classes\Layer\GameSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelpPopupLayer.cpp">
+      <Filter>Classes\Layer\Help</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,9 +239,6 @@
     <ClInclude Include="..\Classes\HelpScene.h">
       <Filter>Classes\Scene\HelpScene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelpTutorialLayer.h">
-      <Filter>Classes\Layer\Help</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\StartAndHelpButtonLayer.h">
       <Filter>Classes\Layer\GameSetting</Filter>
     </ClInclude>
@@ -262,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\SettingOtherPlayerStatusLayer.h">
       <Filter>Classes\Layer\GameSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelpPopuplLayer.h">
+      <Filter>Classes\Layer\Help</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

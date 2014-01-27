@@ -1,6 +1,6 @@
 #include "HelpScene.h"
 #include "BackgroundLayer.h"
-#include "HelpTutorialLayer.h"
+#include "HelpPopuplLayer.h"
 #include "PlayerNameSettingLayer.h"
 
 USING_NS_CC;
@@ -20,7 +20,7 @@ bool CHelpScene::init(void)
 
 	this->addChild(BackgroundLayer, 0);
 
-	CCLayer* HelpTutorialLayer = CHelpTutorialLayer::create();
+	CCLayer* HelpTutorialLayer = CHelpPopupLayer::create();
 
 	this->addChild(HelpTutorialLayer, 1);
 

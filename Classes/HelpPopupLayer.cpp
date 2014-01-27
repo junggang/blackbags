@@ -1,8 +1,8 @@
-#include "HelpTutorialLayer.h"
+#include "HelpPopuplLayer.h"
 
 USING_NS_CC;
 
-bool CHelpTutorialLayer::init()
+bool CHelpPopupLayer::init()
 {
 	//////////////////////////////
 	// 1. super init first

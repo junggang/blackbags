@@ -453,7 +453,7 @@ bool CGameLogic::SetPlayerCharacterId( int characterId )
 			m_Character[i].m_isCharacterSelected = false;
 			--m_PlayerNumber;
 
-			return false;
+			return true;
 		}
 	}
 

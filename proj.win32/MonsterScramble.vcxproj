@@ -145,7 +145,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\BackgroundLayer.cpp" />
     <ClCompile Include="..\Classes\HelpButtonLayer.cpp" />
     <ClCompile Include="..\Classes\HelpScene.cpp" />
-    <ClCompile Include="..\Classes\HelpTutorialLayer.cpp" />
+    <ClCompile Include="..\Classes\HelpPopupLayer.cpp" />
     <ClCompile Include="..\Classes\HelpWindowLayer.cpp" />
     <ClCompile Include="..\Classes\MainMenuLayer.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
@@ -181,7 +181,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\BackgroundLayer.h" />
     <ClInclude Include="..\Classes\HelpButtonLayer.h" />
     <ClInclude Include="..\Classes\HelpScene.h" />
-    <ClInclude Include="..\Classes\HelpTutorialLayer.h" />
+    <ClInclude Include="..\Classes\HelpPopuplLayer.h" />
     <ClInclude Include="..\Classes\HelpWindowLayer.h" />
     <ClInclude Include="..\Classes\MainMenuLayer.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
