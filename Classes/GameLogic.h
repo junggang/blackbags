@@ -59,7 +59,7 @@ public:
 	int GetPlayerId(int playerIdx) { return m_PlayerData[playerIdx]->m_PlayerId; }
 	int GetPlayerTurnById(int playerId) { return m_PlayerData[playerId]->m_PlayerTurn; }
 	int GetPlayerIdByTurn(int currentTurn);
-	int GetPlayerIdByCurrentTurn() { return m_currentTurn % m_PlayerNumber;}
+	int GetPlayerIdByCurrentTurn() { return GetPlayerIdByTurn(m_currentTurn % m_PlayerNumber);}
 	PlayerData* GetFirstPlayer() { return m_FirstPlayer; }
 
 	//캐릭터를 플레이어에게 짝지어 준다.
