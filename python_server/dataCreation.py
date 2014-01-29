@@ -64,13 +64,24 @@ def makeGameData(gameChannelId):
 	# return the result data
 	return gameData
 
-def setMapSize(gmaeData, width, height):
+def setMapSize(gameData, width, height):
 	gameData['game channel void tile'] = width * height
 	gameData['game channel map size'][0] = width
 	gameData['game channel map size'][0] = height
 
 	# map init code
-
+	for i in range(1, height * 2 + 2):
+		for j in range(1, width * 2 + 2):
+			if i % 2 == 0:
+				if j % 2 == 0:
+					gameData['game channel map'][i][j]['type'] = 'tile'
+				else:
+					gameData['game channel map'][i][j]['type'] = 'line'
+			else:
+				if j % 2 == 0:
+					gameData['game channel map'][i][j]['type'] = 'line'
+				else:
+					gameData['game channel map'][i][j]['type'] = 'dot'
 
 def addPlayer(gameData, playerData):
 	for idx in range(4):
@@ -85,7 +96,24 @@ def addPlayer(gameData, playerData):
 
 	return False
 	
+def renderMap(gameData):
+	# for debug
+	for i in range(23):
+		thisLine = ''
+		for j in range(23):
+			if gameData['game channel map'][i][j]['type'] == 'dot':
+				thisLine += '*'
+			elif gameData['game channel map'][i][j]['type'] == 'line':
+				if i % 2 == 0:
+					thisLine += '|'
+				else:
+					thisLine += '-'
+			elif gameData['game channel map'][i][j]['type'] == 'tile':
+				thisLine += ' '
+		if not thisLine == '':
+			print thisLine
 
+	print '>>> current map'
 
 if __name__ == '__main__':
 	# test : player creation
@@ -105,4 +133,9 @@ if __name__ == '__main__':
 	if result == True:
 		result = addPlayer(testGameData, player_wooq)
 
-	print testGameData
+	for each in range(4):
+		if testGameData['game channel player list'][each]['player connection flag'] == True:
+			print "name : %s / score : %d" % (testGameData['game channel player list'][each]['player name'], testGameData['game channel player list'][each]['score'])
+	setMapSize(testGameData, 6, 5)
+
+	renderMap(testGameData)
