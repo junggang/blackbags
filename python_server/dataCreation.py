@@ -12,7 +12,7 @@ def makePalyerData(tokenId, name):
 	return playerData
 
 def setChannelId(playerData, channelId):
-	playerData['plaeyer game channel id'] = channelId
+	playerData['player game channel id'] = channelId
 
 
 # game data 관련 함수들
