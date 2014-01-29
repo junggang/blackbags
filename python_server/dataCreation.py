@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # player data 관련 함수들
 def makePalyerData(tokenId, name):
 	playerData = {
@@ -21,13 +23,14 @@ def makeGameData(gameChannelId):
 		'game channel id' : gameChannelId,
 		'game map id' : -1,
 		'game channel current turn id' : -1,
-		'game channel turn list' = [],
-		'game turn start flag' = False,
-		'game recently connected line idx' = [0, 0],
+		'game channel turn list' : [],
+		'game turn start flag' : False,
+		'game recently connected line idx' : [0, 0],
 		'game channel void tile' : -1,
-		'game channel plyer number' : 0,
-		'game channel player list' = [],
-		'game channel map' = []
+		'game channel player number' : 0,
+		'game channel player list' : [],
+		'game channel map size' : [0, 0],
+		'game channel map' : []
 	}
 
 	# add players data
@@ -49,7 +52,7 @@ def makeGameData(gameChannelId):
 		gameData['game channel map'].append([])
 
 		for j in range(23):
-			gameData['game channel map'][i].append([])
+			gameData['game channel map'][i].append({})
 
 			gameData['game channel map'][i][j]['type'] = 'SENTINEL'
 			gameData['game channel map'][i][j]['owner'] = 'NOBODY'
@@ -63,27 +66,43 @@ def makeGameData(gameChannelId):
 
 def setMapSize(gmaeData, width, height):
 	gameData['game channel void tile'] = width * height
+	gameData['game channel map size'][0] = width
+	gameData['game channel map size'][0] = height
 
 	# map init code
 
 
 def addPlayer(gameData, playerData):
-	idx = gameData['game channel player number']++
-	gameData['game channel player list'][idx]['something'] = playerData['something']
+	for idx in range(4):
+		if gameData['game channel player list'][idx]['player connection flag'] == False:
+			setChannelId(playerData, gameData['game channel id'])
+			++gameData['game channel player number']
+			
+			gameData['game channel player list'][idx]['player name'] = playerData['player name']
+			gameData['game channel player list'][idx]['player connection flag'] = True
+
+			return True
+
+	return False
+	
 
 
 if __name__ == '__main__':
 	# test : player creation
-    player_moon = makePalyerData(29, 'prof. moon')
-    player_jg = makePalyerData(67, 'JUNGGANG')
-    player_wooq = makePalyerData(80, 'wooq')
+	player_moon = makePalyerData(29, 'prof. moon')
+	player_jg = makePalyerData(67, 'JUNGGANG')
+	player_wooq = makePalyerData(80, 'wooq')
 
     # test : game data creation
-	testGameData - makeGameData(4)
+	testGameData = makeGameData(4)
 
 	#insert player to game channel
-	setChannelId(player_moon, 4)
-	setChannelId(player_jg, 4)
-	setChannelId(player_wooq, 4)
+	result = addPlayer(testGameData, player_moon)
 
-	addPlayer(testGameData, player_moon)
+	if result == True:
+		result = addPlayer(testGameData, player_jg)
+
+	if result == True:
+		result = addPlayer(testGameData, player_wooq)
+
+	print testGameData
