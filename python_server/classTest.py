@@ -3,7 +3,6 @@ import Queue
 
 # player data 관련 함수들
 class PlayerData:
-	closedTile = []
 
 	def __init__(self, tokenId, name):
 		self.data = {
@@ -24,6 +23,7 @@ class PlayerData:
 
 # game data 관련 함수들
 class GameData:
+	closedTile = []
 
 	def __init__(self, gameChannelId):
 		# make structure
@@ -95,7 +95,7 @@ class GameData:
 		for idx in range(4):
 			if self.data['game channel player list'][idx]['player connection flag'] == False:
 				playerData.setChannelId(self.data['game channel id'])
-				++self.data['game channel player number']
+				self.data['game channel player number'] += 1
 				
 				self.data['game channel player list'][idx]['player name'] = playerData.getPlayerName()
 				self.data['game channel player list'][idx]['player connection flag'] = True
@@ -116,19 +116,27 @@ class GameData:
 
 		return True
 
+	def isEnd(self):
+		return self.data['game channel void tile']  == 0
+
 	def isPossible(self, i, j):
 		# 일단 hidden line은 없이 구현
 		if self.data['game channel map'][i][j]['type'] == 'LINE_UNCONNECTED':
 			voidTileCount = 0
 
+			print self.data['game channel map'][i + 1][j]['owner']
+
 			if self.data['game channel map'][i + 1][j]['owner'] == 'NOBODY':
-				++voidTileCount
+				print 'why not'
+				voidTileCount += 1
 			if self.data['game channel map'][i - 1][j]['owner'] == 'NOBODY':
-				++voidTileCount
+				voidTileCount += 1
 			if self.data['game channel map'][i][j + 1]['owner'] == 'NOBODY':
-				++voidTileCount
+				voidTileCount += 1
 			if self.data['game channel map'][i][j - 1]['owner'] == 'NOBODY':
-				++voidTileCount
+				voidTileCount += 1
+
+			print voidTileCount
 
 			if voidTileCount == 4:
 				return True
@@ -162,7 +170,7 @@ class GameData:
 
 		if self.data['game channel map'][i][j]['type'] != 'DOT':
 			animationTurn = 1;
-			setAnimationState(currentTile, animationTurn, direction)
+			self.setAnimationState(currentTile, animationTurn, direction)
 
 			i = 0
 
@@ -177,13 +185,13 @@ class GameData:
 					# current tile은 sentinel이므로 초기화 작업 안 함 
 
 					# init closed tiles
-					for each in closedTile:
+					for each in self.closedTile:
 						self.data['game channel map'][each[0]][each[1]]['checked flag'] = False
 						self.data['game channel map'][each[0]][each[1]]['animation flag'] = False
 						self.data['game channel map'][each[0]][each[1]]['animation turn'] = 0
 						self.data['game channel map'][each[0]][each[1]]['direction'] = 'UP'
 
-					del self.closedTile[0:len(closedTile)]
+					del self.closedTile[0:len(self.closedTile)]
 
 					# init checked tiles 
 					'''
@@ -270,11 +278,14 @@ class GameData:
 		if not self.isPossible(idxI, idxJ):
 			return False
 
-		self.data['game channel map'][i][j]['type'] == 'LINE_CONNECTED'
+		self.data['game channel map'][idxI][idxJ]['type'] = 'LINE_CONNECTED'
 
 		if self.isClosed(idxI, idxJ):
-			for each in closedTile:
-				self.data['game channel map'][each[0]][each[1]]['owner'] = ++self.data['game channel current turn id']
+			print 'closed'
+			for each in self.closedTile:
+				self.data['game channel map'][each[0]][each[1]]['owner'] = self.data['game channel current turn id']
+
+		self.data['game channel current turn id'] += 1
 
 		return True
 
@@ -320,15 +331,30 @@ if __name__ == '__main__':
 	#insert player to game channel
 	result = testGameData.addPlayer(player_moon)
 
-	if result == True:
+	if result:
 		result = testGameData.addPlayer(player_jg)
 
-	if result == True:
+	if result:
 		result = testGameData.addPlayer(player_wooq)
 
 	for each in range(4):
-		if testGameData.getPlayerConnection(each) == True:
+		if testGameData.getPlayerConnection(each):
 			print "name : %s / score : %d" % (testGameData.getPlayerName(each), testGameData.getPlayerScore(each))
 	testGameData.setMapSize(6, 5)
 
 	testGameData.renderMap()
+
+	while not testGameData.isEnd():
+		userInput = raw_input('input : ')
+		tempInput = userInput.split()
+
+		indexedPosition = []
+
+		for each in tempInput:
+			indexedPosition.append(int(each))
+
+		if testGameData.drawLine(indexedPosition[0], indexedPosition[1]):
+			print 'succes'
+		else:
+			print 'fail'
+		testGameData.renderMap()
