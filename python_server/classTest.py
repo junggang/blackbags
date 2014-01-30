@@ -124,19 +124,17 @@ class GameData:
 		if self.data['game channel map'][i][j]['type'] == 'LINE_UNCONNECTED':
 			voidTileCount = 0
 
-			print self.data['game channel map'][i + 1][j]['owner']
-
 			if self.data['game channel map'][i + 1][j]['owner'] == 'NOBODY':
-				print 'why not'
 				voidTileCount += 1
+
 			if self.data['game channel map'][i - 1][j]['owner'] == 'NOBODY':
 				voidTileCount += 1
+			
 			if self.data['game channel map'][i][j + 1]['owner'] == 'NOBODY':
 				voidTileCount += 1
+
 			if self.data['game channel map'][i][j - 1]['owner'] == 'NOBODY':
 				voidTileCount += 1
-
-			print voidTileCount
 
 			if voidTileCount == 4:
 				return True
@@ -152,27 +150,20 @@ class GameData:
 	def collectClosedTile(self, i, j, direction):
 		searchTile = Queue.Queue()
 
-		currentTile = [0, 0]
-		nextTile = [0, 0]
+		currentTile = [i, j]
 
 		if direction == 'UP':
-			currentTile[0] = i - 1
-			currentTile[1] = j
+			currentTile[0] -= 1
 		elif direction == 'RIGHT':
-			currentTile[0] = i
-			currentTile[1] = j + 1
+			currentTile[1] += 1
 		elif direction == 'DOWN':
-			currentTile[0] = i + 1
-			currentTile[1] = j + 1
+			currentTile[0] += 1
 		elif direction == 'LEFT':
-			currentTile[0] = i
-			currentTile[1] = j - 1
+			currentTile[1] -= 1
 
-		if self.data['game channel map'][i][j]['type'] != 'DOT':
+		if self.data['game channel map'][currentTile[0]][currentTile[1]]['type'] == 'TILE':
 			animationTurn = 1;
 			self.setAnimationState(currentTile, animationTurn, direction)
-
-			i = 0
 
 			searchTile.put(currentTile)
 			self.closedTile.append(currentTile)
@@ -181,7 +172,7 @@ class GameData:
 			while not searchTile.empty():
 				currentTile = searchTile.get()
 
-				if self.data['game channel map'][currentTile[0]][currentTile[1]]['type'] != 'SENTINEL':
+				if self.data['game channel map'][currentTile[0]][currentTile[1]]['type'] == 'SENTINEL':
 					# current tile은 sentinel이므로 초기화 작업 안 함 
 
 					# init closed tiles
@@ -193,6 +184,7 @@ class GameData:
 
 					del self.closedTile[0:len(self.closedTile)]
 
+					print self.closedTile
 					# init checked tiles 
 					'''
 					while not searchTile.empty():
@@ -202,10 +194,11 @@ class GameData:
 						self.data['game channel map'][tile[0]][tile[1]]['animation turn'] = 0
 						self.data['game channel map'][tile[0]][tile[1]]['direction'] = 'UP'
 					'''
-
+					print 'sentinel !!'
 					break
 
 				if self.data['game channel map'][currentTile[0] - 1][currentTile[1]]['type'] == 'LINE_UNCONNECTED':
+					nextTile = [0, 0]
 					nextTile[0] = currentTile[0] - 2
 					nextTile[1] = currentTile[1]
 
@@ -214,10 +207,11 @@ class GameData:
 						self.closedTile.append(nextTile)
 						self.data['game channel map'][nextTile[0]][nextTile[1]]['checked flag'] = True
 
-						animationTurn = self.data['game channel map'][currentTile[0]][currentTile[1]]['animation turn']
-						setAnimationState(nextTile, animationTurn, 'UP')
+						animationTurn = self.data['game channel map'][currentTile[0]][currentTile[1]]['animation turn'] + 1
+						self.setAnimationState(nextTile, animationTurn, 'UP')
 
 				if self.data['game channel map'][currentTile[0]][currentTile[1] + 1]['type'] == 'LINE_UNCONNECTED':
+					nextTile = [0, 0]
 					nextTile[0] = currentTile[0]
 					nextTile[1] = currentTile[1] + 2
 
@@ -226,10 +220,11 @@ class GameData:
 						self.closedTile.append(nextTile)
 						self.data['game channel map'][nextTile[0]][nextTile[1]]['checked flag'] = True
 
-						animationTurn = self.data['game channel map'][currentTile[0]][currentTile[1]]['animation turn']
-						setAnimationState(nextTile, animationTurn, 'RIGHT')
-				
+						animationTurn = self.data['game channel map'][currentTile[0]][currentTile[1]]['animation turn'] + 1
+						self.setAnimationState(nextTile, animationTurn, 'RIGHT')
+
 				if self.data['game channel map'][currentTile[0] + 1][currentTile[1]]['type'] == 'LINE_UNCONNECTED':
+					nextTile = [0, 0]
 					nextTile[0] = currentTile[0] + 2
 					nextTile[1] = currentTile[1]
 
@@ -238,10 +233,11 @@ class GameData:
 						self.closedTile.append(nextTile)
 						self.data['game channel map'][nextTile[0]][nextTile[1]]['checked flag'] = True
 
-						animationTurn = self.data['game channel map'][currentTile[0]][currentTile[1]]['animation turn']
-						setAnimationState(nextTile, animationTurn, 'DOWN')
-				
+						animationTurn = self.data['game channel map'][currentTile[0]][currentTile[1]]['animation turn'] + 1
+						self.setAnimationState(nextTile, animationTurn, 'DOWN')
+
 				if self.data['game channel map'][currentTile[0]][currentTile[1] - 1]['type'] == 'LINE_UNCONNECTED':
+					nextTile = [0, 0]
 					nextTile[0] = currentTile[0]
 					nextTile[1] = currentTile[1] - 2
 
@@ -250,9 +246,9 @@ class GameData:
 						self.closedTile.append(nextTile)
 						self.data['game channel map'][nextTile[0]][nextTile[1]]['checked flag'] = True
 
-						animationTurn = self.data['game channel map'][currentTile[0]][currentTile[1]]['animation turn']
-						setAnimationState(nextTile, animationTurn, 'LEFT')
-				
+						animationTurn = self.data['game channel map'][currentTile[0]][currentTile[1]]['animation turn'] + 1
+						self.setAnimationState(nextTile, animationTurn, 'LEFT')
+
 			# setAnimationTurnNumber(animationTurn)
 
 	def isClosed(self, i, j):
@@ -283,6 +279,7 @@ class GameData:
 		if self.isClosed(idxI, idxJ):
 			print 'closed'
 			for each in self.closedTile:
+				# print each
 				self.data['game channel map'][each[0]][each[1]]['owner'] = self.data['game channel current turn id']
 
 		self.data['game channel current turn id'] += 1
@@ -304,7 +301,10 @@ class GameData:
 				elif self.data['game channel map'][i][j]['type'] == 'LINE_CONNECTED':
 					thisLine += '#'
 				elif self.data['game channel map'][i][j]['type'] == 'TILE':
-					thisLine += ' '
+					if self.data['game channel map'][i][j]['owner'] == 'NOBODY':
+						thisLine += ' '
+					else:
+						thisLine += '&'
 			if not thisLine == '':
 				print thisLine
 
