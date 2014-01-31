@@ -194,7 +194,6 @@ class GameData:
 						self.data['game channel map'][tile[0]][tile[1]]['animation turn'] = 0
 						self.data['game channel map'][tile[0]][tile[1]]['direction'] = 'UP'
 					'''
-					print 'sentinel !!'
 					break
 
 				if self.data['game channel map'][currentTile[0] - 1][currentTile[1]]['type'] == 'LINE_UNCONNECTED':
@@ -277,9 +276,7 @@ class GameData:
 		self.data['game channel map'][idxI][idxJ]['type'] = 'LINE_CONNECTED'
 
 		if self.isClosed(idxI, idxJ):
-			print 'closed'
 			for each in self.closedTile:
-				# print each
 				self.data['game channel map'][each[0]][each[1]]['owner'] = self.data['game channel current turn id']
 
 		self.data['game channel current turn id'] += 1
