@@ -83,7 +83,12 @@ DI_LEFT = 3
 # player data 관련 함수들
 class PlayerData:
 
-	def __init__(self, tokenId, name):
+	def __init__(self):
+
+	def insertData(self, playerData):
+		self.data = playerData
+
+	def initData(self, tokenId, name):
 		self.data = [
 			tokenId, 
 			-1, 
@@ -98,13 +103,21 @@ class PlayerData:
 		return self.data[PD_NAME]
 
 	def getPlayerGameChannel(self):
+		return self.data[PD_GAME_CHANNEL_ID]
+
+	def getPlayerId(self):
 		return self.data[PD_PLAYER_ID]
 
 # game data 관련 함수들
 class GameData:
-	closedTile = []
 
-	def __init__(self, gameChannelId):
+	def __init__(self):
+		self.closedTile = []
+
+	def insertData(self, gameData):
+		self.data = gameData
+
+	def initData(self, gameChannelId):
 		# make structure
 		self.data = [
 			SC_NOSCENE,
@@ -156,6 +169,9 @@ class GameData:
 		self.data[GD_MAP_SIZE][0] = width
 		self.data[GD_MAP_SIZE][1] = height
 
+	def isChannelMaster(self, playerId):
+		return self.data[GD_PLAYER_LIST][playerId][GDP_MASKTER_FLAG]
+
 	def addPlayer(self, playerData):
 		for idx in range(4):
 			if self.data[GD_PLAYER_LIST][idx][GDP_CONNECTED_FLAG] == False:
@@ -167,9 +183,9 @@ class GameData:
 
 				self.data[GD_PLAYER_LIST][idx][GDP_PLAYER_IDX] = idx
 
-				return True
+				return idx
 
-		return False
+		return -1
 	
 	def selectCharacter(self, playerId, characterId):
 		if self.data[GD_PLAYER_LIST][idx][GDP_CHARACTER_ID] == characterId:
@@ -372,6 +388,7 @@ class GameData:
 		if not self.isPossible(idxI, idxJ):
 			return False
 
+		del self.closedTile[0:len(self.closedTile)]
 		self.data[GD_MAP][idxI][idxJ][GDM_TYPE] = MO_LINE_CONNECTED
 
 		if self.isClosed(idxI, idxJ):
@@ -379,6 +396,7 @@ class GameData:
 				self.data[GD_MAP][each[0]][each[1]][GDM_OWNER] = self.data[GD_TURN_LIST][self.data[GD_CURRENT_TURN_ID]]
 
 		self.data[GD_CURRENT_TURN_ID] += 1
+		self.data[GD_CURRENT_TURN_ID] %= self.data[GD_PLAYER_NUMBER]
 
 		return True
 
@@ -430,15 +448,16 @@ if __name__ == '__main__':
 	player_wooq = PlayerData(80, 'wooq')
 
     # test : game data creation
-	testGameData = GameData(4)
+	testGameData = GameData()
+	testGameData.initData(4)
 
 	#insert player to game channel
 	result = testGameData.addPlayer(player_moon)
 
-	if result:
+	if result != -1:
 		result = testGameData.addPlayer(player_jg)
 
-	if result:
+	if result != -1:
 		result = testGameData.addPlayer(player_wooq)
 
 	for each in range(4):
@@ -446,8 +465,11 @@ if __name__ == '__main__':
 			print "name : %s / score : %d" % (testGameData.getPlayerName(each), testGameData.getPlayerScore(each))
 	testGameData.setMapSize(6, 5)
 
+	testGameData.makeRandomTurn()
+	testGameData.makeRandomMap()
+
 	testGameData.renderMap()
-	print testGameData.data
+	# print testGameData.data
 
 	while not testGameData.isEnd():
 		userInput = raw_input('input : ')

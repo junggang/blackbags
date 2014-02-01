@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import redis
 import json
-from flask import Flask,url_for, session, escape, request, redirect ,render_template
+from flask import Flask,url_for, session, escape, request, redirect
+import dataStructure
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -21,15 +22,65 @@ sys.setdefaultencoding('utf-8')
 
 # game logic은 게임의 인풋이 도착하면 redis에 있는 데이터를 가져와서 업데이트 시키고 다시 저장한다
 # 모든 인풋은 유효성 검사가 필수
+def getPlayerData(tokenId):
+	playerData = dataStructure.PlayerData()
+	playerData.insertData(json.loads(redis.get(tokenId)))
 
-def SCSelectCharacter(gameChannelId, playerId, characterId):
+	return playerData
+
+
+def getGameData(channelId):
+	gameData = dataStructure.GameData()
+	gameData.insertData(json.loads(redis.get(channelId)))
+
+	return gameData
+
+
+def SCSelectCharacter(tokenId, characterId):
 	# 인자로 받은 game channel의 playerId에 해당하는 유저의 선택 character를 업데이트
-	return #gameData
+	playerData = getPlayerData(tokenId)
+
+	channelId = playerData.getPlayerGameChannel()
+	playerId = playerData.getPlayerId()
+
+	# update 적용하기 위한 타겟 game data 불러오기 
+	gameData = getGameData(channelId)
+
+	if gameData.selectCharacter(playerId, characterId):
+		# 캐릭터 선택 성공 - 결과를 다시 redis에 저장 
+		jsonData = json.dumps(gameData.data)
+		redis.set(channelId, jsonData)
+	else:
+		# 캐릭터 선택 실패 - 지금 상태 유지 
+		jsonData = json.dumps(gameData.data)
+
+	return jsonData
 
 
-def SCSelctMap(gameChannelId, playerId, mapId):
+def SCSelctMap(tokenId, mapId):
 	# 인자로 받은 game channel의 map 정보를 업데이트
-	return #gameData
+	playerData = getPlayerData(tokenId)
+
+	channelId = playerData.getPlayerGameChannel()
+	playerId = playerData.getPlayerId()
+
+	# update 적용하기 위한 타겟 game data 불러오기 
+	gameData = getGameData(channelId)
+
+	if gameData.isChannelMaster(playerId) == 1:
+		# 요청한 유저가 방장이므로 맵 크기를 설정한다. 
+		if mapId == 1:
+			gameData.setMapSize(5, 6)
+		elif mapId == 2:
+			gameData.setMapSize(7, 8)
+
+		jsonData = json.dumps(gameData.data)
+		redis.set(channelId, jsonData)
+
+	else:
+		jsonData = json.dumps(gameData.data)
+
+	return jsonData
 
 
 def SCReady(gameChannelId, playerId):
@@ -52,23 +103,6 @@ def PCUpdateGameResult(gameChannelId):
 	return #gameData
 
 
-# game data를 string으로 바꾸고 반대로 파싱하는 함수 필요
-# client에 전송할 때 http를 사용하니까 string이어야 하는데 
-# 응답 속도를 빠르게 하려면 redis에 저장할 때도 string 형태로 저장해 두는 게 좋을지도 json?
-# gameData는 struct 구조로 작성하거나 dic 구조로 작성
-def makeString(gameData):
-	resultString
-
-	return resultString
-
-
-def makeGameData(srcString):
-	gameData
-
-	return gameData
-
-
-
 #################################################
 #					redis 관련 					#
 #################################################
@@ -89,8 +123,17 @@ def login():
 	try : 
 		if request.method  == "POST":  
 			# userTable에 접속한 사람을 추가한다
+			tokenId = 'temp'
+			name = 'noname'
+			
+			playerData = dataStructure.PlayerData(tokenId, name)
+			jsonData = json.dumps(playerData)
 
-			return 
+			redis.set(tokenId, jsonData)
+
+			# userTable 구조 추가 생성 필요 - thread 만들면서 같이 만들자 
+
+			return # 
 
 	except KeyError, err:
 		print 'error  ->  : ' ,err 
@@ -99,13 +142,23 @@ def login():
 
 @app.route('/join_update', methods=['POST','GET'])
 def joinUpdate():
-	# 보낸 유저의 session 정보를 바탕으로 redis안에서 현재 유저가 속한 game channel 정보를 전송한다.
-	# 만약 속한 game channel이 있다면 유저는 setting scene으로 이동
+	# 보낸 유저의 session 정보를 바탕으로 redis안에서 현재 유저의 정보를 확인한다.
+	# 만약 속한 game channel이 있다면 현재 배정받은 player id를 전송한다.
+	# id를 전송받은 클라이언트는 그 id 값을 저장하고, game data를 요청한다.
 	# 만약 아직 속한 game channel에 없다면 유저는 대기 화면을 보는 상태 유지하면서 1초 후에 다시 확인 시도
 	try : 
 		if request.method  == "POST":  
+			tokenId = 'temp'
 
-			return 
+			# player data 불러오기 
+			playerData = json.loads(redis.get(tokenId))
+
+			playerId = playerData[PD_PLAYER_ID]
+			if playerId != -1:
+				# 할당 된 player id가 있으면 그 값을 전송 
+				return playerId
+			else:
+				return # 
 
 	except KeyError, err:
 		print 'error  ->  : ' ,err 
@@ -119,18 +172,11 @@ def selectCharacter():
 	# 업데이트 결과를 redis에 저장하고, 요청을 보낸 유저에게는 변경된 게임 데이터를 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			
-			playerSession = 
+			# parsing
+			tokenId = 'temp'
+			characterId = 1
 
-			channelId = (json.loads(redis.get(playerSession)))['gameChannel']
-			gameData = json.loads(redis.get(channelId))
-
-			# 입력 반영 
-			
-			jsonData = json.dumps(gameData)
-			redis.set(channelId, jsonData)
-			
-			return jsonData
+			return SCSelectCharacter(tokenId, characterId)
 
 	except KeyError, err:
 		print 'error  ->  : ' ,err 
@@ -143,8 +189,12 @@ def selectMap():
 	# 해당 game channel의 데이터를 불러와서 현재 선택된 맵 정보를 업데이트한다.
 	# 업데이트 결과를 redis에 저장하고, 요청을 보낸 유저에게는 변경된 게임 데이터를 바로 전송한다.
 	try : 
-		if request.method  == "POST":  
-			return
+		if request.method  == "POST": 
+
+			tokenId = 'temp'
+			mapId = 1
+
+			return SCSelctMap(tokenId, mapId)
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
 		print 'error  ->  : ' ,err 
@@ -187,7 +237,10 @@ def playUpdate():
 	# 해당 game channel의 데이터를 불러와서 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			return
+			tokenId = 'temp'
+
+			channelId = (json.loads(redis.get(playerSession)))[PD_GAME_CHANNEL_ID]
+			return redis.get(channelId)
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
 		print 'error  ->  : ' ,err 
