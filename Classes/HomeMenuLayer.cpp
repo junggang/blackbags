@@ -1,4 +1,5 @@
 #include "HomeMenuLayer.h"
+#include "MainScene.h"
 
 USING_NS_CC;
 
@@ -39,6 +40,7 @@ bool CHomeMenuLayer::init()
 	m_backLayer->setPosition(ccp(origin.x + visibleSize.width/2,origin.y + visibleSize.height/2));
 	this->addChild(m_backLayer,2);
 
+	CCSize popUpSize = m_backLayer->getContentSize();
 
 	// 팝업 창 아이콘들
 	CCMenuItemImage *pResumeIcon = CCMenuItemImage::create(
@@ -48,7 +50,7 @@ bool CHomeMenuLayer::init()
 		menu_selector(CHomeMenuLayer::ResumeIconCallback)
 		);
 	m_iconResume = CCMenu::create(pResumeIcon,NULL);
-	m_iconResume->setPosition(0,0);
+	m_iconResume->setPosition(popUpSize.width/4,popUpSize.height/2);
 
 	CCMenuItemImage *pHomeIcon = CCMenuItemImage::create(
 		"image/icon_menu_home.png",
@@ -57,7 +59,7 @@ bool CHomeMenuLayer::init()
 		menu_selector(CHomeMenuLayer::homeIconCallback)
 		);
 	m_iconHome = CCMenu::create(pHomeIcon,NULL);
-	m_iconHome->setPosition(200,0);
+	m_iconHome->setPosition(popUpSize.width/2,popUpSize.height/2);
 
 
 	CCMenuItemImage *pOptionIcon = CCMenuItemImage::create(
@@ -67,7 +69,7 @@ bool CHomeMenuLayer::init()
 		menu_selector(CHomeMenuLayer::OptionIconCallback)
 		);
 	m_iconOption = CCMenu::create(pOptionIcon,NULL);
-	m_iconOption->setPosition(400,0);
+	m_iconOption->setPosition(popUpSize.width/2+popUpSize.width/4,popUpSize.height/2);
 
 	m_backLayer->addChild(m_iconResume,1);
 	m_backLayer->addChild(m_iconHome,1);
@@ -85,6 +87,7 @@ void CHomeMenuLayer::homeMenuCallback(CCObject* pSender)
 #else
 	//home menu popup
 	m_backLayer->setVisible(true);
+	CCDirector::sharedDirector()->pause();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
@@ -99,7 +102,8 @@ void CHomeMenuLayer::homeIconCallback(CCObject* pSender)
 #else
 	//home menu popup
 	m_backLayer->setVisible(true);
-
+	CCDirector::sharedDirector()->resume();
+	CCDirector::sharedDirector()->replaceScene(CMainScene::create());
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
 #endif
@@ -112,6 +116,7 @@ void CHomeMenuLayer::ResumeIconCallback(CCObject* pSender)
 #else
 	//home menu popup
 	m_backLayer->setVisible(false);
+	CCDirector::sharedDirector()->resume();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
