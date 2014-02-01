@@ -84,6 +84,7 @@ DI_LEFT = 3
 class PlayerData:
 
 	def __init__(self):
+		self.data = []
 
 	def insertData(self, playerData):
 		self.data = playerData
@@ -113,6 +114,7 @@ class GameData:
 
 	def __init__(self):
 		self.closedTile = []
+		self.data = []
 
 	def insertData(self, gameData):
 		self.data = gameData
@@ -233,6 +235,8 @@ class GameData:
 
 		# generate random objects
 
+	def getCurrentTurnId(self):
+		return self.data[GD_TURN_LIST][self.data[GD_CURRENT_TURN_ID]]
 
 	def isEnd(self):
 		return self.data[GD_VOID_TILE_COUNT]  == 0
@@ -443,9 +447,12 @@ class GameData:
 
 if __name__ == '__main__':
 	# test : player creation
-	player_moon = PlayerData(29, 'prof. moon')
-	player_jg = PlayerData(67, 'JUNGGANG')
-	player_wooq = PlayerData(80, 'wooq')
+	player_moon = PlayerData()
+	player_moon.initData(29, 'prof. moon')
+	player_jg = PlayerData()
+	player_jg.initData(67, 'JUNGGANG')
+	player_wooq = PlayerData()
+	player_wooq.initData(80, 'wooq')
 
     # test : game data creation
 	testGameData = GameData()
@@ -484,4 +491,5 @@ if __name__ == '__main__':
 			print 'succes'
 		else:
 			print 'fail'
+
 		testGameData.renderMap()

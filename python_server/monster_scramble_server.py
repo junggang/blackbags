@@ -93,9 +93,26 @@ def PCStartTurn(gameChannelId):
 	return #gameData
 
 
-def PCDrawLine(gameChannelId, playerId, posI, posJ):
-	# 인자로 받은 game channel의 새로운 턴 시작
-	return #gameData
+def PCDrawLine(tokenId, lineIdx):
+	# 인자로 받은 game channel의 map 정보를 업데이트
+	playerData = getPlayerData(tokenId)
+
+	channelId = playerData.getPlayerGameChannel()
+	playerId = playerData.getPlayerId()
+
+	# update 적용하기 위한 타겟 game data 불러오기 
+	gameData = getGameData(channelId)
+
+	if gameData.getCurrentTurnId == playerId:
+		if gameData.drawLine(lineIdx[0], lineIdx[1]):
+			jsonData = json.dumps(gameData.data)
+			redis.set(channelId, jsonData)
+		else:
+			jsonData = json.dumps(gameData.data)
+
+		return jsonData
+		
+	return json.dumps(gameData.data)
 
 
 def PCUpdateGameResult(gameChannelId):
@@ -255,7 +272,10 @@ def drawLine():
 	# (만약 게임이 종료되었다면 종료 메시지와 함께 게임 결과 데이터를 전송한다.)
 	try : 
 		if request.method  == "POST":  
-			return
+			tokenId = 'temp'
+			lineIdx = []
+
+			return PCDrawLine(tokenId, lineIdx)
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
 		print 'error  ->  : ' ,err 
