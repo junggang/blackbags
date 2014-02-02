@@ -13,18 +13,8 @@ bool CSettingOtherPlayerStatusLayer::init()
 
 	// Get Window Size
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
-	CCMenu *m_PlayerStatusMenu;
-	
-	// create empty menu
-	m_PlayerStatusMenu = CCMenu::createWithItems(NULL, NULL);
-	// set position left - up
-	m_PlayerStatusMenu->setPosition(ccp(m_VisibleSize.width / 4, m_VisibleSize.height * 0.75));
-	// alignVertical
-	m_PlayerStatusMenu->alignItemsVertically();
-	
-	this->addChild(m_PlayerStatusMenu);
 
-	// Check Every Player Status per 1 second
+	// Check Every Player Status
 	this->update();
 
 	return true;
@@ -34,11 +24,13 @@ void CSettingOtherPlayerStatusLayer::update()
 {
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
-		if ( !CGameManager::GetInstance()->isCharacterSelected(i) && this->getChildByTag(i) != NULL )
+		// 만약 어떤 캐릭터가 선택되지 않았는데 화면에 표시되고 있다면 제거한다.
+		if ( !CGameManager::GetInstance()->isCharacterSelected(i) && (this->getChildByTag(i) != NULL) )
 		{
 			this->removeChildByTag(i);
 		}
-		else if ( CGameManager::GetInstance()->isCharacterSelected(i) && this->getChildByTag(i) == NULL )
+		// 만약 어떤 캐릭터가 선택되었는데 화면에는 표시되지 않고 있다면 추가한다.
+		else if ( CGameManager::GetInstance()->isCharacterSelected(i) && (this->getChildByTag(i) == NULL) )
 		{
 			PlayerStatus[i] = CCTextFieldTTF::textFieldWithPlaceHolder(
 				CGameManager::GetInstance()->GetPlayerName(i).c_str(),

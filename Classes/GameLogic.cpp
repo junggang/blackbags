@@ -450,7 +450,7 @@ bool CGameLogic::SetPlayerCharacterId( int characterId )
 		{
 			m_PlayerData[i]->m_CharacterId = -1;
 			m_PlayerData[i]->m_PlayerId = -1;
-			m_Character[i].m_isCharacterSelected = false;
+			m_Character[characterId].m_isCharacterSelected = false;
 			--m_PlayerNumber;
 
 			return true;
@@ -464,7 +464,7 @@ bool CGameLogic::SetPlayerCharacterId( int characterId )
 		{
 			m_PlayerData[i]->m_PlayerId = i;
 			m_PlayerData[i]->m_CharacterId = characterId;
-			m_Character[i].m_isCharacterSelected = true;
+			m_Character[characterId].m_isCharacterSelected = true;
 			++m_PlayerNumber;
 
 			return true;
