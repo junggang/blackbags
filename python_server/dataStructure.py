@@ -7,6 +7,9 @@ PD_TOKEN_ID = 0
 PD_GAME_CHANNEL_ID = 1
 PD_NAME = 2
 PD_PLAYER_ID = 3
+PD_PLAYEER_2 = 4
+PD_PLAYEER_3 = 5
+PD_PLAYEER_4 = 6
 
 # game data index
 GD_CURRENT_SCENE = 0
@@ -94,7 +97,10 @@ class PlayerData:
 			tokenId, 
 			-1, 
 			name, 
-			-1
+			-1,
+			0,
+			0,
+			0
 		]
 
 	def setChannelId(self, channelId):
@@ -109,6 +115,14 @@ class PlayerData:
 	def getPlayerId(self):
 		return self.data[PD_PLAYER_ID]
 
+	def setPlayerId(self, playerId):
+		self.data[PD_PLAYER_ID] = playerId
+
+	def setPlayerNummber(self, two, three, four):
+		self.data[PD_PLAYEER_2] = two
+		self.data[PD_PLAYEER_3] = three
+		self.data[PD_PLAYEER_4] = four
+
 # game data 관련 함수들
 class GameData:
 
@@ -122,7 +136,7 @@ class GameData:
 	def initData(self, gameChannelId):
 		# make structure
 		self.data = [
-			SC_NOSCENE,
+			SC_SETTING,
 			gameChannelId,
 			-1,
 			-1,
@@ -167,6 +181,8 @@ class GameData:
 		for idx in range(4):
 			if self.data[GD_PLAYER_LIST][idx][GDP_CONNECTED_FLAG] == False:
 				playerData.setChannelId(self.data[GD_CHANNEL_ID])
+				playerData.setPlayerId(idx)
+				
 				self.data[GD_PLAYER_NUMBER] += 1
 				
 				self.data[GD_PLAYER_LIST][idx][GDP_NAME] = playerData.getPlayerName()
@@ -270,8 +286,9 @@ class GameData:
 	def startTurn(self):
 		self.resetReadyFlag()
 
-		if not self.isEnd():
+		# if not self.isEnd():
 			# 타이머 시작
+
 
 	def getCurrentTurnId(self):
 		return self.data[GD_TURN_LIST][self.data[GD_CURRENT_TURN_IDX]]
@@ -305,7 +322,6 @@ class GameData:
 		self.data[GD_MAP][currentTile[0]][currentTile[1]][GDM_ANIMATION_TURN] = animationTurn
 		self.data[GD_MAP][currentTile[0]][currentTile[1]][GDM_DIRECTION] = direction
 
-	# del a[0:len(a)]
 	def collectClosedTile(self, i, j, direction):
 		searchTile = Queue.Queue()
 
@@ -517,7 +533,7 @@ if __name__ == '__main__':
 	for each in range(4):
 		if testGameData.getPlayerConnection(each):
 			print "name : %s / score : %d" % (testGameData.getPlayerName(each), testGameData.getPlayerScore(each))
-	testGameData.setMapSize(6, 5)
+	testGameData.setMapSize(8, 7)
 
 	testGameData.makeRandomTurn()
 	testGameData.makeRandomMap()

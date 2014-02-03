@@ -3,6 +3,8 @@ import redis
 import json
 from flask import Flask,url_for, session, escape, request, redirect
 import dataStructure
+import threading
+import time
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -10,6 +12,101 @@ sys.setdefaultencoding('utf-8')
 #################################################
 #				matching thread 관련				#
 #################################################
+# 대기 리스트를 하나 만든다 (공유자원 - 동기화 기능을 지원하는 자료구조이어야 함)
+# 리스트는 redis안에 저장된 player data에 접근하는 key value를 가지고 있다
+# 리스트의 값들은 추가된 순서를 유지한다
+global watingList
+
+def playerMatching():
+	player_2 = []
+	player_3 = []
+	player_4 = []
+
+	# channel id 생성하는 로직 구현 필요 
+	channelId = 0
+
+	while True:
+		for each in watingList:
+			playerData = getPlayerData(each)
+
+			if playerData[PD_PLAYEER_2] == 1:
+				player_2.append(each)
+
+				if len(player_2) == 2:
+					# 2명 방 생성
+					gameData = dataStructure.GameData()
+					gameData.initData(channelId)
+					channelId += 1
+
+					# 플레이어 추가 
+					for player in player_2:
+						playderData = getPlayerData(player)
+						gameData.addPlayer(playerData)
+
+					# 생성한 게임 데이터 redis에 저장 
+					jsonData = json.dumps(gameData.data)
+					redis.set(channelId, jsonData)
+
+					watingList.remove(each)
+
+				break
+
+			if playerData[PD_PLAYEER_3] == 1:
+				player_3.append(each)
+
+				if len(player_3) == 3:
+					# 3명 방 생성
+					gameData = dataStructure.GameData()
+					gameData.initData(channelId)
+					channelId += 1
+
+					# 플레이어 추가 
+					for player in player_3:
+						playderData = getPlayerData(player)
+						gameData.addPlayer(playerData)
+
+					# 생성한 게임 데이터 redis에 저장 
+					jsonData = json.dumps(gameData.data)
+					redis.set(channelId, jsonData)
+
+					watingList.remove(each)
+
+				break
+
+			if playerData[PD_PLAYEER_4] == 1:
+				player_4.append(each)
+
+				if len(player_4) == 4:
+					# 3명 방 생성
+					gameData = dataStructure.GameData()
+					gameData.initData(channelId)
+					channelId += 1
+
+					# 플레이어 추가 
+					for player in player_4:
+						playderData = getPlayerData(player)
+						gameData.addPlayer(playerData)
+
+					# 생성한 게임 데이터 redis에 저장 
+					jsonData = json.dumps(gameData.data)
+					redis.set(channelId, jsonData)
+
+					watingList.remove(each)
+
+				break
+
+		del player_2[0:len(player_2)]
+		del player_3[0:len(player_3)]
+		del player_4[0:len(player_4)]
+
+		time.sleep(1)
+
+# while True:
+# 	각 참여 인원에 대한 가상의 풀을 만든다
+# 	대기 시간이 긴 플레이어부터 선택한 참여 인원의 풀에 추가
+#	추가와 함께 해당하는 참여인원이 모두 모이면 추가된 플레이어들로 채널 생성
+#	앞에서 생성된 채널에 추가된 플레이어는 리스트에서 삭제하고 다시 작업을 반복
+#	대기 시간은 1초에서 2초 정도 준다
 
 # matching thread는 서버가 시작되면 같이 실행된다.
 # 리스트에 있는 사람들이 바뀔 때마다 현재 리스트에 있는 사람들을 가지고 게임 채널 생성하고 채널 테이블을 레디스에 생성
@@ -174,15 +271,24 @@ def login():
 			# userTable에 접속한 사람을 추가한다
 			tokenId = 'temp'
 			name = 'noname'
-			
-			playerData = dataStructure.PlayerData(tokenId, name)
-			jsonData = json.dumps(playerData)
 
+			two = 1
+			three = 1
+			four = 1
+			
+			# 플레이어 데이터 생성 (생성 전에 이미 redis안에 중복 데이터 있는지 확인)
+			playerData = dataStructure.PlayerData()
+			playerData.initData(tokenId, name)
+			playerData.setPlayerNumber(two, three, four)
+
+			# 생성한 데이터 redis에 저장 
+			jsonData = json.dumps(playerData)
 			redis.set(tokenId, jsonData)
 
-			# userTable 구조 추가 생성 필요 - thread 만들면서 같이 만들자 
-
-			return # 
+			# 대기열에 추가
+			watingList.append(tokenId)
+			
+			return True 
 
 	except KeyError, err:
 		print 'error  ->  : ' ,err 
@@ -202,9 +308,9 @@ def joinUpdate():
 			# player data 불러오기 
 			playerData = json.loads(redis.get(tokenId))
 
-			playerId = playerData[PD_PLAYER_ID]
+			playerId = playerData.getPlayerId()
 			if playerId != -1:
-				# 할당 된 player id가 있으면 그 값을 전송 
+				# 할당 된 channel이 있으면 그 channel 안에서의 player id 값을 전송 
 				return playerId
 			else:
 				return # 
@@ -327,7 +433,7 @@ def gameEnd():
 	try : 
 		if request.method  == "POST":  
 			tokenId = 'temp'
-			
+
 			# session.pop('username', None) # logout!
 			return
 
@@ -339,6 +445,11 @@ def gameEnd():
 
 if __name__ == '__main__':
 	gRedis = connect_redis()
+
+	watingList = []
+
+	matchingThread = threading.Thread(target=playerMatching)
+    matchingThread.start()
 
     app.debug = True
     app.secret_key = '\xab\x11\xcb\xdb\xf2\xb9\x0e\xd9N\xbd\x17$\x07\xc9H\x19\x96h\x8a\xf2<`-A'
