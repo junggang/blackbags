@@ -12,7 +12,7 @@ PD_PLAYER_ID = 3
 GD_CURRENT_SCENE = 0
 GD_CHANNEL_ID = 1
 GD_MAP_ID = 2
-GD_CURRENT_TURN_ID = 3
+GD_CURRENT_TURN_IDX = 3
 GD_TURN_LIST = 4
 GD_TURN_START_FLAG = 5
 GD_RECENTLY_CONNECTED_LINE = 6
@@ -152,19 +152,8 @@ class GameData:
 			self.data[GD_PLAYER_LIST][i].append(0)
 			self.data[GD_PLAYER_LIST][i].append(-1)
 
-		# add map data
-		for i in range(23):
-			self.data[GD_MAP].append([])
-
-			for j in range(23):
-				self.data[GD_MAP][i].append([])
-
-				self.data[GD_MAP][i][j].append(MO_SENTINEL)
-				self.data[GD_MAP][i][j].append(OWNER_NOBODY)
-				self.data[GD_MAP][i][j].append(ITEM_NOTHING)
-				self.data[GD_MAP][i][j].append(False)
-				self.data[GD_MAP][i][j].append(0)
-				self.data[GD_MAP][i][j].append(DI_UP)
+	def setScene(self, nextScene):
+		self.data[GD_CURRENT_SCENE] = nextScene
 
 	def setMapSize(self, width, height):
 		self.data[GD_VOID_TILE_COUNT] = width * height
@@ -189,6 +178,16 @@ class GameData:
 
 		return -1
 	
+	def changeReadyFlag(self, playerId):
+		if self.data[GD_PLAYER_LIST][playerId][GDP_READY] == 1:
+			self.data[GD_PLAYER_LIST][playerId][GDP_READY] = 0
+		else:
+			self.data[GD_PLAYER_LIST][playerId][GDP_READY] = 1
+
+	def resetReadyFlag(self):
+		for each in self.data[GD_TURN_LIST]:
+			self.data[GD_PLAYER_LIST][each][GDP_READY] = 0
+
 	def selectCharacter(self, playerId, characterId):
 		if self.data[GD_PLAYER_LIST][idx][GDP_CHARACTER_ID] == characterId:
 			self.data[GD_PLAYER_LIST][idx][GDP_CHARACTER_ID] = -1
@@ -201,6 +200,18 @@ class GameData:
 
 		return True
 
+	def isAllReady(self):
+		count = 0
+
+		for each in self.data[GD_PLAYER_LIST]:
+			if each[GDP_READY] == 1:
+				count += 1
+
+		if count == self.data[GD_PLAYER_NUMBER]:
+			return True
+		else:
+			return False
+
 	def makeRandomTurn(self):
 		for each in self.data[GD_PLAYER_LIST]:
 			if each[GDP_CONNECTED_FLAG]:
@@ -209,6 +220,20 @@ class GameData:
 		random.shuffle(self.data[GD_TURN_LIST])
 
 	def makeRandomMap(self):
+		# add map data
+		for i in range((self.data[GD_MAP_SIZE][1] + 1) * 2):
+			self.data[GD_MAP].append([])
+
+			for j in range((self.data[GD_MAP_SIZE][0] + 1) * 2):
+				self.data[GD_MAP][i].append([])
+
+				self.data[GD_MAP][i][j].append(MO_SENTINEL)
+				self.data[GD_MAP][i][j].append(OWNER_NOBODY)
+				self.data[GD_MAP][i][j].append(ITEM_NOTHING)
+				self.data[GD_MAP][i][j].append(False)
+				self.data[GD_MAP][i][j].append(0)
+				self.data[GD_MAP][i][j].append(DI_UP)
+
 		# map init code
 		for i in range(1, (self.data[GD_MAP_SIZE][1] + 1) * 2):
 			for j in range(1, (self.data[GD_MAP_SIZE][0] + 1) * 2):
@@ -235,8 +260,21 @@ class GameData:
 
 		# generate random objects
 
+	def startGame(self):
+		self.setScene(SC_PLAY)
+		self.makeRandomTurn()
+
+		self.data[GD_CURRENT_TURN_IDX] = 0
+		self.resetReadyFlag()
+
+	def startTurn(self):
+		self.resetReadyFlag()
+
+		if not self.isEnd():
+			# 타이머 시작
+
 	def getCurrentTurnId(self):
-		return self.data[GD_TURN_LIST][self.data[GD_CURRENT_TURN_ID]]
+		return self.data[GD_TURN_LIST][self.data[GD_CURRENT_TURN_IDX]]
 
 	def isEnd(self):
 		return self.data[GD_VOID_TILE_COUNT]  == 0
@@ -397,20 +435,29 @@ class GameData:
 
 		if self.isClosed(idxI, idxJ):
 			for each in self.closedTile:
-				self.data[GD_MAP][each[0]][each[1]][GDM_OWNER] = self.data[GD_TURN_LIST][self.data[GD_CURRENT_TURN_ID]]
+				self.data[GD_MAP][each[0]][each[1]][GDM_OWNER] = self.data[GD_TURN_LIST][self.data[GD_CURRENT_TURN_IDX]]
 
-		self.data[GD_CURRENT_TURN_ID] += 1
-		self.data[GD_CURRENT_TURN_ID] %= self.data[GD_PLAYER_NUMBER]
+		if self.isEnd():
+			self.updateResult()
+		else:
+			self.data[GD_CURRENT_TURN_IDX] += 1
+			self.data[GD_CURRENT_TURN_IDX] %= self.data[GD_PLAYER_NUMBER]
 
 		return True
+
+	def updateResult():
+		self.setScene(SC_RESULT)
+
+		for each in self.data[GD_PLAYER_LIST]:
+			each[GDP_SCORE] = each[GDP_TILE_COUNT] * 2 + each[GDP_GOLD_COUNT] * 5 - each[GDP_TRASH_COUNT] * 10
 
 	# for debug
 	def renderMap(self):
 		# tempMapType
 
-		for i in range(23):
+		for i in range((self.data[GD_MAP_SIZE][1] + 1) * 2):
 			thisLine = ''
-			for j in range(23):
+			for j in range((self.data[GD_MAP_SIZE][0] + 1) * 2):
 				tempMapType = self.data[GD_MAP][i][j][GDM_TYPE]
 
 				if tempMapType == MO_DOT:
@@ -476,7 +523,7 @@ if __name__ == '__main__':
 	testGameData.makeRandomMap()
 
 	testGameData.renderMap()
-	# print testGameData.data
+	print testGameData.data
 
 	while not testGameData.isEnd():
 		userInput = raw_input('input : ')

@@ -83,15 +83,47 @@ def SCSelctMap(tokenId, mapId):
 	return jsonData
 
 
-def SCReady(gameChannelId, playerId):
-	# 인자로 받은 game channel의 playerId에 해당하는 유저의 대기 상태 업데이트
-	return #gameData
+def SCReady(tokenId):
+	# 인자로 받은 player의 대기 상태 업데이트
+	playerData = getPlayerData(tokenId)
 
+	channelId = playerData.getPlayerGameChannel()
+	playerId = playerData.getPlayerId()
 
-def PCStartTurn(gameChannelId):
-	# 인자로 받은 game channel의 새로운 턴 시작
-	return #gameData
+	# update 적용하기 위한 타겟 game data 불러오기 
+	gameData = getGameData(channelId)
 
+	# 일단 레디 상태 변경 
+	gameData.changeReadyFlag(playerId)
+
+	# 모두 레디 상태이면 다음씬으로 전환(play scene)
+	if gameData.isAllReady():
+		gameData.startGame()
+
+	jsonData = json.dumps(gameData.data)
+
+	return jsonData
+
+def PCReady(tokenId):
+	# 인자로 받은 player의 대기 상태 업데이트
+	playerData = getPlayerData(tokenId)
+
+	channelId = playerData.getPlayerGameChannel()
+	playerId = playerData.getPlayerId()
+
+	# update 적용하기 위한 타겟 game data 불러오기 
+	gameData = getGameData(channelId)
+
+	# 일단 레디 상태 변경 
+	gameData.changeReadyFlag(playerId)
+
+	# 모두 레디 상태이면 다음씬으로 전환(play scene)
+	if gameData.isAllReady():
+		gameData.startTurn()
+
+	jsonData = json.dumps(gameData.data)
+
+	return jsonData
 
 def PCDrawLine(tokenId, lineIdx):
 	# 인자로 받은 game channel의 map 정보를 업데이트
@@ -111,7 +143,7 @@ def PCDrawLine(tokenId, lineIdx):
 			jsonData = json.dumps(gameData.data)
 
 		return jsonData
-		
+
 	return json.dumps(gameData.data)
 
 
@@ -226,7 +258,9 @@ def settingReady():
 	# 업데이트 결과를 redis에 저장하고, 요청을 보낸 유저에게는 변경된 게임 데이터를 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			return
+			tokenId = 'temp'
+
+			return SCReady(tokenId)
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
 		print 'error  ->  : ' ,err 
@@ -241,7 +275,9 @@ def playReady():
 	# 업데이트 결과를 redis에 저장하고, 요청을 보낸 유저에게는 변경된 게임 데이터를 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			return
+			tokenId = 'temp'
+
+			return PCReady(tokenId)
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
 		print 'error  ->  : ' ,err 
@@ -290,7 +326,8 @@ def gameEnd():
 	# 만약 game channel 내의 모든 유저가 이 메시지를 전송하면 game channel 정보를 DB에 저장하고 redis에서 삭제한다.
 	try : 
 		if request.method  == "POST":  
-
+			tokenId = 'temp'
+			
 			# session.pop('username', None) # logout!
 			return
 
