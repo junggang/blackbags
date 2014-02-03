@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import redis
 import json
+import redis
 from flask import Flask,url_for, session, escape, request, redirect
 import dataStructure
 import threading
@@ -255,7 +255,7 @@ def PCUpdateGameResult(gameChannelId):
 global gRedis
 
 def connect_redis():
-	return redis.StrictRedis(host=REDIS_ADDRESS, port=REDIS_PORT, db=0)
+	return redis.StrictRedis(host='localhost', port=6379, db=0)
 
 
 
@@ -448,9 +448,10 @@ if __name__ == '__main__':
 
 	watingList = []
 
+	# thread.start_new_thread(playerMatching)
 	matchingThread = threading.Thread(target=playerMatching)
-    matchingThread.start()
+	matchingThread.start()
 
-    app.debug = True
-    app.secret_key = '\xab\x11\xcb\xdb\xf2\xb9\x0e\xd9N\xbd\x17$\x07\xc9H\x19\x96h\x8a\xf2<`-A'
-    app.run()
+	app.debug = True
+	app.secret_key = '\xab\x11\xcb\xdb\xf2\xb9\x0e\xd9N\xbd\x17$\x07\xc9H\x19\x96h\x8a\xf2<`-A'
+	app.run()
