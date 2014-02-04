@@ -198,6 +198,9 @@
     <ClCompile Include="..\Classes\CreditLayer.cpp">
       <Filter>Classes\Layer\Credit</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ExampleUserInput.cpp">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -322,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\CreditLayer.h">
       <Filter>Classes\Layer\Credit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExampleUserInput.h">
+      <Filter>Classes\Layer\GameSetting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

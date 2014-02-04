@@ -138,6 +138,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\CMO_tile.cpp" />
     <ClCompile Include="..\Classes\CreditLayer.cpp" />
     <ClCompile Include="..\Classes\CreditScene.cpp" />
+    <ClCompile Include="..\Classes\ExampleUserInput.cpp" />
     <ClCompile Include="..\Classes\GameBoardLayer.cpp" />
     <ClCompile Include="..\Classes\GameEndLayer.cpp" />
     <ClCompile Include="..\Classes\GameLogic.cpp" />
@@ -181,6 +182,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\config.h" />
     <ClInclude Include="..\Classes\CreditLayer.h" />
     <ClInclude Include="..\Classes\CreditScene.h" />
+    <ClInclude Include="..\Classes\ExampleUserInput.h" />
     <ClInclude Include="..\Classes\GameBoardLayer.h" />
     <ClInclude Include="..\Classes\GameEndLayer.h" />
     <ClInclude Include="..\Classes\GameLogic.h" />

@@ -19,7 +19,7 @@ bool CPlayerNameSettingScene::init(void)
 	CCLayer* BackgroundLayer = CBackgroundLayer::create();
 	this->addChild(BackgroundLayer, 0);
 
-	// title layer
+	// NameSetting layer
 	CCLayer* PlayerNameSettingLayer = CPlayerNameSettingLayer::create();
 	this->addChild(PlayerNameSettingLayer, 1);
 
