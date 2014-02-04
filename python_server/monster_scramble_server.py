@@ -26,10 +26,13 @@ def playerMatching():
 	channelId = 0
 
 	while True:
+		print 'try to make game channels'
+		print watingList
+
 		for each in watingList:
 			playerData = getPlayerData(each)
 
-			if playerData[PD_PLAYEER_2] == 1:
+			if playerData.getPlayerNumber(2) == 1:
 				player_2.append(each)
 
 				if len(player_2) == 2:
@@ -40,18 +43,19 @@ def playerMatching():
 
 					# 플레이어 추가 
 					for player in player_2:
+						print 'player 2 : ' + player
 						playderData = getPlayerData(player)
 						gameData.addPlayer(playerData)
 
 					# 생성한 게임 데이터 redis에 저장 
 					jsonData = json.dumps(gameData.data)
-					redis.set(channelId, jsonData)
+					gRedis.set(channelId, jsonData)
 
 					watingList.remove(each)
 
-				break
+					break
 
-			if playerData[PD_PLAYEER_3] == 1:
+			if playerData.getPlayerNumber(3) == 1:
 				player_3.append(each)
 
 				if len(player_3) == 3:
@@ -62,18 +66,19 @@ def playerMatching():
 
 					# 플레이어 추가 
 					for player in player_3:
+						print 'player 3 : ' + player
 						playderData = getPlayerData(player)
 						gameData.addPlayer(playerData)
 
 					# 생성한 게임 데이터 redis에 저장 
 					jsonData = json.dumps(gameData.data)
-					redis.set(channelId, jsonData)
+					gRedis.set(channelId, jsonData)
 
 					watingList.remove(each)
 
-				break
+					break
 
-			if playerData[PD_PLAYEER_4] == 1:
+			if playerData.getPlayerNumber(4) == 1:
 				player_4.append(each)
 
 				if len(player_4) == 4:
@@ -84,16 +89,17 @@ def playerMatching():
 
 					# 플레이어 추가 
 					for player in player_4:
+						print 'player 4 : ' + str(player)
 						playderData = getPlayerData(player)
 						gameData.addPlayer(playerData)
 
 					# 생성한 게임 데이터 redis에 저장 
 					jsonData = json.dumps(gameData.data)
-					redis.set(channelId, jsonData)
+					gRedis.set(channelId, jsonData)
 
 					watingList.remove(each)
 
-				break
+					break
 
 		del player_2[0:len(player_2)]
 		del player_3[0:len(player_3)]
@@ -121,14 +127,14 @@ def playerMatching():
 # 모든 인풋은 유효성 검사가 필수
 def getPlayerData(tokenId):
 	playerData = dataStructure.PlayerData()
-	playerData.insertData(json.loads(redis.get(tokenId)))
+	playerData.insertData(json.loads(gRedis.get(tokenId)))
 
 	return playerData
 
 
 def getGameData(channelId):
 	gameData = dataStructure.GameData()
-	gameData.insertData(json.loads(redis.get(channelId)))
+	gameData.insertData(json.loads(gRedis.get(channelId)))
 
 	return gameData
 
@@ -146,7 +152,7 @@ def SCSelectCharacter(tokenId, characterId):
 	if gameData.selectCharacter(playerId, characterId):
 		# 캐릭터 선택 성공 - 결과를 다시 redis에 저장 
 		jsonData = json.dumps(gameData.data)
-		redis.set(channelId, jsonData)
+		gRedis.set(channelId, jsonData)
 	else:
 		# 캐릭터 선택 실패 - 지금 상태 유지 
 		jsonData = json.dumps(gameData.data)
@@ -172,7 +178,7 @@ def SCSelctMap(tokenId, mapId):
 			gameData.setMapSize(7, 8)
 
 		jsonData = json.dumps(gameData.data)
-		redis.set(channelId, jsonData)
+		gRedis.set(channelId, jsonData)
 
 	else:
 		jsonData = json.dumps(gameData.data)
@@ -235,7 +241,7 @@ def PCDrawLine(tokenId, lineIdx):
 	if gameData.getCurrentTurnId == playerId:
 		if gameData.drawLine(lineIdx[0], lineIdx[1]):
 			jsonData = json.dumps(gameData.data)
-			redis.set(channelId, jsonData)
+			gRedis.set(channelId, jsonData)
 		else:
 			jsonData = json.dumps(gameData.data)
 
@@ -282,8 +288,8 @@ def login():
 			playerData.setPlayerNumber(two, three, four)
 
 			# 생성한 데이터 redis에 저장 
-			jsonData = json.dumps(playerData)
-			redis.set(tokenId, jsonData)
+			jsonData = json.dumps(playerData.data)
+			gRedis.set(tokenId, jsonData)
 
 			# 대기열에 추가
 			watingList.append(tokenId)
@@ -306,7 +312,7 @@ def joinUpdate():
 			tokenId = 'temp'
 
 			# player data 불러오기 
-			playerData = json.loads(redis.get(tokenId))
+			playerData = getPlayerData(tokenId)
 
 			playerId = playerData.getPlayerId()
 			if playerId != -1:
@@ -398,8 +404,10 @@ def playUpdate():
 		if request.method  == "POST":  
 			tokenId = 'temp'
 
-			channelId = (json.loads(redis.get(playerSession)))[PD_GAME_CHANNEL_ID]
-			return redis.get(channelId)
+			playerData = getPlayerId(tokenId)
+			channelId = playerData.getPlayerGameChannel()
+
+			return gRedis.get(channelId)
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
 		print 'error  ->  : ' ,err 
@@ -451,6 +459,46 @@ if __name__ == '__main__':
 	# thread.start_new_thread(playerMatching)
 	matchingThread = threading.Thread(target=playerMatching)
 	matchingThread.start()
+
+	time.sleep(5)
+	print 'prof. moon'
+	playerData = dataStructure.PlayerData()
+	playerData.initData(29, 'prof. moon')
+	playerData.setPlayerNumber(0, 1, 1)
+
+	# 생성한 데이터 redis에 저장 
+	jsonData = json.dumps(playerData.data)
+	gRedis.set(29, jsonData)
+
+	# 대기열에 추가
+	watingList.append(29)
+
+	time.sleep(5)
+	print 'JUNGGANG'
+	playerData = dataStructure.PlayerData()
+	playerData.initData(67, 'JUNGGANG')
+	playerData.setPlayerNumber(0, 1, 1)
+
+	# 생성한 데이터 redis에 저장 
+	jsonData = json.dumps(playerData.data)
+	gRedis.set(67, jsonData)
+
+	# 대기열에 추가
+	watingList.append(67)
+
+	time.sleep(5)
+	print 'wooq'
+	playerData = dataStructure.PlayerData()
+	playerData.initData(80, 'wooq')
+	playerData.setPlayerNumber(0, 1, 1)
+
+	# 생성한 데이터 redis에 저장 
+	jsonData = json.dumps(playerData.data)
+	gRedis.set(80, jsonData)
+
+	# 대기열에 추가
+	watingList.append(80)
+
 
 	app.debug = True
 	app.secret_key = '\xab\x11\xcb\xdb\xf2\xb9\x0e\xd9N\xbd\x17$\x07\xc9H\x19\x96h\x8a\xf2<`-A'

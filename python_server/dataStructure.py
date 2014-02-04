@@ -7,9 +7,9 @@ PD_TOKEN_ID = 0
 PD_GAME_CHANNEL_ID = 1
 PD_NAME = 2
 PD_PLAYER_ID = 3
-PD_PLAYEER_2 = 4
-PD_PLAYEER_3 = 5
-PD_PLAYEER_4 = 6
+PD_PLAYER_2 = 4
+PD_PLAYER_3 = 5
+PD_PLAYER_4 = 6
 
 # game data index
 GD_CURRENT_SCENE = 0
@@ -86,23 +86,27 @@ DI_LEFT = 3
 # player data 관련 함수들
 class PlayerData:
 
+	# insertData나 initData로 초기화 필요 
 	def __init__(self):
 		self.data = []
 
+	# 외부에서 player data를 받아서 사용 
 	def insertData(self, playerData):
 		self.data = playerData
 
+	# 멤버 변수를 기본값으로 초기화된 player data 생성 
 	def initData(self, tokenId, name):
 		self.data = [
-			tokenId, 
-			-1, 
-			name, 
-			-1,
-			0,
-			0,
-			0
+			tokenId, 	# PD_TOKEN_ID
+			-1, 		# PD_GAME_CHANNEL_ID
+			name, 		# PD_NAME
+			-1,			# PD_PLAYER_ID
+			0,			# PD_PLAYER_2
+			0,			# PD_PLAYER_3
+			0 			# PD_PLAYER_4
 		]
 
+	# get / set functions
 	def setChannelId(self, channelId):
 		self.data[PD_TOKEN_ID] = channelId
 
@@ -118,92 +122,124 @@ class PlayerData:
 	def setPlayerId(self, playerId):
 		self.data[PD_PLAYER_ID] = playerId
 
-	def setPlayerNummber(self, two, three, four):
-		self.data[PD_PLAYEER_2] = two
-		self.data[PD_PLAYEER_3] = three
-		self.data[PD_PLAYEER_4] = four
+	# 참여하고 싶은 game channel의 플레이 인원을 get / set
+	def setPlayerNumber(self, two, three, four):
+		self.data[PD_PLAYER_2] = two
+		self.data[PD_PLAYER_3] = three
+		self.data[PD_PLAYER_4] = four
+
+	def getPlayerNumber(self, number):
+		if number == 2:
+			return self.data[PD_PLAYER_2]
+		elif number == 3:
+			return self.data[PD_PLAYER_3]
+		elif number == 4:
+			return self.data[PD_PLAYER_4]
 
 # game data 관련 함수들
 class GameData:
 
+	# insertData나 initData로 초기화 필요 
 	def __init__(self):
 		self.closedTile = []
 		self.data = []
 
+	# 외부에서 game data를 받아서 사용 
 	def insertData(self, gameData):
 		self.data = gameData
 
+	# 멤버 변수를 기본값으로 초기화된 game data 생성 
 	def initData(self, gameChannelId):
 		# make structure
 		self.data = [
-			SC_SETTING,
-			gameChannelId,
-			-1,
-			-1,
-			[],
-			False,
-			[0, 0],
-			-1,
-			0,
-			[],
-			[0, 0],
-			[]
+			SC_SETTING,		# D_CURRENT_SCENE
+			gameChannelId,	# GD_CHANNEL_ID
+			-1,				# GD_MAP_ID
+			-1,				# GD_CURRENT_TURN_IDX
+			[],				# GD_TURN_LIST
+			False,			# GD_TURN_START_FLAG
+			[0, 0],			# GD_RECENTLY_CONNECTED_LINE
+			-1,				# GD_VOID_TILE_COUNT
+			0,				# GD_PLAYER_NUMBER
+			[],				# GD_PLAYER_LIST
+			[0, 0],			# GD_MAP_SIZE
+			[]				# GD_MAP
 		]
 
 		# add players data
 		for i in range(4):
 			self.data[GD_PLAYER_LIST].append([])
 
-			self.data[GD_PLAYER_LIST][i].append('no_name')
-			self.data[GD_PLAYER_LIST][i].append(False)
-			self.data[GD_PLAYER_LIST][i].append(False)
-			self.data[GD_PLAYER_LIST][i].append(False)
-			self.data[GD_PLAYER_LIST][i].append(-1)
-			self.data[GD_PLAYER_LIST][i].append(-1)
-			self.data[GD_PLAYER_LIST][i].append(0)
-			self.data[GD_PLAYER_LIST][i].append(0)
-			self.data[GD_PLAYER_LIST][i].append(0)
-			self.data[GD_PLAYER_LIST][i].append(0)
-			self.data[GD_PLAYER_LIST][i].append(-1)
+			self.data[GD_PLAYER_LIST][i].append('no_name')	# GDP_NAME
+			self.data[GD_PLAYER_LIST][i].append(False)		# GDP_MASKTER_FLAG
+			self.data[GD_PLAYER_LIST][i].append(False)		# GDP_CONNECTED_FLAG
+			self.data[GD_PLAYER_LIST][i].append(False)		# GDP_READY
+			self.data[GD_PLAYER_LIST][i].append(-1)			# GDP_CHARACTER_ID
+			self.data[GD_PLAYER_LIST][i].append(-1)			# GDP_TURN
+			self.data[GD_PLAYER_LIST][i].append(0)			# GDP_TILE_COUNT
+			self.data[GD_PLAYER_LIST][i].append(0)			# GDP_GOLD_COUNT
+			self.data[GD_PLAYER_LIST][i].append(0)			# GDP_TRASH_COUNT
+			self.data[GD_PLAYER_LIST][i].append(0)			# GDP_SCORE
+			self.data[GD_PLAYER_LIST][i].append(-1)			# GDP_PLAYER_IDX
 
+	# game data의 현재 scene을 설정 
 	def setScene(self, nextScene):
 		self.data[GD_CURRENT_SCENE] = nextScene
 
+	# 플레이어가 선택한 맵 종료에 따른 크기 설정 
 	def setMapSize(self, width, height):
 		self.data[GD_VOID_TILE_COUNT] = width * height
 		self.data[GD_MAP_SIZE][0] = width
 		self.data[GD_MAP_SIZE][1] = height
 
+	# 해당 id의 player가 channel master인지 반환 
 	def isChannelMaster(self, playerId):
 		return self.data[GD_PLAYER_LIST][playerId][GDP_MASKTER_FLAG]
 
+	# player 관련 get functions
+	def getPlayerName(self, idx):
+		return self.data[GD_PLAYER_LIST][idx][GDP_NAME]
+
+	def getPlayerScore(self, idx):
+		return self.data[GD_PLAYER_LIST][idx][GDP_SCORE]
+
+	def getPlayerConnection(self, idx):
+		return self.data[GD_PLAYER_LIST][idx][GDP_CONNECTED_FLAG]
+
+	# game channel에 player 추가 
 	def addPlayer(self, playerData):
 		for idx in range(4):
 			if self.data[GD_PLAYER_LIST][idx][GDP_CONNECTED_FLAG] == False:
+				# 추가되었으므로 player에게 player id와 channel id를 부여 
 				playerData.setChannelId(self.data[GD_CHANNEL_ID])
 				playerData.setPlayerId(idx)
-				
+
+				# 참여 인원 1명 증가 
 				self.data[GD_PLAYER_NUMBER] += 1
 				
+				# game data내부에 있는 player 정보(name, connection flag, id) 업데이트
 				self.data[GD_PLAYER_LIST][idx][GDP_NAME] = playerData.getPlayerName()
 				self.data[GD_PLAYER_LIST][idx][GDP_CONNECTED_FLAG] = True
-
 				self.data[GD_PLAYER_LIST][idx][GDP_PLAYER_IDX] = idx
 
 				return idx
 
 		return -1
 	
+	# 각각의 플레이어가 game data의 업데이트된 내용을 수신했음을 확인하는 flag설정 
+	# 조심해!! - 둘로 분리하는 것이 나을 듯
 	def changeReadyFlag(self, playerId):
 		if self.data[GD_PLAYER_LIST][playerId][GDP_READY] == 1:
 			self.data[GD_PLAYER_LIST][playerId][GDP_READY] = 0
 		else:
 			self.data[GD_PLAYER_LIST][playerId][GDP_READY] = 1
 
+	# game data에서 업데이트가 발생하면 ready flag를 초기화해서 다시 수신 확인을 받을 수 있도록 설정 
 	def resetReadyFlag(self):
 		for each in self.data[GD_TURN_LIST]:
 			self.data[GD_PLAYER_LIST][each][GDP_READY] = 0
 
+	# 캐릭터 선택 및 취소에 대한 입력 업데이트 
 	def selectCharacter(self, playerId, characterId):
 		if self.data[GD_PLAYER_LIST][idx][GDP_CHARACTER_ID] == characterId:
 			self.data[GD_PLAYER_LIST][idx][GDP_CHARACTER_ID] = -1
@@ -216,6 +252,7 @@ class GameData:
 
 		return True
 
+	# 현재 game channel에 참여중인 모든 플레이어가 다름 게임 진행을 할 준비가 되었는지 확인 
 	def isAllReady(self):
 		count = 0
 
@@ -228,6 +265,7 @@ class GameData:
 		else:
 			return False
 
+	# 게임을 시작할 때 플레이어들 순서를 섞어요
 	def makeRandomTurn(self):
 		for each in self.data[GD_PLAYER_LIST]:
 			if each[GDP_CONNECTED_FLAG]:
@@ -235,20 +273,22 @@ class GameData:
 
 		random.shuffle(self.data[GD_TURN_LIST])
 
+	# 게임을 시작할 때 맵을 생성 
+	# 조심해!! - 현재 울타리와 아이템 배치 코드 없음 
 	def makeRandomMap(self):
-		# add map data
+		# generate map data
 		for i in range((self.data[GD_MAP_SIZE][1] + 1) * 2):
 			self.data[GD_MAP].append([])
 
 			for j in range((self.data[GD_MAP_SIZE][0] + 1) * 2):
 				self.data[GD_MAP][i].append([])
 
-				self.data[GD_MAP][i][j].append(MO_SENTINEL)
-				self.data[GD_MAP][i][j].append(OWNER_NOBODY)
-				self.data[GD_MAP][i][j].append(ITEM_NOTHING)
-				self.data[GD_MAP][i][j].append(False)
-				self.data[GD_MAP][i][j].append(0)
-				self.data[GD_MAP][i][j].append(DI_UP)
+				self.data[GD_MAP][i][j].append(MO_SENTINEL)		# GDM_TYPE
+				self.data[GD_MAP][i][j].append(OWNER_NOBODY)	# GDM_OWNER
+				self.data[GD_MAP][i][j].append(ITEM_NOTHING)	# GDM_ITEM
+				self.data[GD_MAP][i][j].append(False)			# GDM_CHECKED_FLAG
+				self.data[GD_MAP][i][j].append(0)				# GDM_ANIMATION_TURN
+				self.data[GD_MAP][i][j].append(DI_UP)			# GDM_DIRECTION
 
 		# map init code
 		for i in range(1, (self.data[GD_MAP_SIZE][1] + 1) * 2):
@@ -276,6 +316,7 @@ class GameData:
 
 		# generate random objects
 
+	# 게임을 시작합니
 	def startGame(self):
 		self.setScene(SC_PLAY)
 		self.makeRandomTurn()
@@ -283,19 +324,23 @@ class GameData:
 		self.data[GD_CURRENT_TURN_IDX] = 0
 		self.resetReadyFlag()
 
+	# play scene에서 새로운 턴을 시작 
 	def startTurn(self):
 		self.resetReadyFlag()
 
-		# if not self.isEnd():
+		if not self.isEnd():
+			pass
 			# 타이머 시작
 
-
+	# 지금 선을 그을 차례인 플레이어의 idx값 반환 
 	def getCurrentTurnId(self):
 		return self.data[GD_TURN_LIST][self.data[GD_CURRENT_TURN_IDX]]
 
+	# 게임 종료?
 	def isEnd(self):
 		return self.data[GD_VOID_TILE_COUNT]  == 0
 
+	# 그 자리에 선 그을 수 있어?
 	def isPossible(self, i, j):
 		# 일단 hidden line은 없이 구현
 		if self.data[GD_MAP][i][j][GDM_TYPE] == MO_LINE_UNCONNECTED:
@@ -318,10 +363,12 @@ class GameData:
 		else:
 			return False
 
+	# 해당 타일에 애니메이션 상태 설정 
 	def setAnimationState(self, currentTile, animationTurn, direction):
 		self.data[GD_MAP][currentTile[0]][currentTile[1]][GDM_ANIMATION_TURN] = animationTurn
 		self.data[GD_MAP][currentTile[0]][currentTile[1]][GDM_DIRECTION] = direction
 
+	# 닫힌 도형을 모아서 gaem data의 closedTile에 담는다 
 	def collectClosedTile(self, i, j, direction):
 		searchTile = Queue.Queue()
 
@@ -336,6 +383,7 @@ class GameData:
 		elif direction == DI_LEFT:
 			currentTile[1] -= 1
 
+		# 만약 sentinel을 만나면 열린 도형이므로 종료 
 		if self.data[GD_MAP][currentTile[0]][currentTile[1]][GDM_TYPE] == MO_TILE:
 			animationTurn = 1;
 			self.setAnimationState(currentTile, animationTurn, direction)
@@ -350,25 +398,20 @@ class GameData:
 				if self.data[GD_MAP][currentTile[0]][currentTile[1]][GDM_TYPE] == MO_SENTINEL:
 					# current tile은 sentinel이므로 초기화 작업 안 함 
 
-					# init closed tiles
+					# init tiles in closedTile
 					for each in self.closedTile:
 						self.data[GD_MAP][each[0]][each[1]][GDM_CHECKED_FLAG] = False
 						self.data[GD_MAP][each[0]][each[1]][GDM_ANIMATION_TURN] = 0
 						self.data[GD_MAP][each[0]][each[1]][GDM_DIRECTION] = DI_UP
 
+					# closedTile 비우기 
 					del self.closedTile[0:len(self.closedTile)]
 
-					print self.closedTile
-					# init checked tiles 
-					'''
-					while not searchTile.empty():
-						tile = searchTile.get()
-						self.data['game channel map'][tile[0]][tile[1]]['checked flag'] = False
-						self.data['game channel map'][tile[0]][tile[1]]['animation turn'] = 0
-						self.data['game channel map'][tile[0]][tile[1]]['direction'] = 'UP'
-					'''
+					# searchTile은 closedTile과 중복되므로 초기화 안 함
 					break
 
+				# 현재 타일이 sentinel이 아니면 주위 네 방향의 선의 연결 상태를 확인하고
+				# 그 너머에 있는 타일의 체크 여부를 확인해서 closedTile과 searchTile에 추가 
 				if self.data[GD_MAP][currentTile[0] - 1][currentTile[1]][GDM_TYPE] == MO_LINE_UNCONNECTED:
 					nextTile = [0, 0]
 					nextTile[0] = currentTile[0] - 2
@@ -421,8 +464,7 @@ class GameData:
 						animationTurn = self.data[GD_MAP][currentTile[0]][currentTile[1]][GDM_ANIMATION_TURN] + 1
 						self.setAnimationState(nextTile, animationTurn, DI_LEFT)
 
-			# setAnimationTurnNumber(animationTurn)
-
+	# 이 선 그으면 닫히나?
 	def isClosed(self, i, j):
 		self.collectClosedTile(i, j, DI_UP)
 		if not self.closedTile == []: # tile list is not empty:
@@ -442,17 +484,24 @@ class GameData:
 
 		return False
 
+	# 선 그리고 턴은 다음 턴으로 넘긴다.
 	def drawLine(self, idxI, idxJ):
 		if not self.isPossible(idxI, idxJ):
 			return False
 
-		del self.closedTile[0:len(self.closedTile)]
+		self.data[GD_RECENTLY_CONNECTED_LINE][0] = idxI
+		self.data[GD_RECENTLY_CONNECTED_LINE][1] = idxJ
+
 		self.data[GD_MAP][idxI][idxJ][GDM_TYPE] = MO_LINE_CONNECTED
 
 		if self.isClosed(idxI, idxJ):
 			for each in self.closedTile:
 				self.data[GD_MAP][each[0]][each[1]][GDM_OWNER] = self.data[GD_TURN_LIST][self.data[GD_CURRENT_TURN_IDX]]
 
+			# 닫혀진 타일들 상태 업데이트 완료 했으니 closedTile은 비운다
+			del self.closedTile[0:len(self.closedTile)]
+
+		# 종료여부 확인해서 결과 계산을 하거나 턴을 넘긴다
 		if self.isEnd():
 			self.updateResult()
 		else:
@@ -461,6 +510,7 @@ class GameData:
 
 		return True
 
+	# 결과 계산
 	def updateResult():
 		self.setScene(SC_RESULT)
 
@@ -468,8 +518,8 @@ class GameData:
 			each[GDP_SCORE] = each[GDP_TILE_COUNT] * 2 + each[GDP_GOLD_COUNT] * 5 - each[GDP_TRASH_COUNT] * 10
 
 	# for debug
+	# console에 현재 맵 상황 표시
 	def renderMap(self):
-		# tempMapType
 
 		for i in range((self.data[GD_MAP_SIZE][1] + 1) * 2):
 			thisLine = ''
@@ -499,14 +549,6 @@ class GameData:
 
 		print '>>> current map'
 
-	def getPlayerName(self, idx):
-		return self.data[GD_PLAYER_LIST][idx][GDP_NAME]
-
-	def getPlayerScore(self, idx):
-		return self.data[GD_PLAYER_LIST][idx][GDP_SCORE]
-
-	def getPlayerConnection(self, idx):
-		return self.data[GD_PLAYER_LIST][idx][GDP_CONNECTED_FLAG]
 
 if __name__ == '__main__':
 	# test : player creation
