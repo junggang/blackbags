@@ -10,6 +10,7 @@ public:
     CREATE_FUNC(CStartAndHelpButtonLayer);
 
 private:
-	void StartButtonCallBack(CCObject* pSender);
+	void StartButtonCallBack( CCObject* pSender );
 	void HelpButtonCallBack( CCObject* pSender );
+	void NameInputButtonCallBack( CCObject* pSender );
 };

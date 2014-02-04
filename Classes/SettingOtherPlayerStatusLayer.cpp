@@ -3,7 +3,8 @@
 #include "base_nodes\CCNode.h"
 
 USING_NS_CC;
-
+// 조심해!! 현재 사용자 이름만 표시되는데 총 플레이어 수, 고른 캐릭터, Ready 여부, 방장도 표시해야 해
+// 그래서 화면에 보여줄 element가 2차원 배열일 때 cocos2d-x 에서 표현할 방법을 찾아봐야해
 bool CSettingOtherPlayerStatusLayer::init()
 {
 	if ( !CCLayer::init() )

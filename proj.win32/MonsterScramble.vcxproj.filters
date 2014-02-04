@@ -199,7 +199,7 @@
       <Filter>Classes\Layer\Credit</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExampleUserInput.cpp">
-      <Filter>Classes\Layer\GameSetting</Filter>
+      <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -327,7 +327,7 @@
       <Filter>Classes\Layer\Credit</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExampleUserInput.h">
-      <Filter>Classes\Layer\GameSetting</Filter>
+      <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

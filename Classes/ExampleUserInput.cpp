@@ -1,66 +1,55 @@
-#include "MainScene.h"
-#include "BackgroundLayer.h"
-#include "GameSettingScene.h"
-#include "SettingTitleLayer.h"
-#include "StartAndHelpButtonLayer.h"
-#include "GameManager.h"
+#include "ExampleUserInput.h"
 
+using namespace cocos2d;
+using namespace cocos2d::extension;
 
-USING_NS_CC;
-
-bool CGameSettingScene::init(void)
+CCScene* ExampleUserInput::scene()
 {
-	//////////////////////////////
-	// 1. super init first
-	if ( !CCScene::init() )
+	CCScene *scene = CCScene::create();
+
+	ExampleUserInput *layer = ExampleUserInput::create();
+
+	scene->addChild(layer);
+
+	return scene;
+}
+
+bool ExampleUserInput::init()
+{
+	if ( !CCLayerColor::initWithColor(ccc4(255,255,255,255)) )
 	{
 		return false;
 	}
 
-	/////////////////////////////
-	// 2. add layers
-	
-	// background layer
-	CCLayer* BackgroundLayer = CBackgroundLayer::create();
-	this->addChild(BackgroundLayer, 0);
+	CCSize editBoxSize = CCSizeMake(300, 60);
 
-	// title layer
-	CCLayer* SettingTitleLayer = CSettingTitleLayer::create();
-	this->addChild(SettingTitleLayer, 1);
-
-	// Character Select Table layer
-	SettingCharacterLayer = CSettingCharacterLayer::create();
-	this->addChild(SettingCharacterLayer, 1);
-
-	// map select table layer
-	SettingMapLayer = CSettingMapLayer::create();
-	this->addChild(SettingMapLayer, 1);
-
-	// StartButton and HelpButton layer
-	CStartAndHelpButtonLayer* StartAndHelpButtonLayer = CStartAndHelpButtonLayer::create();
-	this->addChild(StartAndHelpButtonLayer, 1);
-
-	// PlayerStatusLayer
-	OtherPlayerStatusLayer = CSettingOtherPlayerStatusLayer::create();
-	this->addChild(OtherPlayerStatusLayer, 1);
-
-	this->scheduleUpdate();
+	m_pEditName = CCEditBox::create(editBoxSize, CCScale9Sprite::create("image/board.png"));
+	m_pEditName->setPosition(ccp(240, 250));
+	m_pEditName->setFontColor(ccGREEN);
+	m_pEditName->setPlaceHolder("name:");
+	m_pEditName->setReturnType(kKeyboardReturnTypeDone);
+	m_pEditName->setDelegate(this);
+	addChild(m_pEditName);
 
 	return true;
 }
 
-void CGameSettingScene::update(float dt)
+void ExampleUserInput::editBoxEditingDidBegin( cocos2d::extension::CCEditBox* editBox )
 {
-	//dt는 이전 update 이후 지난 시간
 
-	if (CGameManager::GetInstance()->IsUpdated() )
-	{
-		//여기에 각 레이어들을 업데이트하는 코드를 넣음
-		//각 레이어별로 업데이트 함수 만들어야 함
-		SettingCharacterLayer->update(dt);
-		SettingMapLayer->update();
-		OtherPlayerStatusLayer->update();
-		//업데이트된 내용을 모두 받아와서 갱신했으므로 flag는 원래대로 false로 만든다
-		CGameManager::GetInstance()->SetUpdateFlag(false);
-	}
+}
+
+void ExampleUserInput::editBoxEditingDidEnd( cocos2d::extension::CCEditBox* editBox )
+{
+
+}
+
+void ExampleUserInput::editBoxTextChanged( cocos2d::extension::CCEditBox* editBox, const std::string& text )
+{
+
+}
+
+void ExampleUserInput::editBoxReturn( cocos2d::extension::CCEditBox* editBox )
+{
+
 }
