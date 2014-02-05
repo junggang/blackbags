@@ -43,6 +43,7 @@ def playerMatching():
 
 					# 플레이어 추가 
 					for player in player_2:
+						# 조심해!! - 방장 설정 해줘야 한다!!!
 						print 'player 2 : ' + player
 						playderData = getPlayerData(player)
 						gameData.addPlayer(playerData)
