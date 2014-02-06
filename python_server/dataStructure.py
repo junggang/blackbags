@@ -38,7 +38,7 @@ SC_NOSCENE = 8
 
 # game data - player data index
 GDP_NAME = 0
-GDP_MASKTER_FLAG = 1
+GDP_MASTER_FLAG = 1
 GDP_CONNECTED_FLAG = 2
 GDP_READY = 3
 GDP_CHARACTER_ID = 4
@@ -171,7 +171,7 @@ class GameData:
 			self.data[GD_PLAYER_LIST].append([])
 
 			self.data[GD_PLAYER_LIST][i].append('no_name')	# GDP_NAME
-			self.data[GD_PLAYER_LIST][i].append(False)		# GDP_MASKTER_FLAG
+			self.data[GD_PLAYER_LIST][i].append(False)		# GDP_MASTER_FLAG
 			self.data[GD_PLAYER_LIST][i].append(False)		# GDP_CONNECTED_FLAG
 			self.data[GD_PLAYER_LIST][i].append(False)		# GDP_READY
 			self.data[GD_PLAYER_LIST][i].append(-1)			# GDP_CHARACTER_ID
@@ -186,7 +186,7 @@ class GameData:
 	def setScene(self, nextScene):
 		self.data[GD_CURRENT_SCENE] = nextScene
 
-	# 플레이어가 선택한 맵 종료에 따른 크기 설정 
+	# 플레이어가 선택한 맵 종료에 따른 크기 설정 (가로 / 세로)
 	def setMapSize(self, width, height):
 		self.data[GD_VOID_TILE_COUNT] = width * height
 		self.data[GD_MAP_SIZE][0] = width
@@ -194,7 +194,7 @@ class GameData:
 
 	# 해당 id의 player가 channel master인지 반환 
 	def isChannelMaster(self, playerId):
-		return self.data[GD_PLAYER_LIST][playerId][GDP_MASKTER_FLAG]
+		return self.data[GD_PLAYER_LIST][playerId][GDP_MASTER_FLAG]
 
 	# player 관련 get functions
 	def getPlayerName(self, idx):
@@ -221,6 +221,11 @@ class GameData:
 				self.data[GD_PLAYER_LIST][idx][GDP_NAME] = playerData.getPlayerName()
 				self.data[GD_PLAYER_LIST][idx][GDP_CONNECTED_FLAG] = True
 				self.data[GD_PLAYER_LIST][idx][GDP_PLAYER_IDX] = idx
+
+
+				# 방장 설정 - addPlayer는 최초 방 생성에만 사용하므로 idx값이 0이면 그냥 방장으로 설정
+				if idx == 0:
+					self.data[GD_PLAYER_LIST][idx][GDP_MASTER_FLAG] = True
 
 				return idx
 
@@ -277,10 +282,10 @@ class GameData:
 	# 조심해!! - 현재 울타리와 아이템 배치 코드 없음 
 	def makeRandomMap(self):
 		# generate map data
-		for i in range((self.data[GD_MAP_SIZE][1] + 1) * 2):
+		for i in range(self.data[GD_MAP_SIZE][1] * 2 + 3):
 			self.data[GD_MAP].append([])
 
-			for j in range((self.data[GD_MAP_SIZE][0] + 1) * 2):
+			for j in range(self.data[GD_MAP_SIZE][0] * 2 + 3):
 				self.data[GD_MAP][i].append([])
 
 				self.data[GD_MAP][i][j].append(MO_SENTINEL)		# GDM_TYPE
@@ -291,8 +296,8 @@ class GameData:
 				self.data[GD_MAP][i][j].append(DI_UP)			# GDM_DIRECTION
 
 		# map init code
-		for i in range(1, (self.data[GD_MAP_SIZE][1] + 1) * 2):
-			for j in range(1, (self.data[GD_MAP_SIZE][0] + 1) * 2):
+		for i in range(1, self.data[GD_MAP_SIZE][1] * 2 + 2):
+			for j in range(1, self.data[GD_MAP_SIZE][0] * 2 + 2):
 				if i % 2 == 0:
 					if j % 2 == 0:
 						self.data[GD_MAP][i][j][GDM_TYPE] = MO_TILE
@@ -315,8 +320,36 @@ class GameData:
 			startTrashNumber = 7;
 
 		# generate random objects
+		while startLineNumber > 0:
+			randomPosition = self.makeRandomLine()
 
-	# 게임을 시작합니
+			# 일단 선을 긋자
+			self.data[GD_MAP][randomPosition[0]][randomPosition[1]][GDM_TYPE] = MO_LINE_CONNECTED
+
+			if self.isClosed(randomPosition[0], randomPosition[1]):
+				# 확인하는 동안 닫힌 도형으로 판정된 타일들을 초기화한다.
+				for each in self.closedTile:
+					self.data[GD_MAP][each[0]][each[1]][GDM_DIRECTION] = DI_UP
+					self.data[GD_MAP][each[0]][each[1]][GDM_CHECKED_FLAG] = False
+					self.data[GD_MAP][each[0]][each[1]][GDM_ANIMATION_TURN] = 0
+
+				# closedTile은 비운다
+				del self.closedTile[0:len(self.closedTile)]
+
+				# 방금 그었던 선을 지운다
+				self.data[GD_MAP][randomPosition[0]][randomPosition[1]][GDM_TYPE] = MO_LINE_UNCONNECTED
+			else:
+				# 안 닫혔으니까 랜덤 라인 수 하나 감소 시키자
+				startLineNumber -= 1
+
+		# 아이템 배치
+		for each in range(startGoldNumber):
+			 self.setRandomItem(ITEM_GOLD)
+
+		for each in range(startTrashNumber):
+			self.setRandomItem(ITEM_TRASH)
+
+	# 게임을 시작합니다
 	def startGame(self):
 		self.setScene(SC_PLAY)
 		self.makeRandomTurn()
@@ -510,6 +543,33 @@ class GameData:
 
 		return True
 
+	# 그을 수 있는 임의선을 선택
+	def makeRandomLine(self):
+		while True:
+			randomIdxI = random.randint(1, self.data[GD_MAP_SIZE][1]) * 2 + 1
+
+			if randomIdxI % 2 == 0:
+				randomIdxJ = random.randint(0, self.data[GD_MAP_SIZE][0]) * 2 + 1
+			else:
+				randomIdxJ = random.randint(0, self.data[GD_MAP_SIZE][0]) * 2
+
+			print 'random line'
+			print randomIdxI
+			print randomIdxJ
+
+			if self.isPossible(randomIdxI, randomIdxJ):
+				return [randomIdxI, randomIdxJ]
+
+	# 지정한 아이템을 임의의 타일 위치에 배치
+	def setRandomItem(self, item):
+		while True:
+			randomIdxI = random.randint(1, self.data[GD_MAP_SIZE][0]) * 2
+			randomIdxJ = random.randint(1, self.data[GD_MAP_SIZE][1]) * 2
+
+			if self.data[GD_MAP][randomIdxI][randomIdxJ][GDM_TYPE] == MO_TILE and self.data[GD_MAP][randomIdxI][randomIdxJ][GDM_ITEM] == ITEM_NOTHING:
+				self.data[GD_MAP][randomIdxI][randomIdxJ][GDM_ITEM] = item
+				return
+
 	# 결과 계산
 	def updateResult():
 		self.setScene(SC_RESULT)
@@ -520,10 +580,9 @@ class GameData:
 	# for debug
 	# console에 현재 맵 상황 표시
 	def renderMap(self):
-
-		for i in range((self.data[GD_MAP_SIZE][1] + 1) * 2):
+		for i in range(self.data[GD_MAP_SIZE][1] * 2 + 3):
 			thisLine = ''
-			for j in range((self.data[GD_MAP_SIZE][0] + 1) * 2):
+			for j in range(self.data[GD_MAP_SIZE][0] * 2 + 3):
 				tempMapType = self.data[GD_MAP][i][j][GDM_TYPE]
 
 				if tempMapType == MO_DOT:
@@ -540,9 +599,15 @@ class GameData:
 
 				elif tempMapType == MO_TILE:
 					if self.data[GD_MAP][i][j][GDM_OWNER] == OWNER_NOBODY:
-						thisLine += ' '
+						if self.data[GD_MAP][i][j][GDM_ITEM] == ITEM_NOTHING:
+							thisLine += ' '
+						elif self.data[GD_MAP][i][j][GDM_ITEM] == ITEM_TRASH:
+							thisLine += 'T'
+						elif self.data[GD_MAP][i][j][GDM_ITEM] == ITEM_GOLD:
+							thisLine += 'G'
 					else:
 						thisLine += str(self.data[GD_MAP][i][j][GDM_OWNER])
+						
 
 			if not thisLine == '':
 				print thisLine
