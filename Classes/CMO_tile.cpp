@@ -66,8 +66,9 @@ void CMO_tile::setImage(IndexedPosition indexedPosition)
 
 	// 주인없는 이미지를 넣어준다.
 	// (주인이 없을 때 아무것도 안 보인다면 추가 안 하면 된다)
-	pTile = CCSprite::create(TileImageFileList[4].c_str(), CCRectMake(0.0f, 0.0f, DEFAULT_TILE_SIZE,  DEFAULT_TILE_SIZE) );
-	pTile->setAnchorPoint( ccp(0, 0) );
+	//pTile = CCSprite::create(TileImageFileList[4].c_str(), CCRectMake(0.0f, 0.0f, DEFAULT_TILE_SIZE,  DEFAULT_TILE_SIZE) );
+	pTile = CCSprite::create("image/testtile.png", CCRectMake(0.0f, 0.0f, 80.0f,  60.0f) );
+	pTile->setAnchorPoint( ccp(0, 0.5f) );
 	pTile->setPosition( ccp(0.0f, 0.0f) );
 	this->addChild(pTile, 0);
 

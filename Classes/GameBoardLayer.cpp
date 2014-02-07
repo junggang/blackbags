@@ -27,26 +27,38 @@ bool CGameBoardLayer::init()
 	{
 	case MS_6X5:
 		rowNum = 5;
-		columnNum = 6;
+		columnNum = 5;
 		break;
 	case MS_8X7:
-		rowNum = 7;
+		rowNum = 8;
 		columnNum = 8;
 		break;
 	default:
 		break;
 	}
 
+	float m_tileWidth = 80.0f;
+	float m_tileHeight = 60.0f;
+
 	m_Board = CCSprite::create(
 		"image/board.png", 
-		CCRect(0, 0, columnNum * DEFAULT_TILE_SIZE, rowNum * DEFAULT_TILE_SIZE)
+		CCRect(0, 0, columnNum * m_tileWidth, rowNum * m_tileHeight)
 		);
 	m_Board->setAnchorPoint(ccp(0.5f, 0.5f));
 	m_Board->setPosition(ccp(m_VisibleSize.width / 2, m_VisibleSize.height / 2) );
 	this->addChild(m_Board);
 
-	m_BoardOrigin.x = ( m_VisibleSize.width - (DEFAULT_TILE_SIZE * columnNum) ) / 2;
-	m_BoardOrigin.y = ( m_VisibleSize.height - (DEFAULT_TILE_SIZE * rowNum) ) / 2;
+	m_BoardOrigin.x = m_VisibleSize.width/2 - (FLOAT(columnNum)/2 * m_tileWidth);
+	m_BoardOrigin.y = m_VisibleSize.height/2;	
+
+	float m_OriginX = 0.0f;
+	float m_OriginY = m_Board->getContentSize().height/2;
+
+	float m_LineOriginX = m_OriginX;
+	float m_LineOriginY = m_OriginY;
+
+	float m_DeltaX = m_tileWidth/2;
+	float m_DeltaY = m_tileHeight/2;
 
 	for (int i = 1; i < rowNum * 2 + 2; ++i)
 	{
@@ -61,7 +73,7 @@ bool CGameBoardLayer::init()
 			{
 				CMO_tile* pTile = CMO_tile::create();
 				pTile->setImage(pos);
-				pTile->setPosition( ccp( DEFAULT_TILE_SIZE * (j/2 - 1), DEFAULT_TILE_SIZE*(i/2 - 1) ) );
+				pTile->setPosition(ccp(m_OriginX+m_DeltaX*(j/2-1),m_OriginY+m_DeltaY*(j/2-1)));
 
 				m_Board->addChild(pTile, 0);
 			}
@@ -69,30 +81,39 @@ bool CGameBoardLayer::init()
 			else if ( i % 2 == 1 && j % 2 == 1)
 			{
 				CMO_dot* pDot = CMO_dot::Create();
-				pDot->setPosition( ccp( DEFAULT_TILE_SIZE * (j/2), DEFAULT_TILE_SIZE * (i/2) ) );
+				//pDot->setPosition( ccp( DEFAULT_TILE_SIZE * (j/2), DEFAULT_TILE_SIZE * (i/2) ) );
+				pDot->setPosition( ccp( m_OriginX+m_DeltaX*(j/2),m_OriginY+m_DeltaY*(j/2) ) );
 
 				m_Board->addChild(pDot, 2);
 			}
-			//그 외에는 선이다.
+			
+			//그 외에는 선이다.(i짝수/j홀수 또는 i홀수/j짝수)
 			else
 			{
 				CMO_line* pLine = CMO_line::create();
 				pLine->setImage(pos);
 
-				//누워있다.
-				if ( j % 2 == 0 )
-				{
-					pLine->setPosition( ccp( DEFAULT_TILE_SIZE * (j/2 - 1), DEFAULT_TILE_SIZE * (i/2) ) );
-				}
+				if(j%2 == 0)
+					pLine->setPosition( ccp( m_LineOriginX+m_DeltaX*(j/2-1),m_LineOriginY+m_DeltaY*(j/2-1) ) );
 				else
-				{
-					pLine->setPosition( ccp( DEFAULT_TILE_SIZE * (j/2), DEFAULT_TILE_SIZE * (i/2 - 1) ) );
-				}
+					pLine->setPosition( ccp( m_LineOriginX+m_DeltaX*(j/2),m_LineOriginY+m_DeltaY*(j/2) ) );
 
 				m_Board->addChild(pLine, 1);
-			}			
+
+			}
+		}	
+		if(i%2==0)
+		{
+			m_OriginX += m_DeltaX;
+			m_OriginY -= m_DeltaY;
 		}
-	}
+		else
+		{
+			m_LineOriginX += m_DeltaX;
+			m_LineOriginY -= m_DeltaY;
+		}
+		}
+	
 
 	this->setTouchEnabled(true);
 	

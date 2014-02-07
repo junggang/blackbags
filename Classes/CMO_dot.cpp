@@ -28,7 +28,6 @@ CMO_dot* CMO_dot::create(const char* pszFileName, const CCRect& rect)
 CMO_dot* CMO_dot::Create()
 {
 	CMO_dot* pMapObejct = CMO_dot::create("image/MO_dot.png", CCRectMake(0.0f, 0.0f, 10.0f,  10.0f));
-
 	return pMapObejct;
 }
 

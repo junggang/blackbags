@@ -80,11 +80,8 @@ void CMO_line::setImage(IndexedPosition indexedPosition)
 {
 	m_Index = indexedPosition;
 
-	//i가 홀수고 j가 짝수면 누워 있다.
-	//i가 짝수고 j가 홀수면 서 있다.
-	//짝수행인 경우 수평으로 긴 라인. 홀수행인 경우 수직으로 긴 라인.
-	int width = (indexedPosition.m_PosI % 2 == 0)? DEFAULT_LINE_WEIGHT : DEFAULT_TILE_SIZE ;
-	int height = (indexedPosition.m_PosI % 2 == 0)? DEFAULT_TILE_SIZE : DEFAULT_LINE_WEIGHT  ;
+	int width = 40.0f;
+	int height = 30.0f;
 
 	m_ImageFileIdx = indexedPosition.m_PosI % 2;
 
@@ -92,12 +89,24 @@ void CMO_line::setImage(IndexedPosition indexedPosition)
 	if (CGameManager::GetInstance()->GetMapType(indexedPosition) == MO_LINE_CONNECTED)
 	{
 		m_Connected = true;
-		m_ImageFileIdx += 2;
+		//m_ImageFileIdx += 2;
 	}
 	
 	//적절한 이미지를 넣어준다.
-	pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
-	setAnchorPoint();
+	//pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
+	
+	if(indexedPosition.m_PosI%2==0 &&indexedPosition.m_PosJ%2==1)
+	{
+		pLine = CCSprite::create("image/testline0.png", CCRectMake(0.0f, 0.0f, width,  height) );
+		pLine->setAnchorPoint(ccp(1,0));
+	}
+	else
+	{
+		pLine = CCSprite::create("image/testline.png", CCRectMake(0.0f, 0.0f, width,  height) );
+		pLine->setAnchorPoint(ccp(0,0));
+	}
+
+	//setAnchorPoint();
 	pLine->setPosition( ccp(0.0f, 0.0f) );
 	this->addChild(pLine, 0);
 }
