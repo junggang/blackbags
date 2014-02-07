@@ -1,5 +1,6 @@
 #pragma once
 #include "cocos2d.h"
+#include "cocos-ext.h"
 #include "config.h"
 
 class CGameManager
@@ -17,7 +18,7 @@ public:
 	void SetPlayerNumber(int PlayerNumber);
 
 	//게임이 온라인인지 오프라인인지 설정
-	void SetOnlineMode(bool flag)	{ m_IsOnlineGame = flag; }
+	void SetOnlineMode(bool flag);
 
 	//게임의 현재 상황을 알아보는 함수
 	void SetUpdateFlag(bool flag)	{ m_IsUpdated = flag; }
@@ -70,9 +71,14 @@ public:
 	int GetTotalScore(int playerIdx);
 	const std::string& GetCharacterResultFaceFileName(int playerIdx);
 
+	// network
+	void onHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
+
 private:
 
 	static CGameManager*	m_pInstance; //singleton instance
+
+	cocos2d::extension::CCHttpRequest*			m_Request;
 
 	bool m_IsOnlineGame;
 	bool m_IsUpdated;

@@ -1,12 +1,17 @@
 #include "GameManager.h"
 #include "GameLogic.h"
 
+using namespace cocos2d::extension;
+
 CGameManager* CGameManager::m_pInstance = nullptr;
 
 CGameManager::CGameManager(void)
 {
 	m_IsOnlineGame = false;
 	m_IsUpdated = false;
+	m_Request = false;
+
+	m_Request = nullptr;
 }
 
 CGameManager::~CGameManager(void)
@@ -30,6 +35,10 @@ void CGameManager::ReleaseInstance()
 bool CGameManager::init()
 {
 	CGameLogic::GetInstance()->init();
+
+
+	// make data repository
+	// json 뭐 만든다 치고...
 
 	return true;
 }
@@ -342,4 +351,50 @@ int	CGameManager::GetTileAnimationTurn(IndexedPosition indexedPosition)
 	{
 		return CGameLogic::GetInstance()->GetTileAnimationTurn(indexedPosition);
 	}
+}
+
+void CGameManager::onHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpResponse* response)
+{
+	if (!response)
+	{
+		return;
+	}
+
+	int statusCode = response->getResponseCode();
+	if (!response->isSucceed() ) 
+	{
+		CCLOG("response failed");
+		CCLOG("error buffer: %s", response->getErrorBuffer() );
+		return;
+	}
+
+	// dump data
+	std::vector<char> *buffer = response->getResponseData();
+
+	// tag 종류에 따라서 다른 처리
+	if (strcmp(response->getHttpRequest()->getTag(), "POST login") )
+	{
+		
+	}
+}
+
+void CGameManager::SetOnlineMode(bool flag) 
+{ 
+	m_IsOnlineGame = flag;
+
+	// login
+	// make http request
+	m_Request = new CCHttpRequest();
+
+	m_Request->setUrl("localhost/login");
+	m_Request->setRequestType(CCHttpRequest::kHttpPost);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
+
+	// write the post data
+	const char* postData = "tokenId=tempId&name=tempName&two=1&three=1&four=1";
+	m_Request->setRequestData(postData, strlen(postData));
+
+	m_Request->setTag("POST login");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
 }
