@@ -2,6 +2,7 @@
 
 USING_NS_CC;
 
+// 조심해!! 이 방식은 폐기될 가능성이 높아!
 // 조심해!! 이 레이어가 제대로 작동하는지 알아보려면 Win32 키보드를 지원하지 않아서 iOS에서 돌려봐야해!!
 // Win32 하드웨어 키보드는 아직 지원하지 않는다고 ㅠㅠ
 bool CPlayerNameSettingLayer::init()

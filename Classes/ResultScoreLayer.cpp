@@ -20,7 +20,7 @@ bool CResultScoreLayer::init()
 	// 2. add a background image
 	
 	//score part
-	int playerNum = CGameManager::GetInstance()->GetPlayerNumber();
+	int playerNum = CGameManager::GetInstance()->GetCurrentPlayerNumber();
 	int winnerIdx = CGameManager::GetInstance()->GetWinnerIdx();
 
 	for (unsigned int i = 0; i < playerNum; ++i)

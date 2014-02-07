@@ -59,7 +59,7 @@ public:
 	int GetPlayerId(int playerIdx) { return m_PlayerData[playerIdx]->m_PlayerId; }
 	int GetPlayerTurnById(int playerId) { return m_PlayerData[playerId]->m_PlayerTurn; }
 	int GetPlayerIdByTurn(int currentTurn);
-	int GetPlayerIdByCurrentTurn() { return GetPlayerIdByTurn(m_currentTurn % m_PlayerNumber);}
+	int GetPlayerIdByCurrentTurn() { return GetPlayerIdByTurn(m_currentTurn % m_CurrentPlayerNumber);}
 	PlayerData* GetFirstPlayer() { return m_FirstPlayer; }
 
 	//캐릭터를 플레이어에게 짝지어 준다.
@@ -78,13 +78,23 @@ public:
 	bool			SetSelectedMapSize( MapSelect mapSize );
 	MapSelect		GetSelectedMapSize() { return m_SelectedMapSize; }
 
-	bool		SetPlayerNumber(int playerNumber)			{ m_PlayerNumber = playerNumber; return true; }
-	int			GetplayerNumber()							{ return m_PlayerNumber; }
+	bool		SetCurrentPlayerNumber(int playerNumber)			{ if ( playerNumber < m_PlayerNumberOfThisGame ) { m_CurrentPlayerNumber = playerNumber; } return true; }
+	int			GetCurrentPlayerNumber()							{ return m_CurrentPlayerNumber; }
 
 	bool IsPossible(IndexedPosition indexedPosition);
 	bool IsClosed(IndexedPosition indexedPosition);
 
 	/*	Setting Scene 관련에서 게임 시작까지	*/
+	// 플레이어 숫자와 맵 크기를 골랐는지
+	bool isPlayerNumberAndMapSeleted() { return ( MapSelected && PlayerNumberSelected ); };
+	void SetPlayerNumberOfThisGame( int playerNumber ) { 
+		if (playerNumber <= MAX_PLAYER_NUM)
+		{
+			m_PlayerNumberOfThisGame = playerNumber;
+			PlayerNumberSelected = true;
+		}
+	}
+	int GetPlayerNumberOfThisGame() { return m_PlayerNumberOfThisGame; }
 	bool StartGame();
 	void CreateMap();
 	void InitRandomMap();
@@ -129,7 +139,8 @@ private:
 	static CGameLogic*	m_pInstance; //singleton instance
 
 	MapSelect				m_SelectedMapSize;
-	int						m_PlayerNumber;
+	int						m_CurrentPlayerNumber;
+	int						m_PlayerNumberOfThisGame;
 
 	// 플레이어 데이터를 가지고 있는 구조체
 	std::array<PlayerData*, MAX_PLAYER_NUM> m_PlayerData;
@@ -138,6 +149,10 @@ private:
 
 	//플레이 순서에 매칭되는 PlayerData의 포인터
 	//std::list<PlayerData*> m_PlayerDataByTurn;
+
+	/*	SettingScene 관련 변수들	*/
+	bool MapSelected;
+	bool PlayerNumberSelected;
 
 	/*	맵 관련 변수들 */
 
@@ -170,7 +185,6 @@ private:
 
 	/*	아이템 관련 함수 */
 	void		SetItem(IndexedPosition indexedPosition, MO_ITEM item);
-
 
 	/* 애니메이션 관련 변수들 */
 	bool	m_LineAnimationFlag;

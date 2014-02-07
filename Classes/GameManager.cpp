@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "GameLogic.h"
-#include "rapidjson\document.h"
+// 조심해! 이거 있으니까 컴파일이 안되네요
+//#include "rapidjson\document.h"
 
 USING_NS_CC_EXT;
 
@@ -71,7 +72,7 @@ const std::string& CGameManager::GetPlayerName(int playerIdx)
 	}
 }
 
-int CGameManager::GetPlayerNumber()
+int CGameManager::GetCurrentPlayerNumber()
 {
 	if (m_IsOnlineGame)
 	{
@@ -79,13 +80,13 @@ int CGameManager::GetPlayerNumber()
 	}
 	else
 	{
-		return CGameLogic::GetInstance()->GetplayerNumber();
+		return CGameLogic::GetInstance()->GetCurrentPlayerNumber();
 	}
 }
 
 //조심해!!
 //이거 호출하는 함수 아닌 것 같은데
-void CGameManager::SetPlayerNumber(int PlayerNumber)
+void CGameManager::SetCurrentPlayerNumber(int PlayerNumber)
 {
 	if (m_IsOnlineGame)
 	{
@@ -93,7 +94,7 @@ void CGameManager::SetPlayerNumber(int PlayerNumber)
 	}
 	else
 	{
-		SetUpdateFlag(CGameLogic::GetInstance()->SetPlayerNumber(PlayerNumber) );
+		SetUpdateFlag(CGameLogic::GetInstance()->SetCurrentPlayerNumber(PlayerNumber) );
 	}
 }
 
@@ -433,4 +434,40 @@ void CGameManager::SetOnlineMode(bool flag)
 	m_Request->setTag("POST login");
 	CCHttpClient::getInstance()->send(m_Request);
 	m_Request->release();
+}
+
+bool CGameManager::IsPlayerNumberAndMapSeleted()
+{
+	if (m_IsOnlineGame)
+	{
+
+	}
+	else
+	{
+		return CGameLogic::GetInstance()->isPlayerNumberAndMapSeleted();
+	}
+}
+
+int CGameManager::GetPlayerNumberOfThisGame()
+{
+	if (m_IsOnlineGame)
+	{
+
+	}
+	else
+	{
+		return CGameLogic::GetInstance()->GetPlayerNumberOfThisGame();
+	}
+}
+
+void CGameManager::SetPlayerNumberOfThisGame( int PlayerNumber )
+{
+	if (m_IsOnlineGame)
+	{
+
+	}
+	else
+	{
+		CGameLogic::GetInstance()->SetPlayerNumberOfThisGame(PlayerNumber);
+	}
 }

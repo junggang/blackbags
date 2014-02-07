@@ -14,8 +14,11 @@ public:
 	
 	bool init();
 
-	int GetPlayerNumber();
-	void SetPlayerNumber(int PlayerNumber);
+	int GetCurrentPlayerNumber();
+	void SetCurrentPlayerNumber(int PlayerNumber);
+
+	int GetPlayerNumberOfThisGame();
+	void SetPlayerNumberOfThisGame(int PlayerNumber);
 
 	//게임이 온라인인지 오프라인인지 설정
 	void SetOnlineMode(bool flag);
@@ -26,6 +29,9 @@ public:
 	bool IsEnd();
 
 	/* 게임 셋팅 관련 */
+	// 플레이어 숫자와 맵 크기를 골랐는지 여부를 판단
+	bool IsPlayerNumberAndMapSeleted();
+
 	// 이름
 	void SetPlayerName(int playerId, const std::string& playerName);
 	const std::string& GetPlayerName(int playerIdx);

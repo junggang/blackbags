@@ -14,7 +14,8 @@ CGameLogic::CGameLogic(void)
 
 	m_currentTurn = 0;
 	m_VoidTileCount = 0;
-	m_PlayerNumber = 0;
+	m_CurrentPlayerNumber = 0;
+	m_PlayerNumberOfThisGame = 0;
 }
 
 
@@ -68,6 +69,10 @@ bool CGameLogic::init()
 		m_PlayerData[i] = new PlayerData();
 	}
 
+	// 맵과 캐릭터를 골랐는지 여부 "고르지 않음"으로 설정
+	MapSelected = false;
+	PlayerNumberSelected = false;
+
 	//캐릭터 관련 자료를 넣어준다.
 	for (int i = 0; i < CHARACTER_NUM; ++i)
 	{
@@ -119,6 +124,7 @@ bool CGameLogic::init()
 bool CGameLogic::SetSelectedMapSize( MapSelect mapSize )
 {
 	m_SelectedMapSize = mapSize;
+	MapSelected = true;
 
 	return true;
 }
@@ -406,7 +412,7 @@ int	CGameLogic::GetWinnerIdx()
 {
 	int result = -1;
 
-	for (int i = 1; i < CGameLogic::GetInstance()->GetplayerNumber(); ++i)
+	for (int i = 1; i < CGameLogic::GetInstance()->GetCurrentPlayerNumber(); ++i)
 	{
 		if (CGameLogic::GetInstance()->GetPlayerTotalScore(i - 1) > CGameLogic::GetInstance()->GetPlayerTotalScore(i) )
 		{
@@ -451,7 +457,7 @@ bool CGameLogic::SetPlayerCharacterId( int characterId )
 			m_PlayerData[i]->m_CharacterId = -1;
 			m_PlayerData[i]->m_PlayerId = -1;
 			m_Character[characterId].m_isCharacterSelected = false;
-			--m_PlayerNumber;
+			--m_CurrentPlayerNumber;
 
 			return true;
 		}
@@ -465,7 +471,7 @@ bool CGameLogic::SetPlayerCharacterId( int characterId )
 			m_PlayerData[i]->m_PlayerId = i;
 			m_PlayerData[i]->m_CharacterId = characterId;
 			m_Character[characterId].m_isCharacterSelected = true;
-			++m_PlayerNumber;
+			++m_CurrentPlayerNumber;
 
 			return true;
 		}
@@ -514,7 +520,7 @@ bool CGameLogic::StartGame()
 		if (m_PlayerData[i]->m_PlayerId == -1)
 			continue;
 
-		while (tempTurn[tempT] >= m_PlayerNumber)
+		while (tempTurn[tempT] >= m_CurrentPlayerNumber)
 			++tempT;
 
 		m_PlayerData[i]->m_PlayerTurn = tempTurn[tempT];
@@ -533,9 +539,9 @@ bool CGameLogic::StartGame()
 	//이제 링크드 리스트를 만들어주자!
 	m_FirstPlayer = current;
 
-	for (int i = 0; i < m_PlayerNumber; i++)
+	for (int i = 0; i < m_CurrentPlayerNumber; i++)
 	{
-		for (int j = 0; j < m_PlayerNumber; ++j)
+		for (int j = 0; j < m_CurrentPlayerNumber; ++j)
 		{
 			if (m_PlayerData[i]->m_PlayerTurn+1 == m_PlayerData[j]->m_PlayerTurn)
 				m_PlayerData[i]->m_nextPlayer = m_PlayerData[j];
@@ -547,7 +553,7 @@ bool CGameLogic::StartGame()
 
 	m_PlayerData[tempT]->m_nextPlayer = m_FirstPlayer;
 
-	CCLOG("player number : %d", m_PlayerNumber);
+	CCLOG("player number : %d", m_CurrentPlayerNumber);
 
 
 
@@ -790,7 +796,7 @@ bool CGameLogic::EventHandle(IndexedPosition indexedPosition)
 		while (m_ClosedTile[i].m_PosI != 0 && m_ClosedTile[i].m_PosJ != 0 )
 		{
 			//본래 타일에 뭐가 있었는지 확인해서 각자 바꿀 것!!
-			m_Map[m_ClosedTile[i].m_PosI][m_ClosedTile[i].m_PosJ].m_Owner = (MO_OWNER)GetPlayerIdByTurn(m_currentTurn % m_PlayerNumber);
+			m_Map[m_ClosedTile[i].m_PosI][m_ClosedTile[i].m_PosJ].m_Owner = (MO_OWNER)GetPlayerIdByTurn(m_currentTurn % m_CurrentPlayerNumber);
 			--m_VoidTileCount;
 			i++;
 		}

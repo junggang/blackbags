@@ -123,9 +123,6 @@
     <ClCompile Include="..\Classes\SettingCharacterLayer.cpp">
       <Filter>Classes\Layer\GameSetting</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\SettingMapLayer.cpp">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\PlayScene.cpp">
       <Filter>Classes\Scene\PlayScene</Filter>
     </ClCompile>
@@ -147,9 +144,6 @@
     <ClCompile Include="..\Classes\HelpWindowLayer.cpp">
       <Filter>Classes\Layer\Play</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PlayerNameSettingLayer.cpp">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\HelpScene.cpp">
       <Filter>Classes\Scene\HelpScene</Filter>
     </ClCompile>
@@ -167,9 +161,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\CMO_tile.cpp">
       <Filter>Classes\Layer\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PlayerNameSettingScene.cpp">
-      <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SettingOtherPlayerStatusLayer.cpp">
       <Filter>Classes\Layer\GameSetting</Filter>
@@ -200,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExampleUserInput.cpp">
       <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerNumberAndMapSizeLayer.cpp">
+      <Filter>Classes\Layer\GameSetting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,9 +245,6 @@
     <ClInclude Include="..\Classes\SettingCharacterLayer.h">
       <Filter>Classes\Layer\GameSetting</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\SettingMapLayer.h">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\PlayScene.h">
       <Filter>Classes\Scene\PlayScene</Filter>
     </ClInclude>
@@ -275,9 +266,6 @@
     <ClInclude Include="..\Classes\HelpWindowLayer.h">
       <Filter>Classes\Layer\Play</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PlayerNameSettingLayer.h">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\HelpScene.h">
       <Filter>Classes\Scene\HelpScene</Filter>
     </ClInclude>
@@ -295,9 +283,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\CMO_tile.h">
       <Filter>Classes\Layer\Play</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PlayerNameSettingScene.h">
-      <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SettingOtherPlayerStatusLayer.h">
       <Filter>Classes\Layer\GameSetting</Filter>
@@ -328,6 +313,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExampleUserInput.h">
       <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerNumberAndMapSizeLayer.h">
+      <Filter>Classes\Layer\GameSetting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

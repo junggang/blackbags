@@ -1,8 +1,10 @@
 #include "MainScene.h"
 #include "BackgroundLayer.h"
 #include "GameSettingScene.h"
+
 #include "SettingTitleLayer.h"
 #include "StartAndHelpButtonLayer.h"
+
 #include "GameManager.h"
 
 
@@ -17,6 +19,9 @@ bool CGameSettingScene::init(void)
 		return false;
 	}
 
+	// init state == firstStep(Select PlayerNumber and MapSize)
+	isSceondStep = false;
+
 	/////////////////////////////
 	// 2. add layers
 	
@@ -24,25 +29,9 @@ bool CGameSettingScene::init(void)
 	CCLayer* BackgroundLayer = CBackgroundLayer::create();
 	this->addChild(BackgroundLayer, 0);
 
-	// title layer
-	CCLayer* SettingTitleLayer = CSettingTitleLayer::create();
-	this->addChild(SettingTitleLayer, 1);
-
-	// Character Select Table layer
-	SettingCharacterLayer = CSettingCharacterLayer::create();
-	this->addChild(SettingCharacterLayer, 1);
-
-	// map select table layer
-	SettingMapLayer = CSettingMapLayer::create();
-	this->addChild(SettingMapLayer, 1);
-
-	// StartButton and HelpButton layer
-	CStartAndHelpButtonLayer* StartAndHelpButtonLayer = CStartAndHelpButtonLayer::create();
-	this->addChild(StartAndHelpButtonLayer, 1);
-
-	// PlayerStatusLayer
-	OtherPlayerStatusLayer = CSettingOtherPlayerStatusLayer::create();
-	this->addChild(OtherPlayerStatusLayer, 1);
+	// 2.1 add Player Number and Map Size Select layer
+	m_PlayerNumberAndMapSizeLayer = CPlayerNumberAndMapSizeLayer::create();
+	this->addChild(m_PlayerNumberAndMapSizeLayer, 1);
 
 	this->scheduleUpdate();
 
@@ -53,14 +42,46 @@ void CGameSettingScene::update(float dt)
 {
 	//dt는 이전 update 이후 지난 시간
 
-	if (CGameManager::GetInstance()->IsUpdated() )
+	// 2.2 After Choose Player Number and Map Size, Go Next Step.
+	if ( CGameManager::GetInstance()->IsPlayerNumberAndMapSeleted() )
+	{
+		AddSceondStepLayers();
+		isSceondStep = true;
+		this->removeChild(m_PlayerNumberAndMapSizeLayer);
+	}
+
+	// if Second Step
+	if ( CGameManager::GetInstance()->IsUpdated() && isSceondStep )
 	{
 		//여기에 각 레이어들을 업데이트하는 코드를 넣음
-		//각 레이어별로 업데이트 함수 만들어야 함
-		SettingCharacterLayer->update(dt);
-		SettingMapLayer->update();
-		OtherPlayerStatusLayer->update();
+		m_SettingCharacterLayer->update(dt);
+		m_OtherPlayerStatusLayer->update();
 		//업데이트된 내용을 모두 받아와서 갱신했으므로 flag는 원래대로 false로 만든다
 		CGameManager::GetInstance()->SetUpdateFlag(false);
 	}
+	// is First Step
+	else if ( CGameManager::GetInstance()->IsUpdated() && !isSceondStep )
+	{
+		m_PlayerNumberAndMapSizeLayer->update();
+		CGameManager::GetInstance()->SetUpdateFlag(false);
+	}
+}
+
+void CGameSettingScene::AddSceondStepLayers()
+{
+	// title layer
+	CCLayer* SettingTitleLayer = CSettingTitleLayer::create();
+	this->addChild(SettingTitleLayer, 1);
+
+	// Character Select Table layer
+	m_SettingCharacterLayer = CSettingCharacterLayer::create();
+	this->addChild(m_SettingCharacterLayer, 1);
+
+	// StartButton and HelpButton layer
+	CCLayer* StartAndHelpButtonLayer = CStartAndHelpButtonLayer::create();
+	this->addChild(StartAndHelpButtonLayer, 1);
+
+	// PlayerStatusLayer
+	m_OtherPlayerStatusLayer = CSettingOtherPlayerStatusLayer::create();
+	this->addChild(m_OtherPlayerStatusLayer, 1);
 }
