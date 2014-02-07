@@ -1,7 +1,8 @@
 #include "GameManager.h"
 #include "GameLogic.h"
+#include "rapidjson\document.h"
 
-using namespace cocos2d::extension;
+USING_NS_CC_EXT;
 
 CGameManager* CGameManager::m_pInstance = nullptr;
 
@@ -370,11 +371,46 @@ void CGameManager::onHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespons
 
 	// dump data
 	std::vector<char> *buffer = response->getResponseData();
+	std::stringstream streamData;
 
-	// tag 종류에 따라서 다른 처리
-	if (strcmp(response->getHttpRequest()->getTag(), "POST login") )
+	for (unsigned int i = 0; i < buffer->size(); ++i)
 	{
-		
+		if (i != 0)
+		{
+			streamData << ",";
+			streamData << (*buffer)[i];
+		}
+	}
+
+	std::string stringData = streamData.str();
+
+	if (strcmp(response->getHttpRequest()->getTag(), "POST login") == 0)
+	{
+		// 성공 / 실패 확인 가능
+		// 확인해서 만약 성공이면 네트웍 대기 화면 보여주고
+		// 실패이면 실패 메시지 표시하고 확인 누르면 메인으로 돌아가게
+		// buffer ~~~
+	}
+	else if (strcmp(response->getHttpRequest()->getTag(), "POST loginUpdate") == 0)
+	{
+		// 수신한 데이터가 -1이면 계속 대기 >>> return
+		// 아니면 해당 숫자를 내 아이디로 설정
+		// 세팅씬 호출하고 update 주기적으로 실행되게 설정
+	}
+	else
+	{
+		// update된 내용 없으니까 그냥 종료
+		if (strcmp(stringData.c_str(), "not updated") == 0)
+		{
+			return;
+		}
+		else
+		{
+			rapidjson::Document gameData;
+			gameData.Parse<0>(stringData.c_str() );
+
+			// gameData에 있는 자료를 매니저가 가진 자료에 업데이트해주자
+		}
 	}
 }
 
