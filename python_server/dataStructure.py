@@ -49,6 +49,11 @@ GDP_TRASH_COUNT = 8
 GDP_SCORE = 9
 GDP_PLAYER_IDX = 10
 
+# game data - map id
+MS_NOT_SELECTED = 0
+MS_6X5 = 1
+MS_8X7 = 2
+
 # map data index
 GDM_TYPE = 0
 GDM_OWNER = 1
@@ -154,7 +159,7 @@ class GameData:
 		self.data = [
 			SC_SETTING,		# D_CURRENT_SCENE
 			gameChannelId,	# GD_CHANNEL_ID
-			-1,				# GD_MAP_ID
+			MS_NOT_SELECTED,# GD_MAP_ID
 			-1,				# GD_CURRENT_TURN_IDX
 			[],				# GD_TURN_LIST
 			False,			# GD_TURN_START_FLAG
@@ -187,7 +192,15 @@ class GameData:
 		self.data[GD_CURRENT_SCENE] = nextScene
 
 	# 플레이어가 선택한 맵 종료에 따른 크기 설정 (가로 / 세로)
-	def setMapSize(self, width, height):
+	def setMapSize(self, mapId):
+		if mapId == MS_6X5:
+			width = 6
+			height = 5
+		elif mapId == MS_8X7:
+			width = 8
+			height = 7
+
+		self.data[GD_MAP_ID] = mapId
 		self.data[GD_VOID_TILE_COUNT] = width * height
 		self.data[GD_MAP_SIZE][0] = width
 		self.data[GD_MAP_SIZE][1] = height
@@ -221,7 +234,6 @@ class GameData:
 				self.data[GD_PLAYER_LIST][idx][GDP_NAME] = playerData.getPlayerName()
 				self.data[GD_PLAYER_LIST][idx][GDP_CONNECTED_FLAG] = True
 				self.data[GD_PLAYER_LIST][idx][GDP_PLAYER_IDX] = idx
-
 
 				# 방장 설정 - addPlayer는 최초 방 생성에만 사용하므로 idx값이 0이면 그냥 방장으로 설정
 				if idx == 0:
@@ -640,13 +652,12 @@ if __name__ == '__main__':
 	for each in range(4):
 		if testGameData.getPlayerConnection(each):
 			print "name : %s / score : %d" % (testGameData.getPlayerName(each), testGameData.getPlayerScore(each))
-	testGameData.setMapSize(8, 7)
+	testGameData.setMapSize(MS_8X7)
 
 	testGameData.makeRandomTurn()
 	testGameData.makeRandomMap()
 
 	testGameData.renderMap()
-	print testGameData.data
 
 	while not testGameData.isEnd():
 		userInput = raw_input('input : ')

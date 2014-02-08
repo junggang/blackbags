@@ -172,10 +172,7 @@ def SCSelctMap(tokenId, mapId):
 
 	if gameData.isChannelMaster(playerId) == 1:
 		# 요청한 유저가 방장이므로 맵 크기를 설정한다. 
-		if mapId == 1:
-			gameData.setMapSize(5, 6)
-		elif mapId == 2:
-			gameData.setMapSize(7, 8)
+		gameData.setMapSize(mapId)
 
 		jsonData = json.dumps(gameData.data)
 		gRedis.set(channelId, jsonData)
@@ -423,9 +420,10 @@ def drawLine():
 	try : 
 		if request.method  == "POST":  
 			tokenId = 'temp'
-			lineIdx = []
+			posI = 0
+			posJ = 0
 
-			return PCDrawLine(tokenId, lineIdx)
+			return PCDrawLine(tokenId, [posI, posJ])
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
 		print 'error  ->  : ' ,err 
