@@ -1,9 +1,11 @@
 #include "GameManager.h"
 #include "GameLogic.h"
+#include <cstdio>
 // 조심해! 이거 있으니까 컴파일이 안되네요
 //#include "rapidjson\document.h"
 
 USING_NS_CC_EXT;
+using namespace rapidjson;
 
 CGameManager* CGameManager::m_pInstance = nullptr;
 
@@ -14,6 +16,7 @@ CGameManager::CGameManager(void)
 	m_Request = false;
 
 	m_Request = nullptr;
+	m_networkGameData = nullptr;
 }
 
 CGameManager::~CGameManager(void)
@@ -38,10 +41,6 @@ bool CGameManager::init()
 {
 	CGameLogic::GetInstance()->init();
 
-
-	// make data repository
-	// json 뭐 만든다 치고...
-
 	return true;
 }
 
@@ -51,6 +50,7 @@ void CGameManager::SetPlayerName(int playerId,  const std::string& playerName )
 	if (m_IsOnlineGame)
 	{
 		//온라인인 경우
+		
 		return;
 	}
 	else
@@ -64,7 +64,7 @@ const std::string& CGameManager::GetPlayerName(int playerIdx)
 {
 	if (m_IsOnlineGame)
 	{
-		//server에서 필요한 정보를 받아 온다.
+		return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_NAME)].GetString();
 	}
 	else
 	{
@@ -76,7 +76,7 @@ int CGameManager::GetCurrentPlayerNumber()
 {
 	if (m_IsOnlineGame)
 	{
-		//server에서 필요한 정보를 받아 온다.
+		return m_networkGameData[SizeType(GD_PLAYER_NUMBER)].GetInt();
 	}
 	else
 	{
@@ -103,6 +103,7 @@ int CGameManager::GetWinnerIdx()
 	if (m_IsOnlineGame)
 	{
 		//server에서 필요한 정보를 받아 온다.
+		// winner idx - 동점 경우도 생각해야 함
 	}
 	else
 	{
@@ -114,7 +115,24 @@ int CGameManager::GetElementCount(int playerIdx, MO_ITEM item)
 {
 	if (m_IsOnlineGame)
 	{
-		//server에서 필요한 정보를 받아 온다.
+		int tempIdx = 0;
+
+		switch (item)
+		{
+		case ITEM_NOTHING:
+			tempIdx = GDP_TILE_COUNT;
+			break;
+		case ITEM_GOLD:
+			tempIdx = GDP_GOLD_COUNT;
+			break;
+		case ITEM_TRASH:
+			tempIdx = GDP_TRASH_COUNT;
+			break;
+		default:
+			break;
+		}
+
+		return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(tempIdx)].GetInt();
 	}
 	else
 	{
@@ -126,7 +144,7 @@ int CGameManager::GetTotalScore(int playerIdx)
 {
 	if (m_IsOnlineGame)
 	{
-		//server에서 필요한 정보를 받아 온다.
+		return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_SCORE)].GetInt();
 	}
 	else
 	{
@@ -139,7 +157,9 @@ const std::string& CGameManager::GetCharacterResultFaceFileName(int playerIdx)
 {
 	if (m_IsOnlineGame)
 	{
-		//server에서 필요한 정보를 받아 온다.
+		int characterId = m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_CHARACTER_ID)].GetInt();
+
+		return CGameLogic::GetInstance()->GetCharacterResultImage(characterId);
 	}
 	else
 	{
@@ -165,6 +185,7 @@ bool CGameManager::isCharacterSelected( int characterId )
 	if (m_IsOnlineGame)
 	{
 		//온라인
+		// 필요한가?
 		return false;
 	}
 	else
@@ -177,8 +198,7 @@ int CGameManager::GetCharacterId( int playerId )
 {
 	if (m_IsOnlineGame)
 	{
-		//온라인
-		return -1;
+		return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerId)][SizeType(GDP_CHARACTER_ID)].GetInt();
 	}
 	else
 	{
@@ -190,7 +210,7 @@ int CGameManager::GetPlayerIdByTurn( int currentTurn )
 {
 	if (m_IsOnlineGame)
 	{
-
+		return m_networkGameData[SizeType(GD_TURN_LIST)][SizeType(currentTurn)].GetInt();
 	}
 	else
 	{
@@ -226,7 +246,7 @@ bool CGameManager::IsEnd()
 {
 	if (m_IsOnlineGame)
 	{
-
+		return (m_networkGameData[SizeType(GD_CURRENT_SCENE)].GetInt() == SC_RESULT) ? true : false;
 	}
 	else
 	{
@@ -238,7 +258,7 @@ MapSelect	CGameManager::GetSelectedMapSize()
 {
 	if (m_IsOnlineGame)
 	{
-
+		return static_cast<MapSelect>(m_networkGameData[SizeType(GD_MAP_ID)].GetInt() );
 	}
 	else
 	{
@@ -250,7 +270,7 @@ MO_TYPE CGameManager::GetMapType( IndexedPosition indexedPosition )
 {
 	if (m_IsOnlineGame)
 	{
-
+		return static_cast<MO_TYPE>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_TYPE)].GetInt() );
 	}
 	else
 	{
@@ -262,7 +282,7 @@ MO_OWNER CGameManager::GetMapOwner( IndexedPosition indexedPosition )
 {
 	if (m_IsOnlineGame)
 	{
-
+		return static_cast<MO_OWNER>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_OWNER)].GetInt() );
 	}
 	else
 	{
@@ -274,7 +294,7 @@ MO_ITEM CGameManager::GetItem( IndexedPosition indexedPosition )
 {
 	if (m_IsOnlineGame)
 	{
-
+		return static_cast<MO_ITEM>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_ITEM)].GetInt() );
 	}
 	else
 	{
@@ -299,7 +319,9 @@ const std::string& CGameManager::GetCharacterPlayFaceById( int playerIdx )
 {
 	if (m_IsOnlineGame)
 	{
+		int characterId = m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_CHARACTER_ID)].GetInt();
 
+		return CGameLogic::GetInstance()->GetCharacterPlayImage(characterId);
 	}
 	else
 	{
@@ -311,7 +333,7 @@ MO_TYPE CGameManager::IsConnected(IndexedPosition indexedPosition)
 {
 	if (m_IsOnlineGame)
 	{
-
+		return static_cast<MO_TYPE>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_TYPE)].GetInt() );
 	}
 	else
 	{
@@ -323,7 +345,7 @@ int CGameManager::GetPlayerTurn( int playerId )
 {
 	if (m_IsOnlineGame)
 	{
-
+		return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(GDP_TURN)].GetInt();
 	}
 	else
 	{
@@ -335,7 +357,9 @@ int CGameManager::GetCurrentPlayerId()
 {
 	if (m_IsOnlineGame)
 	{
+		int turnIdx = m_networkGameData[SizeType(GD_CURRENT_TURN_IDX)].GetInt();
 
+		return m_networkGameData[SizeType(GD_TURN_LIST)][SizeType(turnIdx)].GetInt();
 	}
 	else
 	{
@@ -347,7 +371,7 @@ int	CGameManager::GetTileAnimationTurn(IndexedPosition indexedPosition)
 {
 	if (m_IsOnlineGame)
 	{
-
+		m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_ANIMATION_TURN)].GetInt();
 	}
 	else
 	{
@@ -391,6 +415,12 @@ void CGameManager::onHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespons
 		// 확인해서 만약 성공이면 네트웍 대기 화면 보여주고
 		// 실패이면 실패 메시지 표시하고 확인 누르면 메인으로 돌아가게
 		// buffer ~~~
+		
+		// init network game data
+		if (m_networkGameData == nullptr)
+		{
+			m_networkGameData = new Document();
+		}
 	}
 	else if (strcmp(response->getHttpRequest()->getTag(), "POST loginUpdate") == 0)
 	{
@@ -407,10 +437,16 @@ void CGameManager::onHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespons
 		}
 		else
 		{
-			rapidjson::Document gameData;
-			gameData.Parse<0>(stringData.c_str() );
-
 			// gameData에 있는 자료를 매니저가 가진 자료에 업데이트해주자
+			if (m_networkGameData != nullptr)
+			{
+				m_networkGameData->Clear();
+				m_networkGameData->Parse<0>(stringData.c_str() );
+			}
+
+			SetUpdateFlag(true);
+
+			// game end >>> delete the network game data
 		}
 	}
 }

@@ -75,6 +75,11 @@ public:
 	const std::string& GetPlayerResultImage(int playerId)		{ return m_Character[m_PlayerData[playerId]->m_CharacterId].m_CharacterResultImage; }
 	const cocos2d::ccColor4B& GetPlayerColor(int playerId)		{ return m_Character[m_PlayerData[playerId]->m_CharacterId].m_CharacterColor; }
 
+	const std::string& GetCharacterSettingImage(int characterId)		{ return m_Character[characterId].m_CharacterSettingImage; }
+	const std::string& GetCharacterPlayImage(int characterId)			{ return m_Character[characterId].m_CharacterPlayImage; } 
+	const std::string& GetCharacterResultImage(int characterId)			{ return m_Character[characterId].m_CharacterResultImage; }
+	const cocos2d::ccColor4B& GetCharacterColor(int characterId)		{ return m_Character[characterId].m_CharacterColor; }
+
 	bool			SetSelectedMapSize( MapSelect mapSize );
 	MapSelect		GetSelectedMapSize() { return m_SelectedMapSize; }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "rapidjson\document.h"
 #include "config.h"
 
 class CGameManager
@@ -94,5 +95,8 @@ private:
 
 	// implement the "static node()" method manually
     //CREATE_FUNC(CGameManager);
+
+	// network game data
+	rapidjson::Document* m_networkGameData;
 };
 

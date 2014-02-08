@@ -296,6 +296,48 @@ struct Coordinate
 	int m_PosY;
 };
 
+/*	network data */
+enum GameDataIndex
+{
+	GD_CURRENT_SCENE = 0,
+	GD_CHANNEL_ID = 1,
+	GD_MAP_ID = 2,
+	GD_CURRENT_TURN_IDX = 3,
+	GD_TURN_LIST = 4,
+	GD_TURN_START_FLAG = 5,
+	GD_RECENTLY_CONNECTED_LINE = 6,
+	GD_VOID_TILE_COUNT = 7,
+	GD_PLAYER_NUMBER = 8,
+	GD_PLAYER_LIST = 9,
+	GD_MAP_SIZE = 10,
+	GD_MAP = 11
+};
+
+enum GameDataPlayerData
+{
+	GDP_NAME = 0,
+	GDP_MASTER_FLAG = 1,
+	GDP_CONNECTED_FLAG = 2,
+	GDP_READY = 3,
+	GDP_CHARACTER_ID = 4,
+	GDP_TURN = 5,
+	GDP_TILE_COUNT = 6,
+	GDP_GOLD_COUNT = 7,
+	GDP_TRASH_COUNT = 8,
+	GDP_SCORE = 9,
+	GDP_PLAYER_IDX = 10
+};
+
+enum MapDataIndex
+{
+	GDM_TYPE = 0,
+	GDM_OWNER = 1,
+	GDM_ITEM = 2,
+	GDM_CHECKED_FLAG = 3,
+	GDM_ANIMATION_TURN = 4,
+	GDM_DIRECTION = 5
+};
+
 /*	게임 맵의 타일 좌표를 표현하기 위한 구조체 */
 struct IndexedPosition
 {
