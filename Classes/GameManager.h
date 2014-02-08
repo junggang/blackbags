@@ -97,6 +97,13 @@ private:
     //CREATE_FUNC(CGameManager);
 
 	// network game data
-	rapidjson::Document* m_networkGameData;
+	std::string				m_TokenId;
+	std::string				m_UserName;
+
+	bool					m_TwoFlag;
+	bool					m_ThreeFlag;
+	bool					m_FourFlag;
+
+	rapidjson::Document*	m_networkGameData;
 };
 

@@ -1,8 +1,6 @@
 #include "GameManager.h"
 #include "GameLogic.h"
-#include <cstdio>
-// 조심해! 이거 있으니까 컴파일이 안되네요
-//#include "rapidjson\document.h"
+//#include <cstdio>
 
 USING_NS_CC_EXT;
 using namespace rapidjson;
@@ -17,6 +15,9 @@ CGameManager::CGameManager(void)
 
 	m_Request = nullptr;
 	m_networkGameData = nullptr;
+
+	m_TokenId = "";
+	m_UserName = "";
 }
 
 CGameManager::~CGameManager(void)
@@ -49,9 +50,8 @@ void CGameManager::SetPlayerName(int playerId,  const std::string& playerName )
 {
 	if (m_IsOnlineGame)
 	{
-		//온라인인 경우
-		
-		return;
+		// 다른 유저의 이름은 서버에서 받아오고
+		// 본인 이름은 shared data에 저장된 것을 사용하므로 이 함수는 사용하지 않음
 	}
 	else
 	{
@@ -90,7 +90,7 @@ void CGameManager::SetCurrentPlayerNumber(int PlayerNumber)
 {
 	if (m_IsOnlineGame)
 	{
-		//server로 패킷을 보낸다.
+		// player number는 서버가 matching thread를 통해서 결정하므로 사용되지 않음
 	}
 	else
 	{
@@ -171,8 +171,24 @@ void CGameManager::SelectCharacter( int characterId )
 {
 	if (m_IsOnlineGame)
 	{
-		//온라인
-		return;
+		m_Request = new CCHttpRequest();
+
+		m_Request->setUrl("localhost/select_character");
+		m_Request->setRequestType(CCHttpRequest::kHttpPost);
+		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
+
+		// write the post data
+		std::string postData  = "tokenId=";
+		postData.append(m_TokenId);
+
+		postData.append("&characterId=");
+		postData.append(std::to_string(characterId) );
+
+		m_Request->setRequestData(postData.c_str(), postData.length() );
+
+		m_Request->setTag("POST selectCharacter");
+		CCHttpClient::getInstance()->send(m_Request);
+		m_Request->release();
 	}
 	else
 	{
@@ -184,7 +200,6 @@ bool CGameManager::isCharacterSelected( int characterId )
 {
 	if (m_IsOnlineGame)
 	{
-		//온라인
 		// 필요한가?
 		return false;
 	}
@@ -222,7 +237,21 @@ void CGameManager::StartGame()
 {
 	if (m_IsOnlineGame)
 	{
+		m_Request = new CCHttpRequest();
 
+		m_Request->setUrl("localhost/settingReady");
+		m_Request->setRequestType(CCHttpRequest::kHttpPost);
+		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
+
+		// write the post data
+		std::string postData  = "tokenId=";
+		postData.append(m_TokenId);
+
+		m_Request->setRequestData(postData.c_str(), postData.length() );
+
+		m_Request->setTag("POST settingReady");
+		CCHttpClient::getInstance()->send(m_Request);
+		m_Request->release();
 	}
 	else
 	{
@@ -234,7 +263,24 @@ void CGameManager::SetMapSize( MapSelect mapSize )
 {
 	if (m_IsOnlineGame)
 	{
+		m_Request = new CCHttpRequest();
 
+		m_Request->setUrl("localhost/selectMap");
+		m_Request->setRequestType(CCHttpRequest::kHttpPost);
+		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
+
+		// write the post data
+		std::string postData  = "tokenId=";
+		postData.append(m_TokenId);
+
+		postData.append("&mapId=");
+		postData.append(std::to_string(mapSize) );
+
+		m_Request->setRequestData(postData.c_str(), postData.length() );
+
+		m_Request->setTag("POST setMapSize");
+		CCHttpClient::getInstance()->send(m_Request);
+		m_Request->release();
 	}
 	else
 	{
@@ -306,7 +352,27 @@ void CGameManager::DrawLine( IndexedPosition indexedPosition )
 {
 	if (m_IsOnlineGame)
 	{
+		m_Request = new CCHttpRequest();
 
+		m_Request->setUrl("localhost/draw_line");
+		m_Request->setRequestType(CCHttpRequest::kHttpPost);
+		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
+
+		// write the post data
+		std::string postData  = "tokenId=";
+		postData.append(m_TokenId);
+
+		postData.append("&posI=");
+		postData.append(std::to_string(indexedPosition.m_PosI) );
+
+		postData.append("&posJ=");
+		postData.append(std::to_string(indexedPosition.m_PosJ) );
+
+		m_Request->setRequestData(postData.c_str(), postData.length() );
+
+		m_Request->setTag("POST drawLine");
+		CCHttpClient::getInstance()->send(m_Request);
+		m_Request->release();
 	}
 	else
 	{
@@ -379,6 +445,43 @@ int	CGameManager::GetTileAnimationTurn(IndexedPosition indexedPosition)
 	}
 }
 
+bool CGameManager::IsPlayerNumberAndMapSeleted()
+{
+	if (m_IsOnlineGame)
+	{
+		// 채널 마스터인 경우 본인을 제외하고 모든 사람이 레디하면 true
+		// 마스터가 아닌 경우 자신의 레디 상태 확인해서 true / false
+	}
+	else
+	{
+		return CGameLogic::GetInstance()->isPlayerNumberAndMapSeleted();
+	}
+}
+
+int CGameManager::GetPlayerNumberOfThisGame()
+{
+	if (m_IsOnlineGame)
+	{
+		// 필요한가?
+	}
+	else
+	{
+		return CGameLogic::GetInstance()->GetPlayerNumberOfThisGame();
+	}
+}
+
+void CGameManager::SetPlayerNumberOfThisGame( int PlayerNumber )
+{
+	if (m_IsOnlineGame)
+	{
+		// shared data에 player number flags 설정
+	}
+	else
+	{
+		CGameLogic::GetInstance()->SetPlayerNumberOfThisGame(PlayerNumber);
+	}
+}
+
 void CGameManager::onHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpResponse* response)
 {
 	if (!response)
@@ -421,12 +524,15 @@ void CGameManager::onHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespons
 		{
 			m_networkGameData = new Document();
 		}
+
+		// create loginUpdate schedule
 	}
 	else if (strcmp(response->getHttpRequest()->getTag(), "POST loginUpdate") == 0)
 	{
 		// 수신한 데이터가 -1이면 계속 대기 >>> return
 		// 아니면 해당 숫자를 내 아이디로 설정
-		// 세팅씬 호출하고 update 주기적으로 실행되게 설정
+
+		// create update schedule
 	}
 	else
 	{
@@ -455,6 +561,11 @@ void CGameManager::SetOnlineMode(bool flag)
 { 
 	m_IsOnlineGame = flag;
 
+	if (!m_IsOnlineGame)
+	{
+		return;
+	}
+
 	// login
 	// make http request
 	m_Request = new CCHttpRequest();
@@ -464,46 +575,26 @@ void CGameManager::SetOnlineMode(bool flag)
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
 
 	// write the post data
-	const char* postData = "tokenId=tempId&name=tempName&two=1&three=1&four=1";
-	m_Request->setRequestData(postData, strlen(postData));
+	// 조심해!!
+	// shared data 만들고 나서 수정할 것
+	std::string postData  = "tokenId=";
+	postData.append(m_TokenId);
+
+	postData.append("&name=");
+	postData.append(m_UserName);
+	
+	postData.append("&two=");
+	postData.append( (m_TwoFlag) ? "1" : "0" );
+
+	postData.append("&three=");
+	postData.append( (m_ThreeFlag) ? "1" : "0" );
+
+	postData.append("&four=");
+	postData.append( (m_FourFlag) ? "1" : "0" );
+
+	m_Request->setRequestData(postData.c_str(), postData.length() );
 
 	m_Request->setTag("POST login");
 	CCHttpClient::getInstance()->send(m_Request);
 	m_Request->release();
-}
-
-bool CGameManager::IsPlayerNumberAndMapSeleted()
-{
-	if (m_IsOnlineGame)
-	{
-
-	}
-	else
-	{
-		return CGameLogic::GetInstance()->isPlayerNumberAndMapSeleted();
-	}
-}
-
-int CGameManager::GetPlayerNumberOfThisGame()
-{
-	if (m_IsOnlineGame)
-	{
-
-	}
-	else
-	{
-		return CGameLogic::GetInstance()->GetPlayerNumberOfThisGame();
-	}
-}
-
-void CGameManager::SetPlayerNumberOfThisGame( int PlayerNumber )
-{
-	if (m_IsOnlineGame)
-	{
-
-	}
-	else
-	{
-		CGameLogic::GetInstance()->SetPlayerNumberOfThisGame(PlayerNumber);
-	}
 }
