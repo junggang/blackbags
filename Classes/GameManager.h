@@ -77,6 +77,11 @@ public:
 	int GetTotalScore(int playerIdx);
 	const std::string& GetCharacterResultFaceFileName(int playerIdx);
 
+	// network game 상태 확인
+	bool IsLogin();
+	bool IsLoginFail();
+	bool IsInChannel();
+
 private:
 	static CGameManager*	m_pInstance; //singleton instance
 
