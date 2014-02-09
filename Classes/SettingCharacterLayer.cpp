@@ -1,6 +1,8 @@
 #include "SettingCharacterLayer.h"
 #include "GameManager.h"
 
+const int CHARACTER_TABLE_TAG = 10;
+
 USING_NS_CC;
 
 bool CSettingCharacterLayer::init()
@@ -62,6 +64,7 @@ bool CSettingCharacterLayer::init()
 	CharacterSelectTable->alignItemsHorizontally();
 
 	// add to class Character Select menu
+	CharacterSelectTable->setTag(CHARACTER_TABLE_TAG);
 	this->addChild(CharacterSelectTable);
 
 	return true;
@@ -77,18 +80,9 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 	// 버튼 터치로 캐릭터 선택 / 취소 구현
 	CCMenuItemImage* touchedButton = static_cast<CCMenuItemImage*>(pSender);
 
-	if (touchedButton != nullptr)
+	if (touchedButton == nullptr)
 	{
-		// 버튼이 선택되어 있으면 취소, 선택되어 있지 않으면 선택한다.
-		bool isSelected = CGameManager::GetInstance()->isCharacterSelected(selectedCharacterId);
-		if ( isSelected )
-		{
-			touchedButton->unselected();
-		}
-		else
-		{
-			touchedButton->selected();
-		}
+		return;
 	}
 
 	CGameManager::GetInstance()->SelectCharacter(selectedCharacterId);
@@ -101,5 +95,20 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 
 void CSettingCharacterLayer::update()
 {
+	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	{
+		// 모든 캐릭터를 돌면서 선택된 캐릭터인지 아닌지 지속적으로 확인한다.
+		bool isSelected = CGameManager::GetInstance()->isCharacterSelected(i);
 
+		CCMenuItemImage* tempButton = static_cast<CCMenuItemImage*>( this->getChildByTag(CHARACTER_TABLE_TAG)->getChildByTag(i) );
+
+		if ( isSelected )
+		{
+			tempButton->selected();
+		}
+		else
+		{
+			tempButton->unselected();
+		}
+	}
 }
