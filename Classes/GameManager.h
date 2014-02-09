@@ -1,7 +1,5 @@
 #pragma once
 #include "cocos2d.h"
-#include "cocos-ext.h"
-#include "rapidjson\document.h"
 #include "config.h"
 
 class CGameManager
@@ -79,19 +77,8 @@ public:
 	int GetTotalScore(int playerIdx);
 	const std::string& GetCharacterResultFaceFileName(int playerIdx);
 
-	// network
-	bool IsLogin()				{ return m_Login; }
-	bool IsLoginFail()			{ return m_LoginFail; }
-	bool IsInChannel()			{ return m_InChannel; }
-
-	void Login();
-	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
-
 private:
-
 	static CGameManager*	m_pInstance; //singleton instance
-
-	cocos2d::extension::CCHttpRequest*			m_Request;
 
 	bool m_IsOnlineGame;
 	bool m_IsUpdated;
@@ -101,21 +88,5 @@ private:
 
 	// implement the "static node()" method manually
     //CREATE_FUNC(CGameManager);
-
-	// network game data
-	bool					m_Login;
-	bool					m_LoginFail;
-	bool					m_InChannel;
-
-	int						m_MyPlayerId;
-
-	std::string				m_TokenId;
-	std::string				m_UserName;
-
-	bool					m_TwoFlag;
-	bool					m_ThreeFlag;
-	bool					m_FourFlag;
-
-	rapidjson::Document*	m_networkGameData;
 };
 

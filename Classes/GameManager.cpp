@@ -1,9 +1,6 @@
 #include "GameManager.h"
 #include "GameLogic.h"
-#include <cstdio>
-
-USING_NS_CC_EXT;
-using namespace rapidjson;
+#include "NetworkLogic.h"
 
 CGameManager* CGameManager::m_pInstance = nullptr;
 
@@ -11,19 +8,6 @@ CGameManager::CGameManager(void)
 {
 	m_IsOnlineGame = false;
 	m_IsUpdated = false;
-	m_Request = false;
-
-	m_Request = nullptr;
-	m_networkGameData = nullptr;
-
-	m_TokenId = "";
-	m_UserName = "";
-
-	m_Login = false;
-	m_LoginFail = false;
-	m_InChannel = false;
-
-	m_MyPlayerId = -1;
 }
 
 CGameManager::~CGameManager(void)
@@ -42,6 +26,7 @@ CGameManager* CGameManager::GetInstance()
 
 void CGameManager::ReleaseInstance()
 {
+
 }
 
 bool CGameManager::init()
@@ -70,7 +55,7 @@ const std::string& CGameManager::GetPlayerName(int playerIdx)
 {
 	if (m_IsOnlineGame)
 	{
-		return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_NAME)].GetString();
+		return CNetworkLogic::GetInstance()->GetPlayerName(playerIdx);
 	}
 	else
 	{
@@ -82,7 +67,7 @@ int CGameManager::GetCurrentPlayerNumber()
 {
 	if (m_IsOnlineGame)
 	{
-		return m_networkGameData[SizeType(GD_PLAYER_NUMBER)].GetInt();
+		return CNetworkLogic::GetInstance()->GetCurrentPlayerNumber();
 	}
 	else
 	{
@@ -121,24 +106,7 @@ int CGameManager::GetElementCount(int playerIdx, MO_ITEM item)
 {
 	if (m_IsOnlineGame)
 	{
-		int tempIdx = 0;
-
-		switch (item)
-		{
-		case ITEM_NOTHING:
-			tempIdx = GDP_TILE_COUNT;
-			break;
-		case ITEM_GOLD:
-			tempIdx = GDP_GOLD_COUNT;
-			break;
-		case ITEM_TRASH:
-			tempIdx = GDP_TRASH_COUNT;
-			break;
-		default:
-			break;
-		}
-
-		return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(tempIdx)].GetInt();
+		return CNetworkLogic::GetInstance()->GetPlayerResult(playerIdx, item);
 	}
 	else
 	{
@@ -150,7 +118,7 @@ int CGameManager::GetTotalScore(int playerIdx)
 {
 	if (m_IsOnlineGame)
 	{
-		return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_SCORE)].GetInt();
+		return CNetworkLogic::GetInstance()->GetPlayerTotalScore(playerIdx);
 	}
 	else
 	{
@@ -163,9 +131,7 @@ const std::string& CGameManager::GetCharacterResultFaceFileName(int playerIdx)
 {
 	if (m_IsOnlineGame)
 	{
-		int characterId = m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_CHARACTER_ID)].GetInt();
-
-		return CGameLogic::GetInstance()->GetCharacterResultImage(characterId);
+		return CNetworkLogic::GetInstance()->GetPlayerResultImage(playerIdx);
 	}
 	else
 	{
@@ -177,24 +143,7 @@ void CGameManager::SelectCharacter( int characterId )
 {
 	if (m_IsOnlineGame)
 	{
-		m_Request = new CCHttpRequest();
-
-		m_Request->setUrl("localhost/select_character");
-		m_Request->setRequestType(CCHttpRequest::kHttpPost);
-		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::OnHttpRequestCompleted) );
-
-		// write the post data
-		std::string postData  = "tokenId=";
-		postData.append(m_TokenId);
-
-		postData.append("&characterId=");
-		postData.append(std::to_string(characterId) );
-
-		m_Request->setRequestData(postData.c_str(), postData.length() );
-
-		m_Request->setTag("POST selectCharacter");
-		CCHttpClient::getInstance()->send(m_Request);
-		m_Request->release();
+		CNetworkLogic::GetInstance()->SelectCharacter(characterId);
 	}
 	else
 	{
@@ -219,7 +168,7 @@ int CGameManager::GetCharacterId( int playerId )
 {
 	if (m_IsOnlineGame)
 	{
-		return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerId)][SizeType(GDP_CHARACTER_ID)].GetInt();
+		return CNetworkLogic::GetInstance()->GetPlayerCharacterId( playerId );
 	}
 	else
 	{
@@ -231,7 +180,7 @@ int CGameManager::GetPlayerIdByTurn( int currentTurn )
 {
 	if (m_IsOnlineGame)
 	{
-		return m_networkGameData[SizeType(GD_TURN_LIST)][SizeType(currentTurn)].GetInt();
+		return CNetworkLogic::GetInstance()->GetPlayerIdByTurn(currentTurn);
 	}
 	else
 	{
@@ -243,21 +192,7 @@ void CGameManager::StartGame()
 {
 	if (m_IsOnlineGame)
 	{
-		m_Request = new CCHttpRequest();
-
-		m_Request->setUrl("localhost/settingReady");
-		m_Request->setRequestType(CCHttpRequest::kHttpPost);
-		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::OnHttpRequestCompleted) );
-
-		// write the post data
-		std::string postData  = "tokenId=";
-		postData.append(m_TokenId);
-
-		m_Request->setRequestData(postData.c_str(), postData.length() );
-
-		m_Request->setTag("POST settingReady");
-		CCHttpClient::getInstance()->send(m_Request);
-		m_Request->release();
+		CNetworkLogic::GetInstance()->SettingReady();
 	}
 	else
 	{
@@ -269,24 +204,7 @@ void CGameManager::SetMapSize( MapSelect mapSize )
 {
 	if (m_IsOnlineGame)
 	{
-		m_Request = new CCHttpRequest();
-
-		m_Request->setUrl("localhost/selectMap");
-		m_Request->setRequestType(CCHttpRequest::kHttpPost);
-		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::OnHttpRequestCompleted) );
-
-		// write the post data
-		std::string postData  = "tokenId=";
-		postData.append(m_TokenId);
-
-		postData.append("&mapId=");
-		postData.append(std::to_string(mapSize) );
-
-		m_Request->setRequestData(postData.c_str(), postData.length() );
-
-		m_Request->setTag("POST setMapSize");
-		CCHttpClient::getInstance()->send(m_Request);
-		m_Request->release();
+		CNetworkLogic::GetInstance()->SetMapSize(mapSize);
 	}
 	else
 	{
@@ -298,7 +216,7 @@ bool CGameManager::IsEnd()
 {
 	if (m_IsOnlineGame)
 	{
-		return (m_networkGameData[SizeType(GD_CURRENT_SCENE)].GetInt() == SC_RESULT) ? true : false;
+		return CNetworkLogic::GetInstance()->IsEnd();
 	}
 	else
 	{
@@ -310,7 +228,7 @@ MapSelect	CGameManager::GetSelectedMapSize()
 {
 	if (m_IsOnlineGame)
 	{
-		return static_cast<MapSelect>(m_networkGameData[SizeType(GD_MAP_ID)].GetInt() );
+		return CNetworkLogic::GetInstance()->GetSelectedMapSize();
 	}
 	else
 	{
@@ -322,7 +240,7 @@ MO_TYPE CGameManager::GetMapType( IndexedPosition indexedPosition )
 {
 	if (m_IsOnlineGame)
 	{
-		return static_cast<MO_TYPE>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_TYPE)].GetInt() );
+		return CNetworkLogic::GetInstance()->GetMapType(indexedPosition);
 	}
 	else
 	{
@@ -334,7 +252,7 @@ MO_OWNER CGameManager::GetMapOwner( IndexedPosition indexedPosition )
 {
 	if (m_IsOnlineGame)
 	{
-		return static_cast<MO_OWNER>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_OWNER)].GetInt() );
+		return CNetworkLogic::GetInstance()->GetMapOwner(indexedPosition);
 	}
 	else
 	{
@@ -346,7 +264,7 @@ MO_ITEM CGameManager::GetItem( IndexedPosition indexedPosition )
 {
 	if (m_IsOnlineGame)
 	{
-		return static_cast<MO_ITEM>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_ITEM)].GetInt() );
+		return CNetworkLogic::GetInstance()->GetItem(indexedPosition);
 	}
 	else
 	{
@@ -358,27 +276,7 @@ void CGameManager::DrawLine( IndexedPosition indexedPosition )
 {
 	if (m_IsOnlineGame)
 	{
-		m_Request = new CCHttpRequest();
-
-		m_Request->setUrl("localhost/draw_line");
-		m_Request->setRequestType(CCHttpRequest::kHttpPost);
-		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::OnHttpRequestCompleted) );
-
-		// write the post data
-		std::string postData  = "tokenId=";
-		postData.append(m_TokenId);
-
-		postData.append("&posI=");
-		postData.append(std::to_string(indexedPosition.m_PosI) );
-
-		postData.append("&posJ=");
-		postData.append(std::to_string(indexedPosition.m_PosJ) );
-
-		m_Request->setRequestData(postData.c_str(), postData.length() );
-
-		m_Request->setTag("POST drawLine");
-		CCHttpClient::getInstance()->send(m_Request);
-		m_Request->release();
+		return CNetworkLogic::GetInstance()->DrawLine(indexedPosition);
 	}
 	else
 	{
@@ -391,9 +289,7 @@ const std::string& CGameManager::GetCharacterPlayFaceById( int playerIdx )
 {
 	if (m_IsOnlineGame)
 	{
-		int characterId = m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_CHARACTER_ID)].GetInt();
-
-		return CGameLogic::GetInstance()->GetCharacterPlayImage(characterId);
+		return CNetworkLogic::GetInstance()->GetPlayerPlayImage(playerIdx);
 	}
 	else
 	{
@@ -405,7 +301,7 @@ MO_TYPE CGameManager::IsConnected(IndexedPosition indexedPosition)
 {
 	if (m_IsOnlineGame)
 	{
-		return static_cast<MO_TYPE>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_TYPE)].GetInt() );
+		return CNetworkLogic::GetInstance()->IsConnected(indexedPosition);
 	}
 	else
 	{
@@ -417,7 +313,7 @@ int CGameManager::GetPlayerTurn( int playerId )
 {
 	if (m_IsOnlineGame)
 	{
-		return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(GDP_TURN)].GetInt();
+		return CNetworkLogic::GetInstance()->GetPlayerTurnById(playerId);
 	}
 	else
 	{
@@ -429,9 +325,7 @@ int CGameManager::GetCurrentPlayerId()
 {
 	if (m_IsOnlineGame)
 	{
-		int turnIdx = m_networkGameData[SizeType(GD_CURRENT_TURN_IDX)].GetInt();
-
-		return m_networkGameData[SizeType(GD_TURN_LIST)][SizeType(turnIdx)].GetInt();
+		return CNetworkLogic::GetInstance()->GetPlayerIdByCurrentTurn();
 	}
 	else
 	{
@@ -443,7 +337,7 @@ int	CGameManager::GetTileAnimationTurn(IndexedPosition indexedPosition)
 {
 	if (m_IsOnlineGame)
 	{
-		m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_ANIMATION_TURN)].GetInt();
+		return CNetworkLogic::GetInstance()->GetTileAnimationTurn(indexedPosition);
 	}
 	else
 	{
@@ -489,130 +383,4 @@ void CGameManager::SetPlayerNumberOfThisGame( int PlayerNumber )
 	{
 		CGameLogic::GetInstance()->SetPlayerNumberOfThisGame(PlayerNumber);
 	}
-}
-
-void CGameManager::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpResponse* response)
-{
-	if (!response)
-	{
-		return;
-	}
-
-	int statusCode = response->getResponseCode();
-	if (!response->isSucceed() ) 
-	{
-		CCLOG("response failed");
-		CCLOG("error buffer: %s", response->getErrorBuffer() );
-		return;
-	}
-
-	// dump data
-	std::vector<char> *buffer = response->getResponseData();
-	std::stringstream streamData;
-
-	for (unsigned int i = 0; i < buffer->size(); ++i)
-	{
-		if (i != 0)
-		{
-			streamData << ",";
-			streamData << (*buffer)[i];
-		}
-	}
-
-	std::string stringData = streamData.str();
-
-	if (strcmp(response->getHttpRequest()->getTag(), "POST login") == 0)
-	{
-		if (strcmp(stringData.c_str(), "login") == 0)
-		{
-			// login 성공이므로 플래그 설정
-			m_Login = true;
-
-			// init network game data
-			if (m_networkGameData == nullptr)
-			{
-				m_networkGameData = new Document();
-			}
-
-			// create loginUpdate schedule
-
-		}
-		else
-		{
-			m_LoginFail = true;
-		}
-	}
-	else if (strcmp(response->getHttpRequest()->getTag(), "POST joinUpdate") == 0)
-	{
-		m_MyPlayerId = atoi(stringData.c_str());
-
-		if (m_MyPlayerId != -1)
-		{
-			m_InChannel = true;
-
-			// create update schedule
-
-		}
-	}
-	else
-	{
-		// update된 내용 없으니까 그냥 종료
-		if (strcmp(stringData.c_str(), "not updated") == 0)
-		{
-			return;
-		}
-		else
-		{
-			// gameData에 있는 자료를 매니저가 가진 자료에 업데이트해주자
-			if (m_networkGameData != nullptr)
-			{
-				m_networkGameData->Clear();
-				m_networkGameData->Parse<0>(stringData.c_str() );
-			}
-
-			SetUpdateFlag(true);
-
-			// game end >>> delete the network game data
-		}
-	}
-}
-
-void CGameManager::Login()
-{
-	if (!m_IsOnlineGame)
-	{
-		return;
-	}
-
-	// login
-	// make http request
-	m_Request = new CCHttpRequest();
-
-	m_Request->setUrl("localhost/login");
-	m_Request->setRequestType(CCHttpRequest::kHttpPost);
-	m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::OnHttpRequestCompleted) );
-
-	// write the post data
-	// 조심해!!
-	// shared data 만들고 나서 수정할 것
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	postData.append("&name=");
-	postData.append(m_UserName);
-	
-	postData.append("&two=");
-	postData.append( (m_TwoFlag) ? "1" : "0" );
-
-	postData.append("&three=");
-	postData.append( (m_ThreeFlag) ? "1" : "0" );
-
-	postData.append("&four=");
-	postData.append( (m_FourFlag) ? "1" : "0" );
-
-	m_Request->setRequestData(postData.c_str(), postData.length() );
-
-	m_Request->setTag("POST login");
-	CCHttpClient::getInstance()->send(m_Request);
-	m_Request->release();
 }

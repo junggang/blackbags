@@ -76,6 +76,9 @@
     <Filter Include="Classes\Layer\Credit">
       <UniqueIdentifier>{3fb5f408-f3e6-495c-ae7f-09b24c7e78df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Logic\NetworkLogic">
+      <UniqueIdentifier>{fba991af-ec53-416c-acf0-bc20b29431d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -194,6 +197,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PlayerNumberAndMapSizeLayer.cpp">
       <Filter>Classes\Layer\GameSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NetworkLogic.cpp">
+      <Filter>Classes\Logic\NetworkLogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PlayerNumberAndMapSizeLayer.h">
       <Filter>Classes\Layer\GameSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NetworkLogic.h">
+      <Filter>Classes\Logic\NetworkLogic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
