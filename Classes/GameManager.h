@@ -22,7 +22,7 @@ public:
 	void SetPlayerNumberOfThisGame(int PlayerNumber);
 
 	//게임이 온라인인지 오프라인인지 설정
-	void SetOnlineMode(bool flag);
+	void SetOnlineMode(bool flag)	{ m_IsOnlineGame = flag; }
 
 	//게임의 현재 상황을 알아보는 함수
 	void SetUpdateFlag(bool flag)	{ m_IsUpdated = flag; }
@@ -79,7 +79,8 @@ public:
 	const std::string& GetCharacterResultFaceFileName(int playerIdx);
 
 	// network
-	void onHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
+	void Login();
+	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
 
 private:
 

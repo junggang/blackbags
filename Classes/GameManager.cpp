@@ -175,7 +175,7 @@ void CGameManager::SelectCharacter( int characterId )
 
 		m_Request->setUrl("localhost/select_character");
 		m_Request->setRequestType(CCHttpRequest::kHttpPost);
-		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
+		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::OnHttpRequestCompleted) );
 
 		// write the post data
 		std::string postData  = "tokenId=";
@@ -241,7 +241,7 @@ void CGameManager::StartGame()
 
 		m_Request->setUrl("localhost/settingReady");
 		m_Request->setRequestType(CCHttpRequest::kHttpPost);
-		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
+		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::OnHttpRequestCompleted) );
 
 		// write the post data
 		std::string postData  = "tokenId=";
@@ -267,7 +267,7 @@ void CGameManager::SetMapSize( MapSelect mapSize )
 
 		m_Request->setUrl("localhost/selectMap");
 		m_Request->setRequestType(CCHttpRequest::kHttpPost);
-		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
+		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::OnHttpRequestCompleted) );
 
 		// write the post data
 		std::string postData  = "tokenId=";
@@ -356,7 +356,7 @@ void CGameManager::DrawLine( IndexedPosition indexedPosition )
 
 		m_Request->setUrl("localhost/draw_line");
 		m_Request->setRequestType(CCHttpRequest::kHttpPost);
-		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
+		m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::OnHttpRequestCompleted) );
 
 		// write the post data
 		std::string postData  = "tokenId=";
@@ -482,7 +482,7 @@ void CGameManager::SetPlayerNumberOfThisGame( int PlayerNumber )
 	}
 }
 
-void CGameManager::onHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpResponse* response)
+void CGameManager::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpResponse* response)
 {
 	if (!response)
 	{
@@ -557,10 +557,8 @@ void CGameManager::onHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespons
 	}
 }
 
-void CGameManager::SetOnlineMode(bool flag) 
-{ 
-	m_IsOnlineGame = flag;
-
+void CGameManager::Login()
+{
 	if (!m_IsOnlineGame)
 	{
 		return;
@@ -572,7 +570,7 @@ void CGameManager::SetOnlineMode(bool flag)
 
 	m_Request->setUrl("localhost/login");
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
-	m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::onHttpRequestCompleted) );
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CGameManager::OnHttpRequestCompleted) );
 
 	// write the post data
 	// Á¶½ÉÇØ!!
