@@ -130,8 +130,9 @@ void CGameBoardLayer::ccTouchesBegan( CCSet* pTouches, CCEvent* pEvent )
 	CCTouch *pTouch = (CCTouch*)pTouches->anyObject();
 
 	m_StartPoint = pTouch->getLocationInView();
-
 	CCLog("Start point =  %f, %f", m_StartPoint.x,m_StartPoint.y);
+	ConvertCoordinate(m_StartPoint);
+
 }
 
 void CGameBoardLayer::ccTouchesEnded( CCSet *pTouches, CCEvent *pEvent )
@@ -140,7 +141,8 @@ void CGameBoardLayer::ccTouchesEnded( CCSet *pTouches, CCEvent *pEvent )
 
 	m_EndPoint  = pTouch->getLocationInView();
 	CCLog("End point =  %f, %f", m_EndPoint.x,m_EndPoint.y);
-	DrawLine();
+	ConvertCoordinate(m_EndPoint);
+	//DrawLine();
 }
 
 void CGameBoardLayer::DrawLine()
@@ -177,47 +179,82 @@ void CGameBoardLayer::DrawLine()
 
 IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 {
+	//새로운 변환 함수 작성
+	//각 행마다 기울기는 y = (3/4) x 로 동일하지만, y절편이 0,-60,-120,-180,-240 으로 감소한다.
+	//따라서 마우스 좌표값으로 해당 행을 구한 뒤, x값을 계산하여 열을 구해낼 수 있다.
+
 	// (0,0)을 씬의 왼쪽 아래로 옮겨온다.
-	point.y = m_VisibleSize.height - point.y;
+	point.y = m_VisibleSize.height - point.y - m_BoardOrigin.y;
+	point.x -= m_BoardOrigin.x;
 
 	//이제 인덱스로 바꾼다.
 	IndexedPosition indexedPosition;
-	
+
 	//먼저, 범위를 벗어났는지 확인한다.
-	if ( (point.x - m_BoardOrigin.x) < - TOUCH_AREA 
-		|| (point.y - m_BoardOrigin.y) < - TOUCH_AREA 
-		|| (m_VisibleSize.width - point.x) < m_BoardOrigin.x - TOUCH_AREA 
-		|| (m_VisibleSize.height - point.y) < m_BoardOrigin.y - TOUCH_AREA)
+	if ( point.x > m_Board->getContentSize().width + TOUCH_AREA ||
+		point.x< - TOUCH_AREA||
+		point.y > m_Board->getContentSize().height/2 + TOUCH_AREA ||
+		point.y < -m_Board->getContentSize().height/2- TOUCH_AREA)
 	{
 		indexedPosition.m_PosI = 0;
 		indexedPosition.m_PosJ = 0;
 		return indexedPosition;
 	}
 
-	//조심해!!
-	//보드 내에서 dot을 클릭할 수 있는 범위인지 확인한다.
-	if (static_cast<int>(point.x - m_BoardOrigin.x) % static_cast<int>(DEFAULT_TILE_SIZE) < TOUCH_AREA)
+	float DeltaX = 40.0f;
+	float DeltaY = 30.0f;
+	float InterceptY = 0.0f;
+
+	float tempX = 0.0f;
+	float tempY = 0.0f;
+
+	float remainderX = static_cast<int>(point.x) % static_cast<int>(DeltaX);
+	float remainderY = static_cast<int>(point.y) % static_cast<int>(DeltaY) ;
+
+	//일단 이 아이를 다듬어야 해.
+
+	if ( remainderX < TOUCH_AREA)
 	{
-		indexedPosition.m_PosJ = static_cast<int>(point.x - m_BoardOrigin.x) / static_cast<int>(DEFAULT_TILE_SIZE);
+		point.x -= remainderX;
 	}
-	else if (static_cast<int>(point.x - m_BoardOrigin.x) % static_cast<int>(DEFAULT_TILE_SIZE) > DEFAULT_TILE_SIZE - TOUCH_AREA)
+	else if (remainderX > DeltaX - TOUCH_AREA)
 	{
-		indexedPosition.m_PosJ = static_cast<int>(point.x - m_BoardOrigin.x) / static_cast<int>(DEFAULT_TILE_SIZE) + 1;
+		point.x +=(DeltaX - remainderX);
 	}
 
-	if (static_cast<int>(point.y - m_BoardOrigin.y) % static_cast<int>(DEFAULT_TILE_SIZE) < TOUCH_AREA)
+	if ( abs(remainderY) < TOUCH_AREA)
 	{
-		indexedPosition.m_PosI = static_cast<int>(point.y - m_BoardOrigin.y) / static_cast<int>(DEFAULT_TILE_SIZE);
+		if(remainderY>=0)
+			point.y -= remainderY;
+		else
+			point.y += remainderY;
 	}
-	else if (static_cast<int>(point.x - m_BoardOrigin.y) % static_cast<int>(DEFAULT_TILE_SIZE) > DEFAULT_TILE_SIZE - TOUCH_AREA)
+	else if (abs(remainderY) > DeltaY - TOUCH_AREA)
 	{
-		indexedPosition.m_PosI = static_cast<int>(point.y - m_BoardOrigin.y) / static_cast<int>(DEFAULT_TILE_SIZE) + 1;
+		if(remainderY>=0)
+			point.y +=(DeltaY - remainderY);
+		else
+			point.y -=(DeltaY + remainderY);
 	}
-	indexedPosition.m_PosI = indexedPosition.m_PosI * 2 + 1;
-	indexedPosition.m_PosJ = indexedPosition.m_PosJ * 2 + 1;
+
+	//y절편을 계산한다.
+	InterceptY = point.y - (0.75)*point.x;
+
+	//행을 계산한다.
+	indexedPosition.m_PosI = static_cast<int>(InterceptY)/-60;
+
+	//열을 계산한다.
+	indexedPosition.m_PosJ = static_cast<int>(point.x - DeltaX*indexedPosition.m_PosI)/DeltaX;
+
+	//점에 해당하도록 계산한다.
+	indexedPosition.m_PosI = indexedPosition.m_PosI*2+1;
+	indexedPosition.m_PosJ = indexedPosition.m_PosJ*2+1;
+
+	CCLog("CONVERTED : %d, %d",indexedPosition.m_PosI, indexedPosition.m_PosJ);
 
 	return indexedPosition;
 }
+
 
 void CGameBoardLayer::update(float dt)
 {

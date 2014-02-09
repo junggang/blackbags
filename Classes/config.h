@@ -122,7 +122,7 @@ const int MO_TYPE_NUMBER = 6;
 const int CHECKLIST_LENGTH = 100;
 
 /*	터치 인식 범위 */
-const float TOUCH_AREA = 30.0f;
+const float TOUCH_AREA = 20.0f;
 
 /*	결과 화면 오브젝트들의 기본 크기입니다 */
 const float SC_RT_HORIZONTAL_MARGIN = 70.0f;
