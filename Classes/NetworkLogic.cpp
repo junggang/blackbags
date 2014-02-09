@@ -3,6 +3,7 @@
 #include <cstdio>
 #include "GameManager.h"
 
+USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace rapidjson;
 
@@ -212,24 +213,7 @@ void CNetworkLogic::SelectCharacter(int characterId)
 	m_Request->release();
 }
 
-void CNetworkLogic::SettingReady()
-{
-	m_Request = new CCHttpRequest();
 
-	m_Request->setUrl("localhost/settingReady");
-	m_Request->setRequestType(CCHttpRequest::kHttpPost);
-	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
-
-	// write the post data
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	m_Request->setRequestData(postData.c_str(), postData.length() );
-
-	m_Request->setTag("POST settingReady");
-	CCHttpClient::getInstance()->send(m_Request);
-	m_Request->release();
-}
 
 void CNetworkLogic::SetMapSize(MapSelect mapSize)
 {
@@ -278,6 +262,81 @@ void CNetworkLogic::DrawLine(IndexedPosition indexedPosition)
 	m_Request->release();
 }
 
+void CNetworkLogic::JoinUpdate(float dt)
+{
+	m_Request = new CCHttpRequest();
+
+	m_Request->setUrl("localhost/join_update");
+	m_Request->setRequestType(CCHttpRequest::kHttpPost);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
+
+	// write the post data
+	std::string postData  = "tokenId=";
+	postData.append(m_TokenId);
+
+	m_Request->setRequestData(postData.c_str(), postData.length() );
+
+	m_Request->setTag("POST joinUpdate");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
+}
+
+void CNetworkLogic::PlayUpdate()
+{
+	m_Request = new CCHttpRequest();
+
+	m_Request->setUrl("localhost/play_update");
+	m_Request->setRequestType(CCHttpRequest::kHttpPost);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
+
+	// write the post data
+	std::string postData  = "tokenId=";
+	postData.append(m_TokenId);
+
+	m_Request->setRequestData(postData.c_str(), postData.length() );
+
+	m_Request->setTag("POST playUpdate");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
+}
+
+void CNetworkLogic::SettingReady()
+{
+	m_Request = new CCHttpRequest();
+
+	m_Request->setUrl("localhost/settingReady");
+	m_Request->setRequestType(CCHttpRequest::kHttpPost);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
+
+	// write the post data
+	std::string postData  = "tokenId=";
+	postData.append(m_TokenId);
+
+	m_Request->setRequestData(postData.c_str(), postData.length() );
+
+	m_Request->setTag("POST settingReady");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
+}
+
+void CNetworkLogic::PlayReady()
+{
+	m_Request = new CCHttpRequest();
+
+	m_Request->setUrl("localhost/play_ready");
+	m_Request->setRequestType(CCHttpRequest::kHttpPost);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
+
+	// write the post data
+	std::string postData  = "tokenId=";
+	postData.append(m_TokenId);
+
+	m_Request->setRequestData(postData.c_str(), postData.length() );
+
+	m_Request->setTag("POST playReady");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
+}
 
 void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpResponse* response)
 {
@@ -324,7 +383,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			}
 
 			// create loginUpdate schedule
-
+			this->schedule(schedule_selector(CNetworkLogic::JoinUpdate), 10.0f);
 		}
 		else
 		{
@@ -341,7 +400,8 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 
 			// create update schedule
-
+			this->unschedule(schedule_selector(CNetworkLogic::JoinUpdate) );
+			this->schedule(schedule_selector(CNetworkLogic::PlayUpdate), 10.0f);
 		}
 	}
 	else
@@ -363,6 +423,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 
 			// game end >>> delete the network game data
+			this->unschedule(schedule_selector(CNetworkLogic::PlayUpdate) );
 		}
 	}
 }

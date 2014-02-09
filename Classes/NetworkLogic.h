@@ -40,9 +40,13 @@ public:
 	// request functions
 	void Login();
 	void SelectCharacter(int characterId);
-	void SettingReady();
 	void SetMapSize(MapSelect mapSize);
 	void DrawLine(IndexedPosition indexedPosition);
+
+	void JoinUpdate(float dt);
+	void PlayUpdate();
+	void SettingReady();
+	void PlayReady();
 
 	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
 
