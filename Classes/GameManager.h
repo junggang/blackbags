@@ -79,6 +79,10 @@ public:
 	const std::string& GetCharacterResultFaceFileName(int playerIdx);
 
 	// network
+	bool IsLogin()				{ return m_Login; }
+	bool IsLoginFail()			{ return m_LoginFail; }
+	bool IsInChannel()			{ return m_InChannel; }
+
 	void Login();
 	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
 
@@ -98,6 +102,12 @@ private:
     //CREATE_FUNC(CGameManager);
 
 	// network game data
+	bool					m_Login;
+	bool					m_LoginFail;
+	bool					m_InChannel;
+
+	int						m_MyPlayerId;
+
 	std::string				m_TokenId;
 	std::string				m_UserName;
 

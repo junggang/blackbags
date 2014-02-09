@@ -18,6 +18,12 @@ CGameManager::CGameManager(void)
 
 	m_TokenId = "";
 	m_UserName = "";
+
+	m_Login = false;
+	m_LoginFail = false;
+	m_InChannel = false;
+
+	m_MyPlayerId = -1;
 }
 
 CGameManager::~CGameManager(void)
@@ -514,25 +520,36 @@ void CGameManager::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespons
 
 	if (strcmp(response->getHttpRequest()->getTag(), "POST login") == 0)
 	{
-		// 성공 / 실패 확인 가능
-		// 확인해서 만약 성공이면 네트웍 대기 화면 보여주고
-		// 실패이면 실패 메시지 표시하고 확인 누르면 메인으로 돌아가게
-		// buffer ~~~
-		
-		// init network game data
-		if (m_networkGameData == nullptr)
+		if (strcmp(stringData.c_str(), "login") == 0)
 		{
-			m_networkGameData = new Document();
+			// login 성공이므로 플래그 설정
+			m_Login = true;
+
+			// init network game data
+			if (m_networkGameData == nullptr)
+			{
+				m_networkGameData = new Document();
+			}
+
+			// create loginUpdate schedule
+
 		}
-
-		// create loginUpdate schedule
+		else
+		{
+			m_LoginFail = true;
+		}
 	}
-	else if (strcmp(response->getHttpRequest()->getTag(), "POST loginUpdate") == 0)
+	else if (strcmp(response->getHttpRequest()->getTag(), "POST joinUpdate") == 0)
 	{
-		// 수신한 데이터가 -1이면 계속 대기 >>> return
-		// 아니면 해당 숫자를 내 아이디로 설정
+		m_MyPlayerId = atoi(stringData.c_str());
 
-		// create update schedule
+		if (m_MyPlayerId != -1)
+		{
+			m_InChannel = true;
+
+			// create update schedule
+
+		}
 	}
 	else
 	{
