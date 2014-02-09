@@ -441,11 +441,11 @@ bool CGameLogic::SetPlayerName(int playerId,  const std::string& playerName )
 
 bool CGameLogic::SetPlayerCharacterId( int characterId )
 {
-	// IsCharacterSelected 검사를 해서 선택되어 있으면 못 하게
-	// 	if ( isCharacterSelected(characterId) )
-	// 	{
-	// 		return;
-	// 	}
+	// 방어코드 추가 : 음수이거나 MAX_PLAYER_NUM 보다 크면 리턴
+	if ( characterId < 0 || characterId > MAX_PLAYER_NUM )
+	{
+		return false;
+	}
 
 	// Single 일 때
 	// 이미 선택된 캐릭터인지 확인해서 선택되어 있다면 취소시키고 리턴

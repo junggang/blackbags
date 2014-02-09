@@ -20,14 +20,17 @@ bool CStartAndHelpButtonLayer::init()
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 	//// start Button
-	CCMenuItemImage *StartButton = CCMenuItemImage::create(
+	m_StartButton = CCMenuItemImage::create(
 		"image/SETTING_start.png",
 		"image/SETTING_start.png",
 		this,
 		menu_selector(CStartAndHelpButtonLayer::StartButtonCallBack)
 		);
+	
+	// at init, Start button is disabled
+	m_StartButton->setEnabled(false);
 
-	CCMenu	*StartButtonMenu = CCMenu::create(StartButton, NULL);
+	CCMenu	*StartButtonMenu = CCMenu::create(m_StartButton, NULL);
 
 	StartButtonMenu->setPosition(visibleSize.width/2, visibleSize.height/2 + 200);
 
@@ -110,4 +113,16 @@ void CStartAndHelpButtonLayer::NameInputButtonCallBack( CCObject* pSender )
 	exit(0);
 #endif
 #endif
+}
+
+void CStartAndHelpButtonLayer::update()
+{
+	if ( CGameManager::GetInstance()->GetCurrentPlayerNumber() == CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
+	{
+		m_StartButton->setEnabled(true);
+	}
+	else
+	{
+		m_StartButton->setEnabled(false);
+	}
 }

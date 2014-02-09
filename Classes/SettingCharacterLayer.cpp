@@ -14,7 +14,6 @@ bool CSettingCharacterLayer::init()
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize(); 
 
 	// CCMenu
-	// 조심해! 일단 init에 넣고 모듈화는 좀 있다가..
 	CCMenu *CharacterSelectTable = CCMenu::createWithItems(NULL, NULL);
 
 	// make Image Buttons
@@ -77,6 +76,7 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 
 	// 버튼 터치로 캐릭터 선택 / 취소 구현
 	CCMenuItemImage* touchedButton = static_cast<CCMenuItemImage*>(pSender);
+
 	if (touchedButton != nullptr)
 	{
 		// 버튼이 선택되어 있으면 취소, 선택되어 있지 않으면 선택한다.
@@ -97,4 +97,9 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 	exit(0);
 #endif
 #endif
+}
+
+void CSettingCharacterLayer::update()
+{
+
 }

@@ -1,6 +1,6 @@
 #include "GameManager.h"
 #include "GameLogic.h"
-//#include <cstdio>
+#include <cstdio>
 
 USING_NS_CC_EXT;
 using namespace rapidjson;
@@ -457,6 +457,9 @@ bool CGameManager::IsPlayerNumberAndMapSeleted()
 	{
 		// 채널 마스터인 경우 본인을 제외하고 모든 사람이 레디하면 true
 		// 마스터가 아닌 경우 자신의 레디 상태 확인해서 true / false
+
+		// 멀티에서는 NEXT 버튼을 누르기 전에는 무조건 return false
+		return false;
 	}
 	else
 	{

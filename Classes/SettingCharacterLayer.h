@@ -5,7 +5,7 @@ class CSettingCharacterLayer : public cocos2d::CCLayer
 {
 public:
 	virtual bool init();
-
+	virtual void update();
 	CREATE_FUNC(CSettingCharacterLayer);
 
 private:

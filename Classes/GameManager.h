@@ -23,6 +23,7 @@ public:
 
 	//게임이 온라인인지 오프라인인지 설정
 	void SetOnlineMode(bool flag)	{ m_IsOnlineGame = flag; }
+	bool IsOnlineMode() { return m_IsOnlineGame; }
 
 	//게임의 현재 상황을 알아보는 함수
 	void SetUpdateFlag(bool flag)	{ m_IsUpdated = flag; }
