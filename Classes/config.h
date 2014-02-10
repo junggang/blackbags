@@ -88,7 +88,8 @@ const int	MASK_PLAYER_3 = 4;
 const int	MASK_PLAYER_4 = 8;
 
 /*	게임 맵 오브젝트들의 기본 크기입니다 */
-const float DEFAULT_TILE_SIZE = 80.0f;
+const float DEFAULT_TILE_WIDTH = 120.0f;
+const float DEFAULT_TILE_HEIGHT = 80.0f;
 const float DEFAULT_LINE_WEIGHT = 10.0f;
 const float DEFAULT_DOT_RADIUS = 6.0f;
 const float DEFAULT_ITEM_RADIUS = 4.0f;

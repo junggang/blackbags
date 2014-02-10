@@ -37,18 +37,15 @@ bool CGameBoardLayer::init()
 		break;
 	}
 
-	float m_tileWidth = 80.0f;
-	float m_tileHeight = 60.0f;
-
 	m_Board = CCSprite::create(
 		"image/board.png", 
-		CCRect(0, 0, columnNum * m_tileWidth, rowNum * m_tileHeight)
+		CCRect(0, 0, columnNum * DEFAULT_TILE_WIDTH, rowNum * DEFAULT_TILE_HEIGHT)
 		);
 	m_Board->setAnchorPoint(ccp(0.5f, 0.5f));
 	m_Board->setPosition(ccp(m_VisibleSize.width / 2, m_VisibleSize.height / 2) );
 	this->addChild(m_Board);
 
-	m_BoardOrigin.x = m_VisibleSize.width/2 - (FLOAT(columnNum)/2 * m_tileWidth);
+	m_BoardOrigin.x = m_VisibleSize.width/2 - (FLOAT(columnNum)/2 * DEFAULT_TILE_WIDTH);
 	m_BoardOrigin.y = m_VisibleSize.height/2;	
 
 	float m_OriginX = 0.0f;
@@ -57,8 +54,8 @@ bool CGameBoardLayer::init()
 	float m_LineOriginX = m_OriginX;
 	float m_LineOriginY = m_OriginY;
 
-	float m_DeltaX = m_tileWidth/2;
-	float m_DeltaY = m_tileHeight/2;
+	float m_DeltaX = DEFAULT_TILE_WIDTH/2;
+	float m_DeltaY = DEFAULT_TILE_HEIGHT/2;
 
 	for (int i = 1; i < rowNum * 2 + 2; ++i)
 	{
@@ -81,7 +78,6 @@ bool CGameBoardLayer::init()
 			else if ( i % 2 == 1 && j % 2 == 1)
 			{
 				CMO_dot* pDot = CMO_dot::Create();
-				//pDot->setPosition( ccp( DEFAULT_TILE_SIZE * (j/2), DEFAULT_TILE_SIZE * (i/2) ) );
 				pDot->setPosition( ccp( m_OriginX+m_DeltaX*(j/2),m_OriginY+m_DeltaY*(j/2) ) );
 
 				m_Board->addChild(pDot, 2);
@@ -131,7 +127,6 @@ void CGameBoardLayer::ccTouchesBegan( CCSet* pTouches, CCEvent* pEvent )
 
 	m_StartPoint = pTouch->getLocationInView();
 	CCLog("Start point =  %f, %f", m_StartPoint.x,m_StartPoint.y);
-	ConvertCoordinate(m_StartPoint);
 
 }
 
@@ -141,8 +136,7 @@ void CGameBoardLayer::ccTouchesEnded( CCSet *pTouches, CCEvent *pEvent )
 
 	m_EndPoint  = pTouch->getLocationInView();
 	CCLog("End point =  %f, %f", m_EndPoint.x,m_EndPoint.y);
-	ConvertCoordinate(m_EndPoint);
-	//DrawLine();
+	DrawLine();
 }
 
 void CGameBoardLayer::DrawLine()
@@ -201,8 +195,8 @@ IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 		return indexedPosition;
 	}
 
-	float DeltaX = 40.0f;
-	float DeltaY = 30.0f;
+	float DeltaX = DEFAULT_TILE_WIDTH/2;
+	float DeltaY = DEFAULT_TILE_HEIGHT/2;
 	float InterceptY = 0.0f;
 
 	float tempX = 0.0f;

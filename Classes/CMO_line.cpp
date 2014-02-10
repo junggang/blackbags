@@ -80,8 +80,8 @@ void CMO_line::setImage(IndexedPosition indexedPosition)
 {
 	m_Index = indexedPosition;
 
-	int width = 40.0f;
-	int height = 30.0f;
+	int width = DEFAULT_TILE_WIDTH/2;
+	int height = DEFAULT_TILE_HEIGHT/2;
 
 	m_ImageFileIdx = indexedPosition.m_PosI % 2;
 
@@ -97,12 +97,12 @@ void CMO_line::setImage(IndexedPosition indexedPosition)
 	
 	if(indexedPosition.m_PosI%2==0 &&indexedPosition.m_PosJ%2==1)
 	{
-		pLine = CCSprite::create("image/testline0.png", CCRectMake(0.0f, 0.0f, width,  height) );
+		pLine = CCSprite::create("image/linev0.png", CCRectMake(0.0f, 0.0f, width,  height) );
 		pLine->setAnchorPoint(ccp(1,0));
 	}
 	else
 	{
-		pLine = CCSprite::create("image/testline.png", CCRectMake(0.0f, 0.0f, width,  height) );
+		pLine = CCSprite::create("image/line0.png", CCRectMake(0.0f, 0.0f, width,  height) );
 		pLine->setAnchorPoint(ccp(0,0));
 	}
 

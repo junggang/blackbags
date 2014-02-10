@@ -387,15 +387,15 @@ void CGameManager::SetPlayerNumberOfThisGame( int PlayerNumber )
 
 bool CGameManager::IsLogin()
 {
-	CNetworkLogic::GetInstance()->IsLogin();
+	return CNetworkLogic::GetInstance()->IsLogin();
 }
 
 bool CGameManager::IsLoginFail()
 {
-	CNetworkLogic::GetInstance()->IsLoginFail();
+	return CNetworkLogic::GetInstance()->IsLoginFail();
 }
 
 bool CGameManager::IsInChannel()
 {
-	CNetworkLogic::GetInstance()->IsInChannel();
+	return CNetworkLogic::GetInstance()->IsInChannel();
 }
