@@ -151,10 +151,12 @@ void CGameBoardLayer::DrawLine()
 		if (endIndex.m_PosJ - startIndex.m_PosJ == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI, endIndex.m_PosJ - 1) );
+			m_LineDirection = DI_UP;
 		}
 		else if (startIndex.m_PosJ - endIndex.m_PosJ == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI, startIndex.m_PosJ - 1) );
+			m_LineDirection = DI_DOWN;
 		}
 	}
 	//열이 같은 경우
@@ -163,10 +165,12 @@ void CGameBoardLayer::DrawLine()
 		if (endIndex.m_PosI - startIndex.m_PosI == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(endIndex.m_PosI - 1, startIndex.m_PosJ) );
+			m_LineDirection = DI_DOWN;
 		}
 		else if (startIndex.m_PosI - endIndex.m_PosI == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI - 1, startIndex.m_PosJ) );
+			m_LineDirection = DI_UP;
 		}
 	}
 }
@@ -174,7 +178,7 @@ void CGameBoardLayer::DrawLine()
 IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 {
 	//새로운 변환 함수 작성
-	//각 행마다 기울기는 y = (3/4) x 로 동일하지만, y절편이 0,-60,-120,-180,-240 으로 감소한다.
+	//각 행마다 기울기는 y = (DeltaY/DeltaX) x 로 동일하지만, y절편이 -deltaY/2만큼씩 감소한다.
 	//따라서 마우스 좌표값으로 해당 행을 구한 뒤, x값을 계산하여 열을 구해낼 수 있다.
 
 	// (0,0)을 씬의 왼쪽 아래로 옮겨온다.
@@ -195,15 +199,12 @@ IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 		return indexedPosition;
 	}
 
-	float DeltaX = DEFAULT_TILE_WIDTH/2;
-	float DeltaY = DEFAULT_TILE_HEIGHT/2;
-	float InterceptY = 0.0f;
+	float deltaX = DEFAULT_TILE_WIDTH/2;
+	float deltaY = DEFAULT_TILE_HEIGHT/2;
+	float interceptY = 0.0f;
 
-	float tempX = 0.0f;
-	float tempY = 0.0f;
-
-	float remainderX = static_cast<int>(point.x) % static_cast<int>(DeltaX);
-	float remainderY = static_cast<int>(point.y) % static_cast<int>(DeltaY) ;
+	float remainderX = static_cast<int>(point.x) % static_cast<int>(deltaX);
+	float remainderY = static_cast<int>(point.y) % static_cast<int>(deltaY) ;
 
 	//일단 이 아이를 다듬어야 해.
 
@@ -211,9 +212,9 @@ IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 	{
 		point.x -= remainderX;
 	}
-	else if (remainderX > DeltaX - TOUCH_AREA)
+	else if (remainderX > deltaX - TOUCH_AREA)
 	{
-		point.x +=(DeltaX - remainderX);
+		point.x +=(deltaX - remainderX);
 	}
 
 	if ( abs(remainderY) < TOUCH_AREA)
@@ -223,22 +224,22 @@ IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 		else
 			point.y += remainderY;
 	}
-	else if (abs(remainderY) > DeltaY - TOUCH_AREA)
+	else if (abs(remainderY) > deltaY - TOUCH_AREA)
 	{
 		if(remainderY>=0)
-			point.y +=(DeltaY - remainderY);
+			point.y +=(deltaY - remainderY);
 		else
-			point.y -=(DeltaY + remainderY);
+			point.y -=(deltaY + remainderY);
 	}
 
 	//y절편을 계산한다.
-	InterceptY = point.y - (0.75)*point.x;
+	interceptY = point.y - (deltaY/deltaX)*point.x;
 
 	//행을 계산한다.
-	indexedPosition.m_PosI = static_cast<int>(InterceptY)/-60;
+	indexedPosition.m_PosI = static_cast<int>(interceptY/-DEFAULT_TILE_HEIGHT);
 
 	//열을 계산한다.
-	indexedPosition.m_PosJ = static_cast<int>(point.x - DeltaX*indexedPosition.m_PosI)/DeltaX;
+	indexedPosition.m_PosJ = static_cast<int>(point.x - deltaX*indexedPosition.m_PosI)/deltaX;
 
 	//점에 해당하도록 계산한다.
 	indexedPosition.m_PosI = indexedPosition.m_PosI*2+1;

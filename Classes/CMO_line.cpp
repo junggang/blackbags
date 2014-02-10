@@ -180,6 +180,17 @@ void CMO_line::changeImage()
 	//애니메이션 종료 후 화면에 표시될 이미지 등록
 	pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx + 2].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
 	//setAnchorPoint();
-	pLine->setPosition( ccp(0.0f, 0.0f) );
+
+	if(m_ImageFileIdx % 2== 0)
+		pLine->setAnchorPoint( ccp(1.0f, 0.0f) );
+	else
+		pLine->setAnchorPoint( ccp (0,0));
+
+	pLine->setPosition(ccp(0,0));
 	this->addChild(pLine, 0);
+}
+
+void CMO_line::setLineDirection( Direction lineDirection )
+{
+	m_LineDirection = lineDirection;
 }

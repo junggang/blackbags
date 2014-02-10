@@ -19,6 +19,7 @@ public:
 	virtual void update(float delta);
 
 	void setImage(IndexedPosition indexedPosition);
+	void setLineDirection(Direction lineDirection);
 
 	CREATE_FUNC(CMO_line);
 
@@ -30,6 +31,7 @@ private:
 	cocos2d::CCSprite*	pLine;
 	bool				m_Connected;
 	int					m_ImageFileIdx;
+	Direction			m_LineDirection;
 };
 
 
