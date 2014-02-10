@@ -201,6 +201,9 @@
     <ClCompile Include="..\Classes\NetworkLogic.cpp">
       <Filter>Classes\Logic\NetworkLogic</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\NetworkPlayerNumberLayer.cpp">
+      <Filter>Classes\Layer\GameSetting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -325,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\NetworkLogic.h">
       <Filter>Classes\Logic\NetworkLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NetworkPlayerNumberLayer.h">
+      <Filter>Classes\Layer\GameSetting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,9 @@
 
 #include "SettingTitleLayer.h"
 
+#include "NetworkPlayerNumberLayer.h"
+#include "PlayerNumberAndMapSizeLayer.h"
+
 #include "GameManager.h"
 
 
@@ -32,7 +35,7 @@ bool CGameSettingScene::init(void)
 	if ( CGameManager::GetInstance()->IsOnlineMode() ) // OnlineGame
 	{
 		// 조심해!! 온라인은 별도 레이어를 생성해야 해!
-		m_PlayerNumberAndMapSizeLayer = CPlayerNumberAndMapSizeLayer::create();
+		m_PlayerNumberAndMapSizeLayer = CNetworkPlayerNumberLayer::create();
 		this->addChild(m_PlayerNumberAndMapSizeLayer, 1);
 	}
 	else // Single Game
@@ -71,7 +74,7 @@ void CGameSettingScene::update(float dt)
 	// is First Step
 	else if ( CGameManager::GetInstance()->IsUpdated() && !isSceondStep )
 	{
-		m_PlayerNumberAndMapSizeLayer->update();
+		m_PlayerNumberAndMapSizeLayer->update(dt);
 		CGameManager::GetInstance()->SetUpdateFlag(false);
 	}
 }

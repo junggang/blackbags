@@ -3,7 +3,6 @@
 // include this layers for UPDATE function
 #include "SettingCharacterLayer.h"
 #include "SettingOtherPlayerStatusLayer.h"
-#include "PlayerNumberAndMapSizeLayer.h"
 #include "StartAndHelpButtonLayer.h"
 
 class CGameSettingScene : public cocos2d::CCScene
@@ -20,7 +19,7 @@ private:
 
 	CSettingCharacterLayer* m_SettingCharacterLayer;
 	CSettingOtherPlayerStatusLayer* m_OtherPlayerStatusLayer;
-	CPlayerNumberAndMapSizeLayer* m_PlayerNumberAndMapSizeLayer;
+	cocos2d::CCLayer* m_PlayerNumberAndMapSizeLayer;
 	CStartAndHelpButtonLayer* m_StartAndHelpButtonLayer;
 };
 
