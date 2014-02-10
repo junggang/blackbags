@@ -397,10 +397,10 @@ struct MapObject
 
 const std::string lineImageFileList[4] =
 {
-	"image/MO_line_vertical.png",
-	"image/MO_line_horizontal.png",
-	"image/MO_line_vertical_c.png",
-	"image/MO_line_horizontal_c.png",
+	"image/linev0.png",
+	"image/line0.png",
+	"image/line_connectedv_4.png",
+	"image/line_connected4.png",
 };
 
 const std::string TileImageFileList[5] =

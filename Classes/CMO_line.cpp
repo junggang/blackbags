@@ -126,18 +126,23 @@ void CMO_line::update( float delta )
 		if (m_ImageFileIdx % 2 == 0)
 		{
 			//vertical
-			lineAnimation->addSpriteFrameWithFileName("image/test_line_vertical_00.png");
-			lineAnimation->addSpriteFrameWithFileName("image/test_line_vertical_01.png");
-			lineAnimation->addSpriteFrameWithFileName("image/test_line_vertical_02.png");
-			lineAnimation->addSpriteFrameWithFileName("image/test_line_vertical_03.png");
+			lineAnimation->addSpriteFrameWithFileName("image/line_connectedv_0.png");
+			lineAnimation->addSpriteFrameWithFileName("image/line_connectedv_1.png");
+			lineAnimation->addSpriteFrameWithFileName("image/line_connectedv_2.png");
+			lineAnimation->addSpriteFrameWithFileName("image/line_connectedv_3.png");
+			lineAnimation->addSpriteFrameWithFileName("image/line_connectedv_4.png");
+
 		}
 		else
 		{
 			//horizontal
-			lineAnimation->addSpriteFrameWithFileName("image/test_line_horizontal_00.png");
-			lineAnimation->addSpriteFrameWithFileName("image/test_line_horizontal_01.png");
-			lineAnimation->addSpriteFrameWithFileName("image/test_line_horizontal_02.png");
-			lineAnimation->addSpriteFrameWithFileName("image/test_line_horizontal_03.png");
+			
+
+			lineAnimation->addSpriteFrameWithFileName("image/line_connected0.png");
+			lineAnimation->addSpriteFrameWithFileName("image/line_connected1.png");
+			lineAnimation->addSpriteFrameWithFileName("image/line_connected2.png");
+			lineAnimation->addSpriteFrameWithFileName("image/line_connected3.png");
+			lineAnimation->addSpriteFrameWithFileName("image/line_connected4.png");
 		}
 
 		CCAnimate *lineAnimate = CCAnimate::create(lineAnimation);
@@ -174,7 +179,7 @@ void CMO_line::changeImage()
 		
 	//애니메이션 종료 후 화면에 표시될 이미지 등록
 	pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx + 2].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
-	setAnchorPoint();
+	//setAnchorPoint();
 	pLine->setPosition( ccp(0.0f, 0.0f) );
 	this->addChild(pLine, 0);
 }
