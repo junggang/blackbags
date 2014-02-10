@@ -13,7 +13,7 @@ public:
 	static CNetworkLogic*	GetInstance();
 	static void				ReleaseInstance();
 
-	bool init();
+	bool Init();
 
 	bool IsLogin()				{ return m_Login; }
 	bool IsLoginFail()			{ return m_LoginFail; }

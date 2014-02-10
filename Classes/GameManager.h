@@ -82,6 +82,8 @@ public:
 	bool IsLoginFail();
 	bool IsInChannel();
 
+	bool InitNetworkLogic();
+
 private:
 	static CGameManager*	m_pInstance; //singleton instance
 

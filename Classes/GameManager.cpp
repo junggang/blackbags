@@ -399,3 +399,8 @@ bool CGameManager::IsInChannel()
 {
 	return CNetworkLogic::GetInstance()->IsInChannel();
 }
+
+bool CGameManager::InitNetworkLogic()
+{
+	return CNetworkLogic::GetInstance()->init();
+}

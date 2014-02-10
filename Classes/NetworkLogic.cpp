@@ -22,6 +22,10 @@ CNetworkLogic::CNetworkLogic(void)
 	m_InChannel = false;
 
 	m_MyPlayerId = -1;
+
+	m_TwoFlag = false;
+	m_ThreeFlag = false;
+	m_FourFlag = false;
 }
 
 
@@ -43,8 +47,36 @@ void CNetworkLogic::ReleaseInstance()
 {
 }
 
-bool CNetworkLogic::init()
+bool CNetworkLogic::Init()
 {
+	if ( !CCNode::init() )
+	{
+		return false;
+	}
+
+	// init network game data
+	if (m_networkGameData == nullptr)
+	{
+		m_networkGameData = new Document();
+	}
+	else
+	{
+		m_networkGameData->Clear();
+	}
+
+	// facebook token 값 받아 온다
+	m_TokenId.clear();
+	m_TokenId = "temptoken";
+
+	// shared data에 저장된 이름 가져온다
+	m_UserName.clear();
+	m_UserName = "temp name";
+
+	// shared data에 저장된 게임 설정을 가져온다
+	m_TwoFlag = false;
+	m_ThreeFlag = true;
+	m_FourFlag = true;
+
 	return true;
 }
 
@@ -375,12 +407,6 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			// login 성공이므로 플래그 설정
 			m_Login = true;
 			CGameManager::GetInstance()->SetUpdateFlag(true);
-
-			// init network game data
-			if (m_networkGameData == nullptr)
-			{
-				m_networkGameData = new Document();
-			}
 
 			// create loginUpdate schedule
 			this->schedule(schedule_selector(CNetworkLogic::JoinUpdate), 10.0f);
