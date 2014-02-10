@@ -155,7 +155,7 @@ def SCSelectCharacter(tokenId, characterId):
 		gRedis.set(channelId, jsonData)
 	else:
 		# 캐릭터 선택 실패 - 지금 상태 유지 
-		jsonData = json.dumps(gameData.data)
+		jsonData = 'not updated'
 
 	return jsonData
 
@@ -178,7 +178,7 @@ def SCSelctMap(tokenId, mapId):
 		gRedis.set(channelId, jsonData)
 
 	else:
-		jsonData = json.dumps(gameData.data)
+		jsonData = 'not updated'
 
 	return jsonData
 
@@ -217,7 +217,7 @@ def PCReady(tokenId):
 	# 일단 레디 상태 변경 
 	gameData.changeReadyFlag(playerId)
 
-	# 모두 레디 상태이면 다음씬으로 전환(play scene)
+	# 모두 레디 상태이면 다음 턴 시작
 	if gameData.isAllReady():
 		gameData.startTurn()
 
@@ -240,7 +240,7 @@ def PCDrawLine(tokenId, lineIdx):
 			jsonData = json.dumps(gameData.data)
 			gRedis.set(channelId, jsonData)
 		else:
-			jsonData = json.dumps(gameData.data)
+			jsonData = 'not updated'
 
 		return jsonData
 
@@ -272,12 +272,12 @@ def login():
 	try : 
 		if request.method  == "POST":  
 			# userTable에 접속한 사람을 추가한다
-			tokenId = 'temp'
-			name = 'noname'
+			tokenId = request.form['tokenId']
+			name = request.form['name']
 
-			two = 1
-			three = 1
-			four = 1
+			two = int(request.form['two'])
+			three = int(request.form['three'])
+			four = int(request.form['four'])
 			
 			# 플레이어 데이터 생성 (생성 전에 이미 redis안에 중복 데이터 있는지 확인)
 			playerData = dataStructure.PlayerData()
@@ -291,7 +291,7 @@ def login():
 			# 대기열에 추가
 			watingList.append(tokenId)
 			
-			return True 
+			return 'login' 
 
 	except KeyError, err:
 		print 'error  ->  : ' ,err 
@@ -306,7 +306,7 @@ def joinUpdate():
 	# 만약 아직 속한 game channel에 없다면 유저는 대기 화면을 보는 상태 유지하면서 1초 후에 다시 확인 시도
 	try : 
 		if request.method  == "POST":  
-			tokenId = 'temp'
+			tokenId = request.form['tokenId']
 
 			# player data 불러오기 
 			playerData = getPlayerData(tokenId)
@@ -331,8 +331,8 @@ def selectCharacter():
 	try : 
 		if request.method  == "POST":  
 			# parsing
-			tokenId = 'temp'
-			characterId = 1
+			tokenId = request.form['tokenId']
+			characterId = int(request.form['characterId'])
 
 			return SCSelectCharacter(tokenId, characterId)
 
@@ -349,8 +349,8 @@ def selectMap():
 	try : 
 		if request.method  == "POST": 
 
-			tokenId = 'temp'
-			mapId = 1
+			tokenId = request.form['tokenId']
+			mapId = int(request.form['mapId'])
 
 			return SCSelctMap(tokenId, mapId)
 
@@ -367,7 +367,7 @@ def settingReady():
 	# 업데이트 결과를 redis에 저장하고, 요청을 보낸 유저에게는 변경된 게임 데이터를 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			tokenId = 'temp'
+			tokenId = request.form['tokenId']
 
 			return SCReady(tokenId)
 
@@ -384,7 +384,7 @@ def playReady():
 	# 업데이트 결과를 redis에 저장하고, 요청을 보낸 유저에게는 변경된 게임 데이터를 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			tokenId = 'temp'
+			tokenId = request.form['tokenId']
 
 			return PCReady(tokenId)
 
@@ -399,7 +399,7 @@ def playUpdate():
 	# 해당 game channel의 데이터를 불러와서 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			tokenId = 'temp'
+			tokenId = request.form['tokenId']
 
 			playerData = getPlayerId(tokenId)
 			channelId = playerData.getPlayerGameChannel()
@@ -419,9 +419,9 @@ def drawLine():
 	# (만약 게임이 종료되었다면 종료 메시지와 함께 게임 결과 데이터를 전송한다.)
 	try : 
 		if request.method  == "POST":  
-			tokenId = 'temp'
-			posI = 0
-			posJ = 0
+			tokenId = request.form['tokenId']
+			posI = int(request.form['posI'])
+			posJ = int(request.form['posJ'])
 
 			return PCDrawLine(tokenId, [posI, posJ])
 
@@ -438,7 +438,7 @@ def gameEnd():
 	# 만약 game channel 내의 모든 유저가 이 메시지를 전송하면 game channel 정보를 DB에 저장하고 redis에서 삭제한다.
 	try : 
 		if request.method  == "POST":  
-			tokenId = 'temp'
+			tokenId = request.form['tokenId']
 
 			# session.pop('username', None) # logout!
 			return
@@ -483,20 +483,6 @@ if __name__ == '__main__':
 
 	# 대기열에 추가
 	watingList.append(67)
-
-	time.sleep(5)
-	print 'wooq'
-	playerData = dataStructure.PlayerData()
-	playerData.initData(80, 'wooq')
-	playerData.setPlayerNumber(0, 1, 1)
-
-	# 생성한 데이터 redis에 저장 
-	jsonData = json.dumps(playerData.data)
-	gRedis.set(80, jsonData)
-
-	# 대기열에 추가
-	watingList.append(80)
-
 
 	app.debug = True
 	app.secret_key = '\xab\x11\xcb\xdb\xf2\xb9\x0e\xd9N\xbd\x17$\x07\xc9H\x19\x96h\x8a\xf2<`-A'
