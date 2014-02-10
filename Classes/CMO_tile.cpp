@@ -91,10 +91,10 @@ void CMO_tile::update( float delta )
 		CCAnimation *tileAnimation = CCAnimation::create();
 		tileAnimation->setDelayPerUnit(0.2);
 
-		tileAnimation->addSpriteFrameWithFileName("image/MO_tile_void_animation_00.png");
-		tileAnimation->addSpriteFrameWithFileName("image/MO_tile_void_animation_01.png");
-		tileAnimation->addSpriteFrameWithFileName("image/MO_tile_void_animation_02.png");
-		tileAnimation->addSpriteFrameWithFileName("image/MO_tile_void_animation_03.png");
+		tileAnimation->addSpriteFrameWithFileName("image/flower_0.png");
+		tileAnimation->addSpriteFrameWithFileName("image/flower_blue.png");
+		//tileAnimation->addSpriteFrameWithFileName("image/MO_tile_void_animation_02.png");
+		//tileAnimation->addSpriteFrameWithFileName("image/MO_tile_void_animation_03.png");
 
 		CCAnimate *tileAnimate = CCAnimate::create(tileAnimation);
 
@@ -108,6 +108,7 @@ void CMO_tile::update( float delta )
 		CCDelayTime *dt = CCDelayTime::create(delayTime);
 		CCAction *actions = CCSequence::create(dt, pAction, NULL);
 
+		pTile->setAnchorPoint(ccp(0,0.5f));
 		pTile->runAction(actions);
 	}
 }
@@ -120,7 +121,7 @@ void CMO_tile::changeImage()
 	// 새롭게 설정된 소유자에 따라서 이미지 새로 생성 할당
 	// 만약 m_Owner가 MO_NOBODY 상태로 진입하면 큰일남
 	pTile = CCSprite::create(TileImageFileList[static_cast<int>(CGameManager::GetInstance()->GetCharacterId(m_Owner))].c_str(), CCRectMake(0.0f, 0.0f, DEFAULT_TILE_WIDTH,  DEFAULT_TILE_HEIGHT) );
-	pTile->setAnchorPoint( ccp(0, 0) );
+	pTile->setAnchorPoint( ccp(0, 0.5) );
 	pTile->setPosition( ccp(0.0f, 0.0f) );
 	this->addChild(pTile, 0);
 }

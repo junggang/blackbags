@@ -582,7 +582,7 @@ bool CGameLogic::StartGame()
 	CreateMap();
 
 	// 맵에 랜덤으로 선, 아이템 뿌리기 (크기 반영)
-	//InitRandomMap();
+	InitRandomMap();
 
 	return true;
 }

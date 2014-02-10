@@ -405,9 +405,9 @@ const std::string lineImageFileList[4] =
 
 const std::string TileImageFileList[5] =
 	{
-		"image/MO_tile0.png",
-		"image/MO_tile1.png",
-		"image/MO_tile2.png",
-		"image/MO_tile3.png",
-		"image/MO_tile_void.png"
+		"image/tile_occupied.png",
+		"image/tile_occupied.png",
+		"image/tile_occupied.png",
+		"image/tile_occupied.png",
+		"image/tile_void.png"
 	};

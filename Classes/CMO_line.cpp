@@ -89,7 +89,7 @@ void CMO_line::setImage(IndexedPosition indexedPosition)
 	if (CGameManager::GetInstance()->GetMapType(indexedPosition) == MO_LINE_CONNECTED)
 	{
 		m_Connected = true;
-		//m_ImageFileIdx += 2;
+		m_ImageFileIdx += 2;
 	}
 	
 	//적절한 이미지를 넣어준다.
@@ -97,12 +97,12 @@ void CMO_line::setImage(IndexedPosition indexedPosition)
 	
 	if(indexedPosition.m_PosI%2==0 &&indexedPosition.m_PosJ%2==1)
 	{
-		pLine = CCSprite::create("image/linev0.png", CCRectMake(0.0f, 0.0f, width,  height) );
+		pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
 		pLine->setAnchorPoint(ccp(1,0));
 	}
 	else
 	{
-		pLine = CCSprite::create("image/line0.png", CCRectMake(0.0f, 0.0f, width,  height) );
+		pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
 		pLine->setAnchorPoint(ccp(0,0));
 	}
 
@@ -179,7 +179,6 @@ void CMO_line::changeImage()
 		
 	//애니메이션 종료 후 화면에 표시될 이미지 등록
 	pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx + 2].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
-	//setAnchorPoint();
 
 	if(m_ImageFileIdx % 2== 0)
 		pLine->setAnchorPoint( ccp(1.0f, 0.0f) );
