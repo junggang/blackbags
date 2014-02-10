@@ -69,9 +69,10 @@ bool CGameLogic::init()
 		m_PlayerData[i] = new PlayerData();
 	}
 
-	// 맵과 캐릭터를 골랐는지 여부 "고르지 않음"으로 설정
+	// 맵과 캐릭터를 골랐는지 여부 "고르지 않음"으로 설정, Next Button을 눌렀는지 여부를 "누르지 않음"으로 설정
 	MapSelected = false;
 	PlayerNumberSelected = false;
+	NextButtonSelected = false;
 
 	//캐릭터 관련 자료를 넣어준다.
 	for (int i = 0; i < CHARACTER_NUM; ++i)

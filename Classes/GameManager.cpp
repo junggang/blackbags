@@ -357,7 +357,7 @@ bool CGameManager::IsPlayerNumberAndMapSeleted()
 	}
 	else
 	{
-		return CGameLogic::GetInstance()->isPlayerNumberAndMapSeleted();
+		return CGameLogic::GetInstance()->IsPlayerNumberAndMapSeleted();
 	}
 }
 
@@ -403,4 +403,28 @@ bool CGameManager::IsInChannel()
 bool CGameManager::InitNetworkLogic()
 {
 	return CNetworkLogic::GetInstance()->init();
+}
+
+bool CGameManager::IsNextButtonSelected()
+{
+	if (m_IsOnlineGame)
+	{
+		// Logic
+	}
+	else
+	{
+		return CGameLogic::GetInstance()->IsNextButtonSelected();
+	}
+}
+
+void CGameManager::SetNextButtonSelected()
+{
+	if (m_IsOnlineGame)
+	{
+		// Logic
+	}
+	else
+	{
+		CGameLogic::GetInstance()->SetNextButtonSelected();
+	}
 }

@@ -91,7 +91,9 @@ public:
 
 	/*	Setting Scene 관련에서 게임 시작까지	*/
 	// 플레이어 숫자와 맵 크기를 골랐는지
-	bool isPlayerNumberAndMapSeleted() { return ( MapSelected && PlayerNumberSelected ); };
+	bool IsPlayerNumberAndMapSeleted() { return ( MapSelected && PlayerNumberSelected ); };
+	bool IsNextButtonSelected() { return NextButtonSelected; }
+	void SetNextButtonSelected() { NextButtonSelected = true; }
 	void SetPlayerNumberOfThisGame( int playerNumber ) { 
 		if (playerNumber <= MAX_PLAYER_NUM)
 		{
@@ -158,6 +160,7 @@ private:
 	/*	SettingScene 관련 변수들	*/
 	bool MapSelected;
 	bool PlayerNumberSelected;
+	bool NextButtonSelected;
 
 	/*	맵 관련 변수들 */
 

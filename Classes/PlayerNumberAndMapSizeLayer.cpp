@@ -120,6 +120,8 @@ void CPlayerNumberAndMapSizeLayer::CreateNumberOfPlayerMenu( CCSize visibleSize 
 
 void CPlayerNumberAndMapSizeLayer::CreateNextButtonMenu( CCSize visibleSize )
 {
+	CCMenu *NextButtonTable = CCMenu::createWithItems(NULL, NULL);
+
 	CCMenuItemImage* pNextButton = CCMenuItemImage::create(
 		"image/NAMESETTING_next.png",
 		"image/NAMESETTING_next_selected.png",
@@ -127,10 +129,12 @@ void CPlayerNumberAndMapSizeLayer::CreateNextButtonMenu( CCSize visibleSize )
 		menu_selector(CPlayerNumberAndMapSizeLayer::NextButtonCallBack)
 		);
 
-	pNextButton->setPosition(visibleSize.width - pNextButton->getContentSize().width,
+	NextButtonTable->setPosition(visibleSize.width - pNextButton->getContentSize().width,
 							pNextButton->getContentSize().height);
 
-	this->addChild(pNextButton);
+	NextButtonTable->addChild(pNextButton);
+
+	this->addChild(NextButtonTable);
 }
 
 void CPlayerNumberAndMapSizeLayer::SelectMapCallBack( CCObject* pSender )
@@ -176,7 +180,8 @@ void CPlayerNumberAndMapSizeLayer::NextButtonCallBack( CCObject* pSender )
 	// Logic
 	if ( CGameManager::GetInstance()->IsPlayerNumberAndMapSeleted() )
 	{
-
+		CGameManager::GetInstance()->SetNextButtonSelected();
+		CGameManager::GetInstance()->SetUpdateFlag(true);
 	}
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

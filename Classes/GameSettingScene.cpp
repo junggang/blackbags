@@ -54,7 +54,7 @@ void CGameSettingScene::update(float dt)
 	//dt는 이전 update 이후 지난 시간
 
 	// 2.2 After Choose Player Number and Map Size, Go Next Step.
-	if ( CGameManager::GetInstance()->IsPlayerNumberAndMapSeleted() && !isSceondStep )
+	if ( CGameManager::GetInstance()->IsNextButtonSelected() && !isSceondStep )
 	{
 		AddSceondStepLayers();
 		isSceondStep = true;

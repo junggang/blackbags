@@ -29,8 +29,10 @@ public:
 	bool IsEnd();
 
 	/* 게임 셋팅 관련 */
-	// 플레이어 숫자와 맵 크기를 골랐는지 여부를 판단
+	// 플레이어 숫자와 맵 크기를 골랐는지 여부를 판단, NEXT 버튼을 눌렀는지 판단
 	bool IsPlayerNumberAndMapSeleted();
+	bool IsNextButtonSelected();
+	void SetNextButtonSelected();
 
 	// 이름
 	void SetPlayerName(int playerId, const std::string& playerName);
