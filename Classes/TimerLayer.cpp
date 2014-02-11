@@ -17,12 +17,12 @@ bool CTimerLayer::init()
 	m_progressTimeBar = CCProgressTimer::create(timer);
 	m_progressTimeBar->setType(kCCProgressTimerTypeBar);
 
-	m_progressTimeBar->setPosition( ccp(m_VisibleSize.width/2, m_VisibleSize.height-100.0f));
+	m_progressTimeBar->setPosition( ccp(origin.x+100.0f, m_VisibleSize.height/2));
 
-	m_progressTimeBar->setScale(m_VisibleSize.width/3.65/timer->getContentSize().width);
+	m_progressTimeBar->setScale(m_VisibleSize.height/3.65/timer->getContentSize().height);
 	m_progressTimeBar->setPercentage(100.f);
-	m_progressTimeBar->setMidpoint(ccp(0, 0.5));   
-	m_progressTimeBar->setBarChangeRate(ccp(1, 0));
+	m_progressTimeBar->setMidpoint(ccp(0, 0));   
+	m_progressTimeBar->setBarChangeRate(ccp(0, 1));
 
 	this->addChild(m_progressTimeBar,0);
 

@@ -27,7 +27,7 @@ bool CHomeMenuLayer::init()
 		menu_selector(CHomeMenuLayer::homeMenuCallback)
 		);
 
-	pMenuIcon->setPosition(ccp(origin.x + visibleSize.width/2, visibleSize.height-50.0f) );
+	pMenuIcon->setPosition(ccp(visibleSize.width-100.0f, visibleSize.height/2) );
 
 	// create menu, it's an autorelease object
 	pMenu = CCMenu::create(pMenuIcon, NULL);
