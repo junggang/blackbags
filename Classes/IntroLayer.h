@@ -6,8 +6,7 @@ class CIntroLayer : public cocos2d::CCLayer
 public:
 	virtual bool init();
 
-	// a selector callback
-	void mainSceneCallback(CCObject* pSender);
+	void endIntro(float dt);
 
 	// implement the "static node()" method manually
     CREATE_FUNC(CIntroLayer);

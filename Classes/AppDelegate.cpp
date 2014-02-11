@@ -2,6 +2,7 @@
 #include "HelloWorldScene.h"
 #include "MainScene.h"
 #include "config.h"
+#include "IntroScene.h"
 
 USING_NS_CC;
 
@@ -29,7 +30,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-	CCScene *pScene = CMainScene::create();
+	CCScene *pScene = CIntroScene::create();
 
     // run
     pDirector->runWithScene(pScene);

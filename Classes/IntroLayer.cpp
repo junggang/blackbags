@@ -18,20 +18,18 @@ bool CIntroLayer::init()
 	/////////////////////////////
 	// 2. add a background image
 	
-	//delay·Î mainSceneCallback È£Ãâ 
+	CCSprite* pLogo = CCSprite::create("image/INTRO_logo.png");
+
+	pLogo->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
+	this->addChild(pLogo, 0);
+
+	this->schedule(schedule_selector(CIntroLayer::endIntro),1.0f);
     
 	return true;
 }
 
-void CIntroLayer::mainSceneCallback(CCObject* pSender)
+void CIntroLayer::endIntro(float dt)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
 	CCScene* newScene = CMainScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-#endif
 }

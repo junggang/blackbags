@@ -1,5 +1,7 @@
 #include "IntroScene.h"
 #include "BackgroundLayer.h"
+#include "MainScene.h"
+#include "IntroLayer.h"
 
 USING_NS_CC;
 
@@ -18,5 +20,9 @@ bool CIntroScene::init(void)
 
 	this->addChild(BackgroundLayer, 0);
 
+	CCLayer* LogoLayer = CIntroLayer::create();
+	this->addChild(LogoLayer, 1);
+
 	return true;
 }
+
