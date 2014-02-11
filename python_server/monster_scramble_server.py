@@ -16,6 +16,7 @@ sys.setdefaultencoding('utf-8')
 # 리스트는 redis안에 저장된 player data에 접근하는 key value를 가지고 있다
 # 리스트의 값들은 추가된 순서를 유지한다
 global watingList
+global timerThreadList
 
 def playerMatching():
 	player_2 = []
@@ -116,6 +117,28 @@ def playerMatching():
 
 # matching thread는 서버가 시작되면 같이 실행된다.
 # 리스트에 있는 사람들이 바뀔 때마다 현재 리스트에 있는 사람들을 가지고 게임 채널 생성하고 채널 테이블을 레디스에 생성
+
+
+
+#################################################
+#				timer thread 관련				#
+#################################################
+# game channel id를 가지고 있다
+# 시작되면 21초를 기다리고, 21초가 지나면 해당 하는 채널의 게임 데이터를 불러온다
+# 불러온 게임 데이터에 랜덤 라인을 그린다
+# 새로운 타이머 스레드 생성
+# 타이머 관리 풀에 game channel id에 해당하는 스레드를 새로 생성한 스레드로 교체
+# 새로 생성한 스레드 시작
+# 종료
+def randomTimer(tokenId, gameChannelId):
+	# 처음엔 없으니까 리스트 안에 값 있는지 확인 필요
+	del timerThreadList[gameChannelId]
+
+	gameData = getGameData(channelId)
+	randomIdx = gameData.makeRandomLine()
+	if gameData.drawLine(randomIdx[0], randomIdx[1]):
+		timerThreadList[gameChannelId] = threading.Timer(21, PCDrawRandomLine, args=[tokenId, gameChannelId])
+		timerThreadList[gameChannelId].start()
 
 
 
@@ -221,6 +244,10 @@ def PCReady(tokenId):
 	if gameData.isAllReady():
 		gameData.startTurn()
 
+		# 타이머 시작
+		timerThreadList[gameChannelId] = threading.Timer(21, PCDrawRandomLine, arg=[tokenId, gameChannelId])
+		timerThreadList[gameChannelId].start()
+
 	jsonData = json.dumps(gameData.data)
 
 	return jsonData
@@ -239,6 +266,15 @@ def PCDrawLine(tokenId, lineIdx):
 		if gameData.drawLine(lineIdx[0], lineIdx[1]):
 			jsonData = json.dumps(gameData.data)
 			gRedis.set(channelId, jsonData)
+
+			# 기존 타이머 삭제 
+			# 처음엔 없으니까 리스트 안에 값 있는지 확인 필요
+			del timerThreadList[gameChannelId]
+
+			# 타이머 스레드 생성 및 시작
+			# timerThreadList에 저장 
+			timerThreadList[gameChannelId] = threading.Timer(21, PCDrawRandomLine, args=[tokenId, gameChannelId])
+			timerThreadList[gameChannelId].start()
 		else:
 			jsonData = 'not updated'
 
@@ -453,6 +489,7 @@ if __name__ == '__main__':
 	gRedis = connect_redis()
 
 	watingList = []
+	timerThreadList = {}
 
 	# thread.start_new_thread(playerMatching)
 	matchingThread = threading.Thread(target=playerMatching)
