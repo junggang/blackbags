@@ -39,6 +39,8 @@ bool CTimerLayer::init()
 
 void CTimerLayer::update( float dt )
 {
+	m_progressTimeBar->stopAllActions();
+	//다른 애니메이션들 끝날 때 까지 기다렸다가 타이머를 재생해주도록 하자.
 	CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
 	CCFiniteTimeAction* pAction = CCSequence::create(progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
 	m_progressTimeBar->runAction(pAction);
