@@ -16,10 +16,11 @@ public:
 private:
 	cocos2d::CCSize m_VisibleSize;
 	std::array<cocos2d::CCPoint,MAX_PLAYER_NUM> m_UIposition;
-
 	std::array<cocos2d::CCSprite*, MAX_PLAYER_NUM> m_Player;
 	cocos2d::CCSpriteBatchNode* m_pSpriteBatchNode;
 	cocos2d::CCAnimation* m_CharacterAni;
 	int m_CurrentPlayerId;
+
+	std::array<cocos2d::CCLabelTTF*,MAX_PLAYER_NUM>m_PlayerName;
 };
 

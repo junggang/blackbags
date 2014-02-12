@@ -48,6 +48,12 @@ bool CPlayerLayer::init()
 
 		m_Player[playerId] = CCSprite::create();
 		m_Player[playerId]->setPosition(m_UIposition[position]);
+
+		m_PlayerName[playerId] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(), "Arial", 12, 
+			CCSizeMake(245, 32), kCCTextAlignmentCenter);
+
+		m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+DEFAULT_CHARACTER_WIDTH/2,m_UIposition[position].y));
+
 		switch(position)
 		{
 		case 0:
@@ -73,7 +79,9 @@ bool CPlayerLayer::init()
 		if (CGameManager::GetInstance()->GetCharacterId(playerId)==-1)
 			continue;
 
-		m_pSpriteBatchNode->addChild(m_Player[playerId]);
+		m_pSpriteBatchNode->addChild(m_Player[playerId],0);
+		addChild(m_PlayerName[playerId],1);
+
 	}
 
 	//현재 턴(첫번째 턴)부터 애니메이션이 재생될 수 있도록 update()를 한 번 해준다.
