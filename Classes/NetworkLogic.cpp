@@ -17,6 +17,8 @@ CNetworkLogic::CNetworkLogic(void)
 	m_TokenId = "";
 	m_UserName = "";
 
+	m_ServerAddr = "http://10.73.43.191:5000";
+
 	m_MyPlayerId = -1;
 
 	m_TwoFlag = false;
@@ -192,7 +194,10 @@ void CNetworkLogic::Login()
 	// make http request
 	m_Request = new CCHttpRequest();
 
-	m_Request->setUrl("localhost/login");
+	std::string url = m_ServerAddr;
+	url.append("/login");
+
+	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
@@ -224,8 +229,11 @@ void CNetworkLogic::Login()
 void CNetworkLogic::SelectCharacter(int characterId)
 {
 	m_Request = new CCHttpRequest();
+	
+	std::string url = m_ServerAddr;
+	url.append("/select_character");
 
-	m_Request->setUrl("localhost/select_character");
+	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
@@ -246,8 +254,11 @@ void CNetworkLogic::SelectCharacter(int characterId)
 void CNetworkLogic::SetMapSize(MapSelect mapSize)
 {
 	m_Request = new CCHttpRequest();
+	
+	std::string url = m_ServerAddr;
+	url.append("/selectMap");
 
-	m_Request->setUrl("localhost/selectMap");
+	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
@@ -268,8 +279,11 @@ void CNetworkLogic::SetMapSize(MapSelect mapSize)
 void CNetworkLogic::DrawLine(IndexedPosition indexedPosition)
 {
 	m_Request = new CCHttpRequest();
+	
+	std::string url = m_ServerAddr;
+	url.append("/draw_line");
 
-	m_Request->setUrl("localhost/draw_line");
+	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
@@ -293,8 +307,11 @@ void CNetworkLogic::DrawLine(IndexedPosition indexedPosition)
 void CNetworkLogic::JoinUpdate(float dt)
 {
 	m_Request = new CCHttpRequest();
+	
+	std::string url = m_ServerAddr;
+	url.append("/join_update");
 
-	m_Request->setUrl("localhost/join_update");
+	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
@@ -312,8 +329,11 @@ void CNetworkLogic::JoinUpdate(float dt)
 void CNetworkLogic::PlayUpdate()
 {
 	m_Request = new CCHttpRequest();
+	
+	std::string url = m_ServerAddr;
+	url.append("/play_update");
 
-	m_Request->setUrl("localhost/play_update");
+	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
@@ -331,8 +351,11 @@ void CNetworkLogic::PlayUpdate()
 void CNetworkLogic::SettingReady()
 {
 	m_Request = new CCHttpRequest();
+	
+	std::string url = m_ServerAddr;
+	url.append("/settingReady");
 
-	m_Request->setUrl("localhost/settingReady");
+	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
@@ -350,8 +373,11 @@ void CNetworkLogic::SettingReady()
 void CNetworkLogic::PlayReady()
 {
 	m_Request = new CCHttpRequest();
+	
+	std::string url = m_ServerAddr;
+	url.append("/play_ready");
 
-	m_Request->setUrl("localhost/play_ready");
+	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 

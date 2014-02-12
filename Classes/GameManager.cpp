@@ -402,7 +402,7 @@ NetworkPhase CGameManager::GetCurrentNetworkPhase()
 
 bool CGameManager::InitNetworkLogic()
 {
-	return CNetworkLogic::GetInstance()->init();
+	return CNetworkLogic::GetInstance()->Init();
 }
 
 void CGameManager::Login()

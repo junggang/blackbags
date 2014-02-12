@@ -13,7 +13,7 @@ public:
 	static CNetworkLogic*	GetInstance();
 	static void				ReleaseInstance();
 
-	bool Init();
+	virtual bool Init();
 
 	void SetCurrentNetworkPhase(NetworkPhase phase) { m_CurrentPhase = phase; }
 	NetworkPhase GetCurrentNetworkPhase() { return m_CurrentPhase; }
@@ -53,6 +53,8 @@ private:
 	static CNetworkLogic*	m_pInstance; //singleton instance
 	
 	// network game data
+	std::string				m_ServerAddr;
+	
 	cocos2d::extension::CCHttpRequest*			m_Request;
 
 	NetworkPhase			m_CurrentPhase;
