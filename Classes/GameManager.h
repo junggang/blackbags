@@ -67,6 +67,7 @@ public:
 	/* 게임 진행 관련 : 실시간 점수 계산은 로직 쪽에서 하도록 한다.*/
 	void UpdateGameMap();
 	MO_TYPE IsConnected(IndexedPosition indexedPosition);
+	void TimeOut();
 	
 	//조심해!!
 	//아래의 함수들은 호출할 필요가 없다(로직 내부에서만 사용하는 함수들)

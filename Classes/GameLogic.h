@@ -107,6 +107,7 @@ public:
 	void InitRandomMap();
 
 	/* 주어진 index로 선을 연결한다. */
+	bool TimeOut();
 	bool EventHandle(IndexedPosition indexedPosition);
 	void DrawLine(const IndexedPosition& indexedPosition);
 

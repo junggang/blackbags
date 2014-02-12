@@ -33,7 +33,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CCScene *pScene = CIntroScene::create();
 
     // run
-    pDirector->runWithScene(pScene);
+    pDirector->runWithScene(CCTransitionFade::create(1.0,pScene));
 
     return true;
 }

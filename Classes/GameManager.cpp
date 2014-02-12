@@ -428,3 +428,15 @@ void CGameManager::SetNextButtonSelected()
 		CGameLogic::GetInstance()->SetNextButtonSelected();
 	}
 }
+
+void CGameManager::TimeOut()
+{
+	if (m_IsOnlineGame)
+	{
+		// Logic
+	}
+	else
+	{
+		SetUpdateFlag(CGameLogic::GetInstance()->TimeOut());
+	}
+}

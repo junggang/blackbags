@@ -831,3 +831,27 @@ MO_TYPE CGameLogic::IsConnected(IndexedPosition indexedPosition)
 		CCLOG("what a %d", tempType);
 	}
 }
+
+bool CGameLogic::TimeOut()
+{
+	//주어진 시간을 초과하면 랜덤으로 선을 그어버린다.
+
+	IndexedPosition RandomTargetPosition;
+
+	//random line creation
+	while (true)
+	{
+		// 울타리는 (2,1), (1,2) 부터 시작하므로
+		RandomTargetPosition.m_PosI = rand() % MAX_MAP_HEIGHT; 
+		RandomTargetPosition.m_PosJ = rand() % MAX_MAP_WIDTH;
+
+		// 랜덤 값으로 뽑은 좌표가 MO_LINE_UNCONNECTED일 경우에
+		if ( GetMapType(RandomTargetPosition) == MO_LINE_UNCONNECTED )
+		{
+			if ( IsPossible(RandomTargetPosition) )
+			{
+				return EventHandle(RandomTargetPosition);
+			}
+		}
+	}
+}

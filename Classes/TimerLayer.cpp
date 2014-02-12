@@ -1,4 +1,5 @@
 #include "TimerLayer.h"
+#include "GameManager.h"
 
 USING_NS_CC;
 
@@ -29,7 +30,9 @@ bool CTimerLayer::init()
 
 	//시작하면서 한 번 업데이트 해야되는데.
 	CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
-	m_progressTimeBar->runAction(progressToZero);
+	CCFiniteTimeAction* pAction = CCSequence::create(progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
+
+	m_progressTimeBar->runAction(pAction);
 
 	return true;
 }
@@ -37,5 +40,13 @@ bool CTimerLayer::init()
 void CTimerLayer::update( float dt )
 {
 	CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
-	m_progressTimeBar->runAction(progressToZero);
+	CCFiniteTimeAction* pAction = CCSequence::create(progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
+	m_progressTimeBar->runAction(pAction);
+}
+
+void CTimerLayer::timerEndFunc()
+{
+	CCLog("Timer Ended!");
+	//타이머가 끝난 후 취해질 액션
+	CGameManager::GetInstance()->TimeOut();
 }

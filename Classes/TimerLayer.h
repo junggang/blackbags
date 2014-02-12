@@ -6,6 +6,7 @@ class CTimerLayer : public cocos2d::CCLayer
 public:
 	virtual bool init();
 	virtual void update(float dt);
+	void timerEndFunc();
 
 	// implement the "static node()" method manually
 	CREATE_FUNC(CTimerLayer);
