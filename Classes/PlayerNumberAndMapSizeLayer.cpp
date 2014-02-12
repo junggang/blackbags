@@ -163,6 +163,7 @@ void CPlayerNumberAndMapSizeLayer::NumberOfPlayerCallBack( CCObject* pSender )
 	int selectedPlayerNumber = static_cast<CCMenuItem*>(pSender)->getTag();
 
 	// 조심해! HardCoding^^;
+	// Tag :: 0, 1, 2 이므로 유저 수 2, 3, 4 명에 대응되려면 +2 시켜야 함
 	CGameManager::GetInstance()->SetPlayerNumberOfThisGame(selectedPlayerNumber + 2);
 	CGameManager::GetInstance()->SetUpdateFlag(true);
 

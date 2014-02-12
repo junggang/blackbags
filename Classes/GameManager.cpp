@@ -416,6 +416,8 @@ bool CGameManager::IsNextButtonSelected()
 	if (m_IsOnlineGame)
 	{
 		// Logic
+		// 조심해!! Single과 같은 로직으로 만들어뒀어!
+		return CGameLogic::GetInstance()->IsNextButtonSelected();
 	}
 	else
 	{

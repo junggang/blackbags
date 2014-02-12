@@ -34,7 +34,6 @@ bool CGameSettingScene::init(void)
 	// 2.1 add Player Number and Map Size Select layer
 	if ( CGameManager::GetInstance()->IsOnlineMode() ) // OnlineGame
 	{
-		// 조심해!! 온라인은 별도 레이어를 생성해야 해!
 		m_PlayerNumberAndMapSizeLayer = CNetworkPlayerNumberLayer::create();
 		this->addChild(m_PlayerNumberAndMapSizeLayer, 1);
 	}
@@ -53,8 +52,9 @@ void CGameSettingScene::update(float dt)
 {
 	//dt는 이전 update 이후 지난 시간
 
-	if (CGameManager::GetInstance()->IsOnlineMode() )
+	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{
+		// 로컬에 현재 phase를 저장한 다음, 네트워크 phase와 로컬 phase가 같으면 아래 switch 문은 건너뛴다.
 		switch (CGameManager::GetInstance()->GetCurrentNetworkPhase() )
 		{
 		case NP_NOTHING:

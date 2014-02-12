@@ -17,7 +17,7 @@ bool CSettingTitleLayer::init()
 
 	// Title Position : X Center + Y
 	pTitle->setPosition(ccp(visibleSize.width/2, visibleSize.height - pTitle->getContentSize().height) );
-	this->addChild(pTitle, 0);
+	this->addChild(pTitle, 1);
 
 	return true;
 }

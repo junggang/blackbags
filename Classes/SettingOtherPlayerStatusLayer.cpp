@@ -15,6 +15,8 @@ bool CSettingOtherPlayerStatusLayer::init()
 	// Get Window Size
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
+	CreateStatusFrame(m_VisibleSize);
+
 	// Check Every Player Status
 	this->update();
 
@@ -33,23 +35,78 @@ void CSettingOtherPlayerStatusLayer::update()
 		// 만약 어떤 캐릭터가 선택되었는데 화면에는 표시되지 않고 있다면 추가한다.
 		else if ( CGameManager::GetInstance()->isCharacterSelected(i) && (this->getChildByTag(i) == NULL) )
 		{
-			PlayerStatus[i] = CCTextFieldTTF::textFieldWithPlaceHolder(
+			PlayerNames[i] = CCTextFieldTTF::textFieldWithPlaceHolder(
 				CGameManager::GetInstance()->GetPlayerName(i).c_str(),
 				CCSize(480,30),
 				kCCTextAlignmentCenter,
 				"Arial",
 				20);
 
-			PlayerStatus[i]->setTag(i);
+			PlayerNames[i]->setTag(i);
 
-			PlayerStatus[i]->setPosition(ccp(m_VisibleSize.width / 6, m_VisibleSize.height * 0.75 - 50 * i));
+			PlayerNames[i]->setPosition(ccp(m_VisibleSize.width / 6, m_VisibleSize.height * 0.75 - 50 * i));
 
-			this->addChild(PlayerStatus[i], 3);
+			this->addChild(PlayerNames[i], 3);
+		}
+	}
+}
+
+void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
+{
+	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	{
+		m_PlayerStatusFrame[i] = CCSprite::create("image/PLAYER_STATUS.png");
+		switch(i)
+		{
+		case 0:
+			m_PlayerStatusFrame[i]->setAnchorPoint( ccp(0, 1) );
+			m_PlayerStatusFrame[i]->setPosition( ccp(0, m_VisibleSize.height) );
+			break;
+		case 1:
+			m_PlayerStatusFrame[i]->setAnchorPoint( ccp(1, 1) );
+			m_PlayerStatusFrame[i]->setPosition( m_VisibleSize );
+			break;
+		case 2:
+			m_PlayerStatusFrame[i]->setAnchorPoint( ccp(0, 0) );
+			m_PlayerStatusFrame[i]->setPosition( ccp(0, 0) );
+			break;
+		case 3:
+			m_PlayerStatusFrame[i]->setAnchorPoint( ccp(1, 0) );
+			m_PlayerStatusFrame[i]->setPosition( ccp(m_VisibleSize.width, 0) );
+			break;
+		default:
+			break;
 		}
 
-// 		if (m_PlayerStatusMenu->getChildByTag(i) != PlayerStatus[i])
-// 		{
-// 			m_PlayerStatusMenu->addChild(PlayerStatus[i], 3);
-// 		}
+		this->addChild( m_PlayerStatusFrame[i] );
+
+		extension::CCEditBox* pEditName;
+
+		pEditName = extension::CCEditBox::create();
+		pEditName->setPosition(ccp(240, 250));
+		pEditName->setFontColor(ccGREEN);
+		pEditName->setPlaceHolder("name:");
+		pEditName->setReturnType(kKeyboardReturnTypeDone);
+		pEditName->setDelegate(this);
 	}
+}
+
+void CSettingOtherPlayerStatusLayer::editBoxEditingDidBegin( extension::CCEditBox* editBox )
+{
+
+}
+
+void CSettingOtherPlayerStatusLayer::editBoxEditingDidEnd( extension::CCEditBox* editBox )
+{
+
+}
+
+void CSettingOtherPlayerStatusLayer::editBoxTextChanged( extension::CCEditBox* editBox, const std::string& text )
+{
+
+}
+
+void CSettingOtherPlayerStatusLayer::editBoxReturn( extension::CCEditBox* editBox )
+{
+
 }

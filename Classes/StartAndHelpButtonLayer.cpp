@@ -20,12 +20,25 @@ bool CStartAndHelpButtonLayer::init()
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 	//// start Button
-	m_StartButton = CCMenuItemImage::create(
-		"image/SETTING_start.png",
-		"image/SETTING_start.png",
-		this,
-		menu_selector(CStartAndHelpButtonLayer::StartButtonCallBack)
-		);
+	//// 조심해!! 지금 내가 방장인지 아닌지 여부를 같이 확인해야 해!
+	if ( CGameManager::GetInstance()->IsOnlineMode() /*&& CGameManager::GetInstance()-> */ )
+	{
+		m_StartButton = CCMenuItemImage::create(
+			"image/SETTING_ready_unselected.png",
+			"image/SETTING_ready_selected.png",
+			this,
+			menu_selector(CStartAndHelpButtonLayer::StartButtonCallBack)
+			);
+	}
+	else
+	{
+		m_StartButton = CCMenuItemImage::create(
+			"image/SETTING_start.png",
+			"image/SETTING_start.png",
+			this,
+			menu_selector(CStartAndHelpButtonLayer::StartButtonCallBack)
+			);
+	}
 	
 	// at init, Start button is disabled
 	m_StartButton->setEnabled(false);

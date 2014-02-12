@@ -10,6 +10,7 @@ public:
 	// implement the "static node()" method manually
     CREATE_FUNC(CStartAndHelpButtonLayer);
 
+	// Online Mode :: StartButtonCallBack & m_StartButton == Ready Logic
 private:
 	void StartButtonCallBack( CCObject* pSender );
 	void HelpButtonCallBack( CCObject* pSender );
