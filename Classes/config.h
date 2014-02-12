@@ -92,7 +92,7 @@ const float DEFAULT_TILE_WIDTH = 120.0f;
 const float DEFAULT_TILE_HEIGHT = 80.0f;
 const float DEFAULT_LINE_WEIGHT = 10.0f;
 const float DEFAULT_DOT_RADIUS = 6.0f;
-const float DEFAULT_ITEM_RADIUS = 4.0f;
+const float DEFAULT_ITEM_SIZE = 60.0f;
 
 const float DEFAULT_CHARACTER_WIDTH = 190.0f;
 const float DEFAULT_CHARACTER_HEIGHT = 230.0f;
@@ -267,7 +267,7 @@ enum MO_OWNER	//게임 맵 각 타일 소유주
 
 enum MO_ITEM	//타일에 지정된 아이템
 {
-	ITEM_NOTHING,
+	ITEM_NOTHING = -1,
 	ITEM_GOLD,
 	ITEM_TRASH
 };
@@ -419,3 +419,9 @@ const std::string TileImageFileList[5] =
 		"image/tile_occupied.png",
 		"image/tile_void.png"
 	};
+
+const std::string ItemImageFileList[2] =
+{
+	"image/PLAY_gold.png",
+	"image/PLAY_trash.png"
+};

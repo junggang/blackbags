@@ -54,7 +54,7 @@ bool CMO_tile::init()
     }
 
 	pTile = NULL;
-	pItem = NULL;
+	//pItem = NULL;
 	m_Owner = MO_NOBODY;
 
 	return true;
@@ -73,10 +73,17 @@ void CMO_tile::setImage(IndexedPosition indexedPosition)
 	this->addChild(pTile, 0);
 
 	// item Ãß°¡
-	// pItem = CCSprite::create(TileImageFileList[0].c_str(), CCRectMake(0.0f, 0.0f, DEFAULT_TILE_SIZE,  DEFAULT_TILE_SIZE) );
-	// pItem->setAnchorPoint( ccp(0, 0) );
-	// pItem->setPosition( ccp(0.0f, 0.0f) );
-	// this->addChild(pItem, 1);
+	//pItem = CCSprite::create(TileImageFileList[0].c_str(), CCRectMake(0.0f, 0.0f, DEFAULT_TILE_WIDTH,  DEFAULT_TILE_HEIGHT) );
+	//pItem->setAnchorPoint( ccp(0, 0) );
+	//pItem->setPosition( ccp(0.0f, 0.0f) );
+	if(CGameManager::GetInstance()->GetItem(indexedPosition) != ITEM_NOTHING)
+	{
+		CMO_item* pItem = CMO_item::create();
+		pItem->setImage(indexedPosition);
+		pItem->setAnchorPoint( ccp(0, 0.5f) );
+		pItem->setPosition( ccp(0.0f, 0.0f) );
+		this->addChild(pItem, 1);
+	}
 }
 
 void CMO_tile::update( float delta )

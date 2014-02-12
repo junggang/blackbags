@@ -3,46 +3,25 @@
 
 USING_NS_CC;
 
-
-CMO_item::CMO_item()
+bool CMO_item::init()
 {
-}
-
-CMO_item::~CMO_item()
-{
-
-}
-
-CMO_item* CMO_item::create(const char* pszFileName, const CCRect& rect)
-{
-	CMO_item* pSprite = new CMO_item();
-	if (pSprite && pSprite->initWithFile(pszFileName, rect))
+	if ( !CCSprite::init() )
 	{
-		pSprite->autorelease();
-		return pSprite;
+		return false;
 	}
 
-	CC_SAFE_DELETE(pSprite);
-	return NULL;
+	return true;
 }
-
-CMO_item* CMO_item::Create(IndexedPosition indexedPosition)
-{
-
-	//아이템 종류
-	static std::string objectNames[2] =
-	{
-		"image/PLAY_gold.png",
-		"image/PLAY_trash.png",
-	};
-
-	int objectIdx = CGameManager::GetInstance()->GetItem(indexedPosition);
-	CMO_item* pMapObejct = CMO_item::create(objectNames[objectIdx].c_str(), CCRectMake(0.0f, 0.0f, 100.0f,  100.0f));
-
-	return pMapObejct;
-}
-
 void CMO_item::update( float delta )
 {
 
+}
+
+void CMO_item::setImage( IndexedPosition indexedPosition )
+{
+	int objectIdx = CGameManager::GetInstance()->GetItem(indexedPosition);
+	pItem = CCSprite::create(ItemImageFileList[objectIdx].c_str(), CCRectMake(0.0f, 0.0f, 80.0f,  80.0f));
+	pItem->setAnchorPoint(ccp(0.5f, 0.5f));
+	pItem->setPosition(ccp(DEFAULT_TILE_WIDTH/2,0));
+	this->addChild(pItem,0);
 }

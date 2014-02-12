@@ -3,6 +3,7 @@
 #include "CMO_tile.h"
 #include "CMO_dot.h"
 #include "CMO_line.h"
+#include "CMO_item.h"
 
 USING_NS_CC;
 
@@ -97,6 +98,7 @@ bool CGameBoardLayer::init()
 				m_Board->addChild(pLine, 1);
 
 			}
+
 		}	
 		if(i%2==0)
 		{

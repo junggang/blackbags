@@ -1,6 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "config.h"
+#include "CMO_item.h"
 
 class CMO_tile : public cocos2d::CCSprite
 {
@@ -24,7 +25,6 @@ private:
 	void changeImage();
 	IndexedPosition		m_Index;
 	cocos2d::CCSprite*	pTile;
-	cocos2d::CCSprite*	pItem;
 	MO_OWNER			m_Owner;
 };
 
