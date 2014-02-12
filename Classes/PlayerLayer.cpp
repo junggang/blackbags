@@ -48,6 +48,20 @@ bool CPlayerLayer::init()
 
 		m_Player[playerId] = CCSprite::create();
 		m_Player[playerId]->setPosition(m_UIposition[position]);
+		switch(position)
+		{
+		case 0:
+			break;
+		case 1:
+			m_Player[playerId]->setFlipX(true);
+			break;
+		case 2:
+			m_Player[playerId]->setFlipY(true);
+			break;
+		case 3:
+			m_Player[playerId]->setRotation(180.0f);
+			break;
+		}
 	}
 
 	//캐릭터의 첫번째 프레임으로 모든 UI를 준비한다.
