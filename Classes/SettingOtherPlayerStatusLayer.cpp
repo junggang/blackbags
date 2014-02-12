@@ -81,13 +81,13 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		this->addChild( m_PlayerStatusFrame[i] );
 
 		extension::CCEditBox* pEditName;
-
-		pEditName = extension::CCEditBox::create();
-		pEditName->setPosition(ccp(240, 250));
-		pEditName->setFontColor(ccGREEN);
-		pEditName->setPlaceHolder("name:");
-		pEditName->setReturnType(kKeyboardReturnTypeDone);
-		pEditName->setDelegate(this);
+// 
+// 		pEditName = extension::CCEditBox::create();
+// 		pEditName->setPosition(ccp(240, 250));
+// 		pEditName->setFontColor(ccGREEN);
+// 		pEditName->setPlaceHolder("name:");
+// 		pEditName->setReturnType(kKeyboardReturnTypeDone);
+// 		pEditName->setDelegate(this);
 	}
 }
 
