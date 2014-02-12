@@ -75,6 +75,8 @@ void CNetworkPlayerNumberLayer::CreateNumberOfPlayerMenu( CCSize visibleSize )
 
 void CNetworkPlayerNumberLayer::CreateNextButtonMenu( CCSize visibleSize )
 {
+	CCMenu* NextButtonMenu = CCMenu::createWithItems(NULL, NULL);
+
 	CCMenuItemImage* pNextButton = CCMenuItemImage::create(
 		"image/NAMESETTING_next.png",
 		"image/NAMESETTING_next_selected.png",
@@ -82,10 +84,13 @@ void CNetworkPlayerNumberLayer::CreateNextButtonMenu( CCSize visibleSize )
 		menu_selector(CNetworkPlayerNumberLayer::NextButtonCallBack)
 		);
 
-	pNextButton->setPosition(visibleSize.width - pNextButton->getContentSize().width,
+	NextButtonMenu->setPosition(visibleSize.width - pNextButton->getContentSize().width,
 		pNextButton->getContentSize().height);
 
-	this->addChild(pNextButton);
+
+	NextButtonMenu->addChild(pNextButton);
+	
+	this->addChild(NextButtonMenu);
 }
 
 void CNetworkPlayerNumberLayer::NumberOfPlayerCallBack( CCObject* pSender )
