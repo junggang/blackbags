@@ -81,11 +81,10 @@ public:
 	const std::string& GetCharacterResultFaceFileName(int playerIdx);
 
 	// network game 상태 확인
-	bool IsLogin();
-	bool IsLoginFail();
-	bool IsInChannel();
-
 	bool InitNetworkLogic();
+	void Login();
+
+	NetworkPhase GetCurrentNetworkPhase();
 
 private:
 	static CGameManager*	m_pInstance; //singleton instance

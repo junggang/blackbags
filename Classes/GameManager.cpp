@@ -385,24 +385,30 @@ void CGameManager::SetPlayerNumberOfThisGame( int PlayerNumber )
 	}
 }
 
-bool CGameManager::IsLogin()
-{
-	return CNetworkLogic::GetInstance()->IsLogin();
+void CGameManager::SetOnlineMode(bool flag)	
+{ 
+	m_IsOnlineGame = flag; 
+
+	if (m_IsOnlineGame)
+	{
+		CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_PLAYER_NUMBER_SETTING);
+	}
 }
 
-bool CGameManager::IsLoginFail()
+NetworkPhase CGameManager::GetCurrentNetworkPhase()
 {
-	return CNetworkLogic::GetInstance()->IsLoginFail();
-}
-
-bool CGameManager::IsInChannel()
-{
-	return CNetworkLogic::GetInstance()->IsInChannel();
+	return CNetworkLogic::GetInstance()->GetCurrentNetworkPhase();
 }
 
 bool CGameManager::InitNetworkLogic()
 {
 	return CNetworkLogic::GetInstance()->init();
+}
+
+void CGameManager::Login()
+{
+	InitNetworkLogic();
+	CNetworkLogic::GetInstance()->Login();
 }
 
 bool CGameManager::IsNextButtonSelected()

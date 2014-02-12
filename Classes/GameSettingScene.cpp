@@ -53,29 +53,52 @@ void CGameSettingScene::update(float dt)
 {
 	//dt는 이전 update 이후 지난 시간
 
-	// 2.2 After Choose Player Number and Map Size, Go Next Step.
-	if ( CGameManager::GetInstance()->IsNextButtonSelected() && !isSceondStep )
+	if (CGameManager::GetInstance()->IsOnlineMode() )
 	{
-		AddSceondStepLayers();
-		isSceondStep = true;
-		this->removeChild(m_PlayerNumberAndMapSizeLayer);
+		switch (CGameManager::GetInstance()->GetCurrentNetworkPhase() )
+		{
+		case NP_NOTHING:
+			// return to the main menu
+			break;
+		case NP_GAME_SETTING:
+			// real setting layer
+			break;
+		case NP_PLAYER_NUMBER_SETTING:
+			// select player number layer
+			break;
+		case NP_WAITING_CHANNEL_ID:
+			// waiting channel id layer
+			break;
+		default:
+			break;
+		}
 	}
+	else
+	{
+		// 2.2 After Choose Player Number and Map Size, Go Next Step.
+		if ( CGameManager::GetInstance()->IsNextButtonSelected() && !isSceondStep )
+		{
+			AddSceondStepLayers();
+			isSceondStep = true;
+			this->removeChild(m_PlayerNumberAndMapSizeLayer);
+		}
 
-	// if Second Step
-	if ( CGameManager::GetInstance()->IsUpdated() && isSceondStep )
-	{
-		//여기에 각 레이어들을 업데이트하는 코드를 넣음
-		m_SettingCharacterLayer->update();
-		m_OtherPlayerStatusLayer->update();
-		m_StartAndHelpButtonLayer->update();
-		//업데이트된 내용을 모두 받아와서 갱신했으므로 flag는 원래대로 false로 만든다
-		CGameManager::GetInstance()->SetUpdateFlag(false);
-	}
-	// is First Step
-	else if ( CGameManager::GetInstance()->IsUpdated() && !isSceondStep )
-	{
-		m_PlayerNumberAndMapSizeLayer->update(dt);
-		CGameManager::GetInstance()->SetUpdateFlag(false);
+		// if Second Step
+		if ( CGameManager::GetInstance()->IsUpdated() && isSceondStep )
+		{
+			//여기에 각 레이어들을 업데이트하는 코드를 넣음
+			m_SettingCharacterLayer->update();
+			m_OtherPlayerStatusLayer->update();
+			m_StartAndHelpButtonLayer->update();
+			//업데이트된 내용을 모두 받아와서 갱신했으므로 flag는 원래대로 false로 만든다
+			CGameManager::GetInstance()->SetUpdateFlag(false);
+		}
+		// is First Step
+		else if ( CGameManager::GetInstance()->IsUpdated() && !isSceondStep )
+		{
+			m_PlayerNumberAndMapSizeLayer->update(dt);
+			CGameManager::GetInstance()->SetUpdateFlag(false);
+		}
 	}
 }
 

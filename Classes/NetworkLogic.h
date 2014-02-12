@@ -15,9 +15,8 @@ public:
 
 	bool Init();
 
-	bool IsLogin()				{ return m_Login; }
-	bool IsLoginFail()			{ return m_LoginFail; }
-	bool IsInChannel()			{ return m_InChannel; }
+	void SetCurrentNetworkPhase(NetworkPhase phase) { m_CurrentPhase = phase; }
+	NetworkPhase GetCurrentNetworkPhase() { return m_CurrentPhase; }
 
 	std::string			GetPlayerName(int playerIdx);
 	int					GetCurrentPlayerNumber();
@@ -56,9 +55,7 @@ private:
 	// network game data
 	cocos2d::extension::CCHttpRequest*			m_Request;
 
-	bool					m_Login;
-	bool					m_LoginFail;
-	bool					m_InChannel;
+	NetworkPhase			m_CurrentPhase;
 
 	int						m_MyPlayerId;
 	

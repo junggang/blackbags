@@ -230,6 +230,14 @@ enum SceneName	//Scene ¿Ã∏ßµÈ
 	SC_NETWORK_RESULT
 };
 
+enum NetworkPhase
+{
+	NP_NOTHING,
+	NP_PLAYER_NUMBER_SETTING,
+	NP_WAITING_CHANNEL_ID,
+	NP_GAME_SETTING
+};
+
 enum SOUND_BGMList
 {
 	BGM_MAIN,

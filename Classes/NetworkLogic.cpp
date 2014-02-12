@@ -17,15 +17,13 @@ CNetworkLogic::CNetworkLogic(void)
 	m_TokenId = "";
 	m_UserName = "";
 
-	m_Login = false;
-	m_LoginFail = false;
-	m_InChannel = false;
-
 	m_MyPlayerId = -1;
 
 	m_TwoFlag = false;
 	m_ThreeFlag = false;
 	m_FourFlag = false;
+
+	m_CurrentPhase = NP_PLAYER_NUMBER_SETTING;
 }
 
 
@@ -245,8 +243,6 @@ void CNetworkLogic::SelectCharacter(int characterId)
 	m_Request->release();
 }
 
-
-
 void CNetworkLogic::SetMapSize(MapSelect mapSize)
 {
 	m_Request = new CCHttpRequest();
@@ -404,8 +400,8 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 	{
 		if (strcmp(stringData.c_str(), "login") == 0)
 		{
-			// login 성공이므로 플래그 설정
-			m_Login = true;
+			// login next phase
+			m_CurrentPhase = NP_WAITING_CHANNEL_ID;
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 
 			// create loginUpdate schedule
@@ -413,7 +409,8 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		}
 		else
 		{
-			m_LoginFail = true;
+			// return to main menu
+			m_CurrentPhase = NP_NOTHING;
 		}
 	}
 	else if (strcmp(response->getHttpRequest()->getTag(), "POST joinUpdate") == 0)
@@ -422,7 +419,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 
 		if (m_MyPlayerId != -1)
 		{
-			m_InChannel = true;
+			m_CurrentPhase = NP_GAME_SETTING;
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 
 			// create update schedule
