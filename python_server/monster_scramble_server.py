@@ -106,6 +106,7 @@ def playerMatching():
 		del player_3[0:len(player_3)]
 		del player_4[0:len(player_4)]
 
+		# 슬립 1초가 있으면 아무리 사람이 많아도 1초에 채널 1개씩밖에 생성 안 된다
 		time.sleep(1)
 
 # while True:
@@ -523,4 +524,4 @@ if __name__ == '__main__':
 
 	app.debug = True
 	app.secret_key = '\xab\x11\xcb\xdb\xf2\xb9\x0e\xd9N\xbd\x17$\x07\xc9H\x19\x96h\x8a\xf2<`-A'
-	app.run()
+	app.run(host='0.0.0.0')
