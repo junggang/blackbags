@@ -64,6 +64,8 @@ bool CNetworkLogic::Init()
 		m_networkGameData->Clear();
 	}
 
+	m_TokenId = "temptoken";
+
 	// facebook token 값 받아 온다
 	m_TokenId.clear();
 	m_TokenId = "temptoken";

@@ -86,11 +86,24 @@ public:
 
 	NetworkPhase GetCurrentNetworkPhase();
 
+	// game data 접근 관련
+	std::string GetUsersName();
+	std::string GetTokenId();
+	bool		GetPlayerNumberSelection(int number);
+
+	void SetUsersName(std::string name);
+	void SetTokenId(std::string tokenId);
+	void SetPlayerNumberSelection(int number, bool selection);
+
+
 private:
 	static CGameManager*	m_pInstance; //singleton instance
 
+	cocos2d::CCUserDefault *m_GameData;
+
 	bool m_IsOnlineGame;
 	bool m_IsUpdated;
+	//CCUserDefault m_SharedData;
 
 	//캐릭터 이름이나 맵 상태 정보들은 매니저가 캐싱해서 가지고 있는 것이 좋을 듯
 	//대신 그 데이터를 기반으로 무언가를 판단하는 로직은 없도록 주의(일단 인풋이 있으면 전송하고 결과값만 받는 방식 유지)

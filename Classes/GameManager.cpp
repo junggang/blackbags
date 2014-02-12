@@ -8,6 +8,7 @@ CGameManager::CGameManager(void)
 {
 	m_IsOnlineGame = false;
 	m_IsUpdated = false;
+	m_GameData = nullptr;
 }
 
 CGameManager::~CGameManager(void)
@@ -32,6 +33,19 @@ void CGameManager::ReleaseInstance()
 bool CGameManager::init()
 {
 	CGameLogic::GetInstance()->init();
+	m_GameData = cocos2d::CCUserDefault::sharedUserDefault();
+
+	// 만약 현재 저장 된 게임데이터가 없으면 초기값으로 설정해서 생성한다.
+	if (!m_GameData->isXMLFileExist() )
+	{
+		m_GameData->setStringForKey("tokenId", "temptoken");
+
+		m_GameData->setStringForKey("usersName", "noname");
+
+		m_GameData->setBoolForKey("two", true);
+		m_GameData->setBoolForKey("three", true);
+		m_GameData->setBoolForKey("four", true);
+	}
 
 	return true;
 }
@@ -93,7 +107,7 @@ int CGameManager::GetWinnerIdx()
 {
 	if (m_IsOnlineGame)
 	{
-		//server에서 필요한 정보를 받아 온다.
+		// server에서 필요한 정보를 받아 온다.
 		// winner idx - 동점 경우도 생각해야 함
 	}
 	else
@@ -446,5 +460,63 @@ void CGameManager::TimeOut()
 	else
 	{
 		SetUpdateFlag(CGameLogic::GetInstance()->TimeOut());
+	}
+}
+
+std::string CGameManager::GetUsersName()
+{
+	return m_GameData->getStringForKey("usersName");
+}
+
+std::string CGameManager::GetTokenId()
+{
+	return m_GameData->getStringForKey("tokenId");
+}
+
+bool CGameManager::GetPlayerNumberSelection(int number)
+{
+	switch (number)
+	{
+	case 2:
+		return m_GameData->getBoolForKey("two");
+		break;
+	case 3:
+		return m_GameData->getBoolForKey("three");
+		break;
+	case 4:
+		return m_GameData->getBoolForKey("four");
+		break;
+	default:
+		break;
+	}
+
+	return false;
+}
+
+void CGameManager::SetUsersName(std::string name)
+{
+	m_GameData->setStringForKey("usersName", name);
+}
+
+void CGameManager::SetTokenId(std::string tokenId)
+{
+	m_GameData->setStringForKey("tokenId", tokenId);
+}
+
+void CGameManager::SetPlayerNumberSelection(int number, bool selection)
+{
+	switch (number)
+	{
+	case 2:
+		return m_GameData->setBoolForKey("two", selection);
+		break;
+	case 3:
+		return m_GameData->setBoolForKey("three", selection);
+		break;
+	case 4:
+		return m_GameData->setBoolForKey("four", selection);
+		break;
+	default:
+		break;
 	}
 }
