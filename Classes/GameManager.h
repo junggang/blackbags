@@ -17,6 +17,7 @@ public:
 	void SetCurrentPlayerNumber(int PlayerNumber);
 
 	int GetPlayerNumberOfThisGame();
+	bool GetStatusPlayerNumber(int playerNumber);
 	void SetPlayerNumberOfThisGame(int PlayerNumber);
 
 	//게임이 온라인인지 오프라인인지 설정

@@ -103,7 +103,6 @@ void CNetworkPlayerNumberLayer::NumberOfPlayerCallBack( CCObject* pSender )
 
 	// 조심해! HardCoding^^;
 	CGameManager::GetInstance()->SetPlayerNumberOfThisGame(selectedPlayerNumber + 2);
-	CGameManager::GetInstance()->SetUpdateFlag(true);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
@@ -139,11 +138,11 @@ void CNetworkPlayerNumberLayer::update(float dt)
 		{
 			return;
 		}
-
+		
 		// PLAYER NUMBER == i
 		// PLAYER NUMBER 2 == TAG (0), 3 == TAG (1), 4 == TAG (2) 이므로
 		// TAG == i - 2
-		if ( i == CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
+		if (CGameManager::GetInstance()->GetStatusPlayerNumber(i) )
 		{
 			pTempPlayerNumber->selected();
 		}

@@ -387,11 +387,53 @@ int CGameManager::GetPlayerNumberOfThisGame()
 	}
 }
 
+bool CGameManager::GetStatusPlayerNumber(int playerNumber)
+{
+	std::string key = "";
+
+	switch (playerNumber)
+	{
+	case 2:
+		key = "two";
+		break;
+	case 3:
+		key = "three";
+		break;
+	case 4:
+		key = "four";
+		break;
+	default:
+		break;
+	}
+
+	return m_GameData->getBoolForKey(key.c_str() );
+}
+
 void CGameManager::SetPlayerNumberOfThisGame( int PlayerNumber )
 {
 	if (m_IsOnlineGame)
 	{
 		// shared data¿¡ player number flags ¼³Á¤
+		std::string key = "";
+		switch (PlayerNumber)
+		{
+		case 2:
+			key = "two";
+			break;
+		case 3:
+			key = "three";
+			break;
+		case 4:
+			key = "four";
+			break;
+		default:
+			break;
+		}
+
+		bool value = m_GameData->getBoolForKey(key.c_str() );
+		
+		m_GameData->setBoolForKey(key.c_str(), !value);
+		SetUpdateFlag(true);
 	}
 	else
 	{
