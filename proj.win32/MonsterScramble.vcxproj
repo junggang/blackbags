@@ -171,6 +171,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\SettingTitleLayer.cpp" />
     <ClCompile Include="..\Classes\StartAndHelpButtonLayer.cpp" />
     <ClCompile Include="..\Classes\TimerLayer.cpp" />
+    <ClCompile Include="..\Classes\WaitingChannelId.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +216,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\SettingTitleLayer.h" />
     <ClInclude Include="..\Classes\StartAndHelpButtonLayer.h" />
     <ClInclude Include="..\Classes\TimerLayer.h" />
+    <ClInclude Include="..\Classes\WaitingChannelId.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
