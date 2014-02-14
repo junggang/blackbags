@@ -149,7 +149,7 @@ void CPlayerNumberAndMapSizeLayer::SelectMapCallBack( CCObject* pSender )
 	CGameManager::GetInstance()->SetMapSize( static_cast<MapSelect>(selectedMapId) );
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+	//exit(0);
 #endif
 #endif
 }
@@ -168,7 +168,7 @@ void CPlayerNumberAndMapSizeLayer::NumberOfPlayerCallBack( CCObject* pSender )
 	CGameManager::GetInstance()->SetUpdateFlag(true);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+	//exit(0);
 #endif
 #endif
 }
@@ -186,7 +186,7 @@ void CPlayerNumberAndMapSizeLayer::NextButtonCallBack( CCObject* pSender )
 	}
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+	//exit(0);
 #endif
 #endif
 }

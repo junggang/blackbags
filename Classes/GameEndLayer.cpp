@@ -27,6 +27,8 @@ bool CGameEndLayer::init()
 	CCMenu* pMenu = CCMenu::create(pEndButton, NULL);
 	pMenu->setPosition(CCPointZero);
 	this->addChild(pMenu, 1);
+    
+    return true;
 }
 
 void CGameEndLayer::gameEndCallback(CCObject* pSender)
@@ -37,7 +39,7 @@ void CGameEndLayer::gameEndCallback(CCObject* pSender)
 	CCScene* newScene = CResultScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+    //exit(0);
 #endif
 #endif
 }

@@ -49,7 +49,7 @@ void CResultTitleLayer::mainSceneCallback(CCObject* pSender)
 	CCScene* newScene = CMainScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+    //exit(0);
 #endif
 #endif
 }

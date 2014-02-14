@@ -1,7 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "cocos-ext.h"
-#include "rapidjson\document.h"
+#include "rapidjson/document.h"
 #include "config.h"
 
 class CNetworkLogic : public cocos2d::CCNode

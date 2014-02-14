@@ -105,7 +105,7 @@ void CNetworkPlayerNumberLayer::NumberOfPlayerCallBack( CCObject* pSender )
 	CGameManager::GetInstance()->SetPlayerNumberOfThisGame(selectedPlayerNumber + 2);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+	//exit(0);
 #endif
 #endif
 }
@@ -117,7 +117,7 @@ void CNetworkPlayerNumberLayer::NextButtonCallBack( CCObject* pSender )
 #else
 	CGameManager::GetInstance()->Login();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+	//exit(0);
 #endif
 #endif
 }

@@ -46,7 +46,7 @@ bool CGameBoardLayer::init()
 	m_Board->setPosition(ccp(m_VisibleSize.width / 2, m_VisibleSize.height / 2) );
 	this->addChild(m_Board);
 
-	m_BoardOrigin.x = m_VisibleSize.width/2 - (FLOAT(columnNum)/2 * DEFAULT_TILE_WIDTH);
+	m_BoardOrigin.x = m_VisibleSize.width/2 - (float(columnNum)/2 * DEFAULT_TILE_WIDTH);
 	m_BoardOrigin.y = m_VisibleSize.height/2;	
 
 	float m_OriginX = 0.0f;
@@ -115,7 +115,7 @@ bool CGameBoardLayer::init()
 
 	this->setTouchEnabled(true);
 	
-
+    return true;
 }
 
 void CGameBoardLayer::DrawMapObjects()

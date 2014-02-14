@@ -1,6 +1,6 @@
 #include "SettingOtherPlayerStatusLayer.h"
 #include "GameManager.h"
-#include "base_nodes\CCNode.h"
+#include "base_nodes/CCNode.h"
 
 enum PLAYER_TAG
 {
