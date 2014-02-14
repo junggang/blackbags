@@ -90,7 +90,7 @@ void CHomeMenuLayer::homeMenuCallback(CCObject* pSender)
 	CCDirector::sharedDirector()->pause();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+	//exit(0);
 #endif
 #endif
 }
@@ -105,7 +105,7 @@ void CHomeMenuLayer::homeIconCallback(CCObject* pSender)
 	CCDirector::sharedDirector()->resume();
 	CCDirector::sharedDirector()->replaceScene(CMainScene::create());
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+	//exit(0);
 #endif
 #endif
 }
@@ -119,7 +119,7 @@ void CHomeMenuLayer::ResumeIconCallback(CCObject* pSender)
 	CCDirector::sharedDirector()->resume();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+	//exit(0);
 #endif
 #endif
 }
@@ -132,7 +132,7 @@ void CHomeMenuLayer::OptionIconCallback(CCObject* pSender)
 	m_backLayer->setVisible(true);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+	////exit(0);
 #endif
 #endif
 }

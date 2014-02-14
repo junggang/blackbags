@@ -28,8 +28,8 @@ bool CPlayScene::init(void)
 	gameBoard = CGameBoardLayer::create();
 	this->addChild(gameBoard, 1);
 
-	CCLayer* helpButton = CHelpButtonLayer::create();
-	this->addChild(helpButton, 1);
+	CCLayer* HelpButton = CHelpButtonLayer::create();
+	this->addChild(HelpButton, 1);
 
 	player = CPlayerLayer::create();
 	this->addChild(player, 1);

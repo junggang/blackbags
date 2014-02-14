@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4F2B2B5A-33F2-4704-81B5-2C6D520F1534</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MonsterScramble</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BC9DC990-AE89-4D97-B278-3B2491E9DB0B</key>
+		<string>https://github.com/NHNNEXT/blackbags</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>proj.ios/MonsterScramble.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BC9DC990-AE89-4D97-B278-3B2491E9DB0B</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/NHNNEXT/blackbags</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BC9DC990-AE89-4D97-B278-3B2491E9DB0B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BC9DC990-AE89-4D97-B278-3B2491E9DB0B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MonsterScramble</string>
+		</dict>
+	</array>
+</dict>
+</plist>
