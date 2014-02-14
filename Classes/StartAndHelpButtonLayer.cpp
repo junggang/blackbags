@@ -90,7 +90,7 @@ void CStartAndHelpButtonLayer::StartButtonCallBack( CCObject* pSender )
 	CCScene* newScene = CPlayScene::create();
 	CCDirector::sharedDirector()->replaceScene( CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
+	exit(0);
 #endif
 #endif
 }
@@ -110,7 +110,7 @@ void CStartAndHelpButtonLayer::HelpButtonCallBack( CCObject* pSender )
 	}
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
+	exit(0);
 #endif
 #endif
 }
@@ -123,7 +123,7 @@ void CStartAndHelpButtonLayer::NameInputButtonCallBack( CCObject* pSender )
 	CCScene* newScene = ExampleUserInput::scene();
 	CCDirector::sharedDirector()->replaceScene( CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
+	exit(0);
 #endif
 #endif
 }

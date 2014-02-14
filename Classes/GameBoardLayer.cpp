@@ -19,7 +19,7 @@ bool CGameBoardLayer::init()
 	//////////////////////////////
 	// 2. add resources
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
-	//CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
 	int rowNum = 0;
 	int columnNum = 0;
@@ -37,7 +37,7 @@ bool CGameBoardLayer::init()
 	default:
 		break;
 	}
-    
+
 	m_Board = CCSprite::create(
 		"image/board.png", 
 		CCRect(0, 0, columnNum * DEFAULT_TILE_WIDTH, rowNum * DEFAULT_TILE_HEIGHT)
@@ -46,7 +46,7 @@ bool CGameBoardLayer::init()
 	m_Board->setPosition(ccp(m_VisibleSize.width / 2, m_VisibleSize.height / 2) );
 	this->addChild(m_Board);
 
-	m_BoardOrigin.x = m_VisibleSize.width/2 - (float(columnNum)/2 * DEFAULT_TILE_WIDTH);
+	m_BoardOrigin.x = m_VisibleSize.width/2 - (FLOAT(columnNum)/2 * DEFAULT_TILE_WIDTH);
 	m_BoardOrigin.y = m_VisibleSize.height/2;	
 
 	float m_OriginX = 0.0f;
@@ -110,11 +110,12 @@ bool CGameBoardLayer::init()
 			m_LineOriginX += m_DeltaX;
 			m_LineOriginY -= m_DeltaY;
 		}
-    }
+		}
 	
 
 	this->setTouchEnabled(true);
-    return true;
+	
+
 }
 
 void CGameBoardLayer::DrawMapObjects()

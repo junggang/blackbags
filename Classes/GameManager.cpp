@@ -36,15 +36,17 @@ bool CGameManager::init()
 	m_GameData = cocos2d::CCUserDefault::sharedUserDefault();
 
 	// 만약 현재 저장 된 게임데이터가 없으면 초기값으로 설정해서 생성한다.
-	if (!m_GameData->isXMLFileExist() )
+	if (!m_GameData->getBoolForKey("initialized") )
 	{
-		m_GameData->setStringForKey("tokenId", "temptoken");
+		m_GameData->setStringForKey("tokenId", "token wooq");
 
-		m_GameData->setStringForKey("usersName", "noname");
+		m_GameData->setStringForKey("usersName", "wooq");
 
 		m_GameData->setBoolForKey("two", true);
 		m_GameData->setBoolForKey("three", true);
 		m_GameData->setBoolForKey("four", true);
+
+		m_GameData->setBoolForKey("initialized", true);
 	}
 
 	return true;
@@ -463,7 +465,6 @@ bool CGameManager::InitNetworkLogic()
 
 void CGameManager::Login()
 {
-	InitNetworkLogic();
 	CNetworkLogic::GetInstance()->Login();
 }
 

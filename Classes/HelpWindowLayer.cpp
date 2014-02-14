@@ -10,6 +10,4 @@ bool CHelpWindowLayer::init()
 	{
 		return false;
 	}
-    
-    return true;
 }

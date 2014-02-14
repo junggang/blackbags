@@ -1,7 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "cocos-ext.h"
-#include "rapidjson/document.h"
+#include "rapidjson\document.h"
 #include "config.h"
 
 class CNetworkLogic : public cocos2d::CCNode
@@ -16,7 +16,7 @@ public:
 	virtual bool Init();
 
 	void SetCurrentNetworkPhase(NetworkPhase phase) { m_CurrentPhase = phase; }
-	NetworkPhase GetCurrentNetworkPhase() { return m_CurrentPhase; }
+	NetworkPhase GetCurrentNetworkPhase();
 
 	std::string			GetPlayerName(int playerIdx);
 	int					GetCurrentPlayerNumber();
@@ -48,8 +48,18 @@ public:
 	void PlayReady();
 
 	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
+	
+	rapidjson::Document*	m_networkGameData;
+
+	void test();
 
 private:
+	void GetNetworkInfo();
+	void StartJoinUpdate();
+	void StopJoinUpdate();
+	void StartPlayUpdate();
+	void StopPlayUpdate();
+
 	static CNetworkLogic*	m_pInstance; //singleton instance
 	
 	// network game data
@@ -67,7 +77,5 @@ private:
 	bool					m_TwoFlag;
 	bool					m_ThreeFlag;
 	bool					m_FourFlag;
-
-	rapidjson::Document*	m_networkGameData;
 };
 

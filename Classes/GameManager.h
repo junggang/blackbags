@@ -8,7 +8,7 @@ public:
 	CGameManager(void);
 	~CGameManager(void);
 
-	static CGameManager* GetInstance();
+	static CGameManager* CGameManager::GetInstance();
 	static void				ReleaseInstance();
 	
 	bool init();
@@ -95,7 +95,6 @@ public:
 	void SetUsersName(std::string name);
 	void SetTokenId(std::string tokenId);
 	void SetPlayerNumberSelection(int number, bool selection);
-
 
 private:
 	static CGameManager*	m_pInstance; //singleton instance

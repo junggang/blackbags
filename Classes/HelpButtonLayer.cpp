@@ -13,5 +13,5 @@ bool CHelpButtonLayer::init()
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-    return true;
+
 }

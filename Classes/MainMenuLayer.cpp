@@ -117,7 +117,7 @@ void CMainMenuLayer::newgameCallback(CCObject* pSender)
 	CCScene* newScene = CGameSettingScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    //exit(0);
+    exit(0);
 #endif
 #endif
 }
@@ -128,11 +128,12 @@ void CMainMenuLayer::multiplayCallback(CCObject* pSender)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
 	CGameManager::GetInstance()->SetOnlineMode(true);
+	CGameManager::GetInstance()->InitNetworkLogic();
 
     CCScene* newScene = CGameSettingScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    //exit(0);
+    exit(0);
 #endif
 #endif
 }
@@ -146,7 +147,7 @@ void CMainMenuLayer::settingCallback(CCObject* pSender)
 	CCScene* newScene = CSettingScene::create();
 	CCDirector::sharedDirector()->pushScene( newScene );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    //exit(0);
+    exit(0);
 #endif
 #endif
 }
@@ -160,7 +161,7 @@ void CMainMenuLayer::creditCallback(CCObject* pSender)
 	CCScene* newScene = CCreditScene::create();
 	CCDirector::sharedDirector()->pushScene( newScene );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    //exit(0);
+    exit(0);
 #endif
 #endif
 }
@@ -172,7 +173,7 @@ void CMainMenuLayer::exitCallback(CCObject* pSender)
 #else
     CCDirector::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    //exit(0);
+    exit(0);
 #endif
 #endif
 }

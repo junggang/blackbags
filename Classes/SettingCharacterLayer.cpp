@@ -88,7 +88,7 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 	CGameManager::GetInstance()->SelectCharacter(selectedCharacterId);
 	
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
+	exit(0);
 #endif
 #endif
 }
