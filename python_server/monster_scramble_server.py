@@ -6,6 +6,7 @@ import dataStructure
 import threading
 import time
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -18,6 +19,33 @@ sys.setdefaultencoding('utf-8')
 global watingList
 global timerThreadList
 
+def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
+	if playerData.getPlayerNumber(playerNumber) == 1:
+		playerPool.append(tokenId)
+
+		if len(playerPool) == playerNumber:
+			# channel id 생성하는 로직 구현 필요 
+			channelId = 123;
+
+			gameData = dataStructure.GameData()
+			gameData.initData(channelId)
+
+			# 플레이어 추가 
+			for player in playerPool:
+				print 'player ' + str(playerNumber) + ' : ' + player
+				playerData = getPlayerData(player)
+				gameData.addPlayer(playerData)
+				watingList.remove(player)
+
+			# 생성한 게임 데이터 redis에 저장 
+			jsonData = json.dumps(gameData.data)
+			gRedis.set(channelId, jsonData)
+
+			return True
+
+	return False
+
+
 def playerMatching():
 	player_2 = []
 	player_3 = []
@@ -27,80 +55,17 @@ def playerMatching():
 	channelId = 0
 
 	while True:
-		print 'try to make game channels'
-		print watingList
-
 		for each in watingList:
 			playerData = getPlayerData(each)
 
-			if playerData.getPlayerNumber(2) == 1:
-				player_2.append(each)
+			if createAvailableChannel(player_2, 2, playerData, each):
+				break
+			
+			if createAvailableChannel(player_3, 3, playerData, each):
+				break
 
-				if len(player_2) == 2:
-					# 2명 방 생성
-					gameData = dataStructure.GameData()
-					gameData.initData(channelId)
-					channelId += 1
-
-					# 플레이어 추가 
-					for player in player_2:
-						print 'player 2 : ' + player
-						playderData = getPlayerData(player)
-						gameData.addPlayer(playerData)
-
-					# 생성한 게임 데이터 redis에 저장 
-					jsonData = json.dumps(gameData.data)
-					gRedis.set(channelId, jsonData)
-
-					watingList.remove(each)
-
-					break
-
-			if playerData.getPlayerNumber(3) == 1:
-				player_3.append(each)
-
-				if len(player_3) == 3:
-					# 3명 방 생성
-					gameData = dataStructure.GameData()
-					gameData.initData(channelId)
-					channelId += 1
-
-					# 플레이어 추가 
-					for player in player_3:
-						print 'player 3 : ' + player
-						playderData = getPlayerData(player)
-						gameData.addPlayer(playerData)
-
-					# 생성한 게임 데이터 redis에 저장 
-					jsonData = json.dumps(gameData.data)
-					gRedis.set(channelId, jsonData)
-
-					watingList.remove(each)
-
-					break
-
-			if playerData.getPlayerNumber(4) == 1:
-				player_4.append(each)
-
-				if len(player_4) == 4:
-					# 3명 방 생성
-					gameData = dataStructure.GameData()
-					gameData.initData(channelId)
-					channelId += 1
-
-					# 플레이어 추가 
-					for player in player_4:
-						print 'player 4 : ' + str(player)
-						playderData = getPlayerData(player)
-						gameData.addPlayer(playerData)
-
-					# 생성한 게임 데이터 redis에 저장 
-					jsonData = json.dumps(gameData.data)
-					gRedis.set(channelId, jsonData)
-
-					watingList.remove(each)
-
-					break
+			if createAvailableChannel(player_4, 4, playerData, each):
+				break
 
 		del player_2[0:len(player_2)]
 		del player_3[0:len(player_3)]
@@ -133,7 +98,8 @@ def playerMatching():
 # 종료
 def randomTimer(tokenId, gameChannelId):
 	# 처음엔 없으니까 리스트 안에 값 있는지 확인 필요
-	del timerThreadList[gameChannelId]
+	if gameChannelId in timerThreadList:
+		del timerThreadList[gameChannelId]
 
 	gameData = getGameData(channelId)
 	randomIdx = gameData.makeRandomLine()
@@ -269,8 +235,8 @@ def PCDrawLine(tokenId, lineIdx):
 			gRedis.set(channelId, jsonData)
 
 			# 기존 타이머 삭제 
-			# 처음엔 없으니까 리스트 안에 값 있는지 확인 필요
-			del timerThreadList[gameChannelId]
+			if gameChannelId in timerThreadList:
+				del timerThreadList[gameChannelId]
 
 			# 타이머 스레드 생성 및 시작
 			# timerThreadList에 저장 
@@ -309,13 +275,15 @@ def login():
 	try : 
 		if request.method  == "POST":  
 			# userTable에 접속한 사람을 추가한다
+			print request
+
 			tokenId = request.form['tokenId']
 			name = request.form['name']
 
 			two = int(request.form['two'])
 			three = int(request.form['three'])
 			four = int(request.form['four'])
-			
+
 			# 플레이어 데이터 생성 (생성 전에 이미 redis안에 중복 데이터 있는지 확인)
 			playerData = dataStructure.PlayerData()
 			playerData.initData(tokenId, name)
@@ -492,10 +460,10 @@ if __name__ == '__main__':
 	watingList = []
 	timerThreadList = {}
 
-	# thread.start_new_thread(playerMatching)
 	matchingThread = threading.Thread(target=playerMatching)
 	matchingThread.start()
 
+	'''
 	time.sleep(5)
 	print 'prof. moon'
 	playerData = dataStructure.PlayerData()
@@ -521,6 +489,7 @@ if __name__ == '__main__':
 
 	# 대기열에 추가
 	watingList.append(67)
+	'''
 
 	app.debug = True
 	app.secret_key = '\xab\x11\xcb\xdb\xf2\xb9\x0e\xd9N\xbd\x17$\x07\xc9H\x19\x96h\x8a\xf2<`-A'
