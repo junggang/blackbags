@@ -51,6 +51,8 @@ public:
 	
 	rapidjson::Document*	m_networkGameData;
 
+	void test();
+
 private:
 	void GetNetworkInfo();
 	void StartJoinUpdate();

@@ -85,14 +85,14 @@ void CGameSettingScene::update(float dt)
 					break;
 				case NP_GAME_SETTING:
 					// real setting layer
-				this->removeChild(m_CurrentLayer);
-				m_CurrentLayer = CSettingSecondStepLayer::create();
-				this->addChild(m_CurrentLayer);
+					this->removeChild(m_CurrentLayer);
+					m_CurrentLayer = CSettingSecondStepLayer::create();
+					this->addChild(m_CurrentLayer);
 					break;
 				case NP_PLAYER_NUMBER_SETTING:
 					// select player number layer
-				m_CurrentLayer = CSettingFirstStepLayer::create();
-				this->addChild(m_CurrentLayer, 1);
+					m_CurrentLayer = CSettingFirstStepLayer::create();
+					this->addChild(m_CurrentLayer, 1);
 					break;
 				case NP_WAITING_CHANNEL_ID:
 					// waiting channel id layer

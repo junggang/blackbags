@@ -66,7 +66,14 @@ bool CNetworkLogic::Init()
 
 	GetNetworkInfo();
 
+	this->schedule(schedule_selector(CNetworkLogic::test), 1.0f);
+
 	return true;
+}
+
+void CNetworkLogic::test()
+{
+	CCLOG("test");
 }
 
 NetworkPhase CNetworkLogic::GetCurrentNetworkPhase() 
@@ -489,20 +496,20 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 
 void CNetworkLogic::StartJoinUpdate()
 {
-	m_pInstance->schedule(schedule_selector(CNetworkLogic::JoinUpdate), 10.0f);
+	this->schedule(schedule_selector(CNetworkLogic::JoinUpdate), 1.0f);
 }
 
 void CNetworkLogic::StopJoinUpdate()
 {
-	m_pInstance->unschedule(schedule_selector(CNetworkLogic::JoinUpdate) );
+	this->unschedule(schedule_selector(CNetworkLogic::JoinUpdate) );
 }
 
 void CNetworkLogic::StartPlayUpdate()
 {
-	m_pInstance->schedule(schedule_selector(CNetworkLogic::PlayUpdate), 10.0f);
+	this->schedule(schedule_selector(CNetworkLogic::PlayUpdate), 1.0f);
 }
 
 void CNetworkLogic::StopPlayUpdate()
 {
-	m_pInstance->unschedule(schedule_selector(CNetworkLogic::PlayUpdate) );
+	this->unschedule(schedule_selector(CNetworkLogic::PlayUpdate) );
 }
