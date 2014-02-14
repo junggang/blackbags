@@ -68,7 +68,7 @@ void CSettingMapLayer::SelectMapCallBack( CCObject* pSender )
 	CGameManager::GetInstance()->SetMapSize( static_cast<MapSelect>(selectedMapId) );
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
+	//exit(0);
 #endif
 #endif
 }

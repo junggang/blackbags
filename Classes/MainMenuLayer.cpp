@@ -117,7 +117,7 @@ void CMainMenuLayer::newgameCallback(CCObject* pSender)
 	CCScene* newScene = CGameSettingScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+    //exit(0);
 #endif
 #endif
 }
@@ -133,7 +133,7 @@ void CMainMenuLayer::multiplayCallback(CCObject* pSender)
     CCScene* newScene = CGameSettingScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+    //exit(0);
 #endif
 #endif
 }
@@ -147,7 +147,7 @@ void CMainMenuLayer::settingCallback(CCObject* pSender)
 	CCScene* newScene = CSettingScene::create();
 	CCDirector::sharedDirector()->pushScene( newScene );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+    //exit(0);
 #endif
 #endif
 }
@@ -161,7 +161,7 @@ void CMainMenuLayer::creditCallback(CCObject* pSender)
 	CCScene* newScene = CCreditScene::create();
 	CCDirector::sharedDirector()->pushScene( newScene );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+    //exit(0);
 #endif
 #endif
 }
@@ -173,7 +173,7 @@ void CMainMenuLayer::exitCallback(CCObject* pSender)
 #else
     CCDirector::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+    //exit(0);
 #endif
 #endif
 }

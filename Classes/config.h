@@ -1,6 +1,10 @@
 #pragma once
 #include "ccTypes.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    typedef unsigned long DWORD;
+#endif
+
 /*	게임 화면 기본 크기입니다 */
 const int WINDOW_WIDTH = 1250;
 const int WINDOW_HEIGHT = 700;
