@@ -48,6 +48,9 @@ bool CGameSettingScene::init(void)
 		this->addChild(m_PlayerNumberAndMapSizeLayer, 1);
 	}
 
+	// 처음 생성된 레이어가 최신 정보로 업데이트 된 상태로 시작할 수 있도록 플래그 설정
+	CGameManager::GetInstance()->SetUpdateFlag(true);
+
 	// 현재 레이어에 생성한 레이어를 할당
 	m_CurrentLayer = m_PlayerNumberAndMapSizeLayer;
 

@@ -25,7 +25,7 @@ CNetworkLogic::CNetworkLogic(void)
 	m_ThreeFlag = false;
 	m_FourFlag = false;
 
-	m_CurrentPhase = NP_PLAYER_NUMBER_SETTING;
+	m_CurrentPhase = NP_NOTHING;
 }
 
 
@@ -64,22 +64,25 @@ bool CNetworkLogic::Init()
 		m_networkGameData->Clear();
 	}
 
-	m_TokenId = "temptoken";
+	GetNetworkInfo();
 
+	return true;
+}
+
+void CNetworkLogic::GetNetworkInfo()
+{
 	// facebook token 값 받아 온다
 	m_TokenId.clear();
-	m_TokenId = "temptoken";
+	m_TokenId = CGameManager::GetInstance()->GetTokenId();
 
 	// shared data에 저장된 이름 가져온다
 	m_UserName.clear();
-	m_UserName = "temp name";
+	m_UserName = CGameManager::GetInstance()->GetUsersName();
 
 	// shared data에 저장된 게임 설정을 가져온다
-	m_TwoFlag = false;
-	m_ThreeFlag = true;
-	m_FourFlag = true;
-
-	return true;
+	m_TwoFlag = CGameManager::GetInstance()->GetPlayerNumberSelection(2);
+	m_ThreeFlag = CGameManager::GetInstance()->GetPlayerNumberSelection(3);
+	m_FourFlag = CGameManager::GetInstance()->GetPlayerNumberSelection(4);
 }
 
 std::string CNetworkLogic::GetPlayerName(int playerIdx)
@@ -195,6 +198,9 @@ void CNetworkLogic::Login()
 	// login
 	// make http request
 	m_Request = new CCHttpRequest();
+
+	// 요청 보낼 데이터를 최신 상태로 업데이트
+	GetNetworkInfo();
 
 	std::string url = m_ServerAddr;
 	url.append("/login");
@@ -415,11 +421,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 
 	for (unsigned int i = 0; i < buffer->size(); ++i)
 	{
-		if (i != 0)
-		{
-			streamData << ",";
-			streamData << (*buffer)[i];
-		}
+		streamData << (*buffer)[i];
 	}
 
 	std::string stringData = streamData.str();
@@ -433,12 +435,13 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 
 			// create loginUpdate schedule
-			this->schedule(schedule_selector(CNetworkLogic::JoinUpdate), 10.0f);
+			StartJoinUpdate();
 		}
 		else
 		{
 			// return to main menu
 			m_CurrentPhase = NP_NOTHING;
+			CGameManager::GetInstance()->SetUpdateFlag(true);
 		}
 	}
 	else if (strcmp(response->getHttpRequest()->getTag(), "POST joinUpdate") == 0)
@@ -451,8 +454,8 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 
 			// create update schedule
-			this->unschedule(schedule_selector(CNetworkLogic::JoinUpdate) );
-			this->schedule(schedule_selector(CNetworkLogic::PlayUpdate), 10.0f);
+			StopJoinUpdate();
+			StartPlayUpdate();
 		}
 	}
 	else
@@ -474,7 +477,27 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 
 			// game end >>> delete the network game data
-			this->unschedule(schedule_selector(CNetworkLogic::PlayUpdate) );
+			StopPlayUpdate();
 		}
 	}
+}
+
+void CNetworkLogic::StartJoinUpdate()
+{
+	m_pInstance->schedule(schedule_selector(CNetworkLogic::JoinUpdate), 10.0f);
+}
+
+void CNetworkLogic::StopJoinUpdate()
+{
+	m_pInstance->unschedule(schedule_selector(CNetworkLogic::JoinUpdate) );
+}
+
+void CNetworkLogic::StartPlayUpdate()
+{
+	m_pInstance->schedule(schedule_selector(CNetworkLogic::PlayUpdate), 10.0f);
+}
+
+void CNetworkLogic::StopPlayUpdate()
+{
+	m_pInstance->unschedule(schedule_selector(CNetworkLogic::PlayUpdate) );
 }

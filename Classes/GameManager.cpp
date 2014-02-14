@@ -38,9 +38,9 @@ bool CGameManager::init()
 	// 만약 현재 저장 된 게임데이터가 없으면 초기값으로 설정해서 생성한다.
 	if (!m_GameData->isXMLFileExist() )
 	{
-		m_GameData->setStringForKey("tokenId", "temptoken");
+		m_GameData->setStringForKey("tokenId", "temptoken 1");
 
-		m_GameData->setStringForKey("usersName", "noname");
+		m_GameData->setStringForKey("usersName", "noname 1");
 
 		m_GameData->setBoolForKey("two", true);
 		m_GameData->setBoolForKey("three", true);
@@ -463,7 +463,6 @@ bool CGameManager::InitNetworkLogic()
 
 void CGameManager::Login()
 {
-	InitNetworkLogic();
 	CNetworkLogic::GetInstance()->Login();
 }
 

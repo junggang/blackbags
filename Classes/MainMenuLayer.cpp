@@ -128,6 +128,7 @@ void CMainMenuLayer::multiplayCallback(CCObject* pSender)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
 	CGameManager::GetInstance()->SetOnlineMode(true);
+	CGameManager::GetInstance()->InitNetworkLogic();
 
     CCScene* newScene = CGameSettingScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );

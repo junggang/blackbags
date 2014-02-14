@@ -50,6 +50,12 @@ public:
 	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
 
 private:
+	void GetNetworkInfo();
+	void StartJoinUpdate();
+	void StopJoinUpdate();
+	void StartPlayUpdate();
+	void StopPlayUpdate();
+
 	static CNetworkLogic*	m_pInstance; //singleton instance
 	
 	// network game data
