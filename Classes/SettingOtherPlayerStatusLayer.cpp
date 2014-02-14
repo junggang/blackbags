@@ -2,6 +2,14 @@
 #include "GameManager.h"
 #include "base_nodes\CCNode.h"
 
+enum PLAYER_TAG
+{
+	PLAYER_1_TAG,
+	PLAYER_2_TAG,
+	PLAYER_3_TAG,
+	PLAYER_4_TAG
+};
+
 USING_NS_CC;
 // 조심해!! 현재 사용자 이름만 표시되는데 총 플레이어 수, 고른 캐릭터, Ready 여부, 방장도 표시해야 해
 // 그래서 화면에 보여줄 element가 2차원 배열일 때 cocos2d-x 에서 표현할 방법을 찾아봐야해
@@ -58,19 +66,19 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		m_PlayerStatusFrame[i] = CCSprite::create("image/PLAYER_STATUS.png");
 		switch(i)
 		{
-		case 0:
+		case PLAYER_1_TAG:
 			m_PlayerStatusFrame[i]->setPosition( ccp( m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
 											m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
 			break;
-		case 1:
+		case PLAYER_2_TAG:
 			m_PlayerStatusFrame[i]->setPosition( ccp ( m_VisibleSize.width - m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
 											m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
 			break;
-		case 2:
+		case PLAYER_3_TAG:
 			m_PlayerStatusFrame[i]->setPosition( ccp( m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
 											m_VisibleSize.height - m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
 			break;
-		case 3:
+		case PLAYER_4_TAG:
 			m_PlayerStatusFrame[i]->setPosition( ccp(m_VisibleSize.width - m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
 											m_VisibleSize.height - m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
 			break;
@@ -86,17 +94,29 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		CCSprite* pDefaultFaceImg = CCSprite::create("image/DEFAULT_FACE.png");
 		pDefaultFaceImg->setPosition( ccp(pDefaultFaceImg->getContentSize().width / 2,
 								pDefaultFaceImg->getContentSize().height / 2) );
+		// 각 상태창에 기본 얼굴을 집어넣어둔다.
 		m_PlayerStatusFrame[i]->addChild(pDefaultFaceImg);
 	}
 
-	extension::CCEditBox* pEditName;
-	// 
-	// 		pEditName = extension::CCEditBox::create();
-	// 		pEditName->setPosition(ccp(240, 250));
-	// 		pEditName->setFontColor(ccGREEN);
-	// 		pEditName->setPlaceHolder("name:");
-	// 		pEditName->setReturnType(kKeyboardReturnTypeDone);
-	// 		pEditName->setDelegate(this);
+	for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
+	{
+		extension::CCEditBox* pEditName;
+		extension::CCScale9Sprite* NameEditBox = extension::CCScale9Sprite::create("image/PLAYER_NAME.png");
+
+		pEditName = extension::CCEditBox::create( NameEditBox->getContentSize() , NameEditBox );
+
+		pEditName->setPosition( ccp(m_PlayerStatusFrame[i]->getContentSize().width + pEditName->getContentSize().width / 2,
+			m_PlayerStatusFrame[i]->getContentSize().height + pEditName->getContentSize().height / 2) );
+		pEditName->setFontSize(10);
+		pEditName->setFontColor(ccYELLOW);
+		pEditName->setPlaceHolder("name:");
+		pEditName->setReturnType(extension::kKeyboardReturnTypeDone);
+		pEditName->setDelegate(this);
+
+		m_PlayerStatusFrame[i]->addChild(pEditName);
+	}
+	
+
 }
 
 void CSettingOtherPlayerStatusLayer::editBoxEditingDidBegin( extension::CCEditBox* editBox )
