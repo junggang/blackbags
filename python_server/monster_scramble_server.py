@@ -295,6 +295,7 @@ def login():
 
 			# 대기열에 추가
 			watingList.append(tokenId)
+			print tokenId
 			
 			return 'login' 
 
