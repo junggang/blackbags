@@ -59,20 +59,20 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		switch(i)
 		{
 		case 0:
-			m_PlayerStatusFrame[i]->setAnchorPoint( ccp(0, 1) );
-			m_PlayerStatusFrame[i]->setPosition( ccp(0, m_VisibleSize.height) );
+			m_PlayerStatusFrame[i]->setPosition( ccp( m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
+											m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
 			break;
 		case 1:
-			m_PlayerStatusFrame[i]->setAnchorPoint( ccp(1, 1) );
-			m_PlayerStatusFrame[i]->setPosition( m_VisibleSize );
+			m_PlayerStatusFrame[i]->setPosition( ccp ( m_VisibleSize.width - m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
+											m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
 			break;
 		case 2:
-			m_PlayerStatusFrame[i]->setAnchorPoint( ccp(0, 0) );
-			m_PlayerStatusFrame[i]->setPosition( ccp(0, 0) );
+			m_PlayerStatusFrame[i]->setPosition( ccp( m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
+											m_VisibleSize.height - m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
 			break;
 		case 3:
-			m_PlayerStatusFrame[i]->setAnchorPoint( ccp(1, 0) );
-			m_PlayerStatusFrame[i]->setPosition( ccp(m_VisibleSize.width, 0) );
+			m_PlayerStatusFrame[i]->setPosition( ccp(m_VisibleSize.width - m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
+											m_VisibleSize.height - m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
 			break;
 		default:
 			break;
@@ -81,7 +81,15 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		this->addChild( m_PlayerStatusFrame[i] );
 	}
 
-		extension::CCEditBox* pEditName;
+	for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i )
+	{
+		CCSprite* pDefaultFaceImg = CCSprite::create("image/DEFAULT_FACE.png");
+		pDefaultFaceImg->setPosition( ccp(pDefaultFaceImg->getContentSize().width / 2,
+								pDefaultFaceImg->getContentSize().height / 2) );
+		m_PlayerStatusFrame[i]->addChild(pDefaultFaceImg);
+	}
+
+	extension::CCEditBox* pEditName;
 	// 
 	// 		pEditName = extension::CCEditBox::create();
 	// 		pEditName->setPosition(ccp(240, 250));

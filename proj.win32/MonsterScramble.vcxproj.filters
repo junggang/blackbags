@@ -79,6 +79,15 @@
     <Filter Include="Classes\Logic\NetworkLogic">
       <UniqueIdentifier>{fba991af-ec53-416c-acf0-bc20b29431d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Layer\GameSetting\FirstStep">
+      <UniqueIdentifier>{014f57ed-88f5-47fc-a9b6-79cfa9bfe3f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer\GameSetting\SecondStep">
+      <UniqueIdentifier>{b62939c4-4062-4276-a032-f48a31e1398b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer\GameSetting\NetworkClass">
+      <UniqueIdentifier>{533e1fe4-a70d-45a1-bc50-e9abaf7e4cf8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -120,12 +129,6 @@
     <ClCompile Include="..\Classes\GameSettingScene.cpp">
       <Filter>Classes\Scene\GameSettingScene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\SettingTitleLayer.cpp">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SettingCharacterLayer.cpp">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\PlayScene.cpp">
       <Filter>Classes\Scene\PlayScene</Filter>
     </ClCompile>
@@ -150,9 +153,6 @@
     <ClCompile Include="..\Classes\HelpScene.cpp">
       <Filter>Classes\Scene\HelpScene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\StartAndHelpButtonLayer.cpp">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\CMO_dot.cpp">
       <Filter>Classes\Layer\Play</Filter>
     </ClCompile>
@@ -164,9 +164,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\CMO_tile.cpp">
       <Filter>Classes\Layer\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SettingOtherPlayerStatusLayer.cpp">
-      <Filter>Classes\Layer\GameSetting</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\HelpPopupLayer.cpp">
       <Filter>Classes\Layer\Help</Filter>
@@ -195,17 +192,35 @@
     <ClCompile Include="..\Classes\ExampleUserInput.cpp">
       <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PlayerNumberAndMapSizeLayer.cpp">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\NetworkLogic.cpp">
       <Filter>Classes\Logic\NetworkLogic</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\NetworkPlayerNumberLayer.cpp">
-      <Filter>Classes\Layer\GameSetting</Filter>
+      <Filter>Classes\Layer\GameSetting\FirstStep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerNumberAndMapSizeLayer.cpp">
+      <Filter>Classes\Layer\GameSetting\FirstStep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingCharacterLayer.cpp">
+      <Filter>Classes\Layer\GameSetting\SecondStep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingOtherPlayerStatusLayer.cpp">
+      <Filter>Classes\Layer\GameSetting\SecondStep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingTitleLayer.cpp">
+      <Filter>Classes\Layer\GameSetting\SecondStep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StartAndHelpButtonLayer.cpp">
+      <Filter>Classes\Layer\GameSetting\SecondStep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingFirstStepLayer.cpp">
+      <Filter>Classes\Layer\GameSetting\FirstStep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingSecondStepLayer.cpp">
+      <Filter>Classes\Layer\GameSetting\SecondStep</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\WaitingChannelId.cpp">
-      <Filter>Classes\Layer\GameSetting</Filter>
+      <Filter>Classes\Layer\GameSetting\NetworkClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,12 +266,6 @@
     <ClInclude Include="..\Classes\GameSettingScene.h">
       <Filter>Classes\Scene\GameSettingScene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\SettingTitleLayer.h">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SettingCharacterLayer.h">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\PlayScene.h">
       <Filter>Classes\Scene\PlayScene</Filter>
     </ClInclude>
@@ -281,9 +290,6 @@
     <ClInclude Include="..\Classes\HelpScene.h">
       <Filter>Classes\Scene\HelpScene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\StartAndHelpButtonLayer.h">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\CMO_dot.h">
       <Filter>Classes\Layer\Play</Filter>
     </ClInclude>
@@ -295,9 +301,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\CMO_tile.h">
       <Filter>Classes\Layer\Play</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SettingOtherPlayerStatusLayer.h">
-      <Filter>Classes\Layer\GameSetting</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\HelpPopuplLayer.h">
       <Filter>Classes\Layer\Help</Filter>
@@ -326,17 +329,35 @@
     <ClInclude Include="..\Classes\ExampleUserInput.h">
       <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PlayerNumberAndMapSizeLayer.h">
-      <Filter>Classes\Layer\GameSetting</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\NetworkLogic.h">
       <Filter>Classes\Logic\NetworkLogic</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\NetworkPlayerNumberLayer.h">
-      <Filter>Classes\Layer\GameSetting</Filter>
+      <Filter>Classes\Layer\GameSetting\FirstStep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerNumberAndMapSizeLayer.h">
+      <Filter>Classes\Layer\GameSetting\FirstStep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingCharacterLayer.h">
+      <Filter>Classes\Layer\GameSetting\SecondStep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingOtherPlayerStatusLayer.h">
+      <Filter>Classes\Layer\GameSetting\SecondStep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingTitleLayer.h">
+      <Filter>Classes\Layer\GameSetting\SecondStep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StartAndHelpButtonLayer.h">
+      <Filter>Classes\Layer\GameSetting\SecondStep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingFirstStepLayer.h">
+      <Filter>Classes\Layer\GameSetting\FirstStep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingSecondStepLayer.h">
+      <Filter>Classes\Layer\GameSetting\SecondStep</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\WaitingChannelId.h">
-      <Filter>Classes\Layer\GameSetting</Filter>
+      <Filter>Classes\Layer\GameSetting\NetworkClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

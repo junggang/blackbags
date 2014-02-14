@@ -165,9 +165,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\ResultScoreLayer.cpp" />
     <ClCompile Include="..\Classes\ResultTitleLayer.cpp" />
     <ClCompile Include="..\Classes\SettingCharacterLayer.cpp" />
+    <ClCompile Include="..\Classes\SettingFirstStepLayer.cpp" />
     <ClCompile Include="..\Classes\SettingMenuLayer.cpp" />
     <ClCompile Include="..\Classes\SettingOtherPlayerStatusLayer.cpp" />
     <ClCompile Include="..\Classes\SettingScene.cpp" />
+    <ClCompile Include="..\Classes\SettingSecondStepLayer.cpp" />
     <ClCompile Include="..\Classes\SettingTitleLayer.cpp" />
     <ClCompile Include="..\Classes\StartAndHelpButtonLayer.cpp" />
     <ClCompile Include="..\Classes\TimerLayer.cpp" />
@@ -210,9 +212,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\ResultScoreLayer.h" />
     <ClInclude Include="..\Classes\ResultTitleLayer.h" />
     <ClInclude Include="..\Classes\SettingCharacterLayer.h" />
+    <ClInclude Include="..\Classes\SettingFirstStepLayer.h" />
     <ClInclude Include="..\Classes\SettingMenuLayer.h" />
     <ClInclude Include="..\Classes\SettingOtherPlayerStatusLayer.h" />
     <ClInclude Include="..\Classes\SettingScene.h" />
+    <ClInclude Include="..\Classes\SettingSecondStepLayer.h" />
     <ClInclude Include="..\Classes\SettingTitleLayer.h" />
     <ClInclude Include="..\Classes\StartAndHelpButtonLayer.h" />
     <ClInclude Include="..\Classes\TimerLayer.h" />

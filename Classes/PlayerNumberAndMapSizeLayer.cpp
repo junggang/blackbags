@@ -228,7 +228,7 @@ void CPlayerNumberAndMapSizeLayer::update(float dt)
 		}
 
 		// PLAYER NUMBER == i
-		// PLAYER NUMBER 2 == TAG (0), 3 == TAG (1), 4 == TAG (2) 이므로
+		// PLAYER NUMBER : 2 == TAG (0), 3 == TAG (1), 4 == TAG (2) 이므로
 		// TAG == i - 2
 		if ( i == CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
 		{
