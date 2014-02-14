@@ -96,7 +96,6 @@ public:
 	void SetTokenId(std::string tokenId);
 	void SetPlayerNumberSelection(int number, bool selection);
 
-
 private:
 	static CGameManager*	m_pInstance; //singleton instance
 

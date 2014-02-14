@@ -436,16 +436,16 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		if (strcmp(stringData.c_str(), "login") == 0)
 		{
 			// login next phase
-			m_CurrentPhase = NP_WAITING_CHANNEL_ID;
+			CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_WAITING_CHANNEL_ID);
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 
 			// create loginUpdate schedule
-			StartJoinUpdate();
+			CNetworkLogic::GetInstance()->StartJoinUpdate();
 		}
 		else
 		{
 			// return to main menu
-			m_CurrentPhase = NP_NOTHING;
+			CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_NOTHING);
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 		}
 	}
@@ -455,12 +455,12 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 
 		if (m_MyPlayerId != -1)
 		{
-			m_CurrentPhase = NP_GAME_SETTING;
+			CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 
 			// create update schedule
-			StopJoinUpdate();
-			StartPlayUpdate();
+			CNetworkLogic::GetInstance()->StopJoinUpdate();
+			CNetworkLogic::GetInstance()->StartPlayUpdate();
 		}
 	}
 	else
@@ -475,14 +475,14 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			// gameData에 있는 자료를 매니저가 가진 자료에 업데이트해주자
 			if (m_networkGameData != nullptr)
 			{
-				m_networkGameData->Clear();
-				m_networkGameData->Parse<0>(stringData.c_str() );
+				CNetworkLogic::GetInstance()->m_networkGameData->Clear();
+				CNetworkLogic::GetInstance()->m_networkGameData->Parse<0>(stringData.c_str() );
 			}
 
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 
 			// game end >>> delete the network game data
-			StopPlayUpdate();
+			CNetworkLogic::GetInstance()->StopPlayUpdate();
 		}
 	}
 }

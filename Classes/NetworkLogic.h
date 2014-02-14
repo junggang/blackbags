@@ -48,6 +48,8 @@ public:
 	void PlayReady();
 
 	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
+	
+	rapidjson::Document*	m_networkGameData;
 
 private:
 	void GetNetworkInfo();
@@ -73,7 +75,5 @@ private:
 	bool					m_TwoFlag;
 	bool					m_ThreeFlag;
 	bool					m_FourFlag;
-
-	rapidjson::Document*	m_networkGameData;
 };
 
