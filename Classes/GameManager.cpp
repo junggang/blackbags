@@ -36,7 +36,7 @@ bool CGameManager::init()
 	m_GameData = cocos2d::CCUserDefault::sharedUserDefault();
 
 	// 만약 현재 저장 된 게임데이터가 없으면 초기값으로 설정해서 생성한다.
-	if (!m_GameData->isXMLFileExist() )
+	if (!m_GameData->getBoolForKey("initialized") )
 	{
 		m_GameData->setStringForKey("tokenId", "temptoken 1");
 
@@ -45,6 +45,8 @@ bool CGameManager::init()
 		m_GameData->setBoolForKey("two", true);
 		m_GameData->setBoolForKey("three", true);
 		m_GameData->setBoolForKey("four", true);
+
+		m_GameData->setBoolForKey("initialized", true);
 	}
 
 	return true;
