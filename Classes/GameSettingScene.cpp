@@ -7,8 +7,6 @@
 #include "NetworkPlayerNumberLayer.h"
 #include "PlayerNumberAndMapSizeLayer.h"
 
-#include "MainScene.h"
-
 #include "GameManager.h"
 
 
@@ -68,7 +66,6 @@ void CGameSettingScene::update(float dt)
 		일단 업데이트 플래그를 확인해서 업데이트가 되었다면 온라인 오프라인으로 구분해서 처리할 것
 		현재 넥스트 표시 기준은 업데이트 여부 상관 없이 반복적으로 확인하고 있음
 	*/
-
 
 	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{

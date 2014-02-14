@@ -16,7 +16,7 @@ public:
 	virtual bool Init();
 
 	void SetCurrentNetworkPhase(NetworkPhase phase) { m_CurrentPhase = phase; }
-	NetworkPhase GetCurrentNetworkPhase() { return m_CurrentPhase; }
+	NetworkPhase GetCurrentNetworkPhase();
 
 	std::string			GetPlayerName(int playerIdx);
 	int					GetCurrentPlayerNumber();

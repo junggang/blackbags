@@ -69,6 +69,11 @@ bool CNetworkLogic::Init()
 	return true;
 }
 
+NetworkPhase CNetworkLogic::GetCurrentNetworkPhase() 
+{ 
+	return m_CurrentPhase; 
+}
+
 void CNetworkLogic::GetNetworkInfo()
 {
 	// facebook token 값 받아 온다
@@ -324,7 +329,7 @@ void CNetworkLogic::JoinUpdate(float dt)
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
 	// write the post data
-	std::string postData  = "tokenId=";
+	std::string postData = "tokenId=";
 	postData.append(m_TokenId);
 
 	m_Request->setRequestData(postData.c_str(), postData.length() );
