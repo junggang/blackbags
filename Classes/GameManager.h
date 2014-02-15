@@ -81,9 +81,14 @@ public:
 	int GetTotalScore(int playerIdx);
 	const std::string& GetCharacterResultFaceFileName(int playerIdx);
 
-	// network game 상태 확인
+	// network 관련 함수
 	bool InitNetworkLogic();
+
 	void Login();
+
+	void JoinUpdate(float dt);
+	void PlayUpdate(float dt);
+	void PlayReady();
 
 	NetworkPhase GetCurrentNetworkPhase();
 

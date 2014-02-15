@@ -4,7 +4,7 @@
 #include "rapidjson/document.h"
 #include "config.h"
 
-class CNetworkLogic : public cocos2d::CCNode
+class CNetworkLogic
 {
 public:
 	CNetworkLogic(void);
@@ -13,7 +13,7 @@ public:
 	static CNetworkLogic*	GetInstance();
 	static void				ReleaseInstance();
 
-	virtual bool Init();
+	bool Init();
 
 	void SetCurrentNetworkPhase(NetworkPhase phase) { m_CurrentPhase = phase; }
 	NetworkPhase GetCurrentNetworkPhase();
@@ -43,7 +43,7 @@ public:
 	void DrawLine(IndexedPosition indexedPosition);
 
 	void JoinUpdate(float dt);
-	void PlayUpdate();
+	void PlayUpdate(float dt);
 	void SettingReady();
 	void PlayReady();
 
@@ -55,10 +55,6 @@ public:
 
 private:
 	void GetNetworkInfo();
-	void StartJoinUpdate();
-	void StopJoinUpdate();
-	void StartPlayUpdate();
-	void StopPlayUpdate();
 
 	static CNetworkLogic*	m_pInstance; //singleton instance
 	

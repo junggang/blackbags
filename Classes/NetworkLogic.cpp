@@ -17,7 +17,7 @@ CNetworkLogic::CNetworkLogic(void)
 	m_TokenId = "";
 	m_UserName = "";
 
-	m_ServerAddr = "http://10.73.43.191:5000";
+	m_ServerAddr = "http://192.168.0.11:5000";
 
 	m_MyPlayerId = -1;
 
@@ -49,11 +49,6 @@ void CNetworkLogic::ReleaseInstance()
 
 bool CNetworkLogic::Init()
 {
-	if ( !CCNode::init() )
-	{
-		return false;
-	}
-
 	// init network game data
 	if (m_networkGameData == nullptr)
 	{
@@ -65,8 +60,6 @@ bool CNetworkLogic::Init()
 	}
 
 	GetNetworkInfo();
-
-	this->schedule(schedule_selector(CNetworkLogic::test), 1.0f);
 
 	return true;
 }
@@ -346,7 +339,7 @@ void CNetworkLogic::JoinUpdate(float dt)
 	m_Request->release();
 }
 
-void CNetworkLogic::PlayUpdate()
+void CNetworkLogic::PlayUpdate(float dt)
 {
 	m_Request = new CCHttpRequest();
 	
@@ -445,9 +438,6 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			// login next phase
 			CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_WAITING_CHANNEL_ID);
 			CGameManager::GetInstance()->SetUpdateFlag(true);
-
-			// create loginUpdate schedule
-			CNetworkLogic::GetInstance()->StartJoinUpdate();
 		}
 		else
 		{
@@ -464,10 +454,6 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		{
 			CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
 			CGameManager::GetInstance()->SetUpdateFlag(true);
-
-			// create update schedule
-			CNetworkLogic::GetInstance()->StopJoinUpdate();
-			CNetworkLogic::GetInstance()->StartPlayUpdate();
 		}
 	}
 	else
@@ -487,29 +473,6 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			}
 
 			CGameManager::GetInstance()->SetUpdateFlag(true);
-
-			// game end >>> delete the network game data
-			CNetworkLogic::GetInstance()->StopPlayUpdate();
 		}
 	}
-}
-
-void CNetworkLogic::StartJoinUpdate()
-{
-	this->schedule(schedule_selector(CNetworkLogic::JoinUpdate), 1.0f);
-}
-
-void CNetworkLogic::StopJoinUpdate()
-{
-	this->unschedule(schedule_selector(CNetworkLogic::JoinUpdate) );
-}
-
-void CNetworkLogic::StartPlayUpdate()
-{
-	this->schedule(schedule_selector(CNetworkLogic::PlayUpdate), 1.0f);
-}
-
-void CNetworkLogic::StopPlayUpdate()
-{
-	this->unschedule(schedule_selector(CNetworkLogic::PlayUpdate) );
 }

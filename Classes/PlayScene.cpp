@@ -51,6 +51,11 @@ bool CPlayScene::init(void)
 
 	m_GameEndFlag = false;
 
+	if (CGameManager::GetInstance()->IsOnlineMode() )
+	{
+		this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
+	}
+
 	return true;
 }
 

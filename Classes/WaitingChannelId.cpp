@@ -18,7 +18,7 @@ bool CWaitingChannelId::init()
 	/////////////////////////////
 	// 2. add a background image
 	
-	//delay로 mainSceneCallback 호출 
-    
+	// delay로 mainSceneCallback 호출 
+
 	return true;
 }
