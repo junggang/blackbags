@@ -274,14 +274,14 @@ class GameData:
 
 	# 캐릭터 선택 및 취소에 대한 입력 업데이트 
 	def selectCharacter(self, playerId, characterId):
-		if self.data[GD_PLAYER_LIST][idx][GDP_CHARACTER_ID] == characterId:
-			self.data[GD_PLAYER_LIST][idx][GDP_CHARACTER_ID] = -1
+		if self.data[GD_PLAYER_LIST][playerId][GDP_CHARACTER_ID] == characterId:
+			self.data[GD_PLAYER_LIST][playerId][GDP_CHARACTER_ID] = -1
 		else:
 			for idx in range(4):
 				if self.data[GD_PLAYER_LIST][idx][GDP_CHARACTER_ID] == characterId:
 					return False
 
-			self.data[GD_PLAYER_LIST][idx][GDP_CHARACTER_ID] = characterId
+			self.data[GD_PLAYER_LIST][playerId][GDP_CHARACTER_ID] = characterId
 
 		self.setUpdateFlag();
 

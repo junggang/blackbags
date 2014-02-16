@@ -46,8 +46,6 @@ def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
 			jsonData = json.dumps(gameData.data)
 			gRedis.set(channelId, jsonData)
 
-			print jsonData
-
 			return True
 
 	return False
@@ -131,12 +129,7 @@ def getPlayerData(tokenId):
 
 def getGameData(channelId):
 	gameData = dataStructure.GameData()
-
-	print gRedis.get(channelId)
-
 	gameData.insertData(json.loads(gRedis.get(channelId)))
-
-	print gameData
 
 	return gameData
 
@@ -160,6 +153,8 @@ def SCSelectCharacter(tokenId, characterId):
 	else:
 		# 캐릭터 선택 실패 - 지금 상태 유지 
 		jsonData = 'not updated'
+
+	print jsonData
 
 	return jsonData
 
