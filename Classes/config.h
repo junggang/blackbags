@@ -430,3 +430,19 @@ const std::string ItemImageFileList[2] =
 	"image/PLAY_gold.png",
 	"image/PLAY_trash.png"
 };
+
+const std::string ResultCharacterWinImage[4] =
+{
+	"image/RESULT_PLAYER1_win.png",
+	"image/RESULT_PLAYER2_win.png",
+	"image/RESULT_PLAYER3_win.png",
+	"image/RESULT_PLAYER4_win.png",
+};
+
+const std::string ResultCharacterLoseImage[4] =
+{
+	"image/RESULT_PLAYER1_lose.png",
+	"image/RESULT_PLAYER2_lose.png",
+	"image/RESULT_PLAYER3_lose.png",
+	"image/RESULT_PLAYER4_lose.png",
+};
