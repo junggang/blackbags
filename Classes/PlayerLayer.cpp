@@ -52,20 +52,24 @@ bool CPlayerLayer::init()
 		m_PlayerName[playerId] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(), "Arial", 12, 
 			CCSizeMake(245, 32), kCCTextAlignmentCenter);
 
-		m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+DEFAULT_CHARACTER_WIDTH/2,m_UIposition[position].y));
+		m_PlayerName[playerId]->setPosition(m_UIposition[position]);
 
 		switch(position)
 		{
 		case 0:
+			m_PlayerName[playerId]->setRotation(-45.0f);
 			break;
 		case 1:
 			m_Player[playerId]->setFlipX(true);
+			m_PlayerName[playerId]->setRotation(45.0f);
 			break;
 		case 2:
 			m_Player[playerId]->setFlipY(true);
+			m_PlayerName[playerId]->setRotation(-135.0f);
 			break;
 		case 3:
 			m_Player[playerId]->setRotation(180.0f);
+			m_PlayerName[playerId]->setRotation(135.0f);
 			break;
 		}
 	}

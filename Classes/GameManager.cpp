@@ -111,6 +111,7 @@ int CGameManager::GetWinnerIdx()
 	{
 		// server에서 필요한 정보를 받아 온다.
 		// winner idx - 동점 경우도 생각해야 함
+		return 0;
 	}
 	else
 	{
@@ -382,6 +383,7 @@ int CGameManager::GetPlayerNumberOfThisGame()
 	if (m_IsOnlineGame)
 	{
 		// 필요한가?
+		CNetworkLogic::GetInstance()->GetCurrentPlayerNumber();
 	}
 	else
 	{
@@ -466,6 +468,21 @@ bool CGameManager::InitNetworkLogic()
 void CGameManager::Login()
 {
 	CNetworkLogic::GetInstance()->Login();
+}
+
+void CGameManager::JoinUpdate(float dt)
+{
+	CNetworkLogic::GetInstance()->JoinUpdate(dt);
+}
+
+void CGameManager::PlayUpdate(float dt)
+{
+	CNetworkLogic::GetInstance()->PlayUpdate(dt);
+}
+
+void CGameManager::PlayReady()
+{
+	CNetworkLogic::GetInstance()->PlayReady();
 }
 
 bool CGameManager::IsNextButtonSelected()

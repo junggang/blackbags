@@ -17,7 +17,7 @@ CNetworkLogic::CNetworkLogic(void)
 	m_TokenId = "";
 	m_UserName = "";
 
-	m_ServerAddr = "http://10.73.43.191:5000";
+	m_ServerAddr = "http://10.73.38.158:5000";
 
 	m_MyPlayerId = -1;
 
@@ -49,11 +49,6 @@ void CNetworkLogic::ReleaseInstance()
 
 bool CNetworkLogic::Init()
 {
-	if ( !CCNode::init() )
-	{
-		return false;
-	}
-
 	// init network game data
 	if (m_networkGameData == nullptr)
 	{
@@ -65,8 +60,6 @@ bool CNetworkLogic::Init()
 	}
 
 	GetNetworkInfo();
-
-	this->schedule(schedule_selector(CNetworkLogic::test), 1.0f);
 
 	return true;
 }
@@ -222,8 +215,6 @@ void CNetworkLogic::Login()
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
 	// write the post data
-	// 조심해!!
-	// shared data 만들고 나서 수정할 것
 	std::string postData  = "tokenId=";
 	postData.append(m_TokenId);
 
@@ -242,6 +233,29 @@ void CNetworkLogic::Login()
 	m_Request->setRequestData(postData.c_str(), postData.length() );
 
 	m_Request->setTag("POST login");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
+}
+
+void CNetworkLogic::getInitializedGameData()
+{
+	// make http request
+	m_Request = new CCHttpRequest();
+
+	std::string url = m_ServerAddr;
+	url.append("/get_initialized_gamedata");
+
+	m_Request->setUrl(url.c_str() );
+	m_Request->setRequestType(CCHttpRequest::kHttpPost);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
+
+	// write the post data
+	std::string postData  = "tokenId=";
+	postData.append(m_TokenId);
+
+	m_Request->setRequestData(postData.c_str(), postData.length() );
+
+	m_Request->setTag("POST getInitializedGameData");
 	CCHttpClient::getInstance()->send(m_Request);
 	m_Request->release();
 }
@@ -346,7 +360,7 @@ void CNetworkLogic::JoinUpdate(float dt)
 	m_Request->release();
 }
 
-void CNetworkLogic::PlayUpdate()
+void CNetworkLogic::PlayUpdate(float dt)
 {
 	m_Request = new CCHttpRequest();
 	
@@ -445,9 +459,6 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			// login next phase
 			CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_WAITING_CHANNEL_ID);
 			CGameManager::GetInstance()->SetUpdateFlag(true);
-
-			// create loginUpdate schedule
-			CNetworkLogic::GetInstance()->StartJoinUpdate();
 		}
 		else
 		{
@@ -462,13 +473,17 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 
 		if (m_MyPlayerId != -1)
 		{
-			CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
-			CGameManager::GetInstance()->SetUpdateFlag(true);
-
-			// create update schedule
-			CNetworkLogic::GetInstance()->StopJoinUpdate();
-			CNetworkLogic::GetInstance()->StartPlayUpdate();
+			// send getInitializedGameData request
+			CNetworkLogic::GetInstance()->getInitializedGameData();
 		}
+	}
+	else if (strcmp(response->getHttpRequest()->getTag(), "POST getInitializedGameData") == 0)
+	{
+		//CNetworkLogic::GetInstance()->m_networkGameData->Clear();
+		CNetworkLogic::GetInstance()->m_networkGameData->Parse<0>(stringData.c_str() );
+		
+		CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
+		CGameManager::GetInstance()->SetUpdateFlag(true);
 	}
 	else
 	{
@@ -482,34 +497,11 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			// gameData에 있는 자료를 매니저가 가진 자료에 업데이트해주자
 			if (m_networkGameData != nullptr)
 			{
-				CNetworkLogic::GetInstance()->m_networkGameData->Clear();
+				//CNetworkLogic::GetInstance()->m_networkGameData->Clear();
 				CNetworkLogic::GetInstance()->m_networkGameData->Parse<0>(stringData.c_str() );
 			}
 
 			CGameManager::GetInstance()->SetUpdateFlag(true);
-
-			// game end >>> delete the network game data
-			CNetworkLogic::GetInstance()->StopPlayUpdate();
 		}
 	}
-}
-
-void CNetworkLogic::StartJoinUpdate()
-{
-	this->schedule(schedule_selector(CNetworkLogic::JoinUpdate), 1.0f);
-}
-
-void CNetworkLogic::StopJoinUpdate()
-{
-	this->unschedule(schedule_selector(CNetworkLogic::JoinUpdate) );
-}
-
-void CNetworkLogic::StartPlayUpdate()
-{
-	this->schedule(schedule_selector(CNetworkLogic::PlayUpdate), 1.0f);
-}
-
-void CNetworkLogic::StopPlayUpdate()
-{
-	this->unschedule(schedule_selector(CNetworkLogic::PlayUpdate) );
 }

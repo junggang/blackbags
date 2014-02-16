@@ -60,60 +60,66 @@ void CGameSettingScene::update(float dt)
 
 	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{
-			// 만약 업데이트 된 내용이 있다면 현재 phase가 바뀌었는지 확인한다.
-			// 로컬에 현재 phase를 저장한 다음, 네트워크 phase와 로컬 phase가 같으면 아래 switch 문은 건너뛴다.
-			NetworkPhase tempPhase = CGameManager::GetInstance()->GetCurrentNetworkPhase();
+		// 만약 업데이트 된 내용이 있다면 현재 phase가 바뀌었는지 확인한다.
+		// 로컬에 현재 phase를 저장한 다음, 네트워크 phase와 로컬 phase가 같으면 아래 switch 문은 건너뛴다.
+		NetworkPhase tempPhase = CGameManager::GetInstance()->GetCurrentNetworkPhase();
 
-			if (m_CurrentPhase != tempPhase)
+		if (m_CurrentPhase != tempPhase)
+		{
+			// 상태가 바뀌면 현재 상태를 바꿔주고 
+			// 바뀐 상태에 해당하는 레이어를 생성한다.
+
+			m_CurrentPhase = tempPhase;
+			this->removeChild(m_CurrentLayer);
+			m_CurrentLayer = nullptr;
+
+			CCScene* newScene = nullptr;
+
+			switch (tempPhase)
 			{
-				// 상태가 바뀌면 현재 상태를 바꿔주고 
-				// 바뀐 상태에 해당하는 레이어를 생성한다.
-
-				m_CurrentPhase = tempPhase;
+			case NP_NOTHING:
+				// return to the main menu
+				newScene = CMainScene::create();
+				CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+				return;
+				break;
+			case NP_GAME_SETTING:
+				// real setting layer
 				this->removeChild(m_CurrentLayer);
-				m_CurrentLayer = nullptr;
+				m_CurrentLayer = CSettingSecondStepLayer::create();
+				this->addChild(m_CurrentLayer);
 
-				CCScene* newScene = nullptr;
-
-				switch (tempPhase)
-				{
-				case NP_NOTHING:
-					// return to the main menu
-					newScene = CMainScene::create();
-					CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
-					return;
-					break;
-				case NP_GAME_SETTING:
-					// real setting layer
-					this->removeChild(m_CurrentLayer);
-					m_CurrentLayer = CSettingSecondStepLayer::create();
-					this->addChild(m_CurrentLayer);
-					break;
-				case NP_PLAYER_NUMBER_SETTING:
-					// select player number layer
-					m_CurrentLayer = CSettingFirstStepLayer::create();
-					this->addChild(m_CurrentLayer, 1);
-					break;
-				case NP_WAITING_CHANNEL_ID:
-					// waiting channel id layer
-					m_CurrentLayer = CWaitingChannelId::create();
-					this->addChild(m_CurrentLayer, 1);
-					break;
-				default:
-					break;
-				}
+				this->unschedule(schedule_selector(CGameManager::JoinUpdate) );
+				this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
+				break;
+			case NP_PLAYER_NUMBER_SETTING:
+				// select player number layer
+				m_CurrentLayer = CSettingFirstStepLayer::create();
+				this->addChild(m_CurrentLayer, 1);
+				break;
+			case NP_WAITING_CHANNEL_ID:
+				// waiting channel id layer
+				m_CurrentLayer = CWaitingChannelId::create();
+				this->addChild(m_CurrentLayer, 1);
+    
+				// 주기적으로 채널 할당 받았는지 확인
+				this->schedule(schedule_selector(CGameManager::JoinUpdate), 1.0f);
+				break;
+			default:
+				break;
 			}
 		}
+	}
 	else// SinglePlay
 	{
 		// 2.2 After Choose Player Number and Map Size, Go Next Step.
 		if ( CGameManager::GetInstance()->IsNextButtonSelected() )
-			{
+		{
 			this->removeChild(m_CurrentLayer);
 			m_CurrentLayer = CSettingSecondStepLayer::create();
 			this->addChild(m_CurrentLayer);
+		}
 	}
-}
 
 	this->m_CurrentLayer->update(dt);
 	CGameManager::GetInstance()->SetUpdateFlag(false);
