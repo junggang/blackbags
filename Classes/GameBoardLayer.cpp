@@ -26,11 +26,11 @@ bool CGameBoardLayer::init()
 
 	switch (CGameManager::GetInstance()->GetSelectedMapSize() )
 	{
-	case MS_6X5:
+	case MS_5X5:
 		rowNum = 5;
 		columnNum = 5;
 		break;
-	case MS_8X7:
+	case MS_8X8:
 		rowNum = 8;
 		columnNum = 8;
 		break;

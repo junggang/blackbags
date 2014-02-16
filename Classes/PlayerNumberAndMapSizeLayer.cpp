@@ -47,8 +47,8 @@ void CPlayerNumberAndMapSizeLayer::CreateMapSelectMenu( CCSize visibleSize )
 		);
 
 	// set Tag
-	pMapSelect1->setTag( MS_6X5 );
-	pMapSelect2->setTag( MS_8X7 );
+	pMapSelect1->setTag( MS_5X5 );
+	pMapSelect2->setTag( MS_8X8 );
 
 	// add child
 	MapSelectTable->addChild(pMapSelect1);
@@ -201,13 +201,13 @@ void CPlayerNumberAndMapSizeLayer::update(float dt)
 	case MS_NOT_SELECTED:
 		pCheck->setVisible(false);
 		break;
-	case MS_6X5:
+	case MS_5X5:
 		tempX = pMapSelect1->getPositionX() + WINDOW_WIDTH/2;
 		tempY = pMapSelect1->getPositionY();
 		pCheck->setPosition( ccp(tempX, tempY) );
 		pCheck->setVisible( true );
 		break;
-	case MS_8X7:
+	case MS_8X8:
 		pCheck->setPosition(pMapSelect2->getPosition() );
 		pCheck->setVisible(true);
 		break;

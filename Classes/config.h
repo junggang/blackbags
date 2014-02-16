@@ -287,8 +287,8 @@ enum Direction	//게임 맵 탐색 시 활용되는 방향
 enum MapSelect
 {
 	MS_NOT_SELECTED,
-	MS_6X5,
-	MS_8X7
+	MS_5X5,
+	MS_8X8
 };
 
 struct MapSize //맵 크기값을 위한 구조체입니다

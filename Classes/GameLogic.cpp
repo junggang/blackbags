@@ -598,13 +598,13 @@ void CGameLogic::CreateMap()
 	// MapSelect에서 MapSize를 만들어 낸다
 	switch (m_SelectedMapSize)
 	{
-	case MS_6X5:
-		mapSize.m_Width = 6;
+	case MS_5X5:
+		mapSize.m_Width = 5;
 		mapSize.m_Height = 5;
 		break;
-	case MS_8X7:
+	case MS_8X8:
 		mapSize.m_Width = 8;
-		mapSize.m_Height = 7;
+		mapSize.m_Height = 8;
 		break;
 	default:
 		// 조심해!! 방어코드를 넣어야해!! 여기 들어오면 뭔가 잘못된거다
@@ -656,12 +656,12 @@ void CGameLogic::InitRandomMap()
 
 	switch (m_SelectedMapSize)
 	{
-	case MS_6X5: 
+	case MS_5X5: 
 		startLineNumber = 13;
 		startGoldNumber = 5;
 		startTrashNumber = 4;
 		break;
-	case MS_8X7:
+	case MS_8X8:
 		startLineNumber = 27;
 		startGoldNumber = 8;
 		startTrashNumber = 7;
