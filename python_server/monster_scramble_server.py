@@ -25,21 +25,28 @@ def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
 
 		if len(playerPool) == playerNumber:
 			# channel id 생성하는 로직 구현 필요 
-			channelId = 123;
+			channelId = 123
 
 			gameData = dataStructure.GameData()
 			gameData.initData(channelId)
 
 			# 플레이어 추가 
 			for player in playerPool:
-				print 'player ' + str(playerNumber) + ' : ' + player
+				print 'player number ' + str(playerNumber) + ' : ' + player
 				playerData = getPlayerData(player)
 				gameData.addPlayer(playerData)
 				watingList.remove(player)
 
+				print playerData.data[3]
+
+				# player data 저장
+				gRedis.set(player, json.dumps(playerData.data) )
+
 			# 생성한 게임 데이터 redis에 저장 
 			jsonData = json.dumps(gameData.data)
 			gRedis.set(channelId, jsonData)
+
+			print jsonData
 
 			return True
 
@@ -96,7 +103,7 @@ def playerMatching():
 # 타이머 관리 풀에 game channel id에 해당하는 스레드를 새로 생성한 스레드로 교체
 # 새로 생성한 스레드 시작
 # 종료
-def randomTimer(tokenId, gameChannelId):
+def randomTimer(gameChannelId):
 	# 처음엔 없으니까 리스트 안에 값 있는지 확인 필요
 	if gameChannelId in timerThreadList:
 		del timerThreadList[gameChannelId]
@@ -104,7 +111,7 @@ def randomTimer(tokenId, gameChannelId):
 	gameData = getGameData(channelId)
 	randomIdx = gameData.makeRandomLine()
 	if gameData.drawLine(randomIdx[0], randomIdx[1]):
-		timerThreadList[gameChannelId] = threading.Timer(21, PCDrawRandomLine, args=[tokenId, gameChannelId])
+		timerThreadList[gameChannelId] = threading.Timer(21, randomTimer, args=[gameChannelId])
 		timerThreadList[gameChannelId].start()
 
 
@@ -124,7 +131,12 @@ def getPlayerData(tokenId):
 
 def getGameData(channelId):
 	gameData = dataStructure.GameData()
+
+	print gRedis.get(channelId)
+
 	gameData.insertData(json.loads(gRedis.get(channelId)))
+
+	print gameData
 
 	return gameData
 
@@ -140,7 +152,9 @@ def SCSelectCharacter(tokenId, characterId):
 	gameData = getGameData(channelId)
 
 	if gameData.selectCharacter(playerId, characterId):
-		# 캐릭터 선택 성공 - 결과를 다시 redis에 저장 
+		# 캐릭터 선택 성공 - 결과를 다시 redis에 저장
+		# request를 보낸 클라이언트는 바로 응답을 받으므로 update flag를 false로 바꿔준다
+		gameData.setPlayerUpdateFlag(playerId, False)
 		jsonData = json.dumps(gameData.data)
 		gRedis.set(channelId, jsonData)
 	else:
@@ -163,6 +177,9 @@ def SCSelctMap(tokenId, mapId):
 	if gameData.isChannelMaster(playerId) == 1:
 		# 요청한 유저가 방장이므로 맵 크기를 설정한다. 
 		gameData.setMapSize(mapId)
+
+		# request를 보낸 클라이언트는 바로 응답을 받으므로 update flag를 false로 바꿔준다
+		gameData.setPlayerUpdateFlag(playerId, False)
 
 		jsonData = json.dumps(gameData.data)
 		gRedis.set(channelId, jsonData)
@@ -190,7 +207,15 @@ def SCReady(tokenId):
 	if gameData.isAllReady():
 		gameData.startGame()
 
+		# 타이머 시작
+		timerThreadList[gameChannelId] = threading.Timer(21, randomTimer, arg=[gameChannelId])
+		timerThreadList[gameChannelId].start()
+
+	# request를 보낸 클라이언트는 바로 응답을 받으므로 update flag를 false로 바꿔준다
+	gameData.setPlayerUpdateFlag(playerId, False)
+
 	jsonData = json.dumps(gameData.data)
+	gRedis.set(channelId, jsonData)
 
 	return jsonData
 
@@ -212,10 +237,14 @@ def PCReady(tokenId):
 		gameData.startTurn()
 
 		# 타이머 시작
-		timerThreadList[gameChannelId] = threading.Timer(21, PCDrawRandomLine, arg=[tokenId, gameChannelId])
+		timerThreadList[gameChannelId] = threading.Timer(21, randomTimer, arg=[gameChannelId])
 		timerThreadList[gameChannelId].start()
 
+	# request를 보낸 클라이언트는 바로 응답을 받으므로 update flag를 false로 바꿔준다
+	gameData.setPlayerUpdateFlag(playerId, False)
+
 	jsonData = json.dumps(gameData.data)
+	gRedis.set(channelId, jsonData)
 
 	return jsonData
 
@@ -231,6 +260,9 @@ def PCDrawLine(tokenId, lineIdx):
 
 	if gameData.getCurrentTurnId == playerId:
 		if gameData.drawLine(lineIdx[0], lineIdx[1]):
+			# request를 보낸 클라이언트는 바로 응답을 받으므로 update flag를 false로 바꿔준다
+			gameData.setPlayerUpdateFlag(playerId, False)
+
 			jsonData = json.dumps(gameData.data)
 			gRedis.set(channelId, jsonData)
 
@@ -240,14 +272,12 @@ def PCDrawLine(tokenId, lineIdx):
 
 			# 타이머 스레드 생성 및 시작
 			# timerThreadList에 저장 
-			timerThreadList[gameChannelId] = threading.Timer(21, PCDrawRandomLine, args=[tokenId, gameChannelId])
+			timerThreadList[gameChannelId] = threading.Timer(21, randomTimer, args=[gameChannelId])
 			timerThreadList[gameChannelId].start()
-		else:
-			jsonData = 'not updated'
 
-		return jsonData
+			return jsonData
 
-	return json.dumps(gameData.data)
+	return 'not updated'
 
 
 def PCUpdateGameResult(gameChannelId):
@@ -318,18 +348,47 @@ def joinUpdate():
 			playerData = getPlayerData(tokenId)
 
 			playerId = playerData.getPlayerId()
-			if playerId != -1:
-				# 할당 된 channel이 있으면 그 channel 안에서의 player id 값을 전송 
-				return playerId
-			else:
-				return # 
+
+			print tokenId
+			return str(playerId)
 
 	except KeyError, err:
 		print 'error  ->  : ' ,err 
 		return '서버에서 알 수 없는 요청데이터가 있습니다.(잘못된 요청일 수도 있고요)\n'
 
 
-@app.route('/select_character/', methods=['POST','GET'])
+@app.route('/get_initialized_gamedata', methods=['POST','GET'])
+def getInitializedGameData():
+	# 채널을 할당 받아서 게임 세팅으로 넘어 가기 전에 초기 게임 데이터를 요청한다.
+	# 요청한 클라이언트의 tokenId를 이용해서 해당 game channel을 찾아서 그 데이터를 전송한다.
+	# 이때 요청한 클라이언트의 update flag는 false로 바꿔준다.
+	try : 
+		if request.method  == "POST":  
+			tokenId = request.form['tokenId']
+
+			playerData = getPlayerData(tokenId)
+			playerId = playerData.getPlayerId()
+			channelId = playerData.getPlayerGameChannel()
+
+			print channelId + 1
+			print gRedis.get(channelId)
+
+			gameData = getGameData(channelId)
+
+			# flag 상태 변경 
+			gameData.setPlayerUpdateFlag(playerId, False)
+
+			jsonData = json.dumps(gameData.data)
+			gRedis.set(channelId, jsonData)
+
+			return jsonData
+
+	except KeyError, err:
+		print 'error  ->  : ' ,err 
+		return '서버에서 알 수 없는 요청데이터가 있습니다.(잘못된 요청일 수도 있고요)\n'
+
+
+@app.route('/select_character', methods=['POST','GET'])
 def selectCharacter():
 	# 보낸 유저의 session 정보를 바탕으로 어떤 game channel에 반영할 지 판단(redis 안에 저장된 user 정보 참조)
 	# 해당 game channel의 데이터를 불러와서 게임 데이터에서 플레이어의 캐릭터id 정보를 업데이트한다.
@@ -347,7 +406,7 @@ def selectCharacter():
 		return 'error code'
 
 
-@app.route('/select_map/', methods=['POST','GET'])
+@app.route('/select_map', methods=['POST','GET'])
 def selectMap():
 	# 보낸 유저의 session 정보를 바탕으로 어떤 game channel에 반영할 지 판단(redis 안에 저장된 user 정보 참조)
 	# 해당 game channel의 데이터를 불러와서 현재 선택된 맵 정보를 업데이트한다.
@@ -365,7 +424,7 @@ def selectMap():
 		return 'error code'
 
 
-@app.route('/setting_ready/', methods=['POST','GET'])
+@app.route('/setting_ready', methods=['POST','GET'])
 def settingReady():
 	# 보낸 유저의 session 정보를 바탕으로 어떤 game channel에 반영할 지 판단(redis 안에 저장된 user 정보 참조)
 	# 해당 game channel의 데이터를 불러와서 플레이어의 setting scene 관련 레디 정보를 입력한다.
@@ -382,7 +441,7 @@ def settingReady():
 		return 'error code'
 
 
-@app.route('/play_ready/', methods=['POST','GET'])
+@app.route('/play_ready', methods=['POST','GET'])
 def playReady():
 	# 보낸 유저의 session 정보를 바탕으로 어떤 game channel에 반영할 지 판단(redis 안에 저장된 user 정보 참조)
 	# 해당 game channel의 데이터를 불러와서 플레이어의 play scene에 관련된 ready 상태를 변경한다.
@@ -399,7 +458,7 @@ def playReady():
 		return 'error code'
 
 
-@app.route('/play_update/', methods=['POST','GET'])
+@app.route('/play_update', methods=['POST','GET'])
 def playUpdate():
 	# 보낸 유저의 session 정보를 바탕으로 어떤 game channel에 반영할 지 판단(redis 안에 저장된 user 정보 참조)
 	# 해당 game channel의 데이터를 불러와서 바로 전송한다.
@@ -407,17 +466,31 @@ def playUpdate():
 		if request.method  == "POST":  
 			tokenId = request.form['tokenId']
 
-			playerData = getPlayerId(tokenId)
+			playerData = getPlayerData(tokenId)
+			playerId = playerData.getPlayerId()
 			channelId = playerData.getPlayerGameChannel()
 
-			return gRedis.get(channelId)
+			gameData = getGameData(channelId)
+
+			# client가 확인해야 하는 업데이트 내용이 있는지 확인 
+			if gameData.getPlayerUpdateFlag(playerId):
+				gameData.setPlayerUpdateFlag(playerId, False)
+
+				jsonData = json.dumps(gameData.data)
+				gRedis.set(channelId, jsonData)
+
+				print jsonData
+
+				return jsonData
+
+			return 'not updated'
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
 		print 'error  ->  : ' ,err 
 		return 'error code'
 
 
-@app.route('/draw_line/', methods=['POST','GET'])
+@app.route('/draw_line', methods=['POST','GET'])
 def drawLine():
 	# 보낸 유저의 session 정보를 바탕으로 어떤 game channel에 반영할 지 판단(redis 안에 저장된 user 정보 참조)
 	# 해당 game channel의 데이터를 불러와서 선을 그린다.
@@ -436,7 +509,7 @@ def drawLine():
 		return 'error code'
 
 
-@app.route('/game_end/', methods=['POST','GET'])
+@app.route('/game_end', methods=['POST','GET'])
 def gameEnd():
 	# 보낸 유저의 session 정보를 바탕으로 어떤 game channel에 반영할 지 판단(redis 안에 저장된 user 정보 참조)
 	# 해당 game channel의 데이터를 불러와서 플레이어의 game end 상태를 변경한다.

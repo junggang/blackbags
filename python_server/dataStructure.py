@@ -48,6 +48,7 @@ GDP_GOLD_COUNT = 7
 GDP_TRASH_COUNT = 8
 GDP_SCORE = 9
 GDP_PLAYER_IDX = 10
+GDP_UPDATE_FLAG = 11
 
 # game data - map id
 MS_NOT_SELECTED = 0
@@ -113,7 +114,7 @@ class PlayerData:
 
 	# get / set functions
 	def setChannelId(self, channelId):
-		self.data[PD_TOKEN_ID] = channelId
+		self.data[PD_GAME_CHANNEL_ID] = channelId
 
 	def getPlayerName(self):
 		return self.data[PD_NAME]
@@ -186,10 +187,13 @@ class GameData:
 			self.data[GD_PLAYER_LIST][i].append(0)			# GDP_TRASH_COUNT
 			self.data[GD_PLAYER_LIST][i].append(0)			# GDP_SCORE
 			self.data[GD_PLAYER_LIST][i].append(-1)			# GDP_PLAYER_IDX
+			self.data[GD_PLAYER_LIST][i].append(True)		# GDP_UPDATE_FLAG
 
 	# game data의 현재 scene을 설정 
 	def setScene(self, nextScene):
 		self.data[GD_CURRENT_SCENE] = nextScene
+
+		self.setUpdateFlag();
 
 	# 플레이어가 선택한 맵 종료에 따른 크기 설정 (가로 / 세로)
 	def setMapSize(self, mapId):
@@ -204,6 +208,8 @@ class GameData:
 		self.data[GD_VOID_TILE_COUNT] = width * height
 		self.data[GD_MAP_SIZE][0] = width
 		self.data[GD_MAP_SIZE][1] = height
+
+		self.setUpdateFlag();
 
 	# 해당 id의 player가 channel master인지 반환 
 	def isChannelMaster(self, playerId):
@@ -242,6 +248,16 @@ class GameData:
 				return idx
 
 		return -1
+
+	def setUpdateFlag(self):
+		for each in self.data[GD_PLAYER_LIST]:
+			each[GDP_UPDATE_FLAG] = True
+
+	def getPlayerUpdateFlag(self, playerId):
+		return self.data[GD_PLAYER_LIST][playerId][GDP_UPDATE_FLAG]
+
+	def setPlayerUpdateFlag(self, playerId, value):
+		self.data[GD_PLAYER_LIST][playerId][GDP_UPDATE_FLAG] = value
 	
 	# 각각의 플레이어가 game data의 업데이트된 내용을 수신했음을 확인하는 flag설정 
 	# 조심해!! - 둘로 분리하는 것이 나을 듯
@@ -266,6 +282,8 @@ class GameData:
 					return False
 
 			self.data[GD_PLAYER_LIST][idx][GDP_CHARACTER_ID] = characterId
+
+		self.setUpdateFlag();
 
 		return True
 
@@ -369,13 +387,12 @@ class GameData:
 		self.data[GD_CURRENT_TURN_IDX] = 0
 		self.resetReadyFlag()
 
+		self.setUpdateFlag();
+
 	# play scene에서 새로운 턴을 시작 
 	def startTurn(self):
 		self.resetReadyFlag()
-
-		if not self.isEnd():
-			pass
-			# 타이머 시작
+		self.setUpdateFlag();
 
 	# 지금 선을 그을 차례인 플레이어의 idx값 반환 
 	def getCurrentTurnId(self):
@@ -553,6 +570,8 @@ class GameData:
 			self.data[GD_CURRENT_TURN_IDX] += 1
 			self.data[GD_CURRENT_TURN_IDX] %= self.data[GD_PLAYER_NUMBER]
 
+		self.setUpdateFlag();
+
 		return True
 
 	# 그을 수 있는 임의선을 선택
@@ -588,6 +607,8 @@ class GameData:
 
 		for each in self.data[GD_PLAYER_LIST]:
 			each[GDP_SCORE] = each[GDP_TILE_COUNT] * 2 + each[GDP_GOLD_COUNT] * 5 - each[GDP_TRASH_COUNT] * 10
+
+		self.setUpdateFlag();
 
 	# for debug
 	# console에 현재 맵 상황 표시
