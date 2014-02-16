@@ -17,7 +17,7 @@ CNetworkLogic::CNetworkLogic(void)
 	m_TokenId = "";
 	m_UserName = "";
 
-	m_ServerAddr = "http://192.168.0.11:5000";
+	m_ServerAddr = "http://10.73.38.158:5000";
 
 	m_MyPlayerId = -1;
 
@@ -215,8 +215,6 @@ void CNetworkLogic::Login()
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
 	// write the post data
-	// 조심해!!
-	// shared data 만들고 나서 수정할 것
 	std::string postData  = "tokenId=";
 	postData.append(m_TokenId);
 
@@ -235,6 +233,29 @@ void CNetworkLogic::Login()
 	m_Request->setRequestData(postData.c_str(), postData.length() );
 
 	m_Request->setTag("POST login");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
+}
+
+void CNetworkLogic::getInitializedGameData()
+{
+	// make http request
+	m_Request = new CCHttpRequest();
+
+	std::string url = m_ServerAddr;
+	url.append("/get_initialized_gamedata");
+
+	m_Request->setUrl(url.c_str() );
+	m_Request->setRequestType(CCHttpRequest::kHttpPost);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
+
+	// write the post data
+	std::string postData  = "tokenId=";
+	postData.append(m_TokenId);
+
+	m_Request->setRequestData(postData.c_str(), postData.length() );
+
+	m_Request->setTag("POST getInitializedGameData");
 	CCHttpClient::getInstance()->send(m_Request);
 	m_Request->release();
 }
@@ -452,9 +473,17 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 
 		if (m_MyPlayerId != -1)
 		{
-			CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
-			CGameManager::GetInstance()->SetUpdateFlag(true);
+			// send getInitializedGameData request
+			CNetworkLogic::GetInstance()->getInitializedGameData();
 		}
+	}
+	else if (strcmp(response->getHttpRequest()->getTag(), "POST getInitializedGameData") == 0)
+	{
+		//CNetworkLogic::GetInstance()->m_networkGameData->Clear();
+		CNetworkLogic::GetInstance()->m_networkGameData->Parse<0>(stringData.c_str() );
+		
+		CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
+		CGameManager::GetInstance()->SetUpdateFlag(true);
 	}
 	else
 	{
@@ -468,7 +497,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			// gameData에 있는 자료를 매니저가 가진 자료에 업데이트해주자
 			if (m_networkGameData != nullptr)
 			{
-				CNetworkLogic::GetInstance()->m_networkGameData->Clear();
+				//CNetworkLogic::GetInstance()->m_networkGameData->Clear();
 				CNetworkLogic::GetInstance()->m_networkGameData->Parse<0>(stringData.c_str() );
 			}
 

@@ -338,7 +338,8 @@ enum GameDataPlayerData
 	GDP_GOLD_COUNT = 7,
 	GDP_TRASH_COUNT = 8,
 	GDP_SCORE = 9,
-	GDP_PLAYER_IDX = 10
+	GDP_PLAYER_IDX = 10,
+	GDP_UPDATE_FLAG = 11
 };
 
 enum MapDataIndex

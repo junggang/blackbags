@@ -44,6 +44,7 @@ public:
 
 	void JoinUpdate(float dt);
 	void PlayUpdate(float dt);
+	void getInitializedGameData();
 	void SettingReady();
 	void PlayReady();
 

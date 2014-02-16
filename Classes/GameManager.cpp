@@ -383,6 +383,7 @@ int CGameManager::GetPlayerNumberOfThisGame()
 	if (m_IsOnlineGame)
 	{
 		// 필요한가?
+		CNetworkLogic::GetInstance()->GetCurrentPlayerNumber();
 	}
 	else
 	{
