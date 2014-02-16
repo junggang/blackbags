@@ -44,7 +44,7 @@ void CSettingOtherPlayerStatusLayer::update()
 		else if ( CGameManager::GetInstance()->isCharacterSelected(i) && (this->getChildByTag(i) == NULL) )
 		{
 			PlayerNames[i] = CCTextFieldTTF::textFieldWithPlaceHolder(
-				CGameManager::GetInstance()->GetPlayerName(i).c_str(),
+				CGameManager::GetInstance()->GetPlayerNameByCharacterId(i).c_str(),
 				CCSize(480,30),
 				kCCTextAlignmentCenter,
 				"Arial",

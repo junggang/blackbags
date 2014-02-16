@@ -79,6 +79,32 @@ const std::string& CGameManager::GetPlayerName(int playerIdx)
 	}
 }
 
+std::string CGameManager::GetPlayerNameByCharacterId(int characterId)
+{
+	if (m_IsOnlineGame)
+	{
+		for (int i =0; i < MAX_PLAYER_NUM; ++i)
+		{
+			if (CNetworkLogic::GetInstance()->GetPlayerCharacterId(i) == characterId)
+			{
+				return CNetworkLogic::GetInstance()->GetPlayerName(i);
+			}
+		}
+	}
+	else
+	{
+		for (int i =0; i < MAX_PLAYER_NUM; ++i)
+		{
+			if (CGameLogic::GetInstance()->GetPlayerCharacterId(i) == characterId)
+			{
+				return CGameLogic::GetInstance()->GetPlayerName(i);
+			}
+		}
+	}
+
+	return NULL;
+}
+
 int CGameManager::GetCurrentPlayerNumber()
 {
 	if (m_IsOnlineGame)
@@ -172,7 +198,14 @@ bool CGameManager::isCharacterSelected( int characterId )
 {
 	if (m_IsOnlineGame)
 	{
-		// 필요한가?
+		for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+		{
+			if (CNetworkLogic::GetInstance()->GetPlayerCharacterId(i) == characterId)
+			{
+				return true;
+			}
+		}
+
 		return false;
 	}
 	else

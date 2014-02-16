@@ -38,11 +38,12 @@ public:
 	// 이름
 	void SetPlayerName(int playerId, const std::string& playerName);
 	const std::string& GetPlayerName(int playerIdx);
+	std::string GetPlayerNameByCharacterId(int characterId);
 
 	// 캐릭터
 	void SelectCharacter(int characterId);
 	bool isCharacterSelected(int characterId);
-	int	  GetCharacterId(int playerId);
+	int	 GetCharacterId(int playerId);
 
 	// 맵
 	void		SetMapSize(MapSelect mapSize);

@@ -43,8 +43,11 @@ bool CPlayScene::init(void)
 	menu = CHomeMenuLayer::create();
 	this->addChild(menu,2);
 
-	//매프레임마다 update함수 호출하도록 설정
-	//this->schedule(schedule_selector(CPlayScene::update) );
+	if (CGameManager::GetInstance()->IsOnlineMode() )
+	{
+		// 서버에 주기적으로 업데이트 확인
+		this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
+	}
 
 	//이렇게 설정하면 update함수가 알아서 프레임마다 호출된다.
 	this->scheduleUpdate();
