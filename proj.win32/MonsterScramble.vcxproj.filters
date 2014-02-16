@@ -55,9 +55,6 @@
     <Filter Include="Classes\Layer\Help">
       <UniqueIdentifier>{cfd165ea-a4f3-4b14-9269-c92cb9704d49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\Scene\PlayerNameSettingScene">
-      <UniqueIdentifier>{7930f1c5-0bb1-4223-917c-c4ee2386e864}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\Layer\Setting">
       <UniqueIdentifier>{5da11e78-0ecc-4bcd-ab47-8ddf8792d1e9}</UniqueIdentifier>
     </Filter>
@@ -188,9 +185,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\CreditLayer.cpp">
       <Filter>Classes\Layer\Credit</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExampleUserInput.cpp">
-      <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\NetworkLogic.cpp">
       <Filter>Classes\Logic\NetworkLogic</Filter>
@@ -325,9 +319,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\CreditLayer.h">
       <Filter>Classes\Layer\Credit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ExampleUserInput.h">
-      <Filter>Classes\Scene\PlayerNameSettingScene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\NetworkLogic.h">
       <Filter>Classes\Logic\NetworkLogic</Filter>
