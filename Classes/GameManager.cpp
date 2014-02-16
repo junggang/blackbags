@@ -95,7 +95,7 @@ std::string CGameManager::GetPlayerNameByCharacterId(int characterId)
 	{
 		for (int i =0; i < MAX_PLAYER_NUM; ++i)
 		{
-			if (CGameLogic::GetInstance()->GetPlayerCharacterId(i) == characterId)
+			if (CGameLogic::GetInstance()->GetCharacterIdByPlayerId(i) == characterId)
 			{
 				return CGameLogic::GetInstance()->GetPlayerName(i);
 			}
@@ -194,7 +194,7 @@ void CGameManager::SelectCharacter( int characterId )
 	}
 }
 
-bool CGameManager::isCharacterSelected( int characterId )
+bool CGameManager::IsCharacterSelected( int characterId )
 {
 	if (m_IsOnlineGame)
 	{
@@ -210,11 +210,11 @@ bool CGameManager::isCharacterSelected( int characterId )
 	}
 	else
 	{
-		return CGameLogic::GetInstance()->isCharacterSelected(characterId);
+		return CGameLogic::GetInstance()->IsCharacterSelected(characterId);
 	}
 }
 
-int CGameManager::GetCharacterId( int playerId )
+int CGameManager::GetCharacterIdByPlayerId( int playerId )
 {
 	if (m_IsOnlineGame)
 	{
@@ -222,7 +222,7 @@ int CGameManager::GetCharacterId( int playerId )
 	}
 	else
 	{
-		return CGameLogic::GetInstance()->GetPlayerCharacterId( playerId );
+		return CGameLogic::GetInstance()->GetCharacterIdByPlayerId( playerId );
 	}
 }
 
@@ -611,5 +611,31 @@ void CGameManager::SetPlayerNumberSelection(int number, bool selection)
 		break;
 	default:
 		break;
+	}
+}
+
+int CGameManager::GetPlayerIdByCharactyerId( int characterId )
+{
+	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	{
+		if ( characterId == GetCharacterIdByPlayerId(i) )
+		{
+			return i;
+		}
+	}
+	// err
+	return -1;
+}
+
+bool CGameManager::IsPlayerJoinedGame( int characterId )
+{
+	if ( m_IsOnlineGame )
+	{
+		// Á¶½ÉÇØ! Test Code
+		return false;
+	}
+	else
+	{
+		return CGameLogic::GetInstance()->IsPlayerJoinedGame(characterId);
 	}
 }

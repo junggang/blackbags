@@ -42,8 +42,12 @@ public:
 
 	// 캐릭터
 	void SelectCharacter(int characterId);
-	bool isCharacterSelected(int characterId);
-	int	 GetCharacterId(int playerId);
+	bool IsCharacterSelected(int characterId);
+	int GetCharacterIdByPlayerId(int playerId);
+	int GetPlayerIdByCharactyerId(int characterId);
+
+	// 플레이어
+	bool IsPlayerJoinedGame(int characterId);
 
 	// 맵
 	void		SetMapSize(MapSelect mapSize);

@@ -36,7 +36,7 @@ bool CResultScoreLayer::init()
 		//position.y 축에 더해지는 높이 ( 초기화는 캐릭터 위치 )
 		float nextLinePosition = 250.0f;
 
-		int characterId = CGameManager::GetInstance()->GetCharacterId(i);
+		int characterId = CGameManager::GetInstance()->GetCharacterIdByPlayerId(i);
 		CCSprite* pFace;
 		//승패 여부에 따라 캐릭터 이미지 생성
 		if ( i == winnerIdx)

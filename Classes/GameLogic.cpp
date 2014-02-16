@@ -878,3 +878,21 @@ bool CGameLogic::TimeOut()
 		}
 	}
 }
+
+bool CGameLogic::IsPlayerJoinedGame( int playerId )
+{
+	// playerId :: ( 0 <= ~ < MAX_PLAYER_NUM )
+	if (playerId < MAX_PLAYER_NUM && playerId >= 0)
+	{
+		if ( -1 == m_PlayerData[playerId]->m_PlayerId )
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	// err
+	return false;
+}

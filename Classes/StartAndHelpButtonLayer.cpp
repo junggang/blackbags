@@ -3,7 +3,6 @@
 #include "PlayScene.h"
 #include "HelpScene.h"
 #include "GameManager.h"
-#include "ExampleUserInput.h"
 
 USING_NS_CC;
 
@@ -65,16 +64,6 @@ bool CStartAndHelpButtonLayer::init()
 
 	this->addChild(HelpButtonMenu);
 
-	/// NameInput Button
-	CCMenuItemImage *NameInputButton = CCMenuItemImage::create(
-		"image/MO_tile_void_animation_01.png",
-		"image/MO_tile_void_animation_01.png",
-		this,
-		menu_selector(CStartAndHelpButtonLayer::NameInputButtonCallBack)
-		);
-
-	StartButtonMenu->addChild(NameInputButton);
-
 	//// align menu element
 	StartButtonMenu->alignItemsHorizontally();
 
@@ -109,19 +98,6 @@ void CStartAndHelpButtonLayer::HelpButtonCallBack( CCObject* pSender )
 		this->addChild(newLayer);
 	}
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
-#endif
-#endif
-}
-
-void CStartAndHelpButtonLayer::NameInputButtonCallBack( CCObject* pSender )
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-	CCScene* newScene = ExampleUserInput::scene();
-	CCDirector::sharedDirector()->replaceScene( CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	//exit(0);
 #endif

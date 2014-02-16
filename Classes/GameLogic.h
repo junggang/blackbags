@@ -64,8 +64,9 @@ public:
 
 	//캐릭터를 플레이어에게 짝지어 준다.
 	bool SetPlayerCharacterId(int characterId);
-	bool isCharacterSelected(int characterId) {return m_Character[characterId].m_isCharacterSelected;}
-	int   GetPlayerCharacterId(int playerId) { return m_PlayerData[playerId]->m_CharacterId;}
+	bool IsCharacterSelected(int characterId) {return m_Character[characterId].m_isCharacterSelected;}
+	bool IsPlayerJoinedGame(int playerId);
+	int   GetCharacterIdByPlayerId(int playerId) { return m_PlayerData[playerId]->m_CharacterId;}
 
 	bool   SetPlayerName(int playerId, const std::string& playerName);
 	const std::string& GetPlayerName(int playerId)				{ return m_PlayerData[playerId]->m_PlayerName; }

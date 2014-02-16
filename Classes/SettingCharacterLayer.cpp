@@ -98,7 +98,7 @@ void CSettingCharacterLayer::update()
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
 		// 모든 캐릭터를 돌면서 선택된 캐릭터인지 아닌지 지속적으로 확인한다.
-		bool isSelected = CGameManager::GetInstance()->isCharacterSelected(i);
+		bool isSelected = CGameManager::GetInstance()->IsCharacterSelected(i);
 
 		CCMenuItemImage* tempButton = static_cast<CCMenuItemImage*>( this->getChildByTag(CHARACTER_TABLE_TAG)->getChildByTag(i) );
 

@@ -41,7 +41,7 @@ bool CPlayerLayer::init()
 	for (int playerId = 0; playerId<MAX_PLAYER_NUM; ++playerId)
 	{
 		//생성되지 않은 플레이어라면 넘긴다.
-		if (CGameManager::GetInstance()->GetCharacterId(playerId)==-1)
+		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId)==-1)
 			continue;
 
 		int position = CGameManager::GetInstance()->GetPlayerTurn(playerId);
@@ -80,7 +80,7 @@ bool CPlayerLayer::init()
 	//addChild해준다.
 	for(int playerId=0;playerId<MAX_PLAYER_NUM;++playerId)
 	{
-		if (CGameManager::GetInstance()->GetCharacterId(playerId)==-1)
+		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId)==-1)
 			continue;
 
 		m_pSpriteBatchNode->addChild(m_Player[playerId],0);
@@ -117,7 +117,7 @@ void CPlayerLayer::update( float dt )
 	m_CharacterAni = CCAnimation::create();
 	m_CharacterAni->setDelayPerUnit(0.5f);
 
-	switch(CGameManager::GetInstance()->GetCharacterId(m_CurrentPlayerId))
+	switch(CGameManager::GetInstance()->GetCharacterIdByPlayerId(m_CurrentPlayerId))
 	{
 	case 0:
 		m_CharacterAni->addSpriteFrame(cache->spriteFrameByName("CHARACTER_1_Ani0.png"));
@@ -150,9 +150,9 @@ void CPlayerLayer::SetWaitingCharacters()
 
 	for(int playerId = 0; playerId<MAX_PLAYER_NUM;++playerId)
 	{
-		if (CGameManager::GetInstance()->GetCharacterId(playerId)==-1)
+		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId)==-1)
 			continue;
-		switch (CGameManager::GetInstance()->GetCharacterId(playerId))
+		switch (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId))
 		{
 		case 0:
 			m_Player[playerId]->setDisplayFrame(cache->spriteFrameByName("CHARACTER_1_Ani0.png"));

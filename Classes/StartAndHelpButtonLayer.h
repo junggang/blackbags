@@ -14,7 +14,6 @@ public:
 private:
 	void StartButtonCallBack( CCObject* pSender );
 	void HelpButtonCallBack( CCObject* pSender );
-	void NameInputButtonCallBack( CCObject* pSender );
 
 	cocos2d::CCMenuItemImage *m_StartButton;
 };
