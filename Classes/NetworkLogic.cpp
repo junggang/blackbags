@@ -12,7 +12,7 @@ CNetworkLogic* CNetworkLogic::m_pInstance = nullptr;
 CNetworkLogic::CNetworkLogic(void)
 {
 	m_Request = nullptr;
-	m_networkGameData = nullptr;
+	m_NetworkGameData = nullptr;
 
 	m_TokenId = "";
 	m_UserName = "";
@@ -50,13 +50,9 @@ void CNetworkLogic::ReleaseInstance()
 bool CNetworkLogic::Init()
 {
 	// init network game data
-	if (m_networkGameData == nullptr)
+	if (m_NetworkGameData == nullptr)
 	{
-		m_networkGameData = new Document();
-	}
-	else
-	{
-		m_networkGameData->Clear();
+		m_NetworkGameData = new Document();
 	}
 
 	GetNetworkInfo();
@@ -92,12 +88,12 @@ void CNetworkLogic::GetNetworkInfo()
 
 std::string CNetworkLogic::GetPlayerName(int playerIdx)
 {
-	return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_NAME)].GetString();
+	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_NAME)].GetString();
 }
 
 int CNetworkLogic::GetCurrentPlayerNumber()
 {
-	return m_networkGameData[SizeType(GD_PLAYER_NUMBER)].GetInt();
+	return (*m_NetworkGameData)[SizeType(GD_PLAYER_NUMBER)].GetInt();
 }
 
 int CNetworkLogic::GetPlayerResult(int playerIdx, MO_ITEM item)
@@ -119,83 +115,83 @@ int CNetworkLogic::GetPlayerResult(int playerIdx, MO_ITEM item)
 		break;
 	}
 
-	return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(tempIdx)].GetInt();
+	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(tempIdx)].GetInt();
 }
 
 int CNetworkLogic::GetPlayerTotalScore(int playerIdx)
 {
-	return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_SCORE)].GetInt();
+	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_SCORE)].GetInt();
 }
 
 const std::string& CNetworkLogic::GetPlayerResultImage(int playerIdx)
 {
-	int characterId = m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_CHARACTER_ID)].GetInt();
+	int characterId = (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_CHARACTER_ID)].GetInt();
 
 	return CGameLogic::GetInstance()->GetCharacterResultImage(characterId);
 }
 
 int CNetworkLogic::GetPlayerCharacterId(int playerIdx)
 {
-	return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_CHARACTER_ID)].GetInt();
+	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_CHARACTER_ID)].GetInt();
 }
 
 int	CNetworkLogic::GetPlayerIdByTurn(int currentTurn)
 {
-	return m_networkGameData[SizeType(GD_TURN_LIST)][SizeType(currentTurn)].GetInt();
+	return (*m_NetworkGameData)[SizeType(GD_TURN_LIST)][SizeType(currentTurn)].GetInt();
 }
 
 bool CNetworkLogic::IsEnd()
 {
-	return (m_networkGameData[SizeType(GD_CURRENT_SCENE)].GetInt() == SC_RESULT) ? true : false;
+	return ((*m_NetworkGameData)[SizeType(GD_CURRENT_SCENE)].GetInt() == SC_RESULT) ? true : false;
 }
 
 MapSelect CNetworkLogic::GetSelectedMapSize()
 {
-	return static_cast<MapSelect>(m_networkGameData[SizeType(GD_MAP_ID)].GetInt() );
+	return static_cast<MapSelect>((*m_NetworkGameData)[SizeType(GD_MAP_ID)].GetInt() );
 }
 
 MO_TYPE CNetworkLogic::GetMapType(IndexedPosition indexedPosition)
 {
-	return static_cast<MO_TYPE>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_TYPE)].GetInt() );
+	return static_cast<MO_TYPE>((*m_NetworkGameData)[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_TYPE)].GetInt() );
 }
 
 MO_OWNER CNetworkLogic::GetMapOwner(IndexedPosition indexedPosition)
 {
-	return static_cast<MO_OWNER>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_OWNER)].GetInt() );
+	return static_cast<MO_OWNER>((*m_NetworkGameData)[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_OWNER)].GetInt() );
 }
 
 MO_ITEM CNetworkLogic::GetItem(IndexedPosition indexedPosition)
 {
-	return static_cast<MO_ITEM>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_ITEM)].GetInt() );
+	return static_cast<MO_ITEM>((*m_NetworkGameData)[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_ITEM)].GetInt() );
 }
 
 const std::string& CNetworkLogic::GetPlayerPlayImage(int playerIdx)
 {
-	int characterId = m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_CHARACTER_ID)].GetInt();
+	int characterId = (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_CHARACTER_ID)].GetInt();
 
 	return CGameLogic::GetInstance()->GetCharacterPlayImage(characterId);
 }
 
 MO_TYPE CNetworkLogic::IsConnected(IndexedPosition indexedPosition)
 {
-	return static_cast<MO_TYPE>(m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_TYPE)].GetInt() );
+	return static_cast<MO_TYPE>((*m_NetworkGameData)[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_TYPE)].GetInt() );
 }
 
 int CNetworkLogic::GetPlayerTurnById(int playerId)
 {
-	return m_networkGameData[SizeType(GD_PLAYER_LIST)][SizeType(GDP_TURN)].GetInt();
+	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(GDP_TURN)].GetInt();
 }
 
 int CNetworkLogic::GetPlayerIdByCurrentTurn()
 {
-	int turnIdx = m_networkGameData[SizeType(GD_CURRENT_TURN_IDX)].GetInt();
+	int turnIdx = (*m_NetworkGameData)[SizeType(GD_CURRENT_TURN_IDX)].GetInt();
 
-	return m_networkGameData[SizeType(GD_TURN_LIST)][SizeType(turnIdx)].GetInt();
+	return (*m_NetworkGameData)[SizeType(GD_TURN_LIST)][SizeType(turnIdx)].GetInt();
 }
 
 int CNetworkLogic::GetTileAnimationTurn(IndexedPosition indexedPosition)
 {
-	return m_networkGameData[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_ANIMATION_TURN)].GetInt();
+	return (*m_NetworkGameData)[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_ANIMATION_TURN)].GetInt();
 }
 
 void CNetworkLogic::Login()
@@ -433,6 +429,8 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		return;
 	}
 
+	rapidjson::Document* gameData = CNetworkLogic::GetInstance()->GetGameData();
+
 	int statusCode = response->getResponseCode();
 	if (!response->isSucceed() ) 
 	{
@@ -479,8 +477,8 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 	}
 	else if (strcmp(response->getHttpRequest()->getTag(), "POST getInitializedGameData") == 0)
 	{
-		//CNetworkLogic::GetInstance()->m_networkGameData->Clear();
-		CNetworkLogic::GetInstance()->m_networkGameData->Parse<0>(stringData.c_str() );
+		//CNetworkLogic::GetInstance()->m_NetworkGameData->Clear();
+		gameData->Parse<0>(stringData.c_str() );
 		
 		CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
 		CGameManager::GetInstance()->SetUpdateFlag(true);
@@ -495,10 +493,10 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		else
 		{
 			// gameData에 있는 자료를 매니저가 가진 자료에 업데이트해주자
-			if (m_networkGameData != nullptr)
+			if (m_NetworkGameData != nullptr)
 			{
-				//CNetworkLogic::GetInstance()->m_networkGameData->Clear();
-				CNetworkLogic::GetInstance()->m_networkGameData->Parse<0>(stringData.c_str() );
+				//CNetworkLogic::GetInstance()->m_NetworkGameData->Clear();
+				gameData->Parse<0>(stringData.c_str() );
 			}
 
 			CGameManager::GetInstance()->SetUpdateFlag(true);

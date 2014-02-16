@@ -50,7 +50,7 @@ public:
 
 	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
 	
-	rapidjson::Document*	m_networkGameData;
+	rapidjson::Document* GetGameData() { return m_NetworkGameData; }
 
 	void test();
 
@@ -60,6 +60,8 @@ private:
 	static CNetworkLogic*	m_pInstance; //singleton instance
 	
 	// network game data
+	rapidjson::Document*	m_NetworkGameData;
+
 	std::string				m_ServerAddr;
 	
 	cocos2d::extension::CCHttpRequest*			m_Request;
