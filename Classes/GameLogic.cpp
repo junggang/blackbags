@@ -796,9 +796,32 @@ bool CGameLogic::EventHandle(IndexedPosition indexedPosition)
 		int i = 0;
 		while (m_ClosedTile[i].m_PosI != 0 && m_ClosedTile[i].m_PosJ != 0 )
 		{
+			MO_OWNER currentId = (MO_OWNER)GetPlayerIdByTurn(m_currentTurn % m_CurrentPlayerNumber);
 			//본래 타일에 뭐가 있었는지 확인해서 각자 바꿀 것!!
-			m_Map[m_ClosedTile[i].m_PosI][m_ClosedTile[i].m_PosJ].m_Owner = (MO_OWNER)GetPlayerIdByTurn(m_currentTurn % m_CurrentPlayerNumber);
+			m_Map[m_ClosedTile[i].m_PosI][m_ClosedTile[i].m_PosJ].m_Owner = currentId;
 			--m_VoidTileCount;
+
+			//점수 추가 해 줄 것
+			int score = 0;
+			switch (m_Map[m_ClosedTile[i].m_PosI][m_ClosedTile[i].m_PosJ].m_Item)
+			{
+			case ITEM_NOTHING:
+				score = SC_RT_SCORE_TILE;
+				UpdatePlayerResult(currentId,ITEM_NOTHING);
+				break;
+			case ITEM_GOLD:
+				score = SC_RT_SCORE_GOLD;
+				UpdatePlayerResult(currentId,ITEM_GOLD);
+				break;
+			case ITEM_TRASH:
+				score = SC_RT_SCORE_TRASH;
+				UpdatePlayerResult(currentId,ITEM_TRASH);
+				break;
+			default:
+				break;
+			}
+			UpdatePlayerScore(currentId,score);
+
 			i++;
 		}
 	}
