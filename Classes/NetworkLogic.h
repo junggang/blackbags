@@ -19,7 +19,8 @@ public:
 	void SetCurrentNetworkPhase(NetworkPhase phase) { m_CurrentPhase = phase; }
 	NetworkPhase GetCurrentNetworkPhase();
 
-	const std::string&		GetPlayerName(int playerIdx);
+	const std::string&	GetPlayerName(int playerIdx);
+	void				GetPlayerName(std::string name, int playerIdx) { m_PlayerNameList[playerIdx] = name; }
 	int					GetCurrentPlayerNumber();
 	int					GetPlayerResult(int playerIdx, MO_ITEM item);
 	int					GetPlayerTotalScore(int playerIdx);

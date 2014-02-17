@@ -488,7 +488,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		// name check
 		for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 		{
-			m_PlayerNameList[i] = (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(i)][SizeType(GDP_NAME)].GetString();
+			CNetworkLogic::GetInstance()->GetPlayerName( (*gameData)[SizeType(GD_PLAYER_LIST)][SizeType(i)][SizeType(GDP_NAME)].GetString(), i);
 		}
 		
 		CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
