@@ -26,6 +26,11 @@ CNetworkLogic::CNetworkLogic(void)
 	m_FourFlag = false;
 
 	m_CurrentPhase = NP_NOTHING;
+
+	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	{
+		m_PlayerNameList[i] = "";
+	}
 }
 
 
@@ -86,10 +91,9 @@ void CNetworkLogic::GetNetworkInfo()
 	m_FourFlag = CGameManager::GetInstance()->GetPlayerNumberSelection(4);
 }
 
-std::string CNetworkLogic::GetPlayerName(int playerIdx)
+const std::string& CNetworkLogic::GetPlayerName(int playerIdx)
 {
-	std::string tempString = (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_NAME)].GetString();
-	return tempString;
+	return m_PlayerNameList[playerIdx];
 }
 
 int CNetworkLogic::GetCurrentPlayerNumber()
@@ -480,6 +484,12 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 	{
 		//CNetworkLogic::GetInstance()->m_NetworkGameData->Clear();
 		gameData->Parse<0>(stringData.c_str() );
+
+		// name check
+		for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+		{
+			m_PlayerNameList[i] = (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(i)][SizeType(GDP_NAME)].GetString();
+		}
 		
 		CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
 		CGameManager::GetInstance()->SetUpdateFlag(true);

@@ -3,6 +3,7 @@
 #include "cocos-ext.h"
 #include "rapidjson/document.h"
 #include "config.h"
+#include <array>
 
 class CNetworkLogic
 {
@@ -18,7 +19,7 @@ public:
 	void SetCurrentNetworkPhase(NetworkPhase phase) { m_CurrentPhase = phase; }
 	NetworkPhase GetCurrentNetworkPhase();
 
-	std::string			GetPlayerName(int playerIdx);
+	const std::string&		GetPlayerName(int playerIdx);
 	int					GetCurrentPlayerNumber();
 	int					GetPlayerResult(int playerIdx, MO_ITEM item);
 	int					GetPlayerTotalScore(int playerIdx);
@@ -76,5 +77,7 @@ private:
 	bool					m_TwoFlag;
 	bool					m_ThreeFlag;
 	bool					m_FourFlag;
+
+	std::array<std::string, MAX_PLAYER_NUM> m_PlayerNameList;
 };
 
