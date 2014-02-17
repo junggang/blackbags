@@ -10,6 +10,7 @@ PD_PLAYER_ID = 3
 PD_PLAYER_2 = 4
 PD_PLAYER_3 = 5
 PD_PLAYER_4 = 6
+PD_TIMESTAMP = 7
 
 # game data index
 GD_CURRENT_SCENE = 0
@@ -109,7 +110,8 @@ class PlayerData:
 			-1,			# PD_PLAYER_ID
 			0,			# PD_PLAYER_2
 			0,			# PD_PLAYER_3
-			0 			# PD_PLAYER_4
+			0, 			# PD_PLAYER_4
+			0 			# PD_TIMESTAMP
 		]
 
 	# get / set functions
@@ -127,6 +129,12 @@ class PlayerData:
 
 	def setPlayerId(self, playerId):
 		self.data[PD_PLAYER_ID] = playerId
+
+	def setTimestamp(self, time):
+		self.data[PD_TIMESTAMP] = time
+
+	def getTimestamp(self):
+		return self.data[PD_TIMESTAMP]
 
 	# 참여하고 싶은 game channel의 플레이 인원을 get / set
 	def setPlayerNumber(self, two, three, four):
@@ -215,6 +223,9 @@ class GameData:
 	def isChannelMaster(self, playerId):
 		return self.data[GD_PLAYER_LIST][playerId][GDP_MASTER_FLAG]
 
+	def getCurrentPlayerNumber(self):
+		return self.data[GD_PLAYER_NUMBER]
+
 	# player 관련 get functions
 	def getPlayerName(self, idx):
 		return self.data[GD_PLAYER_LIST][idx][GDP_NAME]
@@ -248,6 +259,11 @@ class GameData:
 				return idx
 
 		return -1
+
+	def removePlayer(self, playerIdx):
+		# 참여 인원 1명 감소 
+		self.data[GD_PLAYER_NUMBER] -= 1
+		self.data[GD_PLAYER_LIST][idx][GDP_CONNECTED_FLAG] = False
 
 	def setUpdateFlag(self):
 		for each in self.data[GD_PLAYER_LIST]:
@@ -567,8 +583,13 @@ class GameData:
 		if self.isEnd():
 			self.updateResult()
 		else:
-			self.data[GD_CURRENT_TURN_IDX] += 1
-			self.data[GD_CURRENT_TURN_IDX] %= self.data[GD_PLAYER_NUMBER]
+			while True:
+				self.data[GD_CURRENT_TURN_IDX] += 1
+				self.data[GD_CURRENT_TURN_IDX] %= self.data[GD_PLAYER_NUMBER]
+
+				# 중간에 나간 플레이어가 있을 수도 있으므로 접속 상태를 확인해서 접속이 끊어졌다면 다음 차례로 넘어감
+				if self.data[GD_PLAYER_LIST][self.data[GD_CURRENT_TURN_IDX]][GDP_CONNECTED_FLAG]:
+					break
 
 		self.setUpdateFlag();
 

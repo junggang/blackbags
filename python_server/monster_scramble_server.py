@@ -6,9 +6,14 @@ import dataStructure
 import threading
 import time
 import sys
+import random
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
+
+global watingList
+global timerThreadList
+global cleanupTimer
 
 #################################################
 #				matching thread 관련				#
@@ -16,8 +21,6 @@ sys.setdefaultencoding('utf-8')
 # 대기 리스트를 하나 만든다 (공유자원 - 동기화 기능을 지원하는 자료구조이어야 함)
 # 리스트는 redis안에 저장된 player data에 접근하는 key value를 가지고 있다
 # 리스트의 값들은 추가된 순서를 유지한다
-global watingList
-global timerThreadList
 
 def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
 	if playerData.getPlayerNumber(playerNumber) == 1:
@@ -25,7 +28,7 @@ def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
 
 		if len(playerPool) == playerNumber:
 			# channel id 생성하는 로직 구현 필요 
-			channelId = 123
+			channelId = getNewChannelId
 
 			gameData = dataStructure.GameData()
 			gameData.initData(channelId)
@@ -52,6 +55,9 @@ def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
 
 
 def playerMatching():
+	# matching thread는 서버가 시작되면 같이 실행된다.
+	# 리스트에 있는 사람들이 바뀔 때마다 현재 리스트에 있는 사람들을 가지고 게임 채널 생성하고 채널 테이블을 레디스에 생성
+
 	player_2 = []
 	player_3 = []
 	player_4 = []
@@ -59,6 +65,12 @@ def playerMatching():
 	# channel id 생성하는 로직 구현 필요 
 	channelId = 0
 
+	# while True:
+	# 	각 참여 인원에 대한 가상의 풀을 만든다
+	# 	대기 시간이 긴 플레이어부터 선택한 참여 인원의 풀에 추가
+	#	추가와 함께 해당하는 참여인원이 모두 모이면 추가된 플레이어들로 채널 생성
+	#	앞에서 생성된 채널에 추가된 플레이어는 리스트에서 삭제하고 다시 작업을 반복
+	#	대기 시간은 1초에서 2초 정도 준다
 	while True:
 		for each in watingList:
 			playerData = getPlayerData(each)
@@ -79,15 +91,42 @@ def playerMatching():
 		# 슬립 1초가 있으면 아무리 사람이 많아도 1초에 채널 1개씩밖에 생성 안 된다
 		time.sleep(1)
 
-# while True:
-# 	각 참여 인원에 대한 가상의 풀을 만든다
-# 	대기 시간이 긴 플레이어부터 선택한 참여 인원의 풀에 추가
-#	추가와 함께 해당하는 참여인원이 모두 모이면 추가된 플레이어들로 채널 생성
-#	앞에서 생성된 채널에 추가된 플레이어는 리스트에서 삭제하고 다시 작업을 반복
-#	대기 시간은 1초에서 2초 정도 준다
+def getNewChannelId():
+	newChannelId = 0
 
-# matching thread는 서버가 시작되면 같이 실행된다.
-# 리스트에 있는 사람들이 바뀔 때마다 현재 리스트에 있는 사람들을 가지고 게임 채널 생성하고 채널 테이블을 레디스에 생성
+	while True:
+		newChannelId = random.randint(1, 1024)
+		
+		if gRedis.get(newChannelId) == None:
+			return newChannelId
+
+
+
+#################################################
+#				cleanup thread 관련				#
+#################################################
+# 주기적으로 실행돼서 오랫동안 응답이 없는 플레이어는 redis 안에서 삭제
+def cleanup():
+	print '***START CLEANUP***'
+	
+	# redis에서 key목록 가져오기
+	keys = gRedis.keys('*')
+
+	for key in keys:
+		keyType = redis.type(key)
+		if keyType == KV:
+			if not type(key) is int:
+				# key가 key-value의 형식이고 그 자료형이 int가 아니면 플레이어 데이터에 대한 접근 키
+				data = json.loads(gRedis.get(key) )
+
+				# getPlayerData에서 자동으로 timestamp값을 업데이트 하므로 여기서는 사용할 수 없음
+				# PD_TIMESTAMP = 7
+				if time.time() - data[7] > 600:
+					# 응답시간이 600 이상이면 삭제
+					gRedis.delete(key)
+
+	# 다음 cleanup을 위해서 스레드 새로 시작 
+	startCleanupTimer()
 
 
 
@@ -113,6 +152,12 @@ def randomTimer(gameChannelId):
 		timerThreadList[gameChannelId].start()
 
 
+def startCleanupTimer():
+	# 처음엔 없으니까 리스트 안에 값 있는지 확인 필요
+	cleanupTimer = threading.Timer(600, cleanup,)
+	cleanupTimer.start()
+
+
 
 #################################################
 #				gameLogic 관련					#
@@ -123,6 +168,11 @@ def randomTimer(gameChannelId):
 def getPlayerData(tokenId):
 	playerData = dataStructure.PlayerData()
 	playerData.insertData(json.loads(gRedis.get(tokenId)))
+
+	# timestamp 기능 (응답없는 플레이어 정보를 주기적으로 없애기 위해서)
+	playerData.setTimestamp(time.time())
+	jsonData = json.dumps(playerData.data)
+	gRedis.set(tokenId, jsonData)
 
 	return playerData
 
@@ -299,8 +349,9 @@ app = Flask(__name__)
 def login():
 	try : 
 		if request.method  == "POST":  
-			# userTable에 접속한 사람을 추가한다
-			print request
+			if not gRedis.get(tokenId) == None:
+				# 이미 중복된 키가 있을 경우에 대한 처리가 필요하면 추가할 것
+				pass
 
 			tokenId = request.form['tokenId']
 			name = request.form['name']
@@ -323,6 +374,41 @@ def login():
 			print tokenId
 			
 			return 'login' 
+
+	except KeyError, err:
+		print 'error  ->  : ' ,err 
+		return '서버에서 알 수 없는 요청데이터가 있습니다.(잘못된 요청일 수도 있고요)\n'
+
+
+@app.route('/logout', methods=['POST','GET'])
+def logout():
+	try : 
+		if request.method  == "POST":
+			tokenId = request.form['tokenId']
+
+			playerData = getPlayerData(tokenId)
+			channelId = playerData.getPlayerGameChannel()
+
+			if channelId == -1:
+				# 게임 중 아니면 대기 리스트에서 삭제
+				watingList.remove(tokenId)
+			else:
+				# 게임 중이면 게임 채널에서 삭제
+				gameData = getGameData(channelId)
+				gameData.removePlayer(playerData.getPlayerId())
+
+				if gameData.getCurrentPlayerNumber() == 0:
+					# 채널이 비었으면 관련 스레드 삭제
+					if gameChannelId in timerThreadList:
+						del timerThreadList[gameChannelId]
+
+					# redis에서 채널 삭제 
+					gRedis.delete(channelId)
+
+			# redis에서 플레이 삭제
+			gRedis.delete(tokenId)
+			
+			return 'logout' 
 
 	except KeyError, err:
 		print 'error  ->  : ' ,err 
@@ -514,13 +600,28 @@ def gameEnd():
 		if request.method  == "POST":  
 			tokenId = request.form['tokenId']
 
-			# session.pop('username', None) # logout!
+			playerData = getPlayerData(tokenId)
+			channelId = playerData.getPlayerGameChannel()
+
+			# 게임 채널에서 삭제
+			gameData = getGameData(channelId)
+			gameData.removePlayer(playerData.getPlayerId())
+
+			if gameData.getCurrentPlayerNumber() == 0:
+				# 채널이 비었으면 관련 타이머 스레드 삭제
+				if gameChannelId in timerThreadList:
+					del timerThreadList[gameChannelId]
+
+				# redis에서 채널 삭제 
+				gRedis.delete(channelId)
+
+			# redis에서 플레이어 삭제
+			gRedis.delete(tokenId)
 			return
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
 		print 'error  ->  : ' ,err 
 		return 'error code'
-
 
 
 if __name__ == '__main__':
@@ -532,33 +633,7 @@ if __name__ == '__main__':
 	matchingThread = threading.Thread(target=playerMatching)
 	matchingThread.start()
 
-	'''
-	time.sleep(5)
-	print 'prof. moon'
-	playerData = dataStructure.PlayerData()
-	playerData.initData(29, 'prof. moon')
-	playerData.setPlayerNumber(0, 1, 1)
-
-	# 생성한 데이터 redis에 저장 
-	jsonData = json.dumps(playerData.data)
-	gRedis.set(29, jsonData)
-
-	# 대기열에 추가
-	watingList.append(29)
-
-	time.sleep(5)
-	print 'JUNGGANG'
-	playerData = dataStructure.PlayerData()
-	playerData.initData(67, 'JUNGGANG')
-	playerData.setPlayerNumber(0, 1, 1)
-
-	# 생성한 데이터 redis에 저장 
-	jsonData = json.dumps(playerData.data)
-	gRedis.set(67, jsonData)
-
-	# 대기열에 추가
-	watingList.append(67)
-	'''
+	startCleanupTimer()
 
 	app.debug = True
 	app.secret_key = '\xab\x11\xcb\xdb\xf2\xb9\x0e\xd9N\xbd\x17$\x07\xc9H\x19\x96h\x8a\xf2<`-A'
