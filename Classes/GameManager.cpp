@@ -654,3 +654,8 @@ bool CGameManager::IsAllReady()
 {
 	return CNetworkLogic::GetInstance()->IsAllReady();
 }
+
+int CGameManager::GetMyPlayerId()
+{
+	return CNetworkLogic::GetInstance()->GetMyPlayerId();
+}

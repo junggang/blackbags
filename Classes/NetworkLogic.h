@@ -21,6 +21,7 @@ public:
 
 	const std::string&	GetPlayerName(int playerIdx);
 	void				GetPlayerName(std::string name, int playerIdx) { m_PlayerNameList[playerIdx] = name; }
+	int					GetMyPlayerId() { return m_MyPlayerId; }
 	int					GetCurrentPlayerNumber();
 	int					GetPlayerResult(int playerIdx, MO_ITEM item);
 	int					GetPlayerTotalScore(int playerIdx);

@@ -101,6 +101,7 @@ public:
 	std::string GetUsersName();
 	std::string GetTokenId();
 	bool		GetPlayerNumberSelection(int number);
+	int			GetMyPlayerId();
 
 	void SetUsersName(std::string name);
 	void SetTokenId(std::string tokenId);
