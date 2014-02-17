@@ -20,7 +20,7 @@ bool CStartAndHelpButtonLayer::init()
 
 	//// start Button
 	//// 조심해!! 지금 내가 방장인지 아닌지 여부를 같이 확인해야 해!
-	if ( CGameManager::GetInstance()->IsOnlineMode() /*&& CGameManager::GetInstance()-> */ )
+	if ( CGameManager::GetInstance()->IsOnlineMode() && !CGameManager::GetInstance()->IsChannelMaster() )
 	{
 		m_StartButton = CCMenuItemImage::create(
 			"image/SETTING_ready_unselected.png",
@@ -72,12 +72,25 @@ bool CStartAndHelpButtonLayer::init()
 
 void CStartAndHelpButtonLayer::StartButtonCallBack( CCObject* pSender )
 {
-	CGameManager::GetInstance()->StartGame();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
+	CGameManager::GetInstance()->StartGame();
 	CCScene* newScene = CPlayScene::create();
 	CCDirector::sharedDirector()->replaceScene( CCTransitionFade::create(0.5, newScene) );
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	//exit(0);
+#endif
+#endif
+}
+
+void CStartAndHelpButtonLayer::ReadyButtonCallBack( CCObject* pSender )
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
+#else
+	// 서버로 레디 신호를 보낸다.
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	//exit(0);
 #endif
@@ -106,12 +119,30 @@ void CStartAndHelpButtonLayer::HelpButtonCallBack( CCObject* pSender )
 
 void CStartAndHelpButtonLayer::update()
 {
-	if ( CGameManager::GetInstance()->GetCurrentPlayerNumber() == CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
+	// Online :: StartButton Condition
+	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{
-		m_StartButton->setEnabled(true);
+		// 내가 방장이고 모두가 Ready 했을 때 StartButton을 활성화 시킨다.
+		if ( CGameManager::GetInstance()->IsChannelMaster() && 
+			CGameManager::GetInstance()->IsAllReady() )
+		{
+			m_StartButton->setEnabled(true);
+		}
+		else
+		{
+			m_StartButton->setEnabled(false);
+		}
 	}
+	// Single :: StartButton Condition
 	else
 	{
-		m_StartButton->setEnabled(false);
+		if ( CGameManager::GetInstance()->GetCurrentPlayerNumber() == CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
+		{
+			m_StartButton->setEnabled(true);
+		}
+		else
+		{
+			m_StartButton->setEnabled(false);
+		}
 	}
 }

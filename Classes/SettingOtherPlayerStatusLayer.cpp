@@ -65,7 +65,12 @@ void CSettingOtherPlayerStatusLayer::update()
 		int characterId = CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId);
 		if ( characterId != -1 ) // selected
 		{
+			// create selected face
 			CCSprite* pSelectedFace = CCSprite::create( CGameManager::GetInstance()->GetCharacterResultFaceFileName(playerId).c_str() );
+			// set position
+			pSelectedFace->setPosition( ccp(pSelectedFace->getContentSize().width / 2,
+				pSelectedFace->getContentSize().height / 2) );
+			
 			pSelectedFace->setTag(CURRENT_FACE_TAG);
 
 			m_PlayerStatusFrame[playerId]->removeChildByTag(CURRENT_FACE_TAG);
@@ -127,7 +132,7 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		pEditName->setPosition( ccp(m_PlayerStatusFrame[i]->getContentSize().width - pEditName->getContentSize().width / 2,
 									pEditName->getContentSize().height / 2) );
 		pEditName->setFontColor( ccYELLOW );
-		pEditName->setFontSize( 1 );
+		pEditName->setFont("Helvetica", 30);
 		pEditName->setMaxLength( 12 );
 		pEditName->setPlaceholderFontSize( 1 );
 		pEditName->setPlaceHolder( CGameManager::GetInstance()->GetPlayerName(i).c_str() );
