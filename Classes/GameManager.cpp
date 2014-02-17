@@ -639,3 +639,18 @@ bool CGameManager::IsPlayerJoinedGame( int characterId )
 		return CGameLogic::GetInstance()->IsPlayerJoinedGame(characterId);
 	}
 }
+
+bool CGameManager::IsChannelMaster()
+{
+	return CNetworkLogic::GetInstance()->IsChannelMaster();
+}
+
+bool CGameManager::IsReady()
+{
+	return CNetworkLogic::GetInstance()->IsReady();
+}
+
+bool CGameManager::IsAllReady()
+{
+	return CNetworkLogic::GetInstance()->IsAllReady();
+}

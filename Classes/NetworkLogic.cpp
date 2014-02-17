@@ -184,7 +184,7 @@ MO_TYPE CNetworkLogic::IsConnected(IndexedPosition indexedPosition)
 
 int CNetworkLogic::GetPlayerTurnById(int playerId)
 {
-	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(GDP_TURN)].GetInt();
+	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerId)][SizeType(GDP_TURN)].GetInt();
 }
 
 int CNetworkLogic::GetPlayerIdByCurrentTurn()
@@ -197,6 +197,34 @@ int CNetworkLogic::GetPlayerIdByCurrentTurn()
 int CNetworkLogic::GetTileAnimationTurn(IndexedPosition indexedPosition)
 {
 	return (*m_NetworkGameData)[SizeType(GD_MAP)][SizeType(indexedPosition.m_PosI)][SizeType(indexedPosition.m_PosJ)][SizeType(GDM_ANIMATION_TURN)].GetInt();
+}
+
+bool CNetworkLogic::IsChannelMaster()
+{
+	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(m_MyPlayerId)][SizeType(GDP_MASTER_FLAG)].GetBool();
+}
+
+bool CNetworkLogic::IsReady()
+{
+	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(m_MyPlayerId)][SizeType(GDP_READY)].GetBool();
+}
+
+bool CNetworkLogic::IsAllReady()
+{
+	int readyCount = 0;
+
+	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	{
+		// 방장인 아닌데 레디인 상태이면 
+		if ( !(*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(i)][SizeType(GDP_MASTER_FLAG)].GetBool() 
+			&& (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(i)][SizeType(GDP_READY)].GetBool() )
+		{
+			// 카운트 증가
+			++readyCount;
+		}
+	}
+
+	return (readyCount == GetCurrentPlayerNumber() - 1);
 }
 
 void CNetworkLogic::Login()

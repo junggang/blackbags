@@ -106,6 +106,10 @@ public:
 	void SetTokenId(std::string tokenId);
 	void SetPlayerNumberSelection(int number, bool selection);
 
+	bool IsChannelMaster();
+	bool IsReady();
+	bool IsAllReady();
+
 private:
 	static CGameManager*	m_pInstance; //singleton instance
 

@@ -85,7 +85,7 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 	{
 		return;
 	}
-
+	
 	// 방어코드 Single : 현재 게임의 최대 사용자 수보다 캐릭터를 많이 고를 수 없다.
  	if ( !CGameManager::GetInstance()->IsOnlineMode() &&
 		CGameManager::GetInstance()->GetCurrentPlayerNumber() >= CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
@@ -96,7 +96,7 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 			return;
 		}
  	}
-
+	
 	CGameManager::GetInstance()->SelectCharacter(selectedCharacterId);
 	
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

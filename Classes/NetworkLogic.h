@@ -38,6 +38,13 @@ public:
 	int					GetPlayerIdByCurrentTurn();
 	int					GetTileAnimationTurn(IndexedPosition indexedPosition);
 
+	// 내가 방장?
+	bool IsChannelMaster(); 
+	// 본인이 레디?
+	bool IsReady();
+	// 나머지 다 레디?
+	bool IsAllReady();
+
 	// request functions
 	void Login();
 	void SelectCharacter(int characterId);
