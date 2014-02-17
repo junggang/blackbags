@@ -86,8 +86,9 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 		return;
 	}
 
-	// 방어코드 : 현재 게임의 최대 사용자 수보다 캐릭터를 많이 고를 수 없다.
- 	if ( CGameManager::GetInstance()->GetCurrentPlayerNumber() >= CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
+	// 방어코드 Single : 현재 게임의 최대 사용자 수보다 캐릭터를 많이 고를 수 없다.
+ 	if ( !CGameManager::GetInstance()->IsOnlineMode() &&
+		CGameManager::GetInstance()->GetCurrentPlayerNumber() >= CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
  	{
 		// 캐릭터 취소는 가능해야 하므로 선택되지 않은 캐릭터를 고르려고 하면 그냥 리턴시켜버린다
 		if ( !CGameManager::GetInstance()->IsCharacterSelected(selectedCharacterId) )
