@@ -38,9 +38,9 @@ bool CGameManager::init()
 	// 만약 현재 저장 된 게임데이터가 없으면 초기값으로 설정해서 생성한다.
 	if (!m_GameData->getBoolForKey("initialized") )
 	{
-		m_GameData->setStringForKey("tokenId", "token wooq");
+		m_GameData->setStringForKey("tokenId", "token moon");
 
-		m_GameData->setStringForKey("usersName", "wooq");
+		m_GameData->setStringForKey("usersName", "moon");
 
 		m_GameData->setBoolForKey("two", true);
 		m_GameData->setBoolForKey("three", true);
