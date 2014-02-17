@@ -514,7 +514,7 @@ bool CGameLogic::StartGame()
 	srand( static_cast<unsigned int>(time(NULL)) );
 	std::random_shuffle(tempTurn.begin(), tempTurn.end());
 
-	PlayerData* current;
+	//PlayerData* current;
 	int tempT = 0;
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
@@ -527,7 +527,7 @@ bool CGameLogic::StartGame()
 		m_PlayerData[i]->m_PlayerTurn = tempTurn[tempT];
 
 		if (tempTurn[tempT] == 0)
-			current = m_PlayerData[i];
+			m_FirstPlayer = m_PlayerData[i];
 
 		++tempT;
 	}
@@ -538,13 +538,13 @@ bool CGameLogic::StartGame()
 	//다시 반복
 
 	//이제 링크드 리스트를 만들어주자!
-	m_FirstPlayer = current;
+	//m_FirstPlayer = current;
 
-	for (int i = 0; i < m_CurrentPlayerNumber; i++)
+	for (int i = 0; i < m_CurrentPlayerNumber; ++i)
 	{
 		for (int j = 0; j < m_CurrentPlayerNumber; ++j)
 		{
-			if (m_PlayerData[i]->m_PlayerTurn+1 == m_PlayerData[j]->m_PlayerTurn)
+			if (m_PlayerData[i]->m_PlayerTurn + 1 == m_PlayerData[j]->m_PlayerTurn)
 				m_PlayerData[i]->m_nextPlayer = m_PlayerData[j];
 		}
 

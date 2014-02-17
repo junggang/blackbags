@@ -17,7 +17,7 @@ CNetworkLogic::CNetworkLogic(void)
 	m_TokenId = "";
 	m_UserName = "";
 
-	m_ServerAddr = "http://10.73.38.158:5000";
+	m_ServerAddr = "http://10.73.43.187:5000";
 
 	m_MyPlayerId = -1;
 
@@ -88,7 +88,8 @@ void CNetworkLogic::GetNetworkInfo()
 
 std::string CNetworkLogic::GetPlayerName(int playerIdx)
 {
-	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_NAME)].GetString();
+	std::string tempString = (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerIdx)][SizeType(GDP_NAME)].GetString();
+	return tempString;
 }
 
 int CNetworkLogic::GetCurrentPlayerNumber()
