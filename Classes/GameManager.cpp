@@ -488,6 +488,21 @@ void CGameManager::SetOnlineMode(bool flag)
 	}
 }
 
+SceneName CGameManager::GetCurrentScene()
+{
+	if (m_IsOnlineGame)
+	{
+		// Logic
+		// 조심해!! Single과 같은 로직으로 만들어뒀어!
+		return CNetworkLogic::GetInstance()->GetCurrentScene();
+	}
+	else
+	{
+		// 쓸 일은 없음
+		return SC_MAIN;
+	}
+}
+
 NetworkPhase CGameManager::GetCurrentNetworkPhase()
 {
 	return CNetworkLogic::GetInstance()->GetCurrentNetworkPhase();
@@ -501,6 +516,11 @@ bool CGameManager::InitNetworkLogic()
 void CGameManager::Login()
 {
 	CNetworkLogic::GetInstance()->Login();
+}
+
+void CGameManager::Logout()
+{
+	CNetworkLogic::GetInstance()->Logout();
 }
 
 void CGameManager::JoinUpdate(float dt)

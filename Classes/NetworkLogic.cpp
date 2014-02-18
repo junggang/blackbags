@@ -65,9 +65,9 @@ bool CNetworkLogic::Init()
 	return true;
 }
 
-void CNetworkLogic::test()
+SceneName CNetworkLogic::GetCurrentScene()
 {
-	CCLOG("test");
+	return static_cast<SceneName>( (*m_NetworkGameData)[SizeType(GD_CURRENT_SCENE)].GetInt() );
 }
 
 NetworkPhase CNetworkLogic::GetCurrentNetworkPhase() 
@@ -262,6 +262,32 @@ void CNetworkLogic::Login()
 	m_Request->setRequestData(postData.c_str(), postData.length() );
 
 	m_Request->setTag("POST login");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
+}
+
+void CNetworkLogic::Logout()
+{
+	// make http request
+	m_Request = new CCHttpRequest();
+
+	// 요청 보낼 데이터를 최신 상태로 업데이트
+	GetNetworkInfo();
+
+	std::string url = m_ServerAddr;
+	url.append("/logout");
+
+	m_Request->setUrl(url.c_str() );
+	m_Request->setRequestType(CCHttpRequest::kHttpPost);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
+
+	// write the post data
+	std::string postData  = "tokenId=";
+	postData.append(m_TokenId);
+
+	m_Request->setRequestData(postData.c_str(), postData.length() );
+
+	m_Request->setTag("POST logout");
 	CCHttpClient::getInstance()->send(m_Request);
 	m_Request->release();
 }
@@ -496,6 +522,13 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			// return to main menu
 			CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_NOTHING);
 			CGameManager::GetInstance()->SetUpdateFlag(true);
+		}
+	}
+	else if (strcmp(response->getHttpRequest()->getTag(), "POST logout") == 0)
+	{
+		if (strcmp(stringData.c_str(), "logout") == 0)
+		{
+			// logout할 때 networkLogic에서 처리 할 일 있으면 추가
 		}
 	}
 	else if (strcmp(response->getHttpRequest()->getTag(), "POST joinUpdate") == 0)

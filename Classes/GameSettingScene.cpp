@@ -1,6 +1,7 @@
-#include "MainScene.h"
-#include "BackgroundLayer.h"
 #include "GameSettingScene.h"
+#include "MainScene.h"
+#include "PlayScene.h"
+#include "BackgroundLayer.h"
 #include "SettingFirstStepLayer.h"
 #include "SettingSecondStepLayer.h"
 #include "WaitingChannelId.h"
@@ -55,6 +56,13 @@ void CGameSettingScene::update(float dt)
 
 	if ( !CGameManager::GetInstance()->IsUpdated() )
 	{
+		return;
+	}
+
+	if ( CGameManager::GetInstance()->GetCurrentScene() == SC_PLAY)
+	{
+		CCScene* newScene = CPlayScene::create();
+		CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 		return;
 	}
 

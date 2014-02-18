@@ -25,9 +25,10 @@ public:
 	bool IsOnlineMode() { return m_IsOnlineGame; }
 
 	//게임의 현재 상황을 알아보는 함수
-	void SetUpdateFlag(bool flag)	{ m_IsUpdated = flag; }
-	bool IsUpdated()				{ return m_IsUpdated; }
-	bool IsEnd();
+	SceneName	GetCurrentScene();
+	void		SetUpdateFlag(bool flag)	{ m_IsUpdated = flag; }
+	bool		IsUpdated()				{ return m_IsUpdated; }
+	bool		IsEnd();
 
 	/* 게임 셋팅 관련 */
 	// 플레이어 숫자와 맵 크기를 골랐는지 여부를 판단, NEXT 버튼을 눌렀는지 판단
@@ -90,6 +91,7 @@ public:
 	bool InitNetworkLogic();
 
 	void Login();
+	void Logout();
 
 	void JoinUpdate(float dt);
 	void PlayUpdate(float dt);

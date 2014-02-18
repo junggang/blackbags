@@ -56,6 +56,9 @@ bool CPlayScene::init(void)
 
 	if (CGameManager::GetInstance()->IsOnlineMode() )
 	{
+		// playScene이 준비되었으므로 준비 되었다는 신호를 서버로 보내고
+		// 앞으로 주기적으로 업데이트 내용을 확인하는 스케줄을 실행
+		CGameManager::GetInstance()->PlayReady();
 		this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
 	}
 
@@ -64,9 +67,11 @@ bool CPlayScene::init(void)
 
 void CPlayScene::update(float dt)
 {
-	//dt는 이전 update 이후 지난 시간
+	if (!CGameManager::GetInstance()->IsUpdated() )
+	{
+		return;
+	}
 
-	
 	//게임 종료 확인
 	if (CGameManager::GetInstance()->IsEnd() && !m_GameEndFlag)
 	{
@@ -75,18 +80,17 @@ void CPlayScene::update(float dt)
 		//종료 메시지 layer를 child로 추가해서 result로 갈 수 있게 한다.
 		CCLayer* endButton = CGameEndLayer::create();
 		this->addChild(endButton, 2);
+
+		if (CGameManager::GetInstance()->IsOnlineMode() )
+		{
+			CGameManager::GetInstance()->Logout();
+		}
 	}
 
-	if (CGameManager::GetInstance()->IsUpdated() )
-	{
-		//여기에 각 레이어들을 업데이트하는 코드를 넣음
-		//각 레이어별로 업데이트 함수 만들어야 함
+	gameBoard->update(dt);
+	player->update(dt);
+	timer->update(dt);
 
-		gameBoard->update(dt);
-		player->update(dt);
-		timer->update(dt);
-
-		//업데이트된 내용을 모두 받아와서 갱신했으므로 flag는 원래대로 false로 만든다
-		CGameManager::GetInstance()->SetUpdateFlag(false);
-	}
+	//업데이트된 내용을 모두 받아와서 갱신했으므로 flag는 원래대로 false로 만든다
+	CGameManager::GetInstance()->SetUpdateFlag(false);
 }

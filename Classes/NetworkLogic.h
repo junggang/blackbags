@@ -19,6 +19,7 @@ public:
 	void SetCurrentNetworkPhase(NetworkPhase phase) { m_CurrentPhase = phase; }
 	NetworkPhase GetCurrentNetworkPhase();
 
+	SceneName			GetCurrentScene();
 	const std::string&	GetPlayerName(int playerIdx);
 	void				GetPlayerName(std::string name, int playerIdx) { m_PlayerNameList[playerIdx] = name; }
 	int					GetMyPlayerId() { return m_MyPlayerId; }
@@ -48,6 +49,7 @@ public:
 
 	// request functions
 	void Login();
+	void Logout();
 	void SelectCharacter(int characterId);
 	void SetMapSize(MapSelect mapSize);
 	void DrawLine(IndexedPosition indexedPosition);
@@ -61,8 +63,6 @@ public:
 	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
 	
 	rapidjson::Document* GetGameData() { return m_NetworkGameData; }
-
-	void test();
 
 private:
 	void GetNetworkInfo();
