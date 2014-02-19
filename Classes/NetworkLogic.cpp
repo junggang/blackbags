@@ -557,6 +557,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 		{
 			CNetworkLogic::GetInstance()->GetPlayerName( (*gameData)[SizeType(GD_PLAYER_LIST)][SizeType(i)][SizeType(GDP_NAME)].GetString(), i);
+			m_CurrentScene = static_cast<SceneName>( (*gameData)[SizeType(GD_CURRENT_SCENE)].GetInt() );
 		}
 		
 		CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
