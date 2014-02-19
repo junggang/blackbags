@@ -85,6 +85,12 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 	{
 		return;
 	}
+
+	// 방어코드 online : Ready 상태에서는 캐릭터 변경 불가
+	if ( CGameManager::GetInstance()->IsOnlineMode() && CGameManager::GetInstance()->IsReady() )
+	{
+		return;
+	}
 	
 	// 방어코드 Single : 현재 게임의 최대 사용자 수보다 캐릭터를 많이 고를 수 없다.
  	if ( !CGameManager::GetInstance()->IsOnlineMode() &&
@@ -109,7 +115,7 @@ void CSettingCharacterLayer::update()
 {
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
-		// 모든 캐릭터를 돌면서 선택된 캐릭터인지 아닌지 지속적으로 확인한다.
+		// 모든 캐릭터를 돌면서 선택된 캐릭터인지 아닌지 확인한다.
 		bool isSelected = CGameManager::GetInstance()->IsCharacterSelected(i);
 
 		CCMenuItemImage* tempButton = static_cast<CCMenuItemImage*>( this->getChildByTag(CHARACTER_TABLE_TAG)->getChildByTag(i) );

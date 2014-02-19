@@ -26,6 +26,9 @@ bool CSettingSecondStepLayer::init()
 	m_OtherPlayerStatusLayer = CSettingOtherPlayerStatusLayer::create();
 	this->addChild(m_OtherPlayerStatusLayer, 1);
 
+	// initial update
+	CGameManager::GetInstance()->SetUpdateFlag(true);
+
 	return true;
 }
 
@@ -39,5 +42,4 @@ void CSettingSecondStepLayer::update( float dt )
 	m_SettingCharacterLayer->update();
 	m_OtherPlayerStatusLayer->update();
 	m_StartAndHelpButtonLayer->update();
-	CGameManager::GetInstance()->SetUpdateFlag(false);
 }

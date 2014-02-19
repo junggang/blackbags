@@ -144,6 +144,15 @@ void CStartAndHelpButtonLayer::update()
 		}
 		else
 		{
+			if ( CGameManager::GetInstance()->IsReady() )
+			{
+				m_StartButton->selected();
+			}
+			else
+			{
+				m_StartButton->unselected();
+			}
+
 			if (CGameManager::GetInstance()->GetCharacterIdByPlayerId( CGameManager::GetInstance()->GetMyPlayerId() ) != -1 )
 			{
 				m_StartButton->setEnabled(true);
