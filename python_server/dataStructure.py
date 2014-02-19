@@ -53,8 +53,8 @@ GDP_UPDATE_FLAG = 11
 
 # game data - map id
 MS_NOT_SELECTED = 0
-MS_6X5 = 1
-MS_8X7 = 2
+MS_5X5 = 1
+MS_8X8 = 2
 
 # map data index
 GDM_TYPE = 0
@@ -80,9 +80,9 @@ OWNER_PLAYER_2 = 2
 OWNER_PLAYER_3 = 3
 
 # map item index
-ITEM_NOTHING = 0
-ITEM_GOLD = 1
-ITEM_TRASH = 2
+ITEM_NOTHING = -1
+ITEM_GOLD = 0
+ITEM_TRASH = 1
 
 # direction index
 DI_UP = 0
@@ -205,12 +205,12 @@ class GameData:
 
 	# 플레이어가 선택한 맵 종료에 따른 크기 설정 (가로 / 세로)
 	def setMapSize(self, mapId):
-		if mapId == MS_6X5:
-			width = 6
+		if mapId == MS_5X5:
+			width = 5
 			height = 5
-		elif mapId == MS_8X7:
+		elif mapId == MS_8X8:
 			width = 8
-			height = 7
+			height = 8
 
 		self.data[GD_MAP_ID] = mapId
 		self.data[GD_VOID_TILE_COUNT] = width * height
@@ -278,15 +278,15 @@ class GameData:
 	# 각각의 플레이어가 game data의 업데이트된 내용을 수신했음을 확인하는 flag설정 
 	# 조심해!! - 둘로 분리하는 것이 나을 듯
 	def changeReadyFlag(self, playerId):
-		if self.data[GD_PLAYER_LIST][playerId][GDP_READY] == 1:
-			self.data[GD_PLAYER_LIST][playerId][GDP_READY] = 0
+		if self.data[GD_PLAYER_LIST][playerId][GDP_READY]:
+			self.data[GD_PLAYER_LIST][playerId][GDP_READY] = False
 		else:
-			self.data[GD_PLAYER_LIST][playerId][GDP_READY] = 1
+			self.data[GD_PLAYER_LIST][playerId][GDP_READY] = True
 
 	# game data에서 업데이트가 발생하면 ready flag를 초기화해서 다시 수신 확인을 받을 수 있도록 설정 
 	def resetReadyFlag(self):
 		for each in self.data[GD_TURN_LIST]:
-			self.data[GD_PLAYER_LIST][each][GDP_READY] = 0
+			self.data[GD_PLAYER_LIST][each][GDP_READY] = False
 
 	# 캐릭터 선택 및 취소에 대한 입력 업데이트 
 	def selectCharacter(self, playerId, characterId):
@@ -308,7 +308,7 @@ class GameData:
 		count = 0
 
 		for each in self.data[GD_PLAYER_LIST]:
-			if each[GDP_READY] == 1:
+			if each[GDP_READY]:
 				count += 1
 
 		if count == self.data[GD_PLAYER_NUMBER]:
@@ -323,6 +323,10 @@ class GameData:
 				self.data[GD_TURN_LIST].append(each[GDP_PLAYER_IDX])
 
 		random.shuffle(self.data[GD_TURN_LIST])
+
+		for each in range(self.data[GD_PLAYER_NUMBER]):
+			tempIdx = self.data[GD_TURN_LIST][each]
+			self.data[GD_PLAYER_LIST][tempIdx][GDP_TURN] = each
 
 	# 게임을 시작할 때 맵을 생성 
 	# 조심해!! - 현재 울타리와 아이템 배치 코드 없음 
@@ -398,7 +402,9 @@ class GameData:
 	# 게임을 시작합니다
 	def startGame(self):
 		self.setScene(SC_PLAY)
+
 		self.makeRandomTurn()
+		self.makeRandomMap()
 
 		self.data[GD_CURRENT_TURN_IDX] = 0
 		self.resetReadyFlag()
@@ -605,10 +611,6 @@ class GameData:
 			else:
 				randomIdxJ = random.randint(0, self.data[GD_MAP_SIZE][0]) * 2
 
-			print 'random line'
-			print randomIdxI
-			print randomIdxJ
-
 			if self.isPossible(randomIdxI, randomIdxJ):
 				return [randomIdxI, randomIdxJ]
 
@@ -694,7 +696,7 @@ if __name__ == '__main__':
 	for each in range(4):
 		if testGameData.getPlayerConnection(each):
 			print "name : %s / score : %d" % (testGameData.getPlayerName(each), testGameData.getPlayerScore(each))
-	testGameData.setMapSize(MS_8X7)
+	testGameData.setMapSize(MS_8X8)
 
 	testGameData.makeRandomTurn()
 	testGameData.makeRandomMap()

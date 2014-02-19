@@ -28,7 +28,7 @@ def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
 
 		if len(playerPool) == playerNumber:
 			# channel id 생성하는 로직 구현 필요 
-			channelId = getNewChannelId
+			channelId = getNewChannelId()
 
 			gameData = dataStructure.GameData()
 			gameData.initData(channelId)
@@ -44,6 +44,11 @@ def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
 
 				# player data 저장
 				gRedis.set(player, json.dumps(playerData.data) )
+
+			if playerNumber == 2:
+				gameData.setMapSize(1) # MS_5X5
+			else:
+				gameData.setMapSize(2) # MS_8X8
 
 			# 생성한 게임 데이터 redis에 저장 
 			jsonData = json.dumps(gameData.data)
@@ -113,7 +118,7 @@ def cleanup():
 	keys = gRedis.keys('*')
 
 	for key in keys:
-		keyType = redis.type(key)
+		keyType = gRedis.type(key)
 		if keyType == KV:
 			if not type(key) is int:
 				# key가 key-value의 형식이고 그 자료형이 int가 아니면 플레이어 데이터에 대한 접근 키
@@ -145,7 +150,7 @@ def randomTimer(gameChannelId):
 	if gameChannelId in timerThreadList:
 		del timerThreadList[gameChannelId]
 
-	gameData = getGameData(channelId)
+	gameData = getGameData(gameChannelId)
 	randomIdx = gameData.makeRandomLine()
 	if gameData.drawLine(randomIdx[0], randomIdx[1]):
 		timerThreadList[gameChannelId] = threading.Timer(21, randomTimer, args=[gameChannelId])
@@ -252,15 +257,22 @@ def SCReady(tokenId):
 	if gameData.isAllReady():
 		gameData.startGame()
 
+		print '*** START ***'
+		print '****GAME*****'
+		print gameData
+
 		# 타이머 시작
-		timerThreadList[gameChannelId] = threading.Timer(21, randomTimer, arg=[gameChannelId])
-		timerThreadList[gameChannelId].start()
+		timerThreadList[channelId] = threading.Timer(21, randomTimer, args=[channelId])
+		timerThreadList[channelId].start()
 
 	# request를 보낸 클라이언트는 바로 응답을 받으므로 update flag를 false로 바꿔준다
+	gameData.setUpdateFlag()
 	gameData.setPlayerUpdateFlag(playerId, False)
 
 	jsonData = json.dumps(gameData.data)
 	gRedis.set(channelId, jsonData)
+
+	print jsonData
 
 	return jsonData
 
@@ -282,10 +294,11 @@ def PCReady(tokenId):
 		gameData.startTurn()
 
 		# 타이머 시작
-		timerThreadList[gameChannelId] = threading.Timer(21, randomTimer, arg=[gameChannelId])
-		timerThreadList[gameChannelId].start()
+		timerThreadList[channelId] = threading.Timer(21, randomTimer, args=[channelId])
+		timerThreadList[channelId].start()
 
 	# request를 보낸 클라이언트는 바로 응답을 받으므로 update flag를 false로 바꿔준다
+	gameData.setUpdateFlag()
 	gameData.setPlayerUpdateFlag(playerId, False)
 
 	jsonData = json.dumps(gameData.data)
@@ -303,8 +316,10 @@ def PCDrawLine(tokenId, lineIdx):
 	# update 적용하기 위한 타겟 game data 불러오기 
 	gameData = getGameData(channelId)
 
-	if gameData.getCurrentTurnId == playerId:
+	if gameData.getCurrentTurnId() == playerId:
+		print 'turn OK!'
 		if gameData.drawLine(lineIdx[0], lineIdx[1]):
+			print 'it\'s possible'
 			# request를 보낸 클라이언트는 바로 응답을 받으므로 update flag를 false로 바꿔준다
 			gameData.setPlayerUpdateFlag(playerId, False)
 
@@ -312,15 +327,19 @@ def PCDrawLine(tokenId, lineIdx):
 			gRedis.set(channelId, jsonData)
 
 			# 기존 타이머 삭제 
-			if gameChannelId in timerThreadList:
-				del timerThreadList[gameChannelId]
+			if channelId in timerThreadList:
+				del timerThreadList[channelId]
 
 			# 타이머 스레드 생성 및 시작
 			# timerThreadList에 저장 
-			timerThreadList[gameChannelId] = threading.Timer(21, randomTimer, args=[gameChannelId])
-			timerThreadList[gameChannelId].start()
+			timerThreadList[channelId] = threading.Timer(21, randomTimer, args=[channelId])
+			timerThreadList[channelId].start()
 
 			return jsonData
+		else:
+			print 'it\'s impossible'
+	else:
+		print 'turn NG!'
 
 	return 'not updated'
 
@@ -349,9 +368,11 @@ app = Flask(__name__)
 def login():
 	try : 
 		if request.method  == "POST":  
+			'''
 			if not gRedis.get(tokenId) == None:
 				# 이미 중복된 키가 있을 경우에 대한 처리가 필요하면 추가할 것
 				pass
+			'''
 
 			tokenId = request.form['tokenId']
 			name = request.form['name']
@@ -430,7 +451,7 @@ def joinUpdate():
 
 			playerId = playerData.getPlayerId()
 
-			print tokenId
+			print playerId
 			return str(playerId)
 
 	except KeyError, err:
@@ -515,6 +536,8 @@ def settingReady():
 		if request.method  == "POST":  
 			tokenId = request.form['tokenId']
 
+			print "*** READY ***"
+
 			return SCReady(tokenId)
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
@@ -582,6 +605,8 @@ def drawLine():
 			tokenId = request.form['tokenId']
 			posI = int(request.form['posI'])
 			posJ = int(request.form['posJ'])
+
+			print(str(tokenId) + ' : ' + str(posI) + ' / ' + str(posJ))
 
 			return PCDrawLine(tokenId, [posI, posJ])
 
