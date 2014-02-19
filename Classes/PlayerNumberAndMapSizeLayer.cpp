@@ -202,14 +202,16 @@ void CPlayerNumberAndMapSizeLayer::update(float dt)
 		pCheck->setVisible(false);
 		break;
 	case MS_5X5:
-		tempX = pMapSelect1->getPositionX() + WINDOW_WIDTH/2;
-		tempY = pMapSelect1->getPositionY();
+		tempX = pMapSelect1->getParent()->getPositionX() + pMapSelect1->getPositionX();
+		tempY = pMapSelect1->getParent()->getPositionY();
 		pCheck->setPosition( ccp(tempX, tempY) );
 		pCheck->setVisible( true );
 		break;
 	case MS_8X8:
-		pCheck->setPosition(pMapSelect2->getPosition() );
-		pCheck->setVisible(true);
+		tempX = pMapSelect2->getParent()->getPositionX() + pMapSelect2->getPositionX();
+		tempY = pMapSelect2->getParent()->getPositionY();
+		pCheck->setPosition( ccp(tempX, tempY) );
+		pCheck->setVisible( true );
 		break;
 	}
 

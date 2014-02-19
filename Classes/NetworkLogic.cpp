@@ -74,7 +74,7 @@ SceneName CNetworkLogic::GetCurrentScene()
 
 NetworkPhase CNetworkLogic::GetCurrentNetworkPhase() 
 { 
-	return m_CurrentPhase; 
+	return m_CurrentPhase;
 }
 
 void CNetworkLogic::GetNetworkInfo()
