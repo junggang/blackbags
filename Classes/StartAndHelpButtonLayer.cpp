@@ -131,32 +131,29 @@ void CStartAndHelpButtonLayer::update()
 	// Online Condition
 	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{
-		// 1. Start Button?
-		// 내가 방장이고 모두가 Ready 했을 때 StartButton을 활성화 시킨다.
-		if ( CGameManager::GetInstance()->IsChannelMaster() && 
-			CGameManager::GetInstance()->IsAllReady() )
+		if ( CGameManager::GetInstance()->IsChannelMaster() )
 		{
-			m_StartButton->setEnabled(true);
+			if (CGameManager::GetInstance()->IsAllReady() )
+			{
+				m_StartButton->setEnabled(true);
+			}
+			else
+			{
+				m_StartButton->setEnabled(false);
+			}
 		}
 		else
 		{
-			m_StartButton->setEnabled(false);
+			if (CGameManager::GetInstance()->GetCharacterIdByPlayerId( CGameManager::GetInstance()->GetMyPlayerId() ) != -1 )
+			{
+				m_StartButton->setEnabled(true);
+			}
+			else
+			{
+				m_StartButton->setEnabled(false);
+			}
 		}
-		// 2. Ready Button?
-		// 내가 방장이 아니고 캐릭터를 골랐을 때 ReadyButton을 활성화 시킨다.
-		if ( !CGameManager::GetInstance()->IsChannelMaster() 
-			&& CGameManager::GetInstance()->GetCharacterIdByPlayerId( CGameManager::GetInstance()->GetMyPlayerId() ) != -1 )
-		{
-			m_StartButton->setEnabled(true);
-		}
-		else
-		{
-			m_StartButton->setEnabled(false);
-		}
-		// 3. Scene Change && Game Start??
-		// 서버에서 응답이 돌아오면 Scene Change
 	}
-
 	// Single :: StartButton Condition
 	else
 	{

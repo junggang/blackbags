@@ -537,7 +537,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 	{
 		CNetworkLogic::GetInstance()->SetMyPlayerId(atoi(stringData.c_str() ) );
 
-		if (m_MyPlayerId != -1)
+		if (CNetworkLogic::GetInstance()->GetMyPlayerId() != -1)
 		{
 			// send getInitializedGameData request
 			CNetworkLogic::GetInstance()->getInitializedGameData();
