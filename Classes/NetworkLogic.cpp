@@ -444,7 +444,7 @@ void CNetworkLogic::SettingReady()
 	m_Request = new CCHttpRequest();
 	
 	std::string url = m_ServerAddr;
-	url.append("/settingReady");
+	url.append("/setting_ready");
 
 	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
