@@ -22,6 +22,7 @@ public:
 	SceneName			GetCurrentScene();
 	const std::string&	GetPlayerName(int playerIdx);
 	void				GetPlayerName(std::string name, int playerIdx) { m_PlayerNameList[playerIdx] = name; }
+	void				SetMyPlayerId(int id) { m_MyPlayerId = id; }
 	int					GetMyPlayerId() { return m_MyPlayerId; }
 	int					GetCurrentPlayerNumber();
 	int					GetPlayerResult(int playerIdx, MO_ITEM item);

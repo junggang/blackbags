@@ -535,7 +535,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 	}
 	else if (strcmp(response->getHttpRequest()->getTag(), "POST joinUpdate") == 0)
 	{
-		m_MyPlayerId = atoi(stringData.c_str());
+		CNetworkLogic::GetInstance()->SetMyPlayerId(atoi(stringData.c_str() ) );
 
 		if (m_MyPlayerId != -1)
 		{
