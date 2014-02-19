@@ -20,6 +20,7 @@ public:
 	NetworkPhase GetCurrentNetworkPhase();
 
 	SceneName			GetCurrentScene();
+	void				SetCurrentScene(SceneName scene);
 	const std::string&	GetPlayerName(int playerIdx);
 	void				GetPlayerName(std::string name, int playerIdx) { m_PlayerNameList[playerIdx] = name; }
 	void				SetMyPlayerId(int id) { m_MyPlayerId = id; }
