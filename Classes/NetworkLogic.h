@@ -77,6 +77,7 @@ private:
 	cocos2d::extension::CCHttpRequest*			m_Request;
 
 	NetworkPhase			m_CurrentPhase;
+	SceneName				m_CurrentScene;
 
 	int						m_MyPlayerId;
 	

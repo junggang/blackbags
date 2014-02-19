@@ -26,6 +26,7 @@ CNetworkLogic::CNetworkLogic(void)
 	m_FourFlag = false;
 
 	m_CurrentPhase = NP_NOTHING;
+	m_CurrentScene = SC_NOSCENE;
 
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
@@ -60,6 +61,7 @@ bool CNetworkLogic::Init()
 		m_NetworkGameData = new Document();
 	}
 
+	m_CurrentScene = SC_NETWORK_SETTING;
 	GetNetworkInfo();
 
 	return true;
@@ -67,7 +69,7 @@ bool CNetworkLogic::Init()
 
 SceneName CNetworkLogic::GetCurrentScene()
 {
-	return static_cast<SceneName>( (*m_NetworkGameData)[SizeType(GD_CURRENT_SCENE)].GetInt() );
+	return m_CurrentScene;
 }
 
 NetworkPhase CNetworkLogic::GetCurrentNetworkPhase() 
@@ -569,6 +571,8 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 			{
 				//CNetworkLogic::GetInstance()->m_NetworkGameData->Clear();
 				gameData->Parse<0>(stringData.c_str() );
+				
+				m_CurrentScene = static_cast<SceneName>( (*m_NetworkGameData)[SizeType(GD_CURRENT_SCENE)].GetInt() );
 			}
 
 			CGameManager::GetInstance()->SetUpdateFlag(true);
