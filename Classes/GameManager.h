@@ -111,6 +111,7 @@ public:
 
 	bool IsChannelMaster();
 	bool IsReady();
+	bool IsReady(int playerId);
 	bool IsAllReady();
 
 private:

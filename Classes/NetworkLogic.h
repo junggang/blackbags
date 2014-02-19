@@ -45,6 +45,8 @@ public:
 	bool IsChannelMaster(); 
 	// 본인이 레디?
 	bool IsReady();
+	// 다른 놈들이 레디?
+	bool IsReady(int playerId);
 	// 나머지 다 레디?
 	bool IsAllReady();
 

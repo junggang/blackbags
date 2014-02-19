@@ -154,6 +154,7 @@ void CStartAndHelpButtonLayer::update()
 			}
 		}
 	}
+
 	// Single :: StartButton Condition
 	else
 	{

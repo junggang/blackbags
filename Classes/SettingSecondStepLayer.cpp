@@ -31,6 +31,11 @@ bool CSettingSecondStepLayer::init()
 
 void CSettingSecondStepLayer::update( float dt )
 {
+	if ( !CGameManager::GetInstance()->IsUpdated() )
+	{
+		return;
+	}
+
 	m_SettingCharacterLayer->update();
 	m_OtherPlayerStatusLayer->update();
 	m_StartAndHelpButtonLayer->update();

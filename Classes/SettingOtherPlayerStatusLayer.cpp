@@ -8,7 +8,8 @@ enum PLAYER_TAG
 	PLAYER_2_TAG,
 	PLAYER_3_TAG,
 	PLAYER_4_TAG,
-	CURRENT_FACE_TAG
+	CURRENT_FACE_TAG,
+	READY_STATE_TAG
 };
 
 USING_NS_CC;
@@ -77,6 +78,37 @@ void CSettingOtherPlayerStatusLayer::update()
 			m_PlayerStatusFrame[playerId]->addChild(pSelectedFace);
 		}
 	}
+
+	if ( CGameManager::GetInstance()->IsOnlineMode() )
+	{
+		for (int i = 0 ; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
+		{
+			CCSprite* readyStateImg = nullptr;
+			m_PlayerStatusFrame[i]->removeChildByTag(READY_STATE_TAG);
+
+			if ( CGameManager::GetInstance()->IsReady(i) )
+			{
+				readyStateImg = CCSprite::create("image/SETTING_ready_selected.png");
+			}
+			else
+			{
+				readyStateImg = CCSprite::create("image/SETTING_ready_unselected.png");
+			}
+
+			// if load image failed
+			if (nullptr == readyStateImg)
+			{
+				continue;
+			}
+
+			readyStateImg->setTag(READY_STATE_TAG);
+
+			readyStateImg->setPosition(ccp(m_PlayerStatusFrame[i]->getContentSize().width - readyStateImg->getContentSize().width / 2,
+				m_PlayerStatusFrame[i]->getContentSize().height - readyStateImg->getContentSize().height / 2));
+
+			m_PlayerStatusFrame[i]->addChild( readyStateImg );
+		}
+	}
 }
 
 void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
@@ -141,6 +173,19 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		pEditName->setTag( i );
 
 		m_PlayerStatusFrame[i]->addChild( pEditName );
+	}
+
+	// Ready State Ç¥½Ã
+	if ( CGameManager::GetInstance()->IsOnlineMode() )
+	{
+		for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
+		{
+			CCSprite* readyStateImg = CCSprite::create("image/SETTING_ready_unselected.png");
+			readyStateImg->setTag(READY_STATE_TAG);
+			readyStateImg->setPosition(ccp(m_PlayerStatusFrame[i]->getContentSize().width - readyStateImg->getContentSize().width / 2,
+				m_PlayerStatusFrame[i]->getContentSize().height - readyStateImg->getContentSize().height / 2));
+			m_PlayerStatusFrame[i]->addChild( readyStateImg );
+		}
 	}
 }
 

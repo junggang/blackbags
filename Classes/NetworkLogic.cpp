@@ -211,6 +211,11 @@ bool CNetworkLogic::IsReady()
 	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(m_MyPlayerId)][SizeType(GDP_READY)].GetBool();
 }
 
+bool CNetworkLogic::IsReady(int playerId)
+{
+	return (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(playerId)][SizeType(GDP_READY)].GetBool();
+}
+
 bool CNetworkLogic::IsAllReady()
 {
 	int readyCount = 0;

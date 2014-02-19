@@ -670,6 +670,11 @@ bool CGameManager::IsReady()
 	return CNetworkLogic::GetInstance()->IsReady();
 }
 
+bool CGameManager::IsReady( int playerId )
+{
+	return CNetworkLogic::GetInstance()->IsReady(playerId);
+}
+
 bool CGameManager::IsAllReady()
 {
 	return CNetworkLogic::GetInstance()->IsAllReady();
