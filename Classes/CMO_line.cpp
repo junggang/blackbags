@@ -95,7 +95,7 @@ void CMO_line::setImage(IndexedPosition indexedPosition)
 	//적절한 이미지를 넣어준다.
 	//pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
 	
-	if(indexedPosition.m_PosI%2==0 &&indexedPosition.m_PosJ%2==1)
+	if (indexedPosition.m_PosI%2==0 &&indexedPosition.m_PosJ%2==1)
 	{
 		pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
 		pLine->setAnchorPoint(ccp(1,0));
@@ -180,7 +180,7 @@ void CMO_line::changeImage()
 	//애니메이션 종료 후 화면에 표시될 이미지 등록
 	pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx + 2].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
 
-	if(m_ImageFileIdx % 2== 0)
+	if (m_ImageFileIdx % 2== 0)
 		pLine->setAnchorPoint( ccp(1.0f, 0.0f) );
 	else
 		pLine->setAnchorPoint( ccp (0,0));

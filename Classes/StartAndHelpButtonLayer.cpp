@@ -79,8 +79,12 @@ void CStartAndHelpButtonLayer::StartButtonCallBack( CCObject* pSender )
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
 	CGameManager::GetInstance()->StartGame();
-	CCScene* newScene = CPlayScene::create();
-	CCDirector::sharedDirector()->replaceScene( CCTransitionFade::create(0.5, newScene) );
+
+	if ( !CGameManager::GetInstance()->IsOnlineMode() )
+	{
+		CCScene* newScene = CPlayScene::create();
+		CCDirector::sharedDirector()->replaceScene( CCTransitionFade::create(0.5, newScene) );
+	}
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	//exit(0);
 #endif
@@ -94,7 +98,8 @@ void CStartAndHelpButtonLayer::ReadyButtonCallBack( CCObject* pSender )
 #else
 	// 서버로 레디 신호를 보낸다.
 	CGameManager::GetInstance()->StartGame();
-	// Scene Change는 GetCurrentScene 을 통해서 비교 / Online 에서는 임의로 Scene을 바꾸지 않는다. 
+	// Scene Change는 GetCurrentScene 을 통해서 비교 / Online 에서는 임의로 Scene을 바꾸지 않는다.
+	
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	//exit(0);
 #endif

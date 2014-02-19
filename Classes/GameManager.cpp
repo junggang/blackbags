@@ -38,9 +38,9 @@ bool CGameManager::init()
 	// 만약 현재 저장 된 게임데이터가 없으면 초기값으로 설정해서 생성한다.
 	if (!m_GameData->getBoolForKey("initialized") )
 	{
-		m_GameData->setStringForKey("tokenId", "token wooq");
+		m_GameData->setStringForKey("tokenId", "token moon");
 
-		m_GameData->setStringForKey("usersName", "wooq");
+		m_GameData->setStringForKey("usersName", "moon");
 
 		m_GameData->setBoolForKey("two", true);
 		m_GameData->setBoolForKey("three", true);
@@ -85,7 +85,7 @@ std::string CGameManager::GetPlayerNameByCharacterId(int characterId)
 	{
 		for (int i =0; i < MAX_PLAYER_NUM; ++i)
 		{
-			if (CNetworkLogic::GetInstance()->GetPlayerCharacterId(i) == characterId)
+			if ( CNetworkLogic::GetInstance()->GetPlayerCharacterId(i) == characterId )
 			{
 				return CNetworkLogic::GetInstance()->GetPlayerName(i);
 			}
@@ -95,7 +95,7 @@ std::string CGameManager::GetPlayerNameByCharacterId(int characterId)
 	{
 		for (int i =0; i < MAX_PLAYER_NUM; ++i)
 		{
-			if (CGameLogic::GetInstance()->GetCharacterIdByPlayerId(i) == characterId)
+			if ( CGameLogic::GetInstance()->GetCharacterIdByPlayerId(i) == characterId )
 			{
 				return CGameLogic::GetInstance()->GetPlayerName(i);
 			}

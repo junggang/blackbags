@@ -572,7 +572,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 				//CNetworkLogic::GetInstance()->m_NetworkGameData->Clear();
 				gameData->Parse<0>(stringData.c_str() );
 				
-				m_CurrentScene = static_cast<SceneName>( (*m_NetworkGameData)[SizeType(GD_CURRENT_SCENE)].GetInt() );
+				m_CurrentScene = static_cast<SceneName>( (*gameData)[SizeType(GD_CURRENT_SCENE)].GetInt() );
 			}
 
 			CGameManager::GetInstance()->SetUpdateFlag(true);

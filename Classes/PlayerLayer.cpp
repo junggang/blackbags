@@ -78,7 +78,7 @@ bool CPlayerLayer::init()
 	SetWaitingCharacters();
 	
 	//addChild해준다.
-	for(int playerId=0;playerId<MAX_PLAYER_NUM;++playerId)
+	for (int playerId=0;playerId<MAX_PLAYER_NUM;++playerId)
 	{
 		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId)==-1)
 			continue;
@@ -99,7 +99,7 @@ void CPlayerLayer::update( float dt )
 {
 	//일단 이 전에 실행중이던 애니메이션은 중지하고, 모든 캐릭터를 첫번째 프레임으로 돌려 놓는다.
 	//pause를 했으므로, 반드시 resume을 이용해야 한다.
-	if(m_CurrentPlayerId != -1)
+	if (m_CurrentPlayerId != -1)
 	{
 		SetWaitingCharacters();
 		m_Player[m_CurrentPlayerId]->pauseSchedulerAndActions();
@@ -148,7 +148,7 @@ void CPlayerLayer::SetWaitingCharacters()
 	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
 	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist","image/CharacterPlayAnimation.png");
 
-	for(int playerId = 0; playerId<MAX_PLAYER_NUM;++playerId)
+	for (int playerId = 0; playerId<MAX_PLAYER_NUM;++playerId)
 	{
 		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId)==-1)
 			continue;

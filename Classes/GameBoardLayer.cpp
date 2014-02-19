@@ -90,7 +90,7 @@ bool CGameBoardLayer::init()
 				CMO_line* pLine = CMO_line::create();
 				pLine->setImage(pos);
 
-				if(j%2 == 0)
+				if (j%2 == 0)
 					pLine->setPosition( ccp( m_LineOriginX+m_DeltaX*(j/2-1),m_LineOriginY+m_DeltaY*(j/2-1) ) );
 				else
 					pLine->setPosition( ccp( m_LineOriginX+m_DeltaX*(j/2),m_LineOriginY+m_DeltaY*(j/2) ) );
@@ -100,7 +100,7 @@ bool CGameBoardLayer::init()
 			}
 
 		}	
-		if(i%2==0)
+		if (i%2==0)
 		{
 			m_OriginX += m_DeltaX;
 			m_OriginY -= m_DeltaY;
@@ -221,14 +221,14 @@ IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 
 	if ( abs(remainderY) < TOUCH_AREA)
 	{
-		if(remainderY>=0)
+		if (remainderY>=0)
 			point.y -= remainderY;
 		else
 			point.y += remainderY;
 	}
 	else if (abs(remainderY) > deltaY - TOUCH_AREA)
 	{
-		if(remainderY>=0)
+		if (remainderY>=0)
 			point.y +=(deltaY - remainderY);
 		else
 			point.y -=(deltaY + remainderY);

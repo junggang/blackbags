@@ -90,7 +90,7 @@ bool CResultScoreLayer::init()
 		int itemPerLine = 3;
 		//gold + * + count
 		int goldNum = CGameManager::GetInstance()->GetElementCount(i,ITEM_GOLD);
-		for(int itemNum = 0; itemNum<goldNum;++itemNum)
+		for (int itemNum = 0; itemNum<goldNum;++itemNum)
 		{
 			CCSprite* pGold = CCSprite::create("image/RESULT_gold.png");
 			pGold->setPosition(ccp(position.x+80.0f*(itemNum%itemPerLine),position.y+nextLinePosition-80.0f*(itemNum/itemPerLine)));
@@ -102,7 +102,7 @@ bool CResultScoreLayer::init()
 
 		//Trash + * + count
 		int trashNum = CGameManager::GetInstance()->GetElementCount(i,ITEM_TRASH);
-		for(int itemNum = 0; itemNum<trashNum;++itemNum)
+		for (int itemNum = 0; itemNum<trashNum;++itemNum)
 		{
 			CCSprite* pTrash = CCSprite::create("image/RESULT_trash.png");
 			pTrash->setPosition(ccp(position.x+80.0f*(itemNum%itemPerLine),position.y+nextLinePosition-80.0f*(itemNum/itemPerLine)));
