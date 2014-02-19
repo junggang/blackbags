@@ -3,6 +3,7 @@
 #include "MainTitleLayer.h"
 #include "MainMenuLayer.h"
 #include "GameManager.h"
+#include "BackgroundAnimation.h"
 
 USING_NS_CC;
 
@@ -21,13 +22,17 @@ bool CMainScene::init(void)
 
 	this->addChild(BackgroundLayer, 0);
 
+	CCLayer* BackgroundAnimation = CBackgroundAnimation::create();
+	
+	this->addChild(BackgroundAnimation,1);
+
 	CCLayer* titleLayer = CMainTitleLayer::create();
 
-	this->addChild(titleLayer, 1);
+	this->addChild(titleLayer, 2);
 
 	CCLayer* mainMenuLayer = CMainMenuLayer::create();
 
-	this->addChild(mainMenuLayer, 1);
+	this->addChild(mainMenuLayer, 2);
 
 	CGameManager::GetInstance()->init();
 

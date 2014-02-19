@@ -216,6 +216,9 @@
     <ClCompile Include="..\Classes\WaitingChannelId.cpp">
       <Filter>Classes\Layer\GameSetting\NetworkClass</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BackgroundAnimation.cpp">
+      <Filter>Classes\Layer\Main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -349,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\WaitingChannelId.h">
       <Filter>Classes\Layer\GameSetting\NetworkClass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BackgroundAnimation.h">
+      <Filter>Classes\Layer\Main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
