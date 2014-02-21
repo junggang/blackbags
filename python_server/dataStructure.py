@@ -265,7 +265,7 @@ class GameData:
 	def removePlayer(self, playerIdx):
 		# 참여 인원 1명 감소 
 		self.data[GD_PLAYER_NUMBER] -= 1
-		self.data[GD_PLAYER_LIST][idx][GDP_CONNECTED_FLAG] = False
+		self.data[GD_PLAYER_LIST][playerIdx][GDP_CONNECTED_FLAG] = False
 
 	def setUpdateFlag(self):
 		for each in self.data[GD_PLAYER_LIST]:
@@ -591,6 +591,7 @@ class GameData:
 		if self.isClosed(idxI, idxJ):
 			for each in self.closedTile:
 				self.data[GD_MAP][each[0]][each[1]][GDM_OWNER] = self.data[GD_TURN_LIST][self.data[GD_CURRENT_TURN_IDX]]
+				self.data[GD_VOID_TILE_COUNT] -= 1
 
 			# 닫혀진 타일들 상태 업데이트 완료 했으니 closedTile은 비운다
 			del self.closedTile[0:len(self.closedTile)]
@@ -636,13 +637,31 @@ class GameData:
 				return
 
 	# 결과 계산
-	def updateResult():
+	def updateResult(self):
 		self.setScene(SC_RESULT)
+		
+		# 맵을 확인해서 각 유저들의 결과를 playerList에 반영
+		for eachRow in self.data[GD_MAP]:
+			for eachObject in eachRow:
+				self.checkTile(eachObject)
 
+		# 확인된 결과를 바탕으로 점수 계산
 		for each in self.data[GD_PLAYER_LIST]:
 			each[GDP_SCORE] = each[GDP_TILE_COUNT] * 2 + each[GDP_GOLD_COUNT] * 5 - each[GDP_TRASH_COUNT] * 10
 
 		self.setUpdateFlag()
+	
+	# 개별 맵 오브젝트 상태 확인 및 결과 반영			
+	def checkTile(self, object):
+		# 타일인 경우 소유주와 아이템 여부를 확인
+		if object[GDM_TYPE] == MO_TILE:
+			self.data[GD_PLAYER_LIST][object[GDM_OWNER]][GDP_TILE_COUNT] += 1
+			
+			if object[GDM_ITEM] == ITEM_GOLD:
+				self.data[GD_PLAYER_LIST][object[GDM_OWNER]][GDP_GOLD_COUNT] += 1
+			elif object[GDM_ITEM] == ITEM_TRASH:
+				self.data[GD_PLAYER_LIST][object[GDM_OWNER]][GDP_GOLD_COUNT] += 1
+		
 
 	# for debug
 	# console에 현재 맵 상황 표시
