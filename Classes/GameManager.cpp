@@ -684,3 +684,8 @@ int CGameManager::GetMyPlayerId()
 {
 	return CNetworkLogic::GetInstance()->GetMyPlayerId();
 }
+
+bool CGameManager::GetCurrentTimerStatus()
+{
+	return CNetworkLogic::GetInstance()->GetCurrentTimerStatus();
+}

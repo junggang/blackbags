@@ -239,6 +239,11 @@ bool CNetworkLogic::IsAllReady()
 	return (readyCount == GetCurrentPlayerNumber() - 1);
 }
 
+bool CNetworkLogic::GetCurrentTimerStatus()
+{
+	return (*m_NetworkGameData)[SizeType(GD_TIMER)].GetBool();
+}
+
 void CNetworkLogic::Login()
 {
 	// login

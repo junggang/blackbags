@@ -14,5 +14,6 @@ public:
 private:
 	cocos2d::CCSize m_VisibleSize;
 	cocos2d::CCProgressTimer* m_progressTimeBar;
+	bool m_CurrentServerTimerStatus;
 };
 

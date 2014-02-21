@@ -323,7 +323,8 @@ enum GameDataIndex
 	GD_PLAYER_NUMBER = 8,
 	GD_PLAYER_LIST = 9,
 	GD_MAP_SIZE = 10,
-	GD_MAP = 11
+	GD_MAP = 11,
+	GD_TIMER = 12
 };
 
 enum GameDataPlayerData

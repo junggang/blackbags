@@ -41,7 +41,7 @@ bool CPlayerLayer::init()
 	for (int playerId = 0; playerId<MAX_PLAYER_NUM; ++playerId)
 	{
 		//생성되지 않은 플레이어라면 넘긴다.
-		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId)==-1)
+		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId) == -1)
 			continue;
 
 		int position = CGameManager::GetInstance()->GetPlayerTurn(playerId);

@@ -11,6 +11,9 @@ bool CTimerLayer::init()
 	{
 		return false;
 	}
+
+	m_CurrentServerTimerStatus = CGameManager::GetInstance()->GetCurrentTimerStatus();
+
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
@@ -27,7 +30,6 @@ bool CTimerLayer::init()
 
 	this->addChild(m_progressTimeBar,0);
 
-
 	//시작하면서 한 번 업데이트 해야되는데.
 	CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
 	CCFiniteTimeAction* pAction = CCSequence::create(progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
@@ -39,11 +41,36 @@ bool CTimerLayer::init()
 
 void CTimerLayer::update( float dt )
 {
-	m_progressTimeBar->stopAllActions();
-	//다른 애니메이션들 끝날 때 까지 기다렸다가 타이머를 재생해주도록 하자.
-	CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
-	CCFiniteTimeAction* pAction = CCSequence::create(progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
-	m_progressTimeBar->runAction(pAction);
+	if (CGameManager::GetInstance()->IsOnlineMode() )
+	{
+		bool newStatus = CGameManager::GetInstance()->GetCurrentTimerStatus();
+
+		if (m_CurrentServerTimerStatus == newStatus)
+		{
+			return;
+		}
+
+		m_CurrentServerTimerStatus = newStatus;
+
+		if (m_CurrentServerTimerStatus)
+		{
+			// false >>> true 이므로 타이머 새로 시작
+
+		}
+		else
+		{
+			// true >>> false 이므로 타이머 정지
+
+		}
+	}
+	else
+	{
+		m_progressTimeBar->stopAllActions();
+		//다른 애니메이션들 끝날 때 까지 기다렸다가 타이머를 재생해주도록 하자.
+		CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
+		CCFiniteTimeAction* pAction = CCSequence::create(progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
+		m_progressTimeBar->runAction(pAction);
+	}
 }
 
 void CTimerLayer::timerEndFunc()

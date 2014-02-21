@@ -113,6 +113,7 @@ public:
 	bool IsReady();
 	bool IsReady(int playerId);
 	bool IsAllReady();
+	bool GetCurrentTimerStatus();
 
 private:
 	static CGameManager*	m_pInstance; //singleton instance
