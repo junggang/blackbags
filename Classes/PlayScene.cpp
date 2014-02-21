@@ -84,6 +84,7 @@ void CPlayScene::update(float dt)
 		if (CGameManager::GetInstance()->IsOnlineMode() )
 		{
 			CGameManager::GetInstance()->Logout();
+			this->unschedule(schedule_selector(CGameManager::PlayUpdate) );
 		}
 	}
 

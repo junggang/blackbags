@@ -687,5 +687,13 @@ int CGameManager::GetMyPlayerId()
 
 bool CGameManager::GetCurrentTimerStatus()
 {
-	return CNetworkLogic::GetInstance()->GetCurrentTimerStatus();
+	if ( m_IsOnlineGame )
+	{
+		return CNetworkLogic::GetInstance()->GetCurrentTimerStatus();
+	}
+	else
+	{
+		return false;
+	}
+	
 }
