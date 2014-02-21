@@ -41,6 +41,7 @@ public:
 	int					GetPlayerTurnById(int playerId);
 	int					GetPlayerIdByCurrentTurn();
 	int					GetTileAnimationTurn(IndexedPosition indexedPosition);
+	bool				GetCurrentTimerStatus();
 
 	// 내가 방장?
 	bool IsChannelMaster(); 
