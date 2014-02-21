@@ -25,6 +25,7 @@ GD_PLAYER_NUMBER = 8
 GD_PLAYER_LIST = 9
 GD_MAP_SIZE = 10
 GD_MAP = 11
+GD_TIMER = 12
 
 # scene name index
 SC_OPENING = 0
@@ -168,7 +169,7 @@ class GameData:
 		self.data = [
 			SC_SETTING,		# D_CURRENT_SCENE
 			gameChannelId,	# GD_CHANNEL_ID
-			MS_NOT_SELECTED,# GD_MAP_ID
+			MS_NOT_SELECTED,	# GD_MAP_ID
 			-1,				# GD_CURRENT_TURN_IDX
 			[],				# GD_TURN_LIST
 			False,			# GD_TURN_START_FLAG
@@ -177,7 +178,8 @@ class GameData:
 			0,				# GD_PLAYER_NUMBER
 			[],				# GD_PLAYER_LIST
 			[0, 0],			# GD_MAP_SIZE
-			[]				# GD_MAP
+			[],				# GD_MAP
+			False			# GD_TIMER
 		]
 
 		# add players data
@@ -201,7 +203,7 @@ class GameData:
 	def setScene(self, nextScene):
 		self.data[GD_CURRENT_SCENE] = nextScene
 
-		self.setUpdateFlag();
+		self.setUpdateFlag()
 
 	# 플레이어가 선택한 맵 종료에 따른 크기 설정 (가로 / 세로)
 	def setMapSize(self, mapId):
@@ -217,7 +219,7 @@ class GameData:
 		self.data[GD_MAP_SIZE][0] = width
 		self.data[GD_MAP_SIZE][1] = height
 
-		self.setUpdateFlag();
+		self.setUpdateFlag()
 
 	# 해당 id의 player가 channel master인지 반환 
 	def isChannelMaster(self, playerId):
@@ -277,11 +279,15 @@ class GameData:
 	
 	# 각각의 플레이어가 game data의 업데이트된 내용을 수신했음을 확인하는 flag설정 
 	# 조심해!! - 둘로 분리하는 것이 나을 듯
+	# 일단 True로 바꾸는 것만 생성 (아직 false로 바꾸는 기능은 필요하지 않으므로)
 	def changeReadyFlag(self, playerId):
+		self.data[GD_PLAYER_LIST][playerId][GDP_READY] = True
+		'''
 		if self.data[GD_PLAYER_LIST][playerId][GDP_READY]:
 			self.data[GD_PLAYER_LIST][playerId][GDP_READY] = False
 		else:
 			self.data[GD_PLAYER_LIST][playerId][GDP_READY] = True
+		'''
 
 	# game data에서 업데이트가 발생하면 ready flag를 초기화해서 다시 수신 확인을 받을 수 있도록 설정 
 	def resetReadyFlag(self):
@@ -299,7 +305,7 @@ class GameData:
 
 			self.data[GD_PLAYER_LIST][playerId][GDP_CHARACTER_ID] = characterId
 
-		self.setUpdateFlag();
+		self.setUpdateFlag()
 
 		return True
 
@@ -361,13 +367,13 @@ class GameData:
 
 		# set random object's count
 		if self.data[GD_MAP_SIZE][1] == 5:
-			startLineNumber = 13;
-			startGoldNumber = 5;
-			startTrashNumber = 4;
+			startLineNumber = 13
+			startGoldNumber = 5
+			startTrashNumber = 4
 		elif self.data[GD_MAP_SIZE][1] == 7:
-			startLineNumber = 27;
-			startGoldNumber = 8;
-			startTrashNumber = 7;
+			startLineNumber = 27
+			startGoldNumber = 8
+			startTrashNumber = 7
 
 		# generate random objects
 		while startLineNumber > 0:
@@ -409,12 +415,13 @@ class GameData:
 		self.data[GD_CURRENT_TURN_IDX] = 0
 		self.resetReadyFlag()
 
-		self.setUpdateFlag();
+		self.setUpdateFlag()
 
 	# play scene에서 새로운 턴을 시작 
 	def startTurn(self):
 		self.resetReadyFlag()
-		self.setUpdateFlag();
+		self.setUpdateFlag()
+		self.data[GD_TIMER] = True
 
 	# 지금 선을 그을 차례인 플레이어의 idx값 반환 
 	def getCurrentTurnId(self):
@@ -469,7 +476,7 @@ class GameData:
 
 		# 만약 sentinel을 만나면 열린 도형이므로 종료 
 		if self.data[GD_MAP][currentTile[0]][currentTile[1]][GDM_TYPE] == MO_TILE:
-			animationTurn = 1;
+			animationTurn = 1
 			self.setAnimationState(currentTile, animationTurn, direction)
 
 			searchTile.put(currentTile)
@@ -572,6 +579,9 @@ class GameData:
 	def drawLine(self, idxI, idxJ):
 		if not self.isPossible(idxI, idxJ):
 			return False
+			
+		# 애니메이션 재생해야 하니까 타이머는 멈추자
+		self.data[GD_TIMER] = False
 
 		self.data[GD_RECENTLY_CONNECTED_LINE][0] = idxI
 		self.data[GD_RECENTLY_CONNECTED_LINE][1] = idxJ
@@ -586,6 +596,7 @@ class GameData:
 			del self.closedTile[0:len(self.closedTile)]
 
 		# 종료여부 확인해서 결과 계산을 하거나 턴을 넘긴다
+		# 조심해!! 이 부분에 도달하기 전에 같은 클라이언트에서 선 긋기 요청이 오면 한 번에 여러 선이 그어질 수 있다
 		if self.isEnd():
 			self.updateResult()
 		else:
@@ -597,7 +608,7 @@ class GameData:
 				if self.data[GD_PLAYER_LIST][self.data[GD_CURRENT_TURN_IDX]][GDP_CONNECTED_FLAG]:
 					break
 
-		self.setUpdateFlag();
+		self.setUpdateFlag()
 
 		return True
 
@@ -631,7 +642,7 @@ class GameData:
 		for each in self.data[GD_PLAYER_LIST]:
 			each[GDP_SCORE] = each[GDP_TILE_COUNT] * 2 + each[GDP_GOLD_COUNT] * 5 - each[GDP_TRASH_COUNT] * 10
 
-		self.setUpdateFlag();
+		self.setUpdateFlag()
 
 	# for debug
 	# console에 현재 맵 상황 표시
