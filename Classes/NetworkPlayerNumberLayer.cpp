@@ -5,9 +5,6 @@ USING_NS_CC;
 
 const int PLAYER_SELECT_TABLE_TAG = 20;
 
-// 조심해!! 멀티플레이의 경우 여러 개 옵션을 선택할 수 있어야 해!
-// 무엇무엇을 선택했는지 flag로 저장해서 서버에 보낼 수도 있어야 해!
-
 bool CNetworkPlayerNumberLayer::init()
 {
 	if ( !CCLayer::init() )
