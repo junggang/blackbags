@@ -85,6 +85,9 @@
     <Filter Include="Classes\Layer\GameSetting\NetworkClass">
       <UniqueIdentifier>{533e1fe4-a70d-45a1-bc50-e9abaf7e4cf8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Logic\AudioManager">
+      <UniqueIdentifier>{88c72ad5-24b8-45ea-a9c4-405596b9b4d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -218,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\BackgroundAnimation.cpp">
       <Filter>Classes\Layer\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AudioManager.cpp">
+      <Filter>Classes\Logic\AudioManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +361,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BackgroundAnimation.h">
       <Filter>Classes\Layer\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AudioManager.h">
+      <Filter>Classes\Logic\AudioManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

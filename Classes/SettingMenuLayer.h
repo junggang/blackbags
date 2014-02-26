@@ -13,6 +13,8 @@ public:
 	void CreditCallback(CCObject* pSender);
 	void mainSceneCallback(CCObject* pSender);
 
+	virtual void update(float dt);
+
 	// implement the "static node()" method manually
     CREATE_FUNC(CSettingMenuLayer);
 private:

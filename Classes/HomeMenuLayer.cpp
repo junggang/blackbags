@@ -34,7 +34,6 @@ bool CHomeMenuLayer::init()
 	pMenu->setPosition(CCPointZero);
 	this->addChild(pMenu, 1);
 
-	
 	m_backLayer = CCSprite::create("image/menu_background.png");
 	m_backLayer->setVisible(false);
 	m_backLayer->setPosition(ccp(origin.x + visibleSize.width/2,origin.y + visibleSize.height/2));
@@ -61,7 +60,6 @@ bool CHomeMenuLayer::init()
 	m_iconHome = CCMenu::create(pHomeIcon,NULL);
 	m_iconHome->setPosition(popUpSize.width/2,popUpSize.height/2);
 
-
 	CCMenuItemImage *pOptionIcon = CCMenuItemImage::create(
 		"image/icon_menu_option.png",
 		"image/icon_menu_option_selected.png",
@@ -74,8 +72,6 @@ bool CHomeMenuLayer::init()
 	m_backLayer->addChild(m_iconResume,1);
 	m_backLayer->addChild(m_iconHome,1);
 	m_backLayer->addChild(m_iconOption,1);
-
-	
 
 	return true;
 }
@@ -109,6 +105,7 @@ void CHomeMenuLayer::homeIconCallback(CCObject* pSender)
 #endif
 #endif
 }
+
 void CHomeMenuLayer::ResumeIconCallback(CCObject* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
@@ -123,6 +120,7 @@ void CHomeMenuLayer::ResumeIconCallback(CCObject* pSender)
 #endif
 #endif
 }
+
 void CHomeMenuLayer::OptionIconCallback(CCObject* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)

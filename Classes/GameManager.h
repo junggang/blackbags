@@ -8,7 +8,7 @@ public:
 	CGameManager(void);
 	~CGameManager(void);
 
-	static CGameManager* GetInstance();
+	static CGameManager*	GetInstance();
 	static void				ReleaseInstance();
 	
 	bool init();

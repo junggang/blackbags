@@ -80,3 +80,8 @@ void CSettingMenuLayer::FacebookLoginCallback(CCObject* pSender)
 #endif
 #endif
 }
+
+void CSettingMenuLayer::update( float dt )
+{
+
+}

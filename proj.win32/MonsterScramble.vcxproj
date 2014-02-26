@@ -132,6 +132,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\AudioManager.cpp" />
     <ClCompile Include="..\Classes\BackgroundAnimation.cpp" />
     <ClCompile Include="..\Classes\CMO_dot.cpp" />
     <ClCompile Include="..\Classes\CMO_item.cpp" />
@@ -178,6 +179,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\AudioManager.h" />
     <ClInclude Include="..\Classes\BackgroundAnimation.h" />
     <ClInclude Include="..\Classes\CMO_dot.h" />
     <ClInclude Include="..\Classes\CMO_item.h" />
