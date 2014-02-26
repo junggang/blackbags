@@ -42,7 +42,6 @@ void CAudioManager::PlayBGM()
 
 void CAudioManager::ChangeMusic( MusicList BGMNumber )
 {
-	CCLOG( "%s", BGMList[BGMNumber].c_str() );
 	m_CurrentMusic = BGMList[BGMNumber];
 }
 
@@ -53,12 +52,12 @@ bool CAudioManager::init()
 		switch (i)
 		{
 		case BGM_MAIN:
-			// 조심해!! 테스트 코드야!
-			BGMList[i] = "Sound/simpleMusic.mp3";
 			break;
 		case BGM_PLAY:
 			break;
 		case BGM_SETTING:
+			// 조심해!! 테스트 코드야!
+			BGMList[i] = "Sound/simpleMusic.mp3";
 			break;
 		default:
 			break;
@@ -66,4 +65,14 @@ bool CAudioManager::init()
 	}
 
 	return true;
+}
+
+void CAudioManager::SetBGMVolume( float BGMVolume )
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(BGMVolume);
+}
+
+void CAudioManager::SetSEVolume( float SEVolume )
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->setEffectsVolume(SEVolume);
 }

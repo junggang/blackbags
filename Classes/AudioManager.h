@@ -24,6 +24,8 @@ public:
 
 	void ChangeMusic( MusicList BGMNumber );
 	void PlayBGM();
+	void SetBGMVolume(float BGMVolume);
+	void SetSEVolume(float SEVolume);
 
 private:
 	static CAudioManager* m_pInstance;

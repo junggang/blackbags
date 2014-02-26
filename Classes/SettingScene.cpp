@@ -30,8 +30,11 @@ bool CSettingScene::init(void)
 
 	/////////////////////////////
 	// 4. play music
-	CAudioManager::GetInstance()->ChangeMusic(BGM_MAIN);
+	CAudioManager::GetInstance()->ChangeMusic(BGM_SETTING);
 	CAudioManager::GetInstance()->PlayBGM();
+
+	// 5. initial update
+	CGameManager::GetInstance()->SetUpdateFlag(true);
 
 	return true;
 }
@@ -44,4 +47,10 @@ void CSettingScene::update( float dt )
 	}
 
 	m_SettingMenuLayer->update(dt);
+
+	// update Music & SE Volume
+	CAudioManager::GetInstance()->SetBGMVolume( m_SettingMenuLayer->getCurrentBGMVolume() );
+	CAudioManager::GetInstance()->SetBGMVolume( m_SettingMenuLayer->getCurrentSEVolume() );
+
+	CGameManager::GetInstance()->SetUpdateFlag(false);
 }

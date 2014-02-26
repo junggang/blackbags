@@ -1,7 +1,14 @@
 #include "SettingMenuLayer.h"
 #include "MainScene.h"
+#include "GameManager.h"
 
 USING_NS_CC;
+
+const float DEFAULT_BGM_VOLUME = 80.0f;
+const float DEFAULT_SE_VOLUME = 70.0f;
+
+const int BGM_SLIDER_TAG = 1;
+const int SE_SLIDER_TAG = 2;
 
 bool CSettingMenuLayer::init()
 {
@@ -21,14 +28,14 @@ bool CSettingMenuLayer::init()
 										"image/MAIN_exit.png",
 										"image/MAIN_exit_selected.png",
 										this,
-										menu_selector(CSettingMenuLayer::mainSceneCallback)
+										menu_selector(CSettingMenuLayer::MainSceneCallback)
 										);
     
 	CCMenuItemImage *pFacebookLoginButton = CCMenuItemImage::create(
 										"image/LOGIN_WITH_FACEBOOK.png",
 										"image/LOGIN_WITH_FACEBOOK.png",
 										this,
-										menu_selector(CSettingMenuLayer::FacebookLoginCallback)
+										menu_selector(CSettingMenuLayer::GoogleLoginCallback)
 										);
 
 	m_pBGMVolume = extension::CCControlSlider::create("image/BAR_BACKGROUND.png", "image/BAR_PROGRESS.png", "image/BAR_THUMB.png");
@@ -42,10 +49,23 @@ bool CSettingMenuLayer::init()
 	this->addChild(m_pBGMVolume);
 	this->addChild(m_pSEVolume);
 
+	// set BGM slider
 	m_pBGMVolume->setPosition( ccp(pMenu->getPositionX(), 100) );
 	m_pBGMVolume->setMaximumAllowedValue(100.0);
+	m_pBGMVolume->setMaximumValue(100.0);
+	m_pBGMVolume->setMinimumAllowedValue(100.0);
+	m_pBGMVolume->setMinimumValue(0.0);
+	m_pBGMVolume->setValue(DEFAULT_BGM_VOLUME);
+	m_pBGMVolume->setTag(BGM_SLIDER_TAG);
+
+	// set SE slider
 	m_pSEVolume->setPosition( ccp(pMenu->getPositionX(), 150) );
 	m_pSEVolume->setMaximumAllowedValue(100.0);
+	m_pSEVolume->setMaximumValue(100.0);
+	m_pSEVolume->setMinimumAllowedValue(100.0);
+	m_pSEVolume->setMinimumValue(0.0);
+	m_pSEVolume->setValue(DEFAULT_SE_VOLUME);
+	m_pSEVolume->setTag(SE_SLIDER_TAG);
 
 	pMenu->addChild(pBackToMainButton);
 
@@ -56,7 +76,7 @@ bool CSettingMenuLayer::init()
 	return true;
 }
 
-void CSettingMenuLayer::mainSceneCallback(CCObject* pSender)
+void CSettingMenuLayer::MainSceneCallback(CCObject* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
@@ -68,7 +88,7 @@ void CSettingMenuLayer::mainSceneCallback(CCObject* pSender)
 #endif
 }
 
-void CSettingMenuLayer::FacebookLoginCallback(CCObject* pSender)
+void CSettingMenuLayer::GoogleLoginCallback(CCObject* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
@@ -83,5 +103,34 @@ void CSettingMenuLayer::FacebookLoginCallback(CCObject* pSender)
 
 void CSettingMenuLayer::update( float dt )
 {
+	
+}
 
+void CSettingMenuLayer::ccTouchEnded( CCTouch *pTouch, CCEvent *pEvent )
+{
+	CGameManager::GetInstance()->SetUpdateFlag(true);
+}
+
+bool CSettingMenuLayer::ccTouchBegan( CCTouch *pTouch, CCEvent *pEvent )
+{
+	return true;
+}
+
+void CSettingMenuLayer::ccTouchMoved( CCTouch *pTouch, CCEvent *pEvent )
+{
+
+}
+
+void CSettingMenuLayer::onEnter()
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
+
+	CCLayer::onEnter();
+}
+
+void CSettingMenuLayer::onExit()
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+
+	CCLayer::onExit();
 }
