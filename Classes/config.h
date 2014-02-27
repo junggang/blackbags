@@ -215,6 +215,24 @@ struct MapObject
 	Direction	m_Direction;
 };
 
+
+/*
+	***********
+	image files
+	***********
+*/
+
+
+/*	shared images */
+const std::string BackgroundImage = "shared_background.png";
+
+/*	loading scene */
+
+/*	main scene */
+
+/*	gameSetting scene */
+
+/* play scene	*/
 const std::string lineImageFileList[4] =
 {
 	"image/linev0.png",
@@ -253,3 +271,8 @@ const std::string ResultCharacterLoseImage[4] =
 	"image/RESULT_PLAYER3_lose.png",
 	"image/RESULT_PLAYER4_lose.png",
 };
+
+/*	result scene */
+const std::string ResultTitle = "result_title.png";
+
+/*	setting scene */
