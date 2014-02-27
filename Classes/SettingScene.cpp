@@ -54,3 +54,8 @@ void CSettingScene::update( float dt )
 
 	CGameManager::GetInstance()->SetUpdateFlag(false);
 }
+
+void CSettingScene::StopBackgroundMusic()
+{
+	CAudioManager::GetInstance()->StopBGM();
+}

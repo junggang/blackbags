@@ -30,21 +30,6 @@ void CAudioManager::ReleaseInstance()
 	}
 }
 
-void CAudioManager::PlayBGM()
-{
-	if ( !m_CurrentMusic.empty() )
-	{
-		CCLOG( "%s", m_CurrentMusic.c_str() );
-		CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-			m_CurrentMusic.c_str(), true);
-	}
-}
-
-void CAudioManager::ChangeMusic( MusicList BGMNumber )
-{
-	m_CurrentMusic = BGMList[BGMNumber];
-}
-
 bool CAudioManager::init()
 {
 	for (int i = 0; i < MAX_BGM_LIST; ++i)
@@ -57,7 +42,20 @@ bool CAudioManager::init()
 			break;
 		case BGM_SETTING:
 			// 조심해!! 테스트 코드야!
-			BGMList[i] = "Sound/simpleMusic.mp3";
+			m_BGMList[i] = "Sound/simpleMusic.mp3";
+			break;
+		default:
+			break;
+		}
+	}
+
+	for (int j = 0; j < MAX_SE_LIST; ++j)
+	{
+		switch (j)
+		{
+		case SE_BUTTON_CLICK:
+			// 조심해!! 테스트 코드야!
+			m_BGMList[j] = "Sound/PLAYER_3_good.mp3";
 			break;
 		default:
 			break;
@@ -75,4 +73,39 @@ void CAudioManager::SetBGMVolume( float BGMVolume )
 void CAudioManager::SetSEVolume( float SEVolume )
 {
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->setEffectsVolume(SEVolume);
+}
+
+void CAudioManager::PlayBGM()
+{
+	if ( !m_CurrentMusic.empty() )
+	{
+		CCLOG( "%s", m_CurrentMusic.c_str() );
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
+			m_CurrentMusic.c_str(), true);
+	}
+}
+
+void CAudioManager::ChangeMusic( MusicList BGMNumber )
+{
+	m_CurrentMusic = m_BGMList[BGMNumber];
+}
+
+void CAudioManager::StopBGM()
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic(true);
+}
+
+void CAudioManager::ChangeSE( SEList SENumber )
+{
+	m_CurrentSE = m_BGMList[SENumber];
+}
+
+void CAudioManager::PlaySE()
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(m_CurrentSE.c_str());
+}
+
+void CAudioManager::StopAllSE()
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->stopAllEffects();
 }

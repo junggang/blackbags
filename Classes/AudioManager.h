@@ -11,6 +11,12 @@ enum MusicList
 	MAX_BGM_LIST
 };
 
+enum SEList
+{
+	SE_BUTTON_CLICK = 0,
+	MAX_SE_LIST
+};
+
 class CAudioManager
 {
 public:
@@ -23,7 +29,13 @@ public:
 	bool init();
 
 	void ChangeMusic( MusicList BGMNumber );
+	void ChangeSE( SEList SENumber );
 	void PlayBGM();
+	void StopBGM();
+
+	void PlaySE();
+	void StopAllSE();
+
 	void SetBGMVolume(float BGMVolume);
 	void SetSEVolume(float SEVolume);
 
@@ -31,6 +43,9 @@ private:
 	static CAudioManager* m_pInstance;
 
 	std::string m_CurrentMusic;
-	std::string BGMList[MAX_BGM_LIST];
+	std::string m_BGMList[MAX_BGM_LIST];
+
+	std::string m_CurrentSE;
+	std::string m_SEList[MAX_SE_LIST];
 };
 

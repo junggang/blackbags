@@ -11,6 +11,8 @@ public:
 	// implement the "static node()" method manually
     CREATE_FUNC(CSettingScene);
 
+	void StopBackgroundMusic();
+
 private:
 	CSettingMenuLayer* m_SettingMenuLayer;
 };
