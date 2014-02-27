@@ -9,7 +9,7 @@ public:
 	~CMO_dot();
 
 protected:
-	static CMO_dot* create(const char* pszFileName, const cocos2d::CCRect& rect);
+	static CMO_dot* create(const char* pszFileName);
 
 public:
 	static CMO_dot* Create();

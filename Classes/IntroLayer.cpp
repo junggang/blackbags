@@ -1,5 +1,6 @@
 #include "IntroLayer.h"
 #include "MainScene.h"
+#include "config.h"
 
 USING_NS_CC;
 
@@ -18,9 +19,10 @@ bool CIntroLayer::init()
 	/////////////////////////////
 	// 2. add a background image
 	
-	CCSprite* pLogo = CCSprite::create("image/INTRO_logo.png");
+	CCSprite* pLogo = CCSprite::create(INTRO_LOGO.c_str());
+	pLogo->setAnchorPoint(ccp(0,0));
 
-	pLogo->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
+	pLogo->setPosition(CCPoint(INTRO_LOGO_POS));
 	this->addChild(pLogo, 0);
 
 	this->schedule(schedule_selector(CIntroLayer::endIntro),1.0f);

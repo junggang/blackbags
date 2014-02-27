@@ -225,6 +225,9 @@
     <ClCompile Include="..\Classes\AudioManager.cpp">
       <Filter>Classes\Logic\AudioManager</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\IntroBackgroundLayer.cpp">
+      <Filter>Classes\Layer\Intro</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -364,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AudioManager.h">
       <Filter>Classes\Logic\AudioManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IntroBackgroundLayer.h">
+      <Filter>Classes\Layer\Intro</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

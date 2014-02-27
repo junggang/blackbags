@@ -20,9 +20,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	CCEGLView::sharedOpenGLView()->setFrameSize(winSize.width,winSize.height);
+	CCEGLView::sharedOpenGLView()->setFrameSize(WINDOW_WIDTH/2,WINDOW_HEIGHT/2);
 	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(WINDOW_WIDTH,WINDOW_HEIGHT,kResolutionShowAll);
-	
+	//CCDirector::sharedDirector()->setContentScaleFactor(2.0f);
+
     // turn on display FPS
     pDirector->setDisplayStats(true);
 

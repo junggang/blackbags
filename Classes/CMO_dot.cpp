@@ -12,10 +12,10 @@ CMO_dot::~CMO_dot()
 
 }
 
-CMO_dot* CMO_dot::create(const char* pszFileName, const CCRect& rect)
+CMO_dot* CMO_dot::create(const char* pszFileName)
 {
 	CMO_dot* pSprite = new CMO_dot();
-	if (pSprite && pSprite->initWithFile(pszFileName, rect))
+	if (pSprite && pSprite->initWithFile(pszFileName))
 	{
 		pSprite->autorelease();
 		return pSprite;
@@ -27,7 +27,7 @@ CMO_dot* CMO_dot::create(const char* pszFileName, const CCRect& rect)
 
 CMO_dot* CMO_dot::Create()
 {
-	CMO_dot* pMapObejct = CMO_dot::create("image/MO_dot.png", CCRectMake(0.0f, 0.0f, 10.0f,  10.0f));
+	CMO_dot* pMapObejct = CMO_dot::create(PLAYSCENE_DOT.c_str());
 	return pMapObejct;
 }
 

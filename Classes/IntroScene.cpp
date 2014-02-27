@@ -2,6 +2,7 @@
 #include "BackgroundLayer.h"
 #include "MainScene.h"
 #include "IntroLayer.h"
+#include "IntroBackgroundLayer.h"
 
 USING_NS_CC;
 
@@ -16,7 +17,8 @@ bool CIntroScene::init(void)
 
 	/////////////////////////////
     // 2. add layers
-	CCLayer* BackgroundLayer = CBackgroundLayer::create();
+	//CCLayer* BackgroundLayer = CBackgroundLayer::create();
+	CCLayer* BackgroundLayer = CIntroBackgroundLayer::create();
 
 	this->addChild(BackgroundLayer, 0);
 

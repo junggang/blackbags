@@ -20,7 +20,7 @@ void CMO_item::update( float delta )
 void CMO_item::setImage( IndexedPosition indexedPosition )
 {
 	int objectIdx = CGameManager::GetInstance()->GetItem(indexedPosition);
-	pItem = CCSprite::create(ItemImageFileList[objectIdx].c_str(), CCRectMake(0.0f, 0.0f, 80.0f,  80.0f));
+	pItem = CCSprite::create(ItemImageFileList[objectIdx].c_str());
 	pItem->setAnchorPoint(ccp(0.5f, 0.5f));
 	pItem->setPosition(ccp(DEFAULT_TILE_WIDTH/2,0));
 	this->addChild(pItem,0);

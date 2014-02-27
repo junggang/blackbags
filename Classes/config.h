@@ -6,8 +6,8 @@
 #endif
 
 /*	게임 화면 기본 크기입니다 */
-const int WINDOW_WIDTH = 1250;
-const int WINDOW_HEIGHT = 700;
+const int WINDOW_WIDTH = 2048;
+const int WINDOW_HEIGHT = 1536;
 
 
 /*	최대 플레이 가능 인원입니다 */
@@ -233,12 +233,13 @@ const std::string BackgroundImage = "shared_background.png";
 /*	gameSetting scene */
 
 /* play scene	*/
-const std::string lineImageFileList[4] =
+const std::string lineImageFileList[5] =
 {
 	"image/linev0.png",
-	"image/line0.png",
+	"image/playscene_line_unconnected.png",
 	"image/line_connectedv_4.png",
-	"image/line_connected4.png",
+	"image/playscene_line_connected.png",
+	"image/playscene_line_recent.png"
 };
 
 const std::string TileImageFileList[5] =
@@ -250,10 +251,19 @@ const std::string TileImageFileList[5] =
 		"image/tile_void.png"
 	};
 
-const std::string ItemImageFileList[2] =
+const std::string LandImageFileList[4] =
 {
-	"image/PLAY_gold.png",
-	"image/PLAY_trash.png"
+	"image/plascene_land_character01.png",
+	"image/plascene_land_character02.png",
+	"image/plascene_land_character03.png",
+	"image/plascene_land_character04.png",
+};
+
+const std::string ItemImageFileList[3] =
+{
+	"image/playscene_item_cake.png",
+	"image/playscene_item_trash.png"
+	"image/playscene_item_gift01.png"
 };
 
 const std::string ResultCharacterWinImage[4] =
@@ -272,7 +282,59 @@ const std::string ResultCharacterLoseImage[4] =
 	"image/RESULT_PLAYER4_lose.png",
 };
 
+/* intro scene */
+#define INTRO_BACKGROUND_COLOR  241,196,14,255
+#define INTRO_LOGO_POS 412,665
+const std::string INTRO_LOGO = "image/loading_logo.png";
+
 /*	result scene */
 const std::string ResultTitle = "result_title.png";
 
 /*	setting scene */
+
+/* playscene */
+const std::string PLAYSCENE_TIMER_BG = "image/playscene_timer_background.png";
+const std::string PLAYSCENE_TIMER_BAR = "image/playscene_timer_bar.png";
+const std::string PLAYSCENE_TIMER_MONSTER = "image/playscene_timer_monster.png";
+
+const std::string PLAYSCENE_LAND_01 = "image/playscene_land_character01.png";
+const std::string PLAYSCENE_LAND_02 = "image/playscene_land_character02.png";
+const std::string PLAYSCENE_LAND_03 = "image/playscene_land_character03.png";
+const std::string PLAYSCENE_LAND_04 = "image/playscene_land_character04.png";
+
+const std::string PLAYSCENE_EFFECT_GOOD = "image/playscene_character_effect01.png";
+const std::string PLAYSCENE_EFFECT_GREAT = "image/playscene_character_effect02.png";
+const std::string PLAYSCENE_EFFECT_BAD = "image/playscene_character_effect03.png";
+
+const std::string PLAYSCENE_DOT = "image/playscene_dot.png";
+
+const std::string PLAYSCENE_LAND_UNOCCUPIED = "image/playscene_land_unoccupied.png";
+const std::string PLAYSCENE_LAND_OCCUPIED = "image/playscene_land_occupied.png";
+
+/* shared images */
+const std::string SHARED_BACKGROUND = "image/shared_background.png";
+const std::string SHARED_PLAYERUI_GREY = "image/shared_playerui_background_unselected.png";
+const std::string SHARED_PLAYERUI_BLUE = "image/shared_playerui_background_selected.png";
+
+const std::string PlayerUiCharacterUpper[5] =
+{
+	"image/shared_player_character01_01.png",
+	"image/shared_player_character02_01.png",
+	"image/shared_player_character03_01.png",
+	"image/shared_player_character04_01.png",
+	"image/shared_player_empty_01.png"
+};
+
+const std::string PlayerUiCharacterBelow[5] =
+{
+	"image/shared_player_character01_02.png",
+	"image/shared_player_character02_02.png",
+	"image/shared_player_character03_02.png",
+	"image/shared_player_character04_02.png",
+	"image/shared_player_empty_02.png"
+};
+
+const std::string SHARED_BTN_HOME = "image/shared_icon_home.png";
+const std::string SHARED_BTN_BACK = "image/shared_backButton.png";
+const std::string SHARED_BTN_NEXT = "image/shared_nextButton.png";
+const std::string SHARED_BTN_OK = "image/shared_okButton.png";

@@ -298,12 +298,12 @@ void CGameLogic::CollectClosedTile( IndexedPosition indexedPosition, Direction d
 					m_ClosedTile[idx].m_PosJ = 0;
 				}
 #ifdef _DEBUG
-				CCLOG("sentinel !!!");
+				//CCLOG("sentinel !!!");
 #endif
 				break;
 			}
 #ifdef _DEBUG
-			CCLOG("idx I : %d / idx J : %d", currentTile.m_PosI, currentTile.m_PosJ);
+			//CCLOG("idx I : %d / idx J : %d", currentTile.m_PosI, currentTile.m_PosJ);
 #endif
 			//현재 타일의 위쪽 확인
 			if (m_Map[currentTile.m_PosI - 1][currentTile.m_PosJ].m_Type == MO_LINE_UNCONNECTED)

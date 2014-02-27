@@ -1,4 +1,5 @@
 #include "BackgroundLayer.h"
+#include "config.h"
 
 USING_NS_CC;
 
@@ -16,7 +17,7 @@ bool CBackgroundLayer::init()
 
 	/////////////////////////////
     // 2. add a background image
-	CCSprite* pBackground = CCSprite::create("image/background.png");
+	CCSprite* pBackground = CCSprite::create(SHARED_BACKGROUND.c_str());
 
 	pBackground->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
 
