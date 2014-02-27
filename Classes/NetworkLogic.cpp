@@ -17,7 +17,8 @@ CNetworkLogic::CNetworkLogic(void)
 	m_TokenId = "";
 	m_UserName = "";
 
-	m_ServerAddr = "http://10.73.43.187:5000";
+	//m_ServerAddr = "http://10.73.43.187:8080";
+	m_ServerAddr = "http://blackbags-mons.appspot.com";
 
 	m_MyPlayerId = -1;
 
@@ -241,7 +242,7 @@ bool CNetworkLogic::IsAllReady()
 
 bool CNetworkLogic::GetCurrentTimerStatus()
 {
-	return (*m_NetworkGameData)[SizeType(GD_TIMER)].GetBool();
+	return (*m_NetworkGameData)[SizeType(GD_WAITING_READY)].GetBool();
 }
 
 void CNetworkLogic::Login()
@@ -579,6 +580,10 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		if (strcmp(stringData.c_str(), "not updated") == 0)
 		{
 			return;
+		}
+		else if(strcmp(stringData.c_str(), "disconnected") == 0)
+		{
+			// 접속 종료의 경우에 대한 처리
 		}
 		else
 		{

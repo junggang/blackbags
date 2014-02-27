@@ -52,15 +52,20 @@ void CTimerLayer::update( float dt )
 
 		m_CurrentServerTimerStatus = newStatus;
 
-		if (m_CurrentServerTimerStatus)
+		if (!m_CurrentServerTimerStatus)
 		{
-			// false >>> true 이므로 타이머 새로 시작
+			// true >>> false 이므로 타이머 새로 시작(각 클라이언트의 레디 신호를 모두 수신해서 새로운 턴이 시작)
+			// 일단 기존 타이머 삭제
+			m_progressTimeBar->stopAllActions();
 
+			CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
+			CCFiniteTimeAction* pAction = CCSequence::create(progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
+			m_progressTimeBar->runAction(pAction);
 		}
 		else
 		{
-			// true >>> false 이므로 타이머 정지
-
+			// false >>> true 이므로 타이머 일시 정지
+			m_progressTimeBar->pauseSchedulerAndActions();
 		}
 	}
 	else

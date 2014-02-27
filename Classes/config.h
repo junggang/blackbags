@@ -129,7 +129,8 @@ enum GameDataIndex
 	GD_PLAYER_LIST = 9,
 	GD_MAP_SIZE = 10,
 	GD_MAP = 11,
-	GD_TIMER = 12
+	GD_TURN_START_TIME = 12,
+	GD_WAITING_READY = 13
 };
 
 enum GameDataPlayerData
