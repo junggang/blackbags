@@ -45,7 +45,7 @@ def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
 			channelId = getNewChannelId()
 
 			gameData = dataStructure.GameData()
-			gameData.initData(channelId)
+			gameData.initData(channelId, time.time() )
 
 			# 플레이어 추가 
 			for player in playerPool:
@@ -89,12 +89,12 @@ def playerMatching():
 	#	추가와 함께 해당하는 참여인원이 모두 모이면 추가된 플레이어들로 채널 생성
 	#	앞에서 생성된 채널에 추가된 플레이어는 리스트에서 삭제
 	for each in watingList:
-		if each == None:
+		playerData = getPlayerData(each)
+
+		if playerData == None:
 			# 대기 시간이 길어서 데이터가 삭제된 경우이므로 삭제!
 			watingList.remove(each)
 			continue
-
-		playerData = getPlayerData(each)
 
 		if createAvailableChannel(player_2, 2, playerData, each):
 			break
@@ -107,10 +107,10 @@ def playerMatching():
 
 
 def getNewChannelId():
-	newChannelId = 0
+	newChannelId = ''
 
 	while True:
-		newChannelId = random.randint(1, 1024)
+		newChannelId = str(random.randint(1, 1024) )
 		
 		if memcache.get(newChannelId) == None:
 			return newChannelId
@@ -280,14 +280,15 @@ def PCDrawLine(tokenId, lineIdx):
 	currentTime = time.time()
 	if currentTime - gameData.getTurnStartTime() > 21:
 		# 랜덤으로 긋기
-		randomIdx = gameData.makeRandomLine()
-		if gameData.drawLine(randomIdx[0], randomIdx[1]):
-			gameData.setPlayerUpdateFlag(playerId, False)
+		while True:
+			randomIdx = gameData.makeRandomLine()
+			if gameData.drawLine(randomIdx[0], randomIdx[1]):
+				gameData.setPlayerUpdateFlag(playerId, False)
 
-			jsonData = json.dumps(gameData.data)
-			memcache.set(channelId, jsonData, gameDataTTL)
+				jsonData = json.dumps(gameData.data)
+				memcache.set(channelId, jsonData, gameDataTTL)
 
-			return jsonData
+				return jsonData
 
 	if gameData.getCurrentTurnId() == playerId:
 		# 입력한 좌표로 긋기
@@ -314,16 +315,18 @@ def PCPlayUpdate(tokenId):
 
 	gameData = getGameData(channelId)
 
+	currentTime = time.time()
 	if currentTime - gameData.getTurnStartTime() > 21:
 		# 랜덤으로 긋기
-		randomIdx = gameData.makeRandomLine()
-		if gameData.drawLine(randomIdx[0], randomIdx[1]):
-			gameData.setPlayerUpdateFlag(playerId, False)
+		while True:
+			randomIdx = gameData.makeRandomLine()
+			if gameData.drawLine(randomIdx[0], randomIdx[1]):
+				gameData.setPlayerUpdateFlag(playerId, False)
 
-			jsonData = json.dumps(gameData.data)
-			memcache.set(channelId, jsonData, gameDataTTL)
+				jsonData = json.dumps(gameData.data)
+				memcache.set(channelId, jsonData, gameDataTTL)
 
-			return jsonData
+				return jsonData
 
 	# client가 확인해야 하는 업데이트 내용이 있는지 확인 
 	if gameData.getPlayerUpdateFlag(playerId):
@@ -516,8 +519,8 @@ def getInitializedGameData():
 			playerId = playerData.getPlayerId()
 			channelId = playerData.getPlayerGameChannel()
 
-			print channelId + 1
-			print memcache.get(channelId)
+			# print channelId
+			# print memcache.get(channelId)
 
 			gameData = getGameData(channelId)
 

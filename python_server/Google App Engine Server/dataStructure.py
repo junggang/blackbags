@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import Queue
 import random
+import time
 
 # player data index
 PD_TOKEN_ID = 0
@@ -105,13 +106,13 @@ class PlayerData:
 	# 멤버 변수를 기본값으로 초기화된 player data 생성 
 	def initData(self, tokenId, name):
 		self.data = [
-			tokenId, 	# PD_TOKEN_ID
-			-1, 		# PD_GAME_CHANNEL_ID
-			name, 		# PD_NAME
-			-1,			# PD_PLAYER_ID
-			0,			# PD_PLAYER_2
-			0,			# PD_PLAYER_3
-			0 			# PD_PLAYER_4
+			tokenId, 		# PD_TOKEN_ID
+			'no channel', 	# PD_GAME_CHANNEL_ID
+			name, 			# PD_NAME
+			-1,				# PD_PLAYER_ID
+			0,				# PD_PLAYER_2
+			0,				# PD_PLAYER_3
+			0 				# PD_PLAYER_4
 		]
 
 	# get / set functions
@@ -157,7 +158,7 @@ class GameData:
 		self.data = gameData
 
 	# 멤버 변수를 기본값으로 초기화된 game data 생성 
-	def initData(self, gameChannelId):
+	def initData(self, gameChannelId, time):
 		# make structure
 		self.data = [
 			SC_SETTING,		# D_CURRENT_SCENE
@@ -172,7 +173,7 @@ class GameData:
 			[],				# GD_PLAYER_LIST
 			[0, 0],			# GD_MAP_SIZE
 			[],				# GD_MAP
-			time.time(),	# GD_TURN_START_TIME
+			time,	# GD_TURN_START_TIME
 			False			# GD_WAITING_READY
 		]
 
