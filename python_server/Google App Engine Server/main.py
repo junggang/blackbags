@@ -263,7 +263,7 @@ def PCReady(tokenId):
 	jsonData = json.dumps(gameData.data)
 	memcache.set(channelId, jsonData, gameDataTTL)
 
-	return jsonData
+	return 'ready'
 
 def PCDrawLine(tokenId, lineIdx):
 	playerData = getPlayerData(tokenId)
@@ -276,6 +276,9 @@ def PCDrawLine(tokenId, lineIdx):
 
 	# update 적용하기 위한 타겟 game data 불러오기 
 	gameData = getGameData(channelId)
+
+	if gameData.getWaitingReadyFlag():
+		return 'not updated'
 
 	currentTime = time.time()
 	if currentTime - gameData.getTurnStartTime() > 21:
