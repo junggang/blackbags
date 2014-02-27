@@ -53,6 +53,7 @@ bool CPlayScene::init(void)
 	this->scheduleUpdate();
 
 	m_GameEndFlag = false;
+	m_AnimationDelay = 0.0f;
 
 	if (CGameManager::GetInstance()->IsOnlineMode() )
 	{
@@ -91,6 +92,21 @@ void CPlayScene::update(float dt)
 	gameBoard->update(dt);
 	player->update(dt);
 	timer->update(dt);
+
+	if (CGameManager::GetInstance()->IsOnlineMode() )
+	{
+		// 라인 재생 시간과 타일 재생 시간이 같으므로 아래의 코드에서 0.8의 상수는
+		// 라인 재생만 있을 경우에는 라인 재생 시간을, 타일 애니메이션이 포함되는 경우에는 마지막 재생되는 타일 애니메이션 재생 시간을 의미
+		float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 0.8f;
+
+		// 얼마 후에 전송하는 코드 삽입!
+		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CGameManager::PlayReady) );
+		CCDelayTime* delayAction = CCDelayTime::create(delayTime);
+		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
+
+		// 애니메이션 전송 지연값 초기화
+		CGameManager::GetInstance()->SetAnimationDelay(0.0f);
+	}
 
 	//업데이트된 내용을 모두 받아와서 갱신했으므로 flag는 원래대로 false로 만든다
 	CGameManager::GetInstance()->SetUpdateFlag(false);

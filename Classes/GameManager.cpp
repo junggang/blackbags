@@ -697,3 +697,11 @@ bool CGameManager::GetCurrentTimerStatus()
 	}
 	
 }
+
+void CGameManager::SetAnimationDelay(int time)
+{
+	if (m_AnimationDelay < time)
+	{
+		m_AnimationDelay = time;
+	}
+}

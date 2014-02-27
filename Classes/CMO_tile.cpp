@@ -110,7 +110,9 @@ void CMO_tile::update( float delta )
 			CCCallFunc::create(this, callfunc_selector(CMO_tile::changeImage)), NULL);
 
 		// 기본 라인 애니메이션 재생 시간 + 타일에 할당 된 재생 순서 * 타일 애니메이션 재생 시간
-		float delayTime = 0.8f + 0.8f * (CGameManager::GetInstance()->GetTileAnimationTurn(m_Index) );
+		float delayTime = 0.8f + 0.8f * (CGameManager::GetInstance()->GetTileAnimationTurn(m_Index) - 1);
+
+		CGameManager::GetInstance()->SetAnimationDelay(delayTime);
 
 		CCDelayTime *dt = CCDelayTime::create(delayTime);
 		CCAction *actions = CCSequence::create(dt, pAction, NULL);

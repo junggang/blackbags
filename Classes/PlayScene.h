@@ -17,4 +17,6 @@ private:
 	cocos2d::CCLayer* player;
 	cocos2d::CCLayer* timer;
 	cocos2d::CCLayer* menu;
+
+	float m_AnimationDelay;
 };

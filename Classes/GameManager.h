@@ -99,6 +99,10 @@ public:
 
 	NetworkPhase GetCurrentNetworkPhase();
 
+	// network::playReady 전송을 위한 함수
+	void	SetAnimationDelay(int time);
+	float	GetAnimationDelay() { return m_AnimationDelay; }
+
 	// game data 접근 관련
 	std::string GetUsersName();
 	std::string GetTokenId();
@@ -122,6 +126,8 @@ private:
 
 	bool m_IsOnlineGame;
 	bool m_IsUpdated;
+
+	float m_AnimationDelay;
 	//CCUserDefault m_SharedData;
 
 	//캐릭터 이름이나 맵 상태 정보들은 매니저가 캐싱해서 가지고 있는 것이 좋을 듯

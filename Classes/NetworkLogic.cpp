@@ -584,6 +584,13 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		else if(strcmp(stringData.c_str(), "disconnected") == 0)
 		{
 			// 접속 종료의 경우에 대한 처리
+
+			CGameManager::GetInstance()->SetUpdateFlag(true);
+		}
+		else if(strcmp(stringData.c_str(), "ready") == 0)
+		{
+			// 레디 성공하면 할 일 
+			// 지금은 없음
 		}
 		else
 		{
