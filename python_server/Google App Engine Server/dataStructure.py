@@ -10,7 +10,6 @@ PD_PLAYER_ID = 3
 PD_PLAYER_2 = 4
 PD_PLAYER_3 = 5
 PD_PLAYER_4 = 6
-PD_TIMESTAMP = 7
 
 # game data index
 GD_CURRENT_SCENE = 0
@@ -25,7 +24,8 @@ GD_PLAYER_NUMBER = 8
 GD_PLAYER_LIST = 9
 GD_MAP_SIZE = 10
 GD_MAP = 11
-GD_TIMER = 12
+GD_TURN_START_TIME = 12
+GD_WAITING_READY = 13
 
 # scene name index
 SC_OPENING = 0
@@ -111,8 +111,7 @@ class PlayerData:
 			-1,			# PD_PLAYER_ID
 			0,			# PD_PLAYER_2
 			0,			# PD_PLAYER_3
-			0, 			# PD_PLAYER_4
-			0 			# PD_TIMESTAMP
+			0 			# PD_PLAYER_4
 		]
 
 	# get / set functions
@@ -130,12 +129,6 @@ class PlayerData:
 
 	def setPlayerId(self, playerId):
 		self.data[PD_PLAYER_ID] = playerId
-
-	def setTimestamp(self, time):
-		self.data[PD_TIMESTAMP] = time
-
-	def getTimestamp(self):
-		return self.data[PD_TIMESTAMP]
 
 	# 참여하고 싶은 game channel의 플레이 인원을 get / set
 	def setPlayerNumber(self, two, three, four):
@@ -169,7 +162,7 @@ class GameData:
 		self.data = [
 			SC_SETTING,		# D_CURRENT_SCENE
 			gameChannelId,	# GD_CHANNEL_ID
-			MS_NOT_SELECTED,	# GD_MAP_ID
+			MS_NOT_SELECTED,# GD_MAP_ID
 			-1,				# GD_CURRENT_TURN_IDX
 			[],				# GD_TURN_LIST
 			False,			# GD_TURN_START_FLAG
@@ -179,7 +172,8 @@ class GameData:
 			[],				# GD_PLAYER_LIST
 			[0, 0],			# GD_MAP_SIZE
 			[],				# GD_MAP
-			False			# GD_TIMER
+			time.time(),	# GD_TURN_START_TIME
+			False			# GD_WAITING_READY
 		]
 
 		# add players data
@@ -220,6 +214,12 @@ class GameData:
 		self.data[GD_MAP_SIZE][1] = height
 
 		self.setUpdateFlag()
+
+	def getWaitingReadyFlag(self):
+		return self.data[GD_WAITING_READY]
+
+	def setWaitingReadyFlag(self, flag):
+		self.data[GD_WAITING_READY] = flag
 
 	# 해당 id의 player가 channel master인지 반환 
 	def isChannelMaster(self, playerId):
@@ -322,6 +322,10 @@ class GameData:
 		else:
 			return False
 
+	# 현재 턴의 시작 시간 확인
+	def getTurnStartTime(self):
+		return self.data[GD_TURN_START_TIME]
+
 	# 게임을 시작할 때 플레이어들 순서를 섞어요
 	def makeRandomTurn(self):
 		for each in self.data[GD_PLAYER_LIST]:
@@ -421,7 +425,8 @@ class GameData:
 	def startTurn(self):
 		self.resetReadyFlag()
 		self.setUpdateFlag()
-		self.data[GD_TIMER] = True
+		self.setWaitingReadyFlag(False)
+		self.data[GD_TURN_START_TIME] = time.time()
 
 	# 지금 선을 그을 차례인 플레이어의 idx값 반환 
 	def getCurrentTurnId(self):
@@ -579,9 +584,8 @@ class GameData:
 	def drawLine(self, idxI, idxJ):
 		if not self.isPossible(idxI, idxJ):
 			return False
-			
-		# 애니메이션 재생해야 하니까 타이머는 멈추자
-		self.data[GD_TIMER] = False
+
+		self.setWaitingReadyFlag(True)
 
 		self.data[GD_RECENTLY_CONNECTED_LINE][0] = idxI
 		self.data[GD_RECENTLY_CONNECTED_LINE][1] = idxJ
