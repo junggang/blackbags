@@ -4,8 +4,8 @@
 
 USING_NS_CC;
 
-const float DEFAULT_BGM_VOLUME = 80.0f;
-const float DEFAULT_SE_VOLUME = 70.0f;
+const float DEFAULT_BGM_VOLUME = 0.8f;
+const float DEFAULT_SE_VOLUME = 0.8f;
 
 const int BGM_SLIDER_TAG = 1;
 const int SE_SLIDER_TAG = 2;
@@ -51,18 +51,18 @@ bool CSettingMenuLayer::init()
 
 	// set BGM slider
 	m_pBGMVolume->setPosition( ccp(pMenu->getPositionX(), 100) );
-	m_pBGMVolume->setMaximumAllowedValue(100.0);
-	m_pBGMVolume->setMaximumValue(100.0);
-	m_pBGMVolume->setMinimumAllowedValue(100.0);
+	m_pBGMVolume->setMaximumAllowedValue(1.0);
+	m_pBGMVolume->setMaximumValue(1.0);
+	m_pBGMVolume->setMinimumAllowedValue(0.0);
 	m_pBGMVolume->setMinimumValue(0.0);
 	m_pBGMVolume->setValue(DEFAULT_BGM_VOLUME);
 	m_pBGMVolume->setTag(BGM_SLIDER_TAG);
 
 	// set SE slider
 	m_pSEVolume->setPosition( ccp(pMenu->getPositionX(), 150) );
-	m_pSEVolume->setMaximumAllowedValue(100.0);
-	m_pSEVolume->setMaximumValue(100.0);
-	m_pSEVolume->setMinimumAllowedValue(100.0);
+	m_pSEVolume->setMaximumAllowedValue(1.0);
+	m_pSEVolume->setMaximumValue(1.0);
+	m_pSEVolume->setMinimumAllowedValue(0.0);
 	m_pSEVolume->setMinimumValue(0.0);
 	m_pSEVolume->setValue(DEFAULT_SE_VOLUME);
 	m_pSEVolume->setTag(SE_SLIDER_TAG);
