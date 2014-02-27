@@ -1,4 +1,5 @@
 #include "MainTitleLayer.h"
+#include "config.h"
 
 USING_NS_CC;
 
@@ -16,9 +17,9 @@ bool CMainTitleLayer::init()
 
 	/////////////////////////////
     // 2. add a background image
-	CCSprite* pTitle = CCSprite::create("image/MAIN_title1.png");
-
-	pTitle->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + pTitle->getContentSize().height/2) );
+	CCSprite* pTitle = CCSprite::create(MAIN_TITLE.c_str());
+	pTitle->setAnchorPoint(ccp(0,0));
+	pTitle->setPosition(CCPoint(MAIN_TITLE_POS));
     this->addChild(pTitle, 0);
     
     return true;

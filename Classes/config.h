@@ -287,6 +287,24 @@ const std::string ResultCharacterLoseImage[4] =
 #define INTRO_LOGO_POS 412,665
 const std::string INTRO_LOGO = "image/loading_logo.png";
 
+/* main scene */
+const std::string MAIN_TITLE = "image/main_title.png";
+#define MAIN_TITLE_POS 419,926
+#define MAIN_MENU1_POS 116,115
+#define MAIN_MENU2_POS 785,129
+#define MAIN_MENU3_POS 1382,146
+const std::string MAIN_MENU1_IMG = "image/main_menu01_img.png";
+const std::string MAIN_MENU2_IMG = "image/main_menu02_img.png";
+const std::string MAIN_MENU3_IMG = "image/main_menu03_img.png";
+#define MAIN_MENU1_IMG_POS 200,168
+#define MAIN_MENU2_IMG_POS 856,194
+#define MAIN_MENU3_IMG_POS 1394,244
+const std::string MAIN_MENU_TITLE = "image/main_menu_title.png";
+#define MAIN_MENU_TITLE_POS 140,712
+
+
+
+
 /*	result scene */
 const std::string ResultTitle = "result_title.png";
 
@@ -338,3 +356,11 @@ const std::string SHARED_BTN_HOME = "image/shared_icon_home.png";
 const std::string SHARED_BTN_BACK = "image/shared_backButton.png";
 const std::string SHARED_BTN_NEXT = "image/shared_nextButton.png";
 const std::string SHARED_BTN_OK = "image/shared_okButton.png";
+
+const std::string SHARED_MENU1_UNSELECTED = "image/shared_menu01_unselected.png";
+const std::string SHARED_MENU2_UNSELECTED = "image/shared_menu02_unselected.png";
+const std::string SHARED_MENU3_UNSELECTED = "image/shared_menu03_unselected.png";
+
+const std::string SHARED_MENU1_SELECTED = "image/shared_menu01_selected.png";
+const std::string SHARED_MENU2_SELECTED = "image/shared_menu02_selected.png";
+const std::string SHARED_MENU3_SELECTED = "image/shared_menu03_selected.png";
