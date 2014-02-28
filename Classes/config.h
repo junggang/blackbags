@@ -224,7 +224,14 @@ struct MapObject
 */
 
 
+/*	credit scene */
+#define CREDIT_TITLE_IMAGE "image/credit_title.png"
+#define CREDIT_TITLE_POSITION 1022,1390
 
+#define CREDIT_MEMBER_IMAGE "image/credit_members.png"
+#define CREDIT_MEMBER_POSITION 113,200
+
+#define CREDIT_BACK_BUTTON_POSITION 90,94
 
 /*	loading scene */
 
@@ -449,6 +456,7 @@ const std::string SHARED_BTN_HOME = "image/shared_icon_home.png";
 const std::string SHARED_BTN_BACK = "image/shared_backButton.png";
 const std::string SHARED_BTN_NEXT = "image/shared_nextButton.png";
 const std::string SHARED_BTN_OK = "image/shared_okButton.png";
+
 #define SHARED_BTN_HOME_POS 940,51
 #define SHARED_BTN_BACK_POS 90,94
 #define SHARED_BTN_NEXT_POS 1403,94
