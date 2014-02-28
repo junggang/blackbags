@@ -9,7 +9,6 @@
 const int WINDOW_WIDTH = 2048;
 const int WINDOW_HEIGHT = 1536;
 
-
 /*	최대 플레이 가능 인원입니다 */
 const int MAX_PLAYER_NUM= 4;
 
@@ -335,6 +334,25 @@ const std::string PLAYER_NUMBER_FOUR_TXT = "image/gameset01_menu03_img.png";
 #define PLAYER_NUMBER_FOUR_TXT_POS 1407,515
 #define PLAYER_NUMBER_NEXT_IMG_POS 1403,94
 
+#define GAME_SETTING_CHARACTER_SELECT_TITLE_POS 519,1025
+#define GAME_SETTING_BTN_READY_POS 519,1025
+#define GAME_SETTING_PLAYER_ONE_STATUS_POS 44,20
+#define GAME_SETTING_PLAYER_TWO_STATUS_POS 1337,20
+#define GAME_SETTING_PLAYER_THREE_STATUS_POS 18,1091
+#define GAME_SETTING_PLAYER_FOUR_STATUS_POS 1337,1091
+const std::string CHARACTER_UNSELECT_01 = "image/gameset02_character01_unselected.png";
+const std::string CHARACTER_SELECT_01 = "image/gameset02_character01_selected.png";
+const std::string CHARACTER_UNSELECT_02 = "image/gameset02_character02_unselected.png";
+const std::string CHARACTER_SELECT_02 = "image/gameset02_character02_selected.png";
+const std::string CHARACTER_UNSELECT_03 = "image/gameset02_character03_unselected.png";
+const std::string CHARACTER_SELECT_03 = "image/gameset02_character03_selected.png";
+const std::string CHARACTER_UNSELECT_04 = "image/gameset02_character04_unselected.png";
+const std::string CHARACTER_SELECT_04 = "image/gameset02_character04_selected.png";
+#define GAME_SETTING_CHARACTER_POS_01 488,461
+#define GAME_SETTING_CHARACTER_POS_02 811,474
+#define GAME_SETTING_CHARACTER_POS_03 1053,470
+#define GAME_SETTING_CHARACTER_POS_04 1393,485
+
 /*	result scene */
 const std::string RESULT_TITLE = "image/result_title.png";
 #define RESULT_TITLE_POSITION 1022,1390
@@ -481,5 +499,15 @@ const std::string SHARED_MENU1_SELECTED = "image/shared_menu01_selected.png";
 const std::string SHARED_MENU2_SELECTED = "image/shared_menu02_selected.png";
 const std::string SHARED_MENU3_SELECTED = "image/shared_menu03_selected.png";
 
+#define GAME_FONT "fonts/paper_johnny.ttf"
+
+const std::string SHARED_PLAYER_UI_UPPER_LEFT_SELECTED = "image/shared_playerui_background_upper_left_selected.png";
+const std::string SHARED_PLAYER_UI_UPPER_LEFT_UNSELECTED = "image/shared_playerui_background_upper_left_unselected.png";
+const std::string SHARED_PLAYER_UI_UPPER_RIGHT_SELECTED = "image/shared_playerui_background_upper_right_selected.png";
+const std::string SHARED_PLAYER_UI_UPPER_RIGHT_UNSELECTED = "image/shared_playerui_background_upper_right_unselected.png";
+const std::string SHARED_PLAYER_UI_BELOW_LEFT_SELECTED = "image/shared_playerui_background_below_left_selected.png";
+const std::string SHARED_PLAYER_UI_BELOW_LEFT_UNSELECTED = "image/shared_playerui_background_below_left_unselected.png";
+const std::string SHARED_PLAYER_UI_BELOW_RIGHT_SELECTED = "image/shared_playerui_background_below_right_selected.png";
+const std::string SHARED_PLAYER_UI_BELOW_RIGHT_UNSELECTED = "image/shared_playerui_background_below_right_unselected.png";
 // window에서 실행할 때는 해당 폰트를 설치해주세요 'Paper Johnny Eineinhalb.ttf'
 #define GAME_FONT "Paper Johnny Eineinhalb Regular"

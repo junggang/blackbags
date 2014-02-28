@@ -15,34 +15,41 @@ bool CSettingCharacterLayer::init()
 	// Get Window Size
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize(); 
 
+	CreateCharacters();
+
+	return true;
+}
+
+void CSettingCharacterLayer::CreateCharacters()
+{
 	// CCMenu
 	CCMenu *CharacterSelectTable = CCMenu::createWithItems(NULL, NULL);
 
 	// make Image Buttons
 	CCMenuItemImage *pCharacter1 = CCMenuItemImage::create(
-		"image/PLAYER_1_face.png",
-		"image/PLAYER_1_selected_face.png",
+		CHARACTER_UNSELECT_01.c_str(),
+		CHARACTER_SELECT_01.c_str(),
 		this,
 		menu_selector(CSettingCharacterLayer::SelectCharacterCallBack)
 		);
 
 	CCMenuItemImage *pCharacter2 = CCMenuItemImage::create(
-		"image/PLAYER_2_face.png",
-		"image/PLAYER_2_selected_face.png",
+		CHARACTER_UNSELECT_02.c_str(),
+		CHARACTER_SELECT_02.c_str(),
 		this,
 		menu_selector(CSettingCharacterLayer::SelectCharacterCallBack)
 		);
 
 	CCMenuItemImage *pCharacter3 = CCMenuItemImage::create(
-		"image/PLAYER_3_face.png",
-		"image/PLAYER_3_selected_face.png",
+		CHARACTER_UNSELECT_03.c_str(),
+		CHARACTER_SELECT_03.c_str(),
 		this,
 		menu_selector(CSettingCharacterLayer::SelectCharacterCallBack)
 		);
 
 	CCMenuItemImage *pCharacter4 = CCMenuItemImage::create(
-		"image/PLAYER_4_face.png",
-		"image/PLAYER_4_selected_face.png",
+		CHARACTER_UNSELECT_04.c_str(),
+		CHARACTER_SELECT_04.c_str(),
 		this,
 		menu_selector(CSettingCharacterLayer::SelectCharacterCallBack)
 		);
@@ -60,14 +67,20 @@ bool CSettingCharacterLayer::init()
 	CharacterSelectTable->addChild(pCharacter4, 2);
 
 	// set Position
-	CharacterSelectTable->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-	CharacterSelectTable->alignItemsHorizontally();
+	pCharacter1->setAnchorPoint( ccp(0,0) );
+	pCharacter1->setPosition( CCPoint(GAME_SETTING_CHARACTER_POS_01) );
+	pCharacter2->setAnchorPoint( ccp(0,0) );
+	pCharacter2->setPosition( CCPoint(GAME_SETTING_CHARACTER_POS_02) );
+	pCharacter3->setAnchorPoint( ccp(0,0) );
+	pCharacter3->setPosition( CCPoint(GAME_SETTING_CHARACTER_POS_03) );
+	pCharacter4->setAnchorPoint( ccp(0,0) );
+	pCharacter4->setPosition( CCPoint(GAME_SETTING_CHARACTER_POS_04) );
+
+	CharacterSelectTable->setPosition( ccp(0, 0) );
 
 	// add to class Character Select menu
 	CharacterSelectTable->setTag(CHARACTER_TABLE_TAG);
 	this->addChild(CharacterSelectTable);
-
-	return true;
 }
 
 void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
@@ -96,7 +109,7 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
  	if ( !CGameManager::GetInstance()->IsOnlineMode() &&
 		CGameManager::GetInstance()->GetCurrentPlayerNumber() >= CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
  	{
-		// 캐릭터 취소는 가능해야 하므로 선택되지 않은 캐릭터를 고르려고 하면 그냥 리턴시켜버린다
+		// 캐릭터 취소는 가능해야 하므로 선택되지 않은 캐릭터를 고르려고 할 때만 리턴시켜버린다
 		if ( !CGameManager::GetInstance()->IsCharacterSelected(selectedCharacterId) )
 		{
 			return;

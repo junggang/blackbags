@@ -2,6 +2,12 @@
 #include "GameManager.h"
 #include "base_nodes/CCNode.h"
 
+const int PLAYER_FRAME_1_TAG = 100;
+const int PLAYER_FRAME_2_TAG = 200;
+const int PLAYER_FRAME_3_TAG = 300;
+const int PLAYER_FRAME_4_TAG = 400;
+
+
 enum PLAYER_TAG
 {
 	PLAYER_1_TAG,
@@ -35,6 +41,7 @@ bool CSettingOtherPlayerStatusLayer::init()
 
 void CSettingOtherPlayerStatusLayer::update()
 {
+	// 조심해!! 이 부분은 디버깅용이야!! 나중에 날려버려! 캬!
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
 		// 만약 어떤 캐릭터가 선택되지 않았는데 화면에 표시되고 있다면 제거한다.
@@ -115,28 +122,32 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 {
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
-		m_PlayerStatusFrame[i] = CCSprite::create("image/PLAYER_STATUS.png");
 		switch ( i )
 		{
 		case PLAYER_1_TAG:
-			m_PlayerStatusFrame[i]->setPosition( ccp( m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
-											m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
+			m_PlayerStatusFrame[i] = CCSprite::create( SHARED_PLAYER_UI_BELOW_LEFT_UNSELECTED.c_str() );
+			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_ONE_STATUS_POS) );
+			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_1_TAG );
 			break;
 		case PLAYER_2_TAG:
-			m_PlayerStatusFrame[i]->setPosition( ccp ( m_VisibleSize.width - m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
-											m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
+			m_PlayerStatusFrame[i] = CCSprite::create( SHARED_PLAYER_UI_BELOW_RIGHT_UNSELECTED.c_str() );
+			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_TWO_STATUS_POS) );
+			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_2_TAG );
 			break;
 		case PLAYER_3_TAG:
-			m_PlayerStatusFrame[i]->setPosition( ccp( m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
-											m_VisibleSize.height - m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
+			m_PlayerStatusFrame[i] = CCSprite::create( SHARED_PLAYER_UI_UPPER_LEFT_UNSELECTED.c_str() );
+			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_THREE_STATUS_POS) );
+			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_3_TAG );
 			break;
 		case PLAYER_4_TAG:
-			m_PlayerStatusFrame[i]->setPosition( ccp(m_VisibleSize.width - m_PlayerStatusFrame[i]->getContentSize().width / 2.0,
-											m_VisibleSize.height - m_PlayerStatusFrame[i]->getContentSize().height / 2.0) );
+			m_PlayerStatusFrame[i] = CCSprite::create( SHARED_PLAYER_UI_UPPER_RIGHT_UNSELECTED.c_str() );
+			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_FOUR_STATUS_POS) );
+			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_4_TAG );
 			break;
 		default:
 			break;
 		}
+		m_PlayerStatusFrame[i]->setAnchorPoint( ccp(0,0) );
 
 		this->addChild( m_PlayerStatusFrame[i] );
 	}
@@ -144,12 +155,41 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 	// 기본 얼굴을 집어넣는다.
 	for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i )
 	{
-		CCSprite* pDefaultFaceImg = CCSprite::create("image/DEFAULT_FACE.png");
-		pDefaultFaceImg->setPosition( ccp(pDefaultFaceImg->getContentSize().width / 2,
-								pDefaultFaceImg->getContentSize().height / 2) );
+		CCSprite* pDefaultFaceImg = nullptr;
+
+		switch (i)
+		{
+		case PLAYER_1_TAG:
+			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelow[4].c_str() );
+			pDefaultFaceImg->setPosition( CCPoint(150, 0) );
+			break;
+		case PLAYER_2_TAG:
+			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelow[4].c_str() );
+			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
+			break;
+		case PLAYER_3_TAG:
+			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpper[4].c_str() );
+			pDefaultFaceImg->setPosition( CCPoint(70, 0) );
+			break;
+		case PLAYER_4_TAG:
+			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpper[4].c_str() );
+			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
+			break;
+		default:
+			break;
+		}
+
+		// 방어코드 : 생성 실패시 리턴
+		if ( nullptr == pDefaultFaceImg )
+		{
+			return;
+		}
+
+		pDefaultFaceImg->setTag( CURRENT_FACE_TAG );
+		pDefaultFaceImg->setAnchorPoint( ccp(0,0) );
+
 		// 각 상태창에 기본 얼굴을 집어넣어둔다.
 		m_PlayerStatusFrame[i]->addChild(pDefaultFaceImg);
-		pDefaultFaceImg->setTag(CURRENT_FACE_TAG);
 	}
 
 	// 플레이어 이름 설정 

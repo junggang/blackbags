@@ -11,6 +11,6 @@ public:
 private:
 	// 캐릭터를 선택했을떄 일어나는 일
 	void SelectCharacterCallBack(CCObject* pSender);
-
+	void CreateCharacters();
 };
 
