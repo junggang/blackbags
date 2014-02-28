@@ -224,14 +224,25 @@ struct MapObject
 */
 
 
-/*	shared images */
-const std::string BackgroundImage = "shared_background.png";
+
 
 /*	loading scene */
 
 /*	main scene */
 
 /*	gameSetting scene */
+
+// waiting gamechannel
+#define WAITING_CHANNEL_MONSTER_IMAGE "image/searching_monster.png"
+#define WAITING_CHANNEL_MONSTER_POSITION 875,601
+
+#define WAITING_CHANNEL_TEXT_IMAGE "image/searching_text01.png"
+#define WAITING_CHANNEL_TEXT_POSITION 1051,511
+
+#define WAITING_CHANNEL_MAGNIFIER_IMAGE "image/searching_eye.png"
+#define WAITING_CHANNEL_MAGNIFIER_POSITION 757,680
+
+#define WAITING_CHANNEL_BACK_BUTTON_POSITION 90,94
 
 /* play scene	*/
 const std::string lineImageFileList[5] =
@@ -318,7 +329,73 @@ const std::string PLAYER_NUMBER_FOUR_TXT = "image/gameset01_menu03_img.png";
 #define PLAYER_NUMBER_NEXT_IMG_POS 1403,94
 
 /*	result scene */
-const std::string ResultTitle = "result_title.png";
+const std::string RESULT_TITLE = "image/result_title.png";
+#define RESULT_TITLE_POSITION 1022,1390
+
+#define RESULT_OK_BUTTON_POSITION 1403,94
+
+const std::string RESULT_BACKGROUND_IMAGE[MAX_PLAYER_NUM] =
+{
+	"image/result_bg01.png",
+	"image/result_bg02.png",
+	"image/result_bg03.png",
+	"image/result_bg04.png",
+};
+#define RESULT_BACKGROUND_WIDTH 497
+#define RESULT_BACKGROUND_HEIGHT 1100
+#define RESULT_BACKGROUND_POSITION_Y 246
+
+#define RESULT_PLAYER_NAME_POSITION_X 243
+#define RESULT_PLAYER_NAME_POSITION_Y 950
+
+#define RESULT_PLAYER_SCORE_POSITION_X_MARGIN 243
+#define RESULT_PLAYER_SCORE_POSITION_Y_MARGIN 410
+
+const std::string RESULT_CHARACTER_WIN_IMAGE[MAX_PLAYER_NUM] =
+{
+	"image/result_character01.png",
+	"image/result_character02.png",
+	"image/result_character03.png",
+	"image/result_character04.png",
+};
+const std::string RESULT_CHARACTER_LOSE_IMAGE[MAX_PLAYER_NUM] =
+{
+	"image/result_character01.png",
+	"image/result_character02.png",
+	"image/result_character03.png",
+	"image/result_character04.png",
+};
+#define RESULT_CHARACTER_IMAGE_POSITION_X_MARGIN 248
+#define RESULT_CHARACTER_IMAGE_POSITION_Y_MARGIN 450
+
+#define RESULT_ITEM_IMAGE_Y_MARGIN 175
+const std::string RESULT_FLOWER_IMAGE[MAX_PLAYER_NUM] =
+{
+	"image/result_flower_01.png",
+	"image/result_flower_02.png",
+	"image/result_flower_03.png",
+	"image/result_flower_04.png",
+};
+#define RESULT_FLOWER_IMAGE_X_MARGIN 100
+
+const std::string RESULT_GOLD_IMAGE[1] =
+{
+	"image/result_item_cake.png",
+};
+#define RESULT_GOLD_IMAGE_X_MARGIN 248
+
+const std::string ResultTrashImage[3] =
+{
+	"image/result_item_trash01.png",
+	"image/result_item_trash02.png",
+	"image/result_item_trash03.png",
+};
+#define RESULT_TRASH_IMAGE_X_MARGIN 414
+
+#define RESULT_ITEM_COUNT_Y_MARGIN 105
+#define RESULT_FLOWER_COUNT_X_MARGIN 100
+#define RESULT_GOLD_COUNT_X_MARGIN 248
+#define RESULT_TRASH_COUNT_X_MARGIN 414
 
 /*	setting scene */
 
@@ -395,3 +472,5 @@ const std::string SHARED_MENU3_UNSELECTED = "image/shared_menu03_unselected.png"
 const std::string SHARED_MENU1_SELECTED = "image/shared_menu01_selected.png";
 const std::string SHARED_MENU2_SELECTED = "image/shared_menu02_selected.png";
 const std::string SHARED_MENU3_SELECTED = "image/shared_menu03_selected.png";
+
+#define GAME_FONT "fonts/paper_johnny.ttf"

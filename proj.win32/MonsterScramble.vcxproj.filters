@@ -228,6 +228,9 @@
     <ClCompile Include="..\Classes\IntroBackgroundLayer.cpp">
       <Filter>Classes\Layer\Intro</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ResultButtonLayer.cpp">
+      <Filter>Classes\Layer\Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -370,6 +373,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\IntroBackgroundLayer.h">
       <Filter>Classes\Layer\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ResultButtonLayer.h">
+      <Filter>Classes\Layer\Result</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

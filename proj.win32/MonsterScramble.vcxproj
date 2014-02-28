@@ -163,6 +163,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\PlayerLayer.cpp" />
     <ClCompile Include="..\Classes\PlayerNumberAndMapSizeLayer.cpp" />
     <ClCompile Include="..\Classes\PlayScene.cpp" />
+    <ClCompile Include="..\Classes\ResultButtonLayer.cpp" />
     <ClCompile Include="..\Classes\ResultScene.cpp" />
     <ClCompile Include="..\Classes\ResultScoreLayer.cpp" />
     <ClCompile Include="..\Classes\ResultTitleLayer.cpp" />
@@ -212,6 +213,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\PlayerLayer.h" />
     <ClInclude Include="..\Classes\PlayerNumberAndMapSizeLayer.h" />
     <ClInclude Include="..\Classes\PlayScene.h" />
+    <ClInclude Include="..\Classes\ResultButtonLayer.h" />
     <ClInclude Include="..\Classes\ResultScene.h" />
     <ClInclude Include="..\Classes\ResultScoreLayer.h" />
     <ClInclude Include="..\Classes\ResultTitleLayer.h" />

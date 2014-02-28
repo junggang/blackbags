@@ -1,7 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 
-class CWaitingChannelId : public cocos2d::CCLayer
+class CResultButtonLayer : public cocos2d::CCLayer
 {
 public:
 	virtual bool init();
@@ -10,6 +10,6 @@ public:
     void mainSceneCallback(CCObject* pSender);
 
 	// implement the "static node()" method manually
-    CREATE_FUNC(CWaitingChannelId);
+    CREATE_FUNC(CResultButtonLayer);
 };
 

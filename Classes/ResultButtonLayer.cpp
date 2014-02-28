@@ -1,10 +1,10 @@
-#include "WaitingChannelId.h"
+#include "ResultButtonLayer.h"
 #include "MainScene.h"
 #include "config.h"
 
 USING_NS_CC;
 
-bool CWaitingChannelId::init()
+bool CResultButtonLayer::init()
 {
 	//////////////////////////////
     // 1. super init first
@@ -17,34 +17,16 @@ bool CWaitingChannelId::init()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
 	/////////////////////////////
-	// 2. add a background image
-	// monster part
-	CCSprite* pMonster = CCSprite::create(WAITING_CHANNEL_MONSTER_IMAGE);
-	pMonster->setAnchorPoint(ccp(0, 0) );
-	pMonster->setPosition(CCPoint(WAITING_CHANNEL_MONSTER_POSITION) );
-	addChild(pMonster, 0);
-
-	// magnifier part
-	CCSprite* pMagnifier = CCSprite::create(WAITING_CHANNEL_MAGNIFIER_IMAGE);
-	pMagnifier->setAnchorPoint(ccp(0, 0) );
-	pMagnifier->setPosition(CCPoint(WAITING_CHANNEL_MAGNIFIER_POSITION) );
-	addChild(pMagnifier, 1);
-
-	// searching animation
-	CCSprite* pTextAnimation = CCSprite::create(WAITING_CHANNEL_TEXT_IMAGE);
-	pTextAnimation->setAnchorPoint(ccp(0, 0) );
-	pTextAnimation->setPosition(CCPoint(WAITING_CHANNEL_TEXT_POSITION) );
-	addChild(pTextAnimation, 2);
-
-	// mainmenu button part
+	// 2. add a background image *** 일단 레이아웃은 임의로 잡습니다 ***
+	//finish button part
 	CCMenuItemImage *pMainScene = CCMenuItemImage::create(
-										SHARED_BTN_BACK.c_str(),
-										SHARED_BTN_BACK.c_str(),
+										SHARED_BTN_OK.c_str(),
+										SHARED_BTN_OK.c_str(),
 										this,
-										menu_selector(CWaitingChannelId::mainSceneCallback)
+										menu_selector(CResultButtonLayer::mainSceneCallback)
 										);
 	pMainScene->setAnchorPoint(ccp(0.0, 0.0) );
-	pMainScene->setPosition(CCPoint(WAITING_CHANNEL_BACK_BUTTON_POSITION) );
+	pMainScene->setPosition(CCPoint(RESULT_OK_BUTTON_POSITION) );
 
 	// create menu, it's an autorelease object
 	CCMenu* pMenu = CCMenu::create(pMainScene, NULL);
@@ -54,7 +36,7 @@ bool CWaitingChannelId::init()
 	return true;
 }
 
-void CWaitingChannelId::mainSceneCallback(CCObject* pSender)
+void CResultButtonLayer::mainSceneCallback(CCObject* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
