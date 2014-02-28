@@ -105,6 +105,7 @@ enum MapSelect
 {
 	MS_NOT_SELECTED,
 	MS_5X5,
+	MS_7X7,
 	MS_8X8
 };
 
@@ -302,8 +303,19 @@ const std::string MAIN_MENU3_IMG = "image/main_menu03_img.png";
 const std::string MAIN_MENU_TITLE = "image/main_menu_title.png";
 #define MAIN_MENU_TITLE_POS 140,712
 
-
-
+/*	game setting scene	*/
+const std::string PLAYER_NUMBER_TITLE = "image/gameset01_title.png";
+#define PLAYER_NUMBER_TITLE_POS 1022,1390
+const std::string PLAYER_NUMBER_TWO_TXT = "image/gameset01_menu01_img.png";
+const std::string PLAYER_NUMBER_THREE_TXT = "image/gameset01_menu02_img.png";
+const std::string PLAYER_NUMBER_FOUR_TXT = "image/gameset01_menu03_img.png";
+#define PLAYER_NUMBER_TWO_IMG_POS 94,446
+#define PLAYER_NUMBER_TWO_TXT_POS 167,512
+#define PLAYER_NUMBER_THREE_IMG_POS 763,459
+#define PLAYER_NUMBER_THREE_TXT_POS 804,524
+#define PLAYER_NUMBER_FOUR_IMG_POS 1360,476
+#define PLAYER_NUMBER_FOUR_TXT_POS 1407,515
+#define PLAYER_NUMBER_NEXT_IMG_POS 1403,94
 
 /*	result scene */
 const std::string ResultTitle = "result_title.png";

@@ -19,55 +19,11 @@ bool CPlayerNumberAndMapSizeLayer::init()
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 	// CCMenu
-	CreateMapSelectMenu(visibleSize);
+	CreateTitle();
 	CreateNumberOfPlayerMenu(visibleSize);
 	CreateNextButtonMenu(visibleSize);
 
 	return true;
-}
-
-void CPlayerNumberAndMapSizeLayer::CreateMapSelectMenu( CCSize visibleSize )
-{
-	// 조심해! 일단 init에 넣고 모듈화는 좀 있다가..
-	CCMenu *MapSelectTable = CCMenu::createWithItems(NULL, NULL);
-
-	// make Image Buttons
-	pMapSelect1 = CCMenuItemImage::create(
-		"image/SETTING_5x5.png",
-		"image/SETTING_5x5_selected.png",
-		this,
-		menu_selector(CPlayerNumberAndMapSizeLayer::SelectMapCallBack)
-		);
-
-	pMapSelect2 = CCMenuItemImage::create(
-		"image/SETTING_8x7.png",
-		"image/SETTING_8x7_selected.png",
-		this,
-		menu_selector(CPlayerNumberAndMapSizeLayer::SelectMapCallBack)
-		);
-
-	// set Tag
-	pMapSelect1->setTag( MS_5X5 );
-	pMapSelect2->setTag( MS_8X8 );
-
-	// add child
-	MapSelectTable->addChild(pMapSelect1);
-	MapSelectTable->addChild(pMapSelect2);
-
-	// set position
-	MapSelectTable->setPosition(visibleSize.width / 2, visibleSize.height / 2 - 2 * pMapSelect1->getContentSize().width);
-	MapSelectTable->alignItemsHorizontally();
-
-	// add menu to this class
-	this->addChild(MapSelectTable);
-
-	//check표시
-	pCheck = CCSprite::create("image/SETTING_check.png");
-
-	// Title Position : X Center + Y
-	pCheck->setPosition( ccp(0, 0) );
-	pCheck->setVisible(false);
-	this->addChild(pCheck, 0);
 }
 
 void CPlayerNumberAndMapSizeLayer::CreateNumberOfPlayerMenu( CCSize visibleSize )
@@ -75,47 +31,67 @@ void CPlayerNumberAndMapSizeLayer::CreateNumberOfPlayerMenu( CCSize visibleSize 
 	CCMenu *PlayerNumberSelectTable = CCMenu::createWithItems(NULL, NULL);
 
 	CCMenuItemImage *pPlayerNumber2 = CCMenuItemImage::create(
-		"image/PLAYER_NUMBER_TWO.png",
-		"image/PLAYER_NUMBER_TWO_SELECTED.png",
+		SHARED_MENU1_UNSELECTED.c_str(),
+		SHARED_MENU1_SELECTED.c_str(),
 		this,
 		menu_selector(CPlayerNumberAndMapSizeLayer::NumberOfPlayerCallBack)
 		);
 
 	CCMenuItemImage *pPlayerNumber3 = CCMenuItemImage::create(
-		"image/PLAYER_NUMBER_THREE.png",
-		"image/PLAYER_NUMBER_THREE_SELECTED.png",
+		SHARED_MENU2_UNSELECTED.c_str(),
+		SHARED_MENU2_SELECTED.c_str(),
 		this,
 		menu_selector(CPlayerNumberAndMapSizeLayer::NumberOfPlayerCallBack)
 		);
 
 	CCMenuItemImage *pPlayerNumber4 = CCMenuItemImage::create(
-		"image/PLAYER_NUMBER_FOUR.png",
-		"image/PLAYER_NUMBER_FOUR_SELECTED.png",
+		SHARED_MENU3_UNSELECTED.c_str(),
+		SHARED_MENU3_SELECTED.c_str(),
 		this,
 		menu_selector(CPlayerNumberAndMapSizeLayer::NumberOfPlayerCallBack)
 		);
 
+	CCSprite *pNumberImg2 = CCSprite::create( PLAYER_NUMBER_TWO_TXT.c_str() );
+	CCSprite *pNumberImg3 = CCSprite::create( PLAYER_NUMBER_THREE_TXT.c_str() );
+	CCSprite *pNumberImg4 = CCSprite::create( PLAYER_NUMBER_FOUR_TXT.c_str() );
+
 	// set Tag
-	pPlayerNumber2->setTag(0);
-	pPlayerNumber3->setTag(1);
-	pPlayerNumber4->setTag(2);
+	pPlayerNumber2->setTag( MS_5X5 );
+	pPlayerNumber3->setTag( MS_7X7 );
+	pPlayerNumber4->setTag( MS_8X8 );
 
 	// add buttons to MENU
-	PlayerNumberSelectTable->addChild(pPlayerNumber2);
-	PlayerNumberSelectTable->addChild(pPlayerNumber3);
-	PlayerNumberSelectTable->addChild(pPlayerNumber4);
-
-	// Set Align Style
-	PlayerNumberSelectTable->alignItemsHorizontallyWithPadding(10);
+	PlayerNumberSelectTable->addChild( pPlayerNumber2 );
+	PlayerNumberSelectTable->addChild( pPlayerNumber3 );
+	PlayerNumberSelectTable->addChild( pPlayerNumber4 );
+	
+	// Set Item Position
+	pPlayerNumber2->setAnchorPoint( ccp(0,0) );
+	pPlayerNumber2->setPosition( CCPoint( PLAYER_NUMBER_TWO_IMG_POS ) );
+	pPlayerNumber3->setAnchorPoint( ccp(0,0) );
+	pPlayerNumber3->setPosition( CCPoint( PLAYER_NUMBER_THREE_IMG_POS ) );
+	pPlayerNumber4->setAnchorPoint( ccp(0,0) );
+	pPlayerNumber4->setPosition( CCPoint( PLAYER_NUMBER_FOUR_IMG_POS ) );
+	pNumberImg2->setAnchorPoint( ccp(0,0) );
+	pNumberImg2->setPosition( CCPoint( PLAYER_NUMBER_TWO_TXT_POS ) );
+	pNumberImg3->setAnchorPoint( ccp(0,0) );
+	pNumberImg3->setPosition( CCPoint( PLAYER_NUMBER_THREE_TXT_POS ) );
+	pNumberImg4->setAnchorPoint( ccp(0,0) );
+	pNumberImg4->setPosition( CCPoint( PLAYER_NUMBER_FOUR_TXT_POS ) );
 
 	// set menu Position
-	PlayerNumberSelectTable->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	PlayerNumberSelectTable->setPosition( ccp(0, 0) );
 
 	// set menu Tag
 	PlayerNumberSelectTable->setTag(PLAYER_SELECT_TABLE_TAG);
 
 	// add menu to this layer
 	this->addChild(PlayerNumberSelectTable);
+
+	// add Number Img on button
+	this->addChild( pNumberImg2 );
+	this->addChild( pNumberImg3 );
+	this->addChild( pNumberImg4 );
 }
 
 void CPlayerNumberAndMapSizeLayer::CreateNextButtonMenu( CCSize visibleSize )
@@ -123,35 +99,19 @@ void CPlayerNumberAndMapSizeLayer::CreateNextButtonMenu( CCSize visibleSize )
 	CCMenu *NextButtonTable = CCMenu::createWithItems(NULL, NULL);
 
 	CCMenuItemImage* pNextButton = CCMenuItemImage::create(
-		"image/NAMESETTING_next.png",
-		"image/NAMESETTING_next_selected.png",
+		SHARED_BTN_NEXT.c_str(),
+		SHARED_BTN_NEXT.c_str(),
 		this,
 		menu_selector(CPlayerNumberAndMapSizeLayer::NextButtonCallBack)
 		);
 
-	NextButtonTable->setPosition(visibleSize.width - pNextButton->getContentSize().width,
-							pNextButton->getContentSize().height);
+	pNextButton->setAnchorPoint( ccp(0, 0) );
+	pNextButton->setPosition( CCPoint( PLAYER_NUMBER_NEXT_IMG_POS ) );
 
 	NextButtonTable->addChild(pNextButton);
+	NextButtonTable->setPosition( ccp(0, 0) );
 
 	this->addChild(NextButtonTable);
-}
-
-void CPlayerNumberAndMapSizeLayer::SelectMapCallBack( CCObject* pSender )
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-	// 어떤 버튼이 클릭되었는지를 알아본다.
-	int selectedMapId = static_cast<CCMenuItem*>(pSender)->getTag();
-
-	// 어떤 버튼이 클릭되었다는 것을 알려준다.
-	CGameManager::GetInstance()->SetMapSize( static_cast<MapSelect>(selectedMapId) );
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
-#endif
-#endif
 }
 
 void CPlayerNumberAndMapSizeLayer::NumberOfPlayerCallBack( CCObject* pSender )
@@ -160,12 +120,14 @@ void CPlayerNumberAndMapSizeLayer::NumberOfPlayerCallBack( CCObject* pSender )
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
 	// 몇 명이 플레이할지를 골랐다면 값을 전달함
-	int selectedPlayerNumber = static_cast<CCMenuItem*>(pSender)->getTag();
+	int buttonTag = static_cast<CCMenuItem*>(pSender)->getTag();
 
-	// 조심해! HardCoding^^;
-	// Tag :: 0, 1, 2 이므로 유저 수 2, 3, 4 명에 대응되려면 +2 시켜야 함
-	CGameManager::GetInstance()->SetPlayerNumberOfThisGame(selectedPlayerNumber + 2);
+	// Tag :: 1, 2, 3 이므로 유저 수 2, 3, 4 명에 대응되려면 +1 시켜야 함
+	CGameManager::GetInstance()->SetPlayerNumberOfThisGame(buttonTag + 1);
 	CGameManager::GetInstance()->SetUpdateFlag(true);
+
+	// 여기서 맵 크기까지 같이 정해준다!
+	CGameManager::GetInstance()->SetMapSize( static_cast<MapSelect>(buttonTag) );
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	//exit(0);
@@ -196,32 +158,13 @@ void CPlayerNumberAndMapSizeLayer::update(float dt)
 {
 	float tempX, tempY;
 
-	switch ( CGameManager::GetInstance()->GetSelectedMapSize() )
-	{
-	case MS_NOT_SELECTED:
-		pCheck->setVisible(false);
-		break;
-	case MS_5X5:
-		tempX = pMapSelect1->getParent()->getPositionX() + pMapSelect1->getPositionX();
-		tempY = pMapSelect1->getParent()->getPositionY();
-		pCheck->setPosition( ccp(tempX, tempY) );
-		pCheck->setVisible( true );
-		break;
-	case MS_8X8:
-		tempX = pMapSelect2->getParent()->getPositionX() + pMapSelect2->getPositionX();
-		tempY = pMapSelect2->getParent()->getPositionY();
-		pCheck->setPosition( ccp(tempX, tempY) );
-		pCheck->setVisible( true );
-		break;
-	}
-
 	// 이 게임을 몇 명이 하는지 가져와서 해당 버튼을 선택된 상태로 만든다.
 	CCMenuItemImage* pTempPlayerNumber;
 
 	for (int i = 2; i <= MAX_PLAYER_NUM; ++i)
 	{
 		// 현재 인원수에 해당하는 버튼 포인터를 가져온다.
-		pTempPlayerNumber = static_cast<CCMenuItemImage*>( this->getChildByTag(PLAYER_SELECT_TABLE_TAG)->getChildByTag(i - 2) );
+		pTempPlayerNumber = static_cast<CCMenuItemImage*>( this->getChildByTag(PLAYER_SELECT_TABLE_TAG)->getChildByTag(i - 1) );
 
 		// 방어코드
 		if ( pTempPlayerNumber == nullptr )
@@ -230,8 +173,8 @@ void CPlayerNumberAndMapSizeLayer::update(float dt)
 		}
 
 		// PLAYER NUMBER == i
-		// PLAYER NUMBER : 2 == TAG (0), 3 == TAG (1), 4 == TAG (2) 이므로
-		// TAG == i - 2
+		// PLAYER NUMBER : 2 == TAG (1), 3 == TAG (2), 4 == TAG (3) 이므로
+		// TAG == i - 1
 		if ( i == CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
 		{
 			pTempPlayerNumber->selected();
@@ -241,4 +184,11 @@ void CPlayerNumberAndMapSizeLayer::update(float dt)
 			pTempPlayerNumber->unselected();
 		}
 	}
+}
+
+void CPlayerNumberAndMapSizeLayer::CreateTitle()
+{
+	CCSprite* pTitle = CCSprite::create(PLAYER_NUMBER_TITLE.c_str());
+	pTitle->setPosition( CCPoint(PLAYER_NUMBER_TITLE_POS) );
+	this->addChild(pTitle);
 }

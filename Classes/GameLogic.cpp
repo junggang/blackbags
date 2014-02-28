@@ -602,6 +602,10 @@ void CGameLogic::CreateMap()
 		mapSize.m_Width = 5;
 		mapSize.m_Height = 5;
 		break;
+	case MS_7X7:
+		mapSize.m_Width = 7;
+		mapSize.m_Height = 7;
+		break;
 	case MS_8X8:
 		mapSize.m_Width = 8;
 		mapSize.m_Height = 8;
@@ -660,6 +664,11 @@ void CGameLogic::InitRandomMap()
 		startLineNumber = 13;
 		startGoldNumber = 5;
 		startTrashNumber = 4;
+		break;
+	case MS_7X7: 
+		startLineNumber = 20;
+		startGoldNumber = 6;
+		startTrashNumber = 5;
 		break;
 	case MS_8X8:
 		startLineNumber = 27;

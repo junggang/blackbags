@@ -6,12 +6,11 @@ class CPlayerNumberAndMapSizeLayer : public cocos2d::CCLayer
 {
 public:
 	virtual bool init();
-
-	void CreateMapSelectMenu(cocos2d::CCSize visibleSize);
+	
+	void CreateTitle();
 	void CreateNumberOfPlayerMenu(cocos2d::CCSize visibleSize);
 	void CreateNextButtonMenu(cocos2d::CCSize visibleSize);
 
-	void SelectMapCallBack(cocos2d::CCObject* pSender);
 	void NumberOfPlayerCallBack(cocos2d::CCObject* pSender);
 	void NextButtonCallBack(cocos2d::CCObject* pSender);
 
@@ -21,15 +20,8 @@ public:
 
 	// implement the "static node()" method manually
     CREATE_FUNC(CPlayerNumberAndMapSizeLayer);
-
-private:
-	// Check Image
-	cocos2d::CCSprite*		pCheck;
 	
-	// Map Select
-	cocos2d::CCMenuItemImage *pMapSelect1;
-	cocos2d::CCMenuItemImage *pMapSelect2;
-
+private:
 	// Next Button
 	cocos2d::CCMenuItemImage *pNextButton;
 };
