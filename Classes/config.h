@@ -460,21 +460,23 @@ const std::string SHARED_BACKGROUND = "image/shared_background.png";
 const std::string SHARED_PLAYERUI_GREY = "image/shared_playerui_background_unselected.png";
 const std::string SHARED_PLAYERUI_BLUE = "image/shared_playerui_background_selected.png";
 
-const std::string PlayerUiCharacterUpper[5] =
+const std::string PlayerUiCharacterUpper[6] =
 {
 	"image/shared_player_character01_01.png",
 	"image/shared_player_character02_01.png",
 	"image/shared_player_character03_01.png",
 	"image/shared_player_character04_01.png",
-	"image/shared_player_empty_01.png"
+	"image/shared_player_empty_03.png",
+	"image/shared_player_empty_04.png"
 };
 
-const std::string PlayerUiCharacterBelow[5] =
+const std::string PlayerUiCharacterBelow[6] =
 {
 	"image/shared_player_character01_02.png",
 	"image/shared_player_character02_02.png",
 	"image/shared_player_character03_02.png",
 	"image/shared_player_character04_02.png",
+	"image/shared_player_empty_01.png",
 	"image/shared_player_empty_02.png"
 };
 

@@ -161,18 +161,18 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		{
 		case PLAYER_1_TAG:
 			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelow[4].c_str() );
-			pDefaultFaceImg->setPosition( CCPoint(150, 0) );
+			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
 			break;
 		case PLAYER_2_TAG:
-			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelow[4].c_str() );
+			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelow[5].c_str() );
 			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
 			break;
 		case PLAYER_3_TAG:
 			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpper[4].c_str() );
-			pDefaultFaceImg->setPosition( CCPoint(70, 0) );
+			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
 			break;
 		case PLAYER_4_TAG:
-			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpper[4].c_str() );
+			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpper[5].c_str() );
 			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
 			break;
 		default:
@@ -204,7 +204,7 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		pEditName->setPosition( ccp(m_PlayerStatusFrame[i]->getContentSize().width - pEditName->getContentSize().width / 2,
 									pEditName->getContentSize().height / 2) );
 		pEditName->setFontColor( ccYELLOW );
-		pEditName->setFont("Helvetica", 30);
+		pEditName->setFont(GAME_FONT, 30);
 		pEditName->setMaxLength( 12 );
 		pEditName->setPlaceholderFontSize( 1 );
 		pEditName->setPlaceHolder( CGameManager::GetInstance()->GetPlayerName(i).c_str() );
