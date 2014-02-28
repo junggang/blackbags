@@ -17,18 +17,23 @@ bool CTimerLayer::init()
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
-	CCSprite* timer = CCSprite::create("image/timer.png");
-	m_progressTimeBar = CCProgressTimer::create(timer);
+	CCSprite* timerBg = CCSprite::create(PLAYSCENE_TIMER_BAR.c_str());
+	timerBg->setAnchorPoint(ccp(0,0));
+	timerBg->setPosition(CCPoint(PLAYSCENE_TIMER_POS));
+	addChild(timerBg,0);
+
+	CCSprite* timerBar = CCSprite::create(PLAYSCENE_TIMER_BAR.c_str());
+	m_progressTimeBar = CCProgressTimer::create(timerBar);
 	m_progressTimeBar->setType(kCCProgressTimerTypeBar);
 
-	m_progressTimeBar->setPosition( ccp(origin.x+100.0f, m_VisibleSize.height/2));
+	m_progressTimeBar->setAnchorPoint(ccp(0,0));
+	m_progressTimeBar->setPosition(CCPoint(PLAYSCENE_TIMER_POS));
 
-	m_progressTimeBar->setScale(m_VisibleSize.height/3.65/timer->getContentSize().height);
 	m_progressTimeBar->setPercentage(100.f);
-	m_progressTimeBar->setMidpoint(ccp(0, 0));   
-	m_progressTimeBar->setBarChangeRate(ccp(0, 1));
+	m_progressTimeBar->setMidpoint(ccp(0, 0.5));   
+	m_progressTimeBar->setBarChangeRate(ccp(1,0));
 
-	this->addChild(m_progressTimeBar,0);
+	this->addChild(m_progressTimeBar,1);
 
 	//시작하면서 한 번 업데이트 해야되는데.
 	CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);

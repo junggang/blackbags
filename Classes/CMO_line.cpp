@@ -172,13 +172,11 @@ void CMO_line::setAnchorPoint()
 void CMO_line::changeImage()
 {
 	//기존의 이미지는 삭제하고
-	int width = pLine->getContentSize().width;
-	int height = pLine->getContentSize().height;
 
 	this->removeChild(pLine, true);
 		
 	//애니메이션 종료 후 화면에 표시될 이미지 등록
-	pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx + 2].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
+	pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx + 2].c_str());
 
 	if (m_ImageFileIdx % 2== 0)
 		pLine->setAnchorPoint( ccp(1.0f, 0.0f) );

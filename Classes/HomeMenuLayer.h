@@ -8,9 +8,10 @@ public:
 
 	// a selector callback
 	void homeMenuCallback(CCObject* pSender);
-	void homeIconCallback(CCObject* pSender);
 	void ResumeIconCallback(CCObject* pSender);
-	void OptionIconCallback(CCObject* pSender);
+	void HelpIconCallback(CCObject* pSender);
+	void SettingIconCallback(CCObject* pSender);
+	void QuitIconCallback(CCObject* pSender);
 
 	// implement the "static node()" method manually
 	CREATE_FUNC(CHomeMenuLayer);
@@ -18,7 +19,9 @@ public:
 private:
 	cocos2d::CCSprite* m_backLayer;
 	cocos2d::CCMenu* m_iconResume;
-	cocos2d::CCMenu* m_iconHome;
-	cocos2d::CCMenu* m_iconOption;
+	cocos2d::CCMenu* m_iconHelp;
+	cocos2d::CCMenu* m_iconSetting;
+	cocos2d::CCMenu* m_iconQuit;
+
 };
 

@@ -39,7 +39,7 @@ bool CGameBoardLayer::init()
 	}
 
 	m_Board = CCSprite::create(
-		"image/board.png", 
+		PLAYSCENE_BOARD.c_str(), 
 		CCRect(0, 0, columnNum * DEFAULT_TILE_WIDTH, rowNum * DEFAULT_TILE_HEIGHT)
 		);
 	m_Board->setAnchorPoint(ccp(0.5f, 0.5f));

@@ -17,8 +17,8 @@ const int MAX_PLAYER_NUM= 4;
 const int CHARACTER_NUM = 4;
 
 /*	게임 맵 오브젝트들의 기본 크기입니다 */
-const float DEFAULT_TILE_WIDTH = 120.0f;
-const float DEFAULT_TILE_HEIGHT = 80.0f;
+const float DEFAULT_TILE_WIDTH = 240.0f;
+const float DEFAULT_TILE_HEIGHT = 160.0f;
 
 const float DEFAULT_CHARACTER_MARGIN_H = 100.0f;
 const float DEFAULT_CHARACTER_MARGIN_V = 100.0f;
@@ -235,20 +235,20 @@ const std::string BackgroundImage = "shared_background.png";
 /* play scene	*/
 const std::string lineImageFileList[5] =
 {
-	"image/linev0.png",
+	"image/playscene_line_unconnected_v.png",
 	"image/playscene_line_unconnected.png",
-	"image/line_connectedv_4.png",
+	"image/playscene_line_connected_v.png",
 	"image/playscene_line_connected.png",
 	"image/playscene_line_recent.png"
 };
 
 const std::string TileImageFileList[5] =
 	{
-		"image/tile_occupied.png",
-		"image/tile_occupied.png",
-		"image/tile_occupied.png",
-		"image/tile_occupied.png",
-		"image/tile_void.png"
+		"image/playscene_land_occupied.png",
+		"image/playscene_land_occupied.png",
+		"image/playscene_land_occupied.png",
+		"image/playscene_land_occupied.png",
+		"image/playscene_land_unoccupied.png"
 	};
 
 const std::string LandImageFileList[4] =
@@ -262,7 +262,7 @@ const std::string LandImageFileList[4] =
 const std::string ItemImageFileList[3] =
 {
 	"image/playscene_item_cake.png",
-	"image/playscene_item_trash.png"
+	"image/playscene_item_trash.png",
 	"image/playscene_item_gift01.png"
 };
 
@@ -314,6 +314,10 @@ const std::string ResultTitle = "result_title.png";
 const std::string PLAYSCENE_TIMER_BG = "image/playscene_timer_background.png";
 const std::string PLAYSCENE_TIMER_BAR = "image/playscene_timer_bar.png";
 const std::string PLAYSCENE_TIMER_MONSTER = "image/playscene_timer_monster.png";
+#define PLAYSCENE_TIMER_POS 728,1322
+#define PLAYSCENE_TIMER_MONSTER_POS 900,1380
+
+const std::string PLAYSCENE_BOARD = "image/playscene_board.png";
 
 const std::string PLAYSCENE_LAND_01 = "image/playscene_land_character01.png";
 const std::string PLAYSCENE_LAND_02 = "image/playscene_land_character02.png";
@@ -356,6 +360,21 @@ const std::string SHARED_BTN_HOME = "image/shared_icon_home.png";
 const std::string SHARED_BTN_BACK = "image/shared_backButton.png";
 const std::string SHARED_BTN_NEXT = "image/shared_nextButton.png";
 const std::string SHARED_BTN_OK = "image/shared_okButton.png";
+#define SHARED_BTN_HOME_POS 940,51
+#define SHARED_BTN_BACK_POS 90,94
+#define SHARED_BTN_NEXT_POS 1403,94
+#define SHARED_BTN_OK_POS 1403,94
+
+const std::string SHARED_POPUP_BG = "image/shared_popup_background.png";
+const std::string SHARED_POPUP_TITLE = "image/shared_popup_paused.png";
+const std::string SHARED_POPUP_RESUME = "image/shared_popup_resume.png";
+const std::string SHARED_POPUP_HELP = "image/shared_popup_help.png";
+const std::string SHARED_POPUP_SETTING = "image/shared_popup_setting.png";
+const std::string SHARED_POPUP_QUIT = "image/shared_popup_quit.png";
+#define SHARED_POPUP_BG_POS 197,223
+#define SHARED_POPUP_TITLE_POS 907
+#define SHARED_POPUP_MENU_MARGIN 130
+#define SHARED_POPUP_BOTTOM_MARGIN 310
 
 const std::string SHARED_MENU1_UNSELECTED = "image/shared_menu01_unselected.png";
 const std::string SHARED_MENU2_UNSELECTED = "image/shared_menu02_unselected.png";

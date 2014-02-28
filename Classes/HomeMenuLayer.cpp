@@ -1,5 +1,6 @@
 #include "HomeMenuLayer.h"
 #include "MainScene.h"
+#include "config.h"
 
 USING_NS_CC;
 
@@ -21,57 +22,82 @@ bool CHomeMenuLayer::init()
 	CCMenu* pMenu = nullptr;
 
 	CCMenuItemImage *pMenuIcon = CCMenuItemImage::create(
-		"image/icon_menu.png",
-		"image/icon_menu_selected.png",
+		SHARED_BTN_HOME.c_str(),
+		SHARED_BTN_HOME.c_str(),
 		this,
 		menu_selector(CHomeMenuLayer::homeMenuCallback)
 		);
 
-	pMenuIcon->setPosition(ccp(visibleSize.width-100.0f, visibleSize.height/2) );
+	pMenuIcon->setPosition(CCPoint(SHARED_BTN_HOME_POS) );
 
 	// create menu, it's an autorelease object
 	pMenu = CCMenu::create(pMenuIcon, NULL);
 	pMenu->setPosition(CCPointZero);
 	this->addChild(pMenu, 1);
 
-	m_backLayer = CCSprite::create("image/menu_background.png");
+	m_backLayer = CCSprite::create(SHARED_POPUP_BG.c_str());
 	m_backLayer->setVisible(false);
-	m_backLayer->setPosition(ccp(origin.x + visibleSize.width/2,origin.y + visibleSize.height/2));
+	m_backLayer->setAnchorPoint(ccp(0,0));
+	m_backLayer->setPosition(CCPoint(SHARED_POPUP_BG_POS));
 	this->addChild(m_backLayer,2);
 
-	CCSize popUpSize = m_backLayer->getContentSize();
+	float centerX = m_backLayer->getContentSize().width/2;
+	float bottomMargin = SHARED_POPUP_BOTTOM_MARGIN;
+
+	CCSprite* pTitle = CCSprite::create(SHARED_POPUP_TITLE.c_str());
+	pTitle->setPosition(ccp(centerX,SHARED_POPUP_TITLE_POS));
+	m_backLayer->addChild(pTitle);
+
 
 	// 팝업 창 아이콘들
-	CCMenuItemImage *pResumeIcon = CCMenuItemImage::create(
-		"image/icon_menu_resume.png",
-		"image/icon_menu_resume_selected.png",
+
+	CCMenuItemImage *pQuitIcon = CCMenuItemImage::create(
+		SHARED_POPUP_QUIT.c_str(),
+		SHARED_POPUP_QUIT.c_str(),
 		this,
 		menu_selector(CHomeMenuLayer::ResumeIconCallback)
 		);
-	m_iconResume = CCMenu::create(pResumeIcon,NULL);
-	m_iconResume->setPosition(popUpSize.width/4,popUpSize.height/2);
+	m_iconQuit = CCMenu::create(pQuitIcon,NULL);
+	m_iconQuit->setPosition(ccp(centerX,bottomMargin));
 
-	CCMenuItemImage *pHomeIcon = CCMenuItemImage::create(
-		"image/icon_menu_home.png",
-		"image/icon_menu_home_selected.png",
-		this,
-		menu_selector(CHomeMenuLayer::homeIconCallback)
-		);
-	m_iconHome = CCMenu::create(pHomeIcon,NULL);
-	m_iconHome->setPosition(popUpSize.width/2,popUpSize.height/2);
+	bottomMargin += SHARED_POPUP_MENU_MARGIN;
 
-	CCMenuItemImage *pOptionIcon = CCMenuItemImage::create(
-		"image/icon_menu_option.png",
-		"image/icon_menu_option_selected.png",
+	CCMenuItemImage *pSetting = CCMenuItemImage::create(
+		SHARED_POPUP_SETTING.c_str(),
+		SHARED_POPUP_SETTING.c_str(),
 		this,
-		menu_selector(CHomeMenuLayer::OptionIconCallback)
+		menu_selector(CHomeMenuLayer::ResumeIconCallback)
 		);
-	m_iconOption = CCMenu::create(pOptionIcon,NULL);
-	m_iconOption->setPosition(popUpSize.width/2+popUpSize.width/4,popUpSize.height/2);
+	m_iconSetting = CCMenu::create(pSetting,NULL);
+	m_iconSetting->setPosition(ccp(centerX,bottomMargin));
+
+	bottomMargin += SHARED_POPUP_MENU_MARGIN;
+
+	CCMenuItemImage *pHelpIcon = CCMenuItemImage::create(
+		SHARED_POPUP_HELP.c_str(),
+		SHARED_POPUP_HELP.c_str(),
+		this,
+		menu_selector(CHomeMenuLayer::HelpIconCallback)
+		);
+	m_iconHelp = CCMenu::create(pHelpIcon,NULL);
+	m_iconHelp->setPosition(ccp(centerX,bottomMargin));
+
+	bottomMargin += SHARED_POPUP_MENU_MARGIN;
+
+	CCMenuItemImage *pResume = CCMenuItemImage::create(
+		SHARED_POPUP_RESUME.c_str(),
+		SHARED_POPUP_RESUME.c_str(),
+		this,
+		menu_selector(CHomeMenuLayer::SettingIconCallback)
+		);
+	m_iconResume = CCMenu::create(pResume,NULL);
+	m_iconResume->setPosition(ccp(centerX,bottomMargin));
 
 	m_backLayer->addChild(m_iconResume,1);
-	m_backLayer->addChild(m_iconHome,1);
-	m_backLayer->addChild(m_iconOption,1);
+	m_backLayer->addChild(m_iconHelp,1);
+	m_backLayer->addChild(m_iconSetting,1);
+	m_backLayer->addChild(m_iconQuit,1);
+
 
 	return true;
 }
@@ -91,15 +117,13 @@ void CHomeMenuLayer::homeMenuCallback(CCObject* pSender)
 #endif
 }
 
-void CHomeMenuLayer::homeIconCallback(CCObject* pSender)
+void CHomeMenuLayer::HelpIconCallback(CCObject* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
-	//home menu popup
-	m_backLayer->setVisible(true);
-	CCDirector::sharedDirector()->resume();
-	CCDirector::sharedDirector()->replaceScene(CMainScene::create());
+	//help 창으로 간다
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	//exit(0);
 #endif
@@ -121,16 +145,20 @@ void CHomeMenuLayer::ResumeIconCallback(CCObject* pSender)
 #endif
 }
 
-void CHomeMenuLayer::OptionIconCallback(CCObject* pSender)
+void CHomeMenuLayer::SettingIconCallback(CCObject* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
-	//home menu popup
-	m_backLayer->setVisible(true);
+	//셋팅 창으로 간다.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	//exit(0);
 #endif
 #endif
+}
+
+void CHomeMenuLayer::QuitIconCallback( CCObject* pSender )
+{
+	//메인으로 돌아갈꺼야
 }
