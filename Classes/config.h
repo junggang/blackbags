@@ -232,12 +232,6 @@ struct MapObject
 
 #define CREDIT_BACK_BUTTON_POSITION 90,94
 
-/*	loading scene */
-
-/*	main scene */
-
-/*	gameSetting scene */
-
 // waiting gamechannel
 #define WAITING_CHANNEL_MONSTER_IMAGE "image/searching_monster.png"
 #define WAITING_CHANNEL_MONSTER_POSITION 875,601
@@ -423,6 +417,20 @@ const std::string ResultTrashImage[3] =
 #define RESULT_TRASH_COUNT_X_MARGIN 414
 
 /*	setting scene */
+
+// troubleshooting layer
+#define TROUBLESHOOTING_BACKGROUND_IMAGE "image/login_troubleshooting.png"
+#define TROUBLESHOOTING_BACKGROUND_POS 555,248
+
+#define TROUBLESHOOTING_SIGNUP_IMAGE "image/login_signUp.png"
+#define TROUBLESHOOTING_SIGNUP_POS 674,790
+
+#define TROUBLESHOOTING_VISIT_IMAGE "image/login_visit.png"
+#define TROUBLESHOOTING_VISIT_POS 674,549
+
+#define TROUBLESHOOTING_CLOSE_IMAGE "image/login_exitBtn.png"
+#define TROUBLESHOOTING_CLOSE_POS 1337,1221
+
 
 /* playscene */
 const std::string PLAYSCENE_TIMER_BG = "image/playscene_timer_background.png";
