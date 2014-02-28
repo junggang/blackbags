@@ -481,4 +481,5 @@ const std::string SHARED_MENU1_SELECTED = "image/shared_menu01_selected.png";
 const std::string SHARED_MENU2_SELECTED = "image/shared_menu02_selected.png";
 const std::string SHARED_MENU3_SELECTED = "image/shared_menu03_selected.png";
 
-#define GAME_FONT "fonts/paper_johnny.ttf"
+// window에서 실행할 때는 해당 폰트를 설치해주세요 'Paper Johnny Eineinhalb.ttf'
+#define GAME_FONT "Paper Johnny Eineinhalb Regular"
