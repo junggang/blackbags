@@ -60,6 +60,7 @@ bool CResultScoreLayer::init()
 		std::string playerScore = std::to_string(CGameManager::GetInstance()->GetTotalScore(i) );
 		CCLabelTTF* pScore = CCLabelTTF::create(playerScore.c_str(), GAME_FONT, 72 );
 		pScore->setAnchorPoint(ccp(0.5,0.5));
+		pScore->setColor(ccc3(80, 80, 80));
 		pScore->setPosition(ccp(position.x + RESULT_PLAYER_SCORE_POSITION_X_MARGIN, position.y + RESULT_PLAYER_SCORE_POSITION_Y_MARGIN));
 		addChild(pScore,0);
 
