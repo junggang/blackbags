@@ -95,6 +95,10 @@ def playerMatching():
 			# 대기 시간이 길어서 데이터가 삭제된 경우이므로 삭제!
 			watingList.remove(each)
 			continue
+		elif time.time() - playerData.getTimestamp() > 5:
+			# 응답이 없는 상태이므로 삭제
+			watingList.remove(each)
+			continue
 
 		if createAvailableChannel(player_2, 2, playerData, each):
 			break
@@ -129,6 +133,10 @@ def getPlayerData(tokenId):
 
 	if tempData is not None:
 		playerData.insertData(json.loads(tempData))
+
+		# timestamp 갱신
+		playerData.setTimestamp(time.time() )
+
 		jsonData = json.dumps(playerData.data)
 		memcache.set(tokenId, jsonData, playerDataTTL)
 
@@ -406,6 +414,17 @@ def ttl_check():
 
     return 'hell...'
 
+@app.route('/authentication')
+def authentication():
+    """Return a friendly HTTP greeting."""
+
+    user = users.get_current_user()
+
+    if user:
+    	return ('hi' )
+    else:
+    	return redirect(users.create_login_url(request.url) )
+
 
 # game server
 @app.route('/login', methods=['POST','GET'])
@@ -494,7 +513,7 @@ def joinUpdate():
 
 			if playerData is None:
 				return 'disconnected'
-			
+
 			playerId = playerData.getPlayerId()
 
 			# print playerId
