@@ -65,6 +65,8 @@ public:
 	void SettingReady();
 	void PlayReady();
 
+	void Authetication();
+
 	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
 	
 	rapidjson::Document* GetGameData() { return m_NetworkGameData; }

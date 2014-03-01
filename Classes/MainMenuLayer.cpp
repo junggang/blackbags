@@ -4,7 +4,7 @@
 #include "GameManager.h"
 #include "GameSettingScene.h"
 //for test
-#include "ResultScene.h"
+#include "NetworkLogic.h"
 
 USING_NS_CC;
 
@@ -115,6 +115,8 @@ void CMainMenuLayer::multiplayCallback(CCObject* pSender)
 #else
 	CGameManager::GetInstance()->SetOnlineMode(true);
 	CGameManager::GetInstance()->InitNetworkLogic();
+
+	CNetworkLogic::GetInstance()->Authetication();
 
     CCScene* newScene = CGameSettingScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );

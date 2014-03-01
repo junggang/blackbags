@@ -499,6 +499,22 @@ void CNetworkLogic::PlayReady()
 	m_Request->release();
 }
 
+void CNetworkLogic::Authetication()
+{
+	m_Request = new CCHttpRequest();
+	
+	std::string url = m_ServerAddr;
+	url.append("/authentication");
+
+	m_Request->setUrl(url.c_str() );
+	m_Request->setRequestType(CCHttpRequest::kHttpGet);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
+
+	m_Request->setTag("GET authetication");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
+}
+
 void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpResponse* response)
 {
 	if (!response)
@@ -573,6 +589,17 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		
 		CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
 		CGameManager::GetInstance()->SetUpdateFlag(true);
+	}
+	else if (strcmp(response->getHttpRequest()->getTag(), "GET authetication") == 0)
+	{
+		if (strcmp(stringData.c_str(), "hi") == 0)
+		{
+			CCLOG("Hello world!");
+		}
+		else
+		{
+			CCLOG("fail");
+		}
 	}
 	else
 	{
