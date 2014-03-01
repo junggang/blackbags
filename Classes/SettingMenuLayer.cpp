@@ -44,6 +44,18 @@ bool CSettingMenuLayer::init()
 	pGoogle->setPosition(CCPoint(SETTING_MENU_GOOGLE_POS));
 	addChild(pGoogle,1);
 
+	CCMenuItemImage *pLogin = CCMenuItemImage::create(
+		SETTING_LOGIN.c_str(),
+		SETTING_LOGIN.c_str(),
+		this,
+		menu_selector(CSettingMenuLayer::MainSceneCallback)
+		);
+
+	pLogin->setAnchorPoint(ccp(0,0));
+	pMenu = CCMenu::create(pLogin, NULL);
+	pMenu->setPosition(SETTING_LOGIN_POS);
+	addChild(pMenu, 1);
+
 	CCSprite* pName = CCSprite::create(SETTING_MENU_NAME.c_str());
 	pName->setAnchorPoint(ccp(0,0));
 	pName->setPosition(CCPoint(SETTING_MENU_NAME_POS));
@@ -61,8 +73,8 @@ bool CSettingMenuLayer::init()
 		menu_selector(CSettingMenuLayer::TutorialCallback)
 		);
 	pTutorial->setAnchorPoint(ccp(0,0));
-	pTutorial->setPosition(SETTING_MENU_TUTORIAL_POS);
 	pMenu = CCMenu::create(pTutorial, NULL);
+	pMenu->setPosition(SETTING_MENU_TUTORIAL_POS);
 	addChild(pMenu, 1);
 
 	CCMenuItemImage *pCredit = CCMenuItemImage::create(
@@ -72,8 +84,8 @@ bool CSettingMenuLayer::init()
 		menu_selector(CSettingMenuLayer::CreditCallback)
 		);
 	pCredit->setAnchorPoint(ccp(0,0));
-	pCredit->setPosition(SETTING_MENU_CREDIT_POS);
 	pMenu = CCMenu::create(pCredit, NULL);
+	pMenu->setPosition(SETTING_MENU_CREDIT_POS);
 	addChild(pMenu, 1);
 
 	CCMenuItemImage *pBackToMainButton = CCMenuItemImage::create(
@@ -84,8 +96,8 @@ bool CSettingMenuLayer::init()
 										);
     
 	pBackToMainButton->setAnchorPoint(ccp(0,0));
-	pBackToMainButton->setPosition(CCPoint(SHARED_BTN_BACK_POS));
 	pMenu = CCMenu::create(pBackToMainButton, NULL);
+	pMenu->setPosition(SHARED_BTN_BACK_POS);
 	addChild(pMenu, 1);
 
 	m_pBGMVolume = extension::CCControlSlider::create(SETTING_BAR.c_str(),SETTING_BAR.c_str(),SETTING_CONTROLLER.c_str());
@@ -115,10 +127,6 @@ bool CSettingMenuLayer::init()
 	m_pSEVolume->setValue(DEFAULT_SE_VOLUME);
 	m_pSEVolume->setTag(SE_SLIDER_TAG);
 
-
-
-	this->addChild(pMenu);
-    
 	return true;
 }
 

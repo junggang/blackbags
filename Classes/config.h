@@ -426,12 +426,12 @@ const std::string SETTING_MENU_NAME = "image/setting_menu_name.png";
 const std::string SETTING_MENU_SOUND = "image/setting_menu_sound.png";
 const std::string SETTING_MENU_TUTORIAL = "image/setting_menu_tutorial.png";
 const std::string SETTING_MENU_CREDIT = "image/setting_menu_credit.png";
-const std::string SETTING_LOGIN= "image/setting_menu_credit.png";
+const std::string SETTING_LOGIN= "image/setting_menu_google_login.png";
 #define SETTING_MENU_GOOGLE_POS 463,1013
 #define SETTING_MENU_NAME_POS 463,876
 #define SETTING_MENU_SOUND_POS 463,743
 #define SETTING_MENU_TUTORIAL_POS 1153,458
-#define SETTING_MENU_CREDIT_POS 463,321
+#define SETTING_MENU_CREDIT_POS 1153,321
 #define SETTING_LOGIN_POS 1153,1013
 #define SETTING_NAME_POS 1153,876
 const std::string SETTING_ICON_MUSIC = "image/setting_icon_music.png";
