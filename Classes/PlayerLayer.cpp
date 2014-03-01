@@ -17,25 +17,10 @@ bool CPlayerLayer::init()
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 	//위치 선정부터 한다. 위치는 턴 순서대로이다.
-	m_UIposition[0].x = DEFAULT_CHARACTER_MARGIN_H;
-	m_UIposition[0].y = m_VisibleSize.height - DEFAULT_CHARACTER_MARGIN_V;
-
-	m_UIposition[1].x = m_VisibleSize.width - DEFAULT_CHARACTER_MARGIN_H;
-	m_UIposition[1].y =m_VisibleSize.height - DEFAULT_CHARACTER_MARGIN_V;
-
-	m_UIposition[2].x = DEFAULT_CHARACTER_MARGIN_H;
-	m_UIposition[2].y = DEFAULT_CHARACTER_MARGIN_V;
-
-	m_UIposition[3].x =m_VisibleSize.width -  DEFAULT_CHARACTER_MARGIN_H;
-	m_UIposition[3].y = DEFAULT_CHARACTER_MARGIN_V;
-
-	//CCSpriteBatchNode를 사용하여 리소스를 준비한다.
-	m_pSpriteBatchNode = CCSpriteBatchNode::create("image/CharacterPlayAnimation.png");
-	addChild(m_pSpriteBatchNode,0);
-	
-	
-	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist");
+	m_UIposition[0] = CCPoint(SHARED_PLAYER_UI_UPPER_LEFT_POS);
+	m_UIposition[1] = CCPoint(SHARED_PLAYER_UI_UPPER_RIGHT_POS);
+	m_UIposition[2] = CCPoint(SHARED_PLAYER_UI_BELOW_LEFT_POS);
+	m_UIposition[3] = CCPoint(SHARED_PLAYER_UI_BELOW_RIGHT_POS);
 	
 	//일단 각 플레이어의 캐릭터가 어디에 위치할 지만 정한다.
 	for (int playerId = 0; playerId<MAX_PLAYER_NUM; ++playerId)
@@ -44,9 +29,12 @@ bool CPlayerLayer::init()
 		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId) == -1)
 			continue;
 
+		m_BackGround[playerId] = CCSprite::create();
+
 		int position = CGameManager::GetInstance()->GetPlayerTurn(playerId);
 
 		m_Player[playerId] = CCSprite::create();
+		m_Player[playerId]->setAnchorPoint(ccp(0,0));
 		m_Player[playerId]->setPosition(m_UIposition[position]);
 
 		m_PlayerName[playerId] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(), "Arial", 12, 

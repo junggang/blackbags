@@ -417,6 +417,31 @@ const std::string ResultTrashImage[3] =
 #define RESULT_TRASH_COUNT_X_MARGIN 414
 
 /*	setting scene */
+const std::string SETTING_TITLE = "image/setting_title.png";
+#define SETTING_TITLE_POS 1390
+const std::string SETTING_BG = "image/setting_menu_background.png";
+#define SETTING_BG_POS 113,200
+const std::string SETTING_MENU_GOOGLE = "image/setting_menu_google.png";
+const std::string SETTING_MENU_NAME = "image/setting_menu_name.png";
+const std::string SETTING_MENU_SOUND = "image/setting_menu_sound.png";
+const std::string SETTING_MENU_TUTORIAL = "image/setting_menu_tutorial.png";
+const std::string SETTING_MENU_CREDIT = "image/setting_menu_credit.png";
+const std::string SETTING_LOGIN= "image/setting_menu_credit.png";
+#define SETTING_MENU_GOOGLE_POS 463,1013
+#define SETTING_MENU_NAME_POS 463,876
+#define SETTING_MENU_SOUND_POS 463,743
+#define SETTING_MENU_TUTORIAL_POS 1153,458
+#define SETTING_MENU_CREDIT_POS 463,321
+#define SETTING_LOGIN_POS 1153,1013
+#define SETTING_NAME_POS 1153,876
+const std::string SETTING_ICON_MUSIC = "image/setting_icon_music.png";
+const std::string SETTING_ICON_SOUND = "image/setting_icon_sound.png";
+const std::string SETTING_BAR = "image/setting_sound_bar.png";
+const std::string SETTING_CONTROLLER = "image/setting_sound_controller.png";
+#define SETTING_ICON_MUSIC_POS 1042,766
+#define SETTING_ICON_SOUND_POS 1042,628
+#define SETTING_MUSIC_BAR_POS 1153,803
+#define SETTING_SOUND_BAR_POS 1153,660
 
 // troubleshooting layer
 #define TROUBLESHOOTING_BACKGROUND_IMAGE "image/login_troubleshooting.png"
@@ -519,5 +544,10 @@ const std::string SHARED_PLAYER_UI_BELOW_LEFT_SELECTED = "image/shared_playerui_
 const std::string SHARED_PLAYER_UI_BELOW_LEFT_UNSELECTED = "image/shared_playerui_background_below_left_unselected.png";
 const std::string SHARED_PLAYER_UI_BELOW_RIGHT_SELECTED = "image/shared_playerui_background_below_right_selected.png";
 const std::string SHARED_PLAYER_UI_BELOW_RIGHT_UNSELECTED = "image/shared_playerui_background_below_right_unselected.png";
+
+#define SHARED_PLAYER_UI_UPPER_LEFT_POS 20,1091
+#define SHARED_PLAYER_UI_UPPER_RIGHT_POS 1337,1091
+#define SHARED_PLAYER_UI_BELOW_LEFT_POS 20,20
+#define SHARED_PLAYER_UI_BELOW_RIGHT_POS 1337,20
 // window에서 실행할 때는 해당 폰트를 설치해주세요 'Paper Johnny Eineinhalb.ttf'
 #define GAME_FONT "Paper Johnny Eineinhalb Regular"

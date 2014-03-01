@@ -24,33 +24,80 @@ bool CSettingMenuLayer::init()
 
 	/////////////////////////////
 	// 2. add menus
+	
+	CCMenu* pMenu = nullptr;
+	
+	//add backgroundImg
+	CCSprite* pBackground = CCSprite::create(SETTING_BG.c_str());
+	pBackground->setAnchorPoint(ccp(0,0));
+	pBackground->setPosition(CCPoint(SETTING_BG_POS));
+	addChild(pBackground,0);
+
+	//add Setting Title
+	CCSprite* pTitle = CCSprite::create(SETTING_TITLE.c_str());
+	pTitle->setPosition(ccp(visibleSize.width/2,SETTING_TITLE_POS));
+	addChild(pTitle,1);
+
+	//add Menu Titles(google, name, sound, tutorial, credit)
+	CCSprite* pGoogle = CCSprite::create(SETTING_MENU_GOOGLE.c_str());
+	pGoogle->setAnchorPoint(ccp(0,0));
+	pGoogle->setPosition(CCPoint(SETTING_MENU_GOOGLE_POS));
+	addChild(pGoogle,1);
+
+	CCSprite* pName = CCSprite::create(SETTING_MENU_NAME.c_str());
+	pName->setAnchorPoint(ccp(0,0));
+	pName->setPosition(CCPoint(SETTING_MENU_NAME_POS));
+	addChild(pName,1);
+
+	CCSprite* pSound = CCSprite::create(SETTING_MENU_SOUND.c_str());
+	pSound->setAnchorPoint(ccp(0,0));
+	pSound->setPosition(CCPoint(SETTING_MENU_SOUND_POS));
+	addChild(pSound,1);
+
+	CCMenuItemImage *pTutorial = CCMenuItemImage::create(
+		SETTING_MENU_TUTORIAL.c_str(),
+		SETTING_MENU_TUTORIAL.c_str(),
+		this,
+		menu_selector(CSettingMenuLayer::TutorialCallback)
+		);
+	pTutorial->setAnchorPoint(ccp(0,0));
+	pTutorial->setPosition(SETTING_MENU_TUTORIAL_POS);
+	pMenu = CCMenu::create(pTutorial, NULL);
+	addChild(pMenu, 1);
+
+	CCMenuItemImage *pCredit = CCMenuItemImage::create(
+		SETTING_MENU_CREDIT.c_str(),
+		SETTING_MENU_CREDIT.c_str(),
+		this,
+		menu_selector(CSettingMenuLayer::CreditCallback)
+		);
+	pCredit->setAnchorPoint(ccp(0,0));
+	pCredit->setPosition(SETTING_MENU_CREDIT_POS);
+	pMenu = CCMenu::create(pCredit, NULL);
+	addChild(pMenu, 1);
+
 	CCMenuItemImage *pBackToMainButton = CCMenuItemImage::create(
-										"image/MAIN_exit.png",
-										"image/MAIN_exit_selected.png",
+										SHARED_BTN_BACK.c_str(),
+										SHARED_BTN_BACK.c_str(),
 										this,
 										menu_selector(CSettingMenuLayer::MainSceneCallback)
 										);
     
-	CCMenuItemImage *pFacebookLoginButton = CCMenuItemImage::create(
-										"image/LOGIN_WITH_FACEBOOK.png",
-										"image/LOGIN_WITH_FACEBOOK.png",
-										this,
-										menu_selector(CSettingMenuLayer::GoogleLoginCallback)
-										);
+	pBackToMainButton->setAnchorPoint(ccp(0,0));
+	pBackToMainButton->setPosition(CCPoint(SHARED_BTN_BACK_POS));
+	pMenu = CCMenu::create(pBackToMainButton, NULL);
+	addChild(pMenu, 1);
 
-	m_pBGMVolume = extension::CCControlSlider::create("image/BAR_BACKGROUND.png", "image/BAR_PROGRESS.png", "image/BAR_THUMB.png");
-	m_pSEVolume = extension::CCControlSlider::create("image/BAR_BACKGROUND.png", "image/BAR_PROGRESS.png", "image/BAR_THUMB.png");
+	m_pBGMVolume = extension::CCControlSlider::create(SETTING_BAR.c_str(),SETTING_BAR.c_str(),SETTING_CONTROLLER.c_str());
+	m_pSEVolume = extension::CCControlSlider::create(SETTING_BAR.c_str(),SETTING_BAR.c_str(),SETTING_CONTROLLER.c_str());
 
 	// create menu, it's an autorelease object
-	CCMenu* pMenu = CCMenu::create(NULL, NULL);
-
-	pMenu->addChild(pFacebookLoginButton);
-
-	this->addChild(m_pBGMVolume);
-	this->addChild(m_pSEVolume);
+	addChild(m_pBGMVolume,1);
+	addChild(m_pSEVolume,1);
 
 	// set BGM slider
-	m_pBGMVolume->setPosition( ccp(pMenu->getPositionX(), 100) );
+	m_pBGMVolume->setPosition( CCPoint(SETTING_MUSIC_BAR_POS) );
+	m_pBGMVolume->setAnchorPoint(ccp(0,0));
 	m_pBGMVolume->setMaximumAllowedValue(1.0);
 	m_pBGMVolume->setMaximumValue(1.0);
 	m_pBGMVolume->setMinimumAllowedValue(0.0);
@@ -59,7 +106,8 @@ bool CSettingMenuLayer::init()
 	m_pBGMVolume->setTag(BGM_SLIDER_TAG);
 
 	// set SE slider
-	m_pSEVolume->setPosition( ccp(pMenu->getPositionX(), 150) );
+	m_pSEVolume->setPosition( CCPoint(SETTING_SOUND_BAR_POS));
+	m_pSEVolume->setAnchorPoint(ccp(0,0));
 	m_pSEVolume->setMaximumAllowedValue(1.0);
 	m_pSEVolume->setMaximumValue(1.0);
 	m_pSEVolume->setMinimumAllowedValue(0.0);
@@ -67,9 +115,7 @@ bool CSettingMenuLayer::init()
 	m_pSEVolume->setValue(DEFAULT_SE_VOLUME);
 	m_pSEVolume->setTag(SE_SLIDER_TAG);
 
-	pMenu->addChild(pBackToMainButton);
 
-	pMenu->alignItemsVertically();
 
 	this->addChild(pMenu);
     
@@ -100,6 +146,17 @@ void CSettingMenuLayer::GoogleLoginCallback(CCObject* pSender)
 #endif
 #endif
 }
+
+void CSettingMenuLayer::TutorialCallback( CCObject* pSender )
+{
+
+}
+
+void CSettingMenuLayer::CreditCallback( CCObject* pSender )
+{
+
+}
+
 
 void CSettingMenuLayer::update( float dt )
 {

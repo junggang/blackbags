@@ -28,17 +28,11 @@ bool CPlayScene::init(void)
 	gameBoard = CGameBoardLayer::create();
 	this->addChild(gameBoard, 1);
 
-	CCLayer* helpButton = CHelpButtonLayer::create();
-	this->addChild(helpButton, 1);
-
 	player = CPlayerLayer::create();
 	this->addChild(player, 1);
 
 	timer = CTimerLayer::create();
 	this->addChild(timer, 1);
-
-	CCLayer* helpWindow = CHelpWindowLayer::create();
-	this->addChild(helpWindow, 2);
 
 	menu = CHomeMenuLayer::create();
 	this->addChild(menu,2);
