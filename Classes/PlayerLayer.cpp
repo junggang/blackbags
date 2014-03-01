@@ -43,7 +43,7 @@ bool CPlayerLayer::init()
 		m_Player[playerId] = CCSprite::create(SHARED_PLAYERUI_CHARACTERS[4*position+characterId].c_str());
 		m_Player[playerId]->setAnchorPoint(ccp(0,0));
 		m_Player[playerId]->setPosition(m_UIposition[position]);
-		addChild(m_Player[playerId],1);
+		addChild(m_Player[playerId],2);
 
 		//이름을 가져온다.
 		//오프라인 일 경우 필요 없는데?
@@ -53,7 +53,7 @@ bool CPlayerLayer::init()
 		}
 
 	//현재 턴(첫번째 턴)부터 애니메이션이 재생될 수 있도록 update()를 한 번 해준다.
-	//update(0);
+	update(0);
 
 	return true;
 
@@ -69,8 +69,22 @@ void CPlayerLayer::update( float dt )
 		m_Player[m_CurrentPlayerId]->pauseSchedulerAndActions();
 	}
 
+	m_CurrentPlayerId = CGameManager::GetInstance()->GetCurrentPlayerId();
+	int position = CGameManager::GetInstance()->GetPlayerTurn(m_CurrentPlayerId);
+	
+	removeChildByTag(0);
+
+	CCSprite* currentTurnUI = CCSprite::create(SHARED_PLAYERUI_BACKGROUND[4+position].c_str());
+	currentTurnUI->setTag(0);
+	currentTurnUI->setAnchorPoint(ccp(0,0));
+	currentTurnUI->setPosition(m_UIposition[position]);
+	addChild(currentTurnUI,1);
+
+
+
 	//현재 턴에 해당하는 캐릭터의 애니메이션을 재생한다.
 	//애니메이션은 업데이트할 때마다 새로 생성해줘야 함.
+	/*
 	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
 	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist");
 
@@ -104,7 +118,7 @@ void CPlayerLayer::update( float dt )
 	CCRepeatForever* repeatAction = CCRepeatForever::create(CCAnimate::create(m_CharacterAni));
 	m_Player[m_CurrentPlayerId]->runAction(repeatAction);	
 	m_Player[m_CurrentPlayerId]->resumeSchedulerAndActions();
-
+	*/
 }
 
 void CPlayerLayer::SetWaitingCharacters()
