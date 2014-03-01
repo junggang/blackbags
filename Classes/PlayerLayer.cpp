@@ -5,7 +5,6 @@ USING_NS_CC;
 
 bool CPlayerLayer::init()
 {
-	//////////////////////////////
 	// 1. super init first
 	if ( !CCLayer::init() )
 	{
@@ -17,67 +16,44 @@ bool CPlayerLayer::init()
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 	//위치 선정부터 한다. 위치는 턴 순서대로이다.
+	int playerNumber = CGameManager::GetInstance()->GetPlayerNumberOfThisGame();
+
 	m_UIposition[0] = CCPoint(SHARED_PLAYER_UI_UPPER_LEFT_POS);
 	m_UIposition[1] = CCPoint(SHARED_PLAYER_UI_UPPER_RIGHT_POS);
 	m_UIposition[2] = CCPoint(SHARED_PLAYER_UI_BELOW_LEFT_POS);
 	m_UIposition[3] = CCPoint(SHARED_PLAYER_UI_BELOW_RIGHT_POS);
 	
-	//일단 각 플레이어의 캐릭터가 어디에 위치할 지만 정한다.
 	for (int playerId = 0; playerId<MAX_PLAYER_NUM; ++playerId)
 	{
 		//생성되지 않은 플레이어라면 넘긴다.
 		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId) == -1)
 			continue;
 
-		m_BackGround[playerId] = CCSprite::create();
-
+		//턴에 따른 위치를 알아낸다.
 		int position = CGameManager::GetInstance()->GetPlayerTurn(playerId);
+		int characterId = CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId);
 
-		m_Player[playerId] = CCSprite::create();
+		//배경을 바른다
+		m_BackGround[playerId] = CCSprite::create(SHARED_PLAYERUI_BACKGROUND[position].c_str());
+		m_BackGround[playerId]->setAnchorPoint(ccp(0,0));
+		m_BackGround[playerId]->setPosition(m_UIposition[position]);
+		addChild(m_BackGround[playerId],0);
+
+		//위치, 캐릭터 Id에 따라 파일명 알아냄
+		m_Player[playerId] = CCSprite::create(SHARED_PLAYERUI_CHARACTERS[4*position+characterId].c_str());
 		m_Player[playerId]->setAnchorPoint(ccp(0,0));
 		m_Player[playerId]->setPosition(m_UIposition[position]);
+		addChild(m_Player[playerId],1);
 
-		m_PlayerName[playerId] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(), "Arial", 12, 
-			CCSizeMake(245, 32), kCCTextAlignmentCenter);
-
-		m_PlayerName[playerId]->setPosition(m_UIposition[position]);
-
-		switch(position)
-		{
-		case 0:
-			m_PlayerName[playerId]->setRotation(-45.0f);
-			break;
-		case 1:
-			m_Player[playerId]->setFlipX(true);
-			m_PlayerName[playerId]->setRotation(45.0f);
-			break;
-		case 2:
-			m_Player[playerId]->setFlipY(true);
-			m_PlayerName[playerId]->setRotation(-135.0f);
-			break;
-		case 3:
-			m_Player[playerId]->setRotation(180.0f);
-			m_PlayerName[playerId]->setRotation(135.0f);
-			break;
+		//이름을 가져온다.
+		//오프라인 일 경우 필요 없는데?
+// 		m_PlayerName[playerId] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(), "Arial", 12, 
+// 			CCSizeMake(245, 32), kCCTextAlignmentCenter);
+// 		m_PlayerName[playerId]->setPosition(m_UIposition[position]);
 		}
-	}
-
-	//캐릭터의 첫번째 프레임으로 모든 UI를 준비한다.
-	SetWaitingCharacters();
-	
-	//addChild해준다.
-	for (int playerId=0;playerId<MAX_PLAYER_NUM;++playerId)
-	{
-		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId)==-1)
-			continue;
-
-		m_pSpriteBatchNode->addChild(m_Player[playerId],0);
-		addChild(m_PlayerName[playerId],1);
-
-	}
 
 	//현재 턴(첫번째 턴)부터 애니메이션이 재생될 수 있도록 update()를 한 번 해준다.
-	update(0);
+	//update(0);
 
 	return true;
 
@@ -133,29 +109,12 @@ void CPlayerLayer::update( float dt )
 
 void CPlayerLayer::SetWaitingCharacters()
 {
-	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-	cache->addSpriteFramesWithFile("image/CharacterPlayAnimation.plist","image/CharacterPlayAnimation.png");
-
+	//처음 프레임으로 돌려 놓는 함수
 	for (int playerId = 0; playerId<MAX_PLAYER_NUM;++playerId)
 	{
 		if (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId)==-1)
 			continue;
-		switch (CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId))
-		{
-		case 0:
-			m_Player[playerId]->setDisplayFrame(cache->spriteFrameByName("CHARACTER_1_Ani0.png"));
-			break;
-		case 1:
-			m_Player[playerId]->setDisplayFrame(cache->spriteFrameByName("CHARACTER_2_Ani1.png"));
-			break;
-		case 2:
-			m_Player[playerId]->setDisplayFrame(cache->spriteFrameByName("CHARACTER_3_Ani1.png"));
-			break;
-		case 3:
-			m_Player[playerId]->setDisplayFrame(cache->spriteFrameByName("CHARACTER_4_Ani1.png"));
-			break;
-		default:
-			break;
-		}
+
+		
 	}	
 }

@@ -505,6 +505,37 @@ const std::string PlayerUiCharacterBelow[6] =
 	"image/shared_player_empty_02.png"
 };
 
+const std::string SHARED_PLAYERUI_CHARACTERS[16] =
+{
+	"image/shared_player_character01_01.png",
+	"image/shared_player_character02_01.png",
+	"image/shared_player_character03_01.png",
+	"image/shared_player_character04_01.png",
+	"image/shared_player_character01_02.png",
+	"image/shared_player_character02_02.png",
+	"image/shared_player_character03_02.png",
+	"image/shared_player_character04_02.png",
+	"image/shared_player_character01_03.png",
+	"image/shared_player_character02_03.png",
+	"image/shared_player_character03_03.png",
+	"image/shared_player_character04_03.png",
+	"image/shared_player_character01_04.png",
+	"image/shared_player_character02_04.png",
+	"image/shared_player_character03_04.png",
+	"image/shared_player_character04_04.png",	
+};
+const std::string SHARED_PLAYERUI_BACKGROUND[8] =
+{
+	"image/shared_playerui_bg_unselected01.png",
+	"image/shared_playerui_bg_unselected02.png",
+	"image/shared_playerui_bg_unselected03.png",
+	"image/shared_playerui_bg_unselected04.png",
+	"image/shared_playerui_bg_selected01.png",
+	"image/shared_playerui_bg_selected02.png",
+	"image/shared_playerui_bg_selected03.png",
+	"image/shared_playerui_bg_selected04.png",
+};
+
 const std::string SHARED_BTN_HOME = "image/shared_icon_home.png";
 const std::string SHARED_BTN_BACK = "image/shared_backButton.png";
 const std::string SHARED_BTN_NEXT = "image/shared_nextButton.png";
