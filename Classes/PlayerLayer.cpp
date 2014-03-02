@@ -43,6 +43,31 @@ bool CPlayerLayer::init()
 		if(CGameManager::GetInstance()->IsOnlineMode())
 		{
 			m_Player[playerId] = CCSprite::create(SHARED_PLAYERUI_CHARACTERS[4*position+characterId].c_str());
+			
+			//이름을 돌려줘야한다. config에 추가할 것.
+			m_PlayerName[playerId] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(), "Arial", 50, 
+				CCSizeMake(400, 100), kCCTextAlignmentLeft);
+			m_PlayerName[playerId]->setAnchorPoint(ccp(0,0));
+			switch (position)
+			{
+			case 0:
+				m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+600.0f,m_UIposition[position].y+300.0f));
+				m_PlayerName[playerId]->setRotation(180.0f);
+				break;
+			case 1:
+				m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+400.0f,m_UIposition[position].y+300.0f));
+				m_PlayerName[playerId]->setRotation(180.0f);
+				break;
+			case 2:
+				m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+300.0f,m_UIposition[position].y+100.0f));
+				break;
+			case 3:
+				m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+100.0f,m_UIposition[position].y+100.0f));
+				break;
+			default:
+				break;
+			}
+			addChild(m_PlayerName[playerId],3);
 		}
 		else
 		{
@@ -51,12 +76,6 @@ bool CPlayerLayer::init()
 		m_Player[playerId]->setAnchorPoint(ccp(0,0));
 		m_Player[playerId]->setPosition(m_UIposition[position]);
 		addChild(m_Player[playerId],2);
-
-		//이름을 가져온다.
-		//오프라인 일 경우 필요 없는데?
-// 		m_PlayerName[playerId] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(), "Arial", 12, 
-// 			CCSizeMake(245, 32), kCCTextAlignmentCenter);
-// 		m_PlayerName[playerId]->setPosition(m_UIposition[position]);
 		}
 
 	//현재 턴(첫번째 턴)부터 애니메이션이 재생될 수 있도록 update()를 한 번 해준다.
