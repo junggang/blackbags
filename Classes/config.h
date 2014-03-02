@@ -544,12 +544,34 @@ const std::string SHARED_PLAYERUI_CHARACTERS[16] =
 	"image/shared_player_character04_04.png",	
 };
 
-const std::string SHARED_PLAYERUI_CHARACTERS_OFF[4] =
+const std::string SHARED_PLAYERUI_CHARACTERS_OFF_EMPTY[4] =
 {
 	"image/shared_player_empty_01.png",
 	"image/shared_player_empty_02.png",
 	"image/shared_player_empty_03.png",
 	"image/shared_player_empty_04.png"
+};
+
+const std::string SHARED_PLAYERUI_CHARACTERS_OFF[16] =
+{
+	"image/shared_player_character01_01_off.png",
+	"image/shared_player_character02_01_off.png",
+	"image/shared_player_character03_01_off.png",
+	"image/shared_player_character04_01_off.png",
+	"image/shared_player_character01_02_off.png",
+	"image/shared_player_character02_02_off.png",
+	"image/shared_player_character03_02_off.png",
+	"image/shared_player_character04_02_off.png",
+	"image/shared_player_character01_03_off.png",
+	"image/shared_player_character02_03_off.png",
+	"image/shared_player_character03_03_off.png",
+	"image/shared_player_character04_03_off.png",
+	"image/shared_player_character01_04_off.png",
+	"image/shared_player_character02_04_off.png",
+	"image/shared_player_character03_04_off.png",
+	"image/shared_player_character04_04_off.png",
+
+
 };
 
 const std::string SHARED_PLAYERUI_BACKGROUND[8] =
