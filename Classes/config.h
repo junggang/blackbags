@@ -603,9 +603,9 @@ const std::string SHARED_POPUP_HELP = "image/shared_popup_help.png";
 const std::string SHARED_POPUP_SETTING = "image/shared_popup_setting.png";
 const std::string SHARED_POPUP_QUIT = "image/shared_popup_quit.png";
 #define SHARED_POPUP_BG_POS 197,223
-#define SHARED_POPUP_TITLE_POS 907
+#define SHARED_POPUP_TITLE_POS 1130
 #define SHARED_POPUP_MENU_MARGIN 130
-#define SHARED_POPUP_BOTTOM_MARGIN 310
+#define SHARED_POPUP_BOTTOM_MARGIN 533
 
 const std::string SHARED_MENU1_UNSELECTED = "image/shared_menu01_unselected.png";
 const std::string SHARED_MENU2_UNSELECTED = "image/shared_menu02_unselected.png";

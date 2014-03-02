@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="win32">
@@ -234,6 +234,9 @@
     <ClCompile Include="..\Classes\TroubleshootingLayer.cpp">
       <Filter>Classes\Layer\Setting</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\HomeMenuPopUp.cpp">
+      <Filter>Classes\Layer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -382,6 +385,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\TroubleshootingLayer.h">
       <Filter>Classes\Layer\Setting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HomeMenuPopUp.h">
+      <Filter>Classes\Layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

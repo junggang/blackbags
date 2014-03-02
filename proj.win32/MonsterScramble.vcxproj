@@ -152,6 +152,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\HelpPopupLayer.cpp" />
     <ClCompile Include="..\Classes\HelpWindowLayer.cpp" />
     <ClCompile Include="..\Classes\HomeMenuLayer.cpp" />
+    <ClCompile Include="..\Classes\HomeMenuPopUp.cpp" />
     <ClCompile Include="..\Classes\IntroBackgroundLayer.cpp" />
     <ClCompile Include="..\Classes\IntroLayer.cpp" />
     <ClCompile Include="..\Classes\IntroScene.cpp" />
@@ -203,6 +204,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\HelpPopuplLayer.h" />
     <ClInclude Include="..\Classes\HelpWindowLayer.h" />
     <ClInclude Include="..\Classes\HomeMenuLayer.h" />
+    <ClInclude Include="..\Classes\HomeMenuPopUp.h" />
     <ClInclude Include="..\Classes\IntroBackgroundLayer.h" />
     <ClInclude Include="..\Classes\IntroLayer.h" />
     <ClInclude Include="..\Classes\IntroScene.h" />
