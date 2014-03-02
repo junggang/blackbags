@@ -22,6 +22,7 @@ bool CPlayerNumberAndMapSizeLayer::init()
 	CreateTitle();
 	CreateNumberOfPlayerMenu(visibleSize);
 	CreateNextButtonMenu(visibleSize);
+	CreateBackButtonMenu(visibleSize);
 
 	return true;
 }
@@ -93,6 +94,23 @@ void CPlayerNumberAndMapSizeLayer::CreateNumberOfPlayerMenu( CCSize visibleSize 
 	this->addChild( pNumberImg3 );
 	this->addChild( pNumberImg4 );
 }
+
+void CPlayerNumberAndMapSizeLayer::CreateBackButtonMenu( cocos2d::CCSize visibleSize )
+{
+
+	CCMenuItemImage *pBackToMainButton = CCMenuItemImage::create(
+		SHARED_BTN_BACK.c_str(),
+		SHARED_BTN_BACK.c_str(),
+		this,
+		menu_selector(CPlayerNumberAndMapSizeLayer::MainSceneCallback)
+		);
+
+	pBackToMainButton->setAnchorPoint(ccp(0,0));
+	CCMenu *pBackButton = CCMenu::create(pBackToMainButton, NULL);
+	pBackButton->setPosition(SHARED_BTN_BACK_POS);
+	addChild(pBackButton, 1);
+}
+
 
 void CPlayerNumberAndMapSizeLayer::CreateNextButtonMenu( CCSize visibleSize )
 {
@@ -191,4 +209,9 @@ void CPlayerNumberAndMapSizeLayer::CreateTitle()
 	CCSprite* pTitle = CCSprite::create(PLAYER_NUMBER_TITLE.c_str());
 	pTitle->setPosition( CCPoint(PLAYER_NUMBER_TITLE_POS) );
 	this->addChild(pTitle);
+}
+
+void CPlayerNumberAndMapSizeLayer::MainSceneCallback(CCObject* pSender)
+{
+	CCDirector::sharedDirector()->popScene();
 }

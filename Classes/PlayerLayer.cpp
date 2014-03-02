@@ -51,12 +51,10 @@ bool CPlayerLayer::init()
 			switch (position)
 			{
 			case 0:
-				m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+600.0f,m_UIposition[position].y+300.0f));
-				m_PlayerName[playerId]->setRotation(180.0f);
+				m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+300.0f,m_UIposition[position].y+100.0f));
 				break;
 			case 1:
-				m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+400.0f,m_UIposition[position].y+300.0f));
-				m_PlayerName[playerId]->setRotation(180.0f);
+				m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+100.0f,m_UIposition[position].y+100.0f));
 				break;
 			case 2:
 				m_PlayerName[playerId]->setPosition(ccp(m_UIposition[position].x+300.0f,m_UIposition[position].y+100.0f));

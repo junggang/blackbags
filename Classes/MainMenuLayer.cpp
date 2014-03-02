@@ -101,7 +101,7 @@ void CMainMenuLayer::newgameCallback(CCObject* pSender)
 #else
 	//newgame load
 	CCScene* newScene = CGameSettingScene::create();
-	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+	CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     //exit(0);
 #endif
