@@ -450,7 +450,7 @@ bool CGameLogic::SetPlayerCharacterId( int characterId )
 
 	// Single 일 때
 	// 이미 선택된 캐릭터인지 확인해서 선택되어 있다면 취소시키고 리턴
-	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	for ( int i = 0; i < MAX_PLAYER_NUM; ++i )
 	{
 		if ( m_PlayerData[i]->m_CharacterId == characterId 
 			&& m_PlayerData[i]->m_PlayerId != -1 )
@@ -479,13 +479,27 @@ bool CGameLogic::SetPlayerCharacterId( int characterId )
 	}
 
 	return true;
-	// 이 밑의 코드는 안 쓴다!
-	//이미 선택했던 캐릭터가 있다면 이전 캐릭터는 풀어준다.
-	// 	if (m_PlayerData[playerId]->m_CharacterId != -1)
-	// 	{
-	// 		m_Character[m_PlayerData[playerId]->m_CharacterId].m_isCharacterSelected = false;
-	// 	}
-	// 	m_PlayerData[playerId]->m_CharacterId = characterId;
+}
+
+bool CGameLogic::SetPlayerCharacterId( int playerId, int characterId )
+{
+	// 방어코드 추가 : 음수이거나 MAX_PLAYER_NUM 보다 크면 리턴
+	if ( characterId < 0 || characterId > MAX_PLAYER_NUM )
+	{
+		return false;
+	}
+
+	// 방어코드 추가 : 음수이거나 MAX_PLAYER_NUM 보다 크면 리턴
+	if ( playerId < 0 || playerId > MAX_PLAYER_NUM )
+	{
+		return false;
+	}
+
+
+	if ( m_PlayerData[playerId] )
+	{
+
+	}
 }
 
 bool CGameLogic::StartGame()

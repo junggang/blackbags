@@ -43,6 +43,7 @@ public:
 
 	// Ä³¸¯ÅÍ
 	void SelectCharacter(int characterId);
+	void SelectCharacter(int playerId, int characterId);
 	bool IsCharacterSelected(int characterId);
 	int GetCharacterIdByPlayerId(int playerId);
 	int GetPlayerIdByCharactyerId(int characterId);

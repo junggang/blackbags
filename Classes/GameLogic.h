@@ -64,6 +64,7 @@ public:
 
 	//캐릭터를 플레이어에게 짝지어 준다.
 	bool SetPlayerCharacterId(int characterId);
+	bool SetPlayerCharacterId(int playerId, int characterId);
 	bool IsCharacterSelected(int characterId) {return m_Character[characterId].m_isCharacterSelected;}
 	bool IsPlayerJoinedGame(int playerId);
 	int   GetCharacterIdByPlayerId(int playerId) { return m_PlayerData[playerId]->m_CharacterId;}

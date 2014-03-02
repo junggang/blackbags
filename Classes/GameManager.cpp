@@ -194,6 +194,18 @@ void CGameManager::SelectCharacter( int characterId )
 	}
 }
 
+void CGameManager::SelectCharacter( int playerId, int characterId )
+{
+	if (m_IsOnlineGame)
+	{
+		CNetworkLogic::GetInstance()->SelectCharacter(characterId);
+	}
+	else
+	{
+		SetUpdateFlag( CGameLogic::GetInstance()->SetPlayerCharacterId( playerId, characterId ) );
+	}
+}
+
 bool CGameManager::IsCharacterSelected( int characterId )
 {
 	if (m_IsOnlineGame)
