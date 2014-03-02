@@ -41,6 +41,7 @@ bool CSettingOtherPlayerStatusLayer::init()
 
 void CSettingOtherPlayerStatusLayer::update()
 {
+	////////////////////////////////////////////////////////////
 	// 조심해!! 이 부분은 디버깅용이야!! 나중에 날려버려! 캬!
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
@@ -66,6 +67,7 @@ void CSettingOtherPlayerStatusLayer::update()
 			this->addChild(PlayerNames[i], 3);
 		}
 	}
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// 캐릭터가 선택되면 해당 캐릭터를 선택한 플레이어 STATUS 창의 프로필 사진을 바꾼다.
 	for ( int playerId = 0; playerId < MAX_PLAYER_NUM; ++playerId)
@@ -74,11 +76,34 @@ void CSettingOtherPlayerStatusLayer::update()
 		if ( characterId != -1 ) // selected
 		{
 			// create selected face
-			CCSprite* pSelectedFace = CCSprite::create( CGameManager::GetInstance()->GetCharacterResultFaceFileName(playerId).c_str() );
+			CCSprite* pSelectedFace = nullptr;
+
+			switch (playerId)
+			{
+			case 0: // player 1 :: below left
+				pSelectedFace = CCSprite::create( PlayerUiCharacterBelowLeft[characterId].c_str() );
+				break;
+			case 1: // player 2 :: below right
+				pSelectedFace = CCSprite::create( PlayerUiCharacterBelowRight[characterId].c_str() );
+				break;
+			case 2: // player 3 :: upper left
+				pSelectedFace = CCSprite::create( PlayerUiCharacterUpperLeft[characterId].c_str() );
+				break;
+			case 3: // player 4 :: upper right
+				pSelectedFace = CCSprite::create( PlayerUiCharacterUpperRight[characterId].c_str() );
+				break;
+			}
+
+			// 방어코드
+			if ( nullptr == pSelectedFace )
+			{
+				return;
+			}
+
 			// set position
-			pSelectedFace->setPosition( ccp(pSelectedFace->getContentSize().width / 2,
-				pSelectedFace->getContentSize().height / 2) );
-			
+			pSelectedFace->setPosition( ccp(0, 0) );
+			pSelectedFace->setAnchorPoint( ccp(0, 0) );
+
 			pSelectedFace->setTag(CURRENT_FACE_TAG);
 
 			m_PlayerStatusFrame[playerId]->removeChildByTag(CURRENT_FACE_TAG);
@@ -160,19 +185,19 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		switch (i)
 		{
 		case PLAYER_1_TAG:
-			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelow[4].c_str() );
+			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowLeft[4].c_str() );
 			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
 			break;
 		case PLAYER_2_TAG:
-			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelow[5].c_str() );
+			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowRight[4].c_str() );
 			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
 			break;
 		case PLAYER_3_TAG:
-			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpper[4].c_str() );
+			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpperLeft[4].c_str() );
 			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
 			break;
 		case PLAYER_4_TAG:
-			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpper[5].c_str() );
+			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpperRight[4].c_str() );
 			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
 			break;
 		default:
@@ -192,7 +217,7 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		m_PlayerStatusFrame[i]->addChild(pDefaultFaceImg);
 	}
 
-	// 플레이어 이름 설정 
+	// 플레이어 이름 설정창 생성
 	for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
 	{
 		extension::CCEditBox* pEditName;
@@ -204,7 +229,7 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		pEditName->setPosition( ccp(m_PlayerStatusFrame[i]->getContentSize().width - pEditName->getContentSize().width / 2,
 									pEditName->getContentSize().height / 2) );
 		pEditName->setFontColor( ccYELLOW );
-		pEditName->setFont(GAME_FONT, 30);
+		pEditName->setFont( GAME_FONT, 30 );
 		pEditName->setMaxLength( 12 );
 		pEditName->setPlaceholderFontSize( 1 );
 		pEditName->setPlaceHolder( CGameManager::GetInstance()->GetPlayerName(i).c_str() );
