@@ -2,6 +2,7 @@
 #include "GameLogic.h"
 #include <cstdio>
 #include "GameManager.h"
+#include <vector>
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -509,7 +510,9 @@ void CNetworkLogic::Authetication()
 	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpGet);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
-
+	std::vector<std::string> headers;
+	headers.push_back("Cookie: ACSID=AJKiYcFnXQY6UMzCKOH9q0jtzeWFOP9o_a96oeLkwLPwsIUgXAkV2YF1Mvvk4F1Ug_VQLEK55kBBnkV5jh_a1sexfmyk9LFmOrDXq9vUaWOrmwSdz6iITquk9M6CRCWMm1NjGZidFzUK3EabhMuYhpY9B6XlBqwn5TWO3-AfE59tWFVojq0pTQU85dUUfCxxPB-rgFVqztxQORvTN8DGHHijoQkSFqKY5GSOYj_TDY3X6kdEkFMKBwUfaFOY636QBRXIFzrKjJ6uz7y2RzTOaUHHs6F705p3-ar-i3c4HasYvTnXAk5ClSb6HIis38MyZOolDOqbYr3j8HE1aPuazut68D3CHM6Peah-SCmrhSnxLo9NXi5KvqSKwIsqgUVpqHaRdQ4ODM9B3QhIQys19dNLVPdVpmJr0bVhVAja-s3FX5HkujWrIJPoh3bMhm5tRb4tch6-K36RZ5u5LzTyNJ4CV0IGxF2wB8DbjvF0BUjf3vp9C4BLJ9VE2Sgf30-3Gp9U2a9U7xlXPOgF8SNgwbgY3aWGLrb6Gkllk7JsbK9a_iVarYE24QB2oOYghzbx1_AsG62tGOPXFzTdE6dPHPoNHVU6_CrEBQ");
+	m_Request->setHeaders(headers);
 	m_Request->setTag("GET authetication");
 	CCHttpClient::getInstance()->send(m_Request);
 	m_Request->release();
