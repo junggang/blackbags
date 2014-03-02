@@ -1,6 +1,8 @@
 #include "HomeMenuLayer.h"
 #include "MainScene.h"
 #include "config.h"
+#include "HelpScene.h"
+#include "GameSettingScene.h"
 
 USING_NS_CC;
 
@@ -104,61 +106,33 @@ bool CHomeMenuLayer::init()
 
 void CHomeMenuLayer::homeMenuCallback(CCObject* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-	//home menu popup
 	m_backLayer->setVisible(true);
 	CCDirector::sharedDirector()->pause();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
-#endif
-#endif
 }
 
 void CHomeMenuLayer::HelpIconCallback(CCObject* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
 	//help 창으로 간다
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
-#endif
-#endif
+	CCScene* newScene = CHelpScene::create();
+	CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5, newScene) );
 }
 
 void CHomeMenuLayer::ResumeIconCallback(CCObject* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
 	//home menu popup
 	m_backLayer->setVisible(false);
 	CCDirector::sharedDirector()->resume();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
-#endif
-#endif
 }
 
 void CHomeMenuLayer::SettingIconCallback(CCObject* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-	//셋팅 창으로 간다.
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
-#endif
-#endif
+	CCScene* newScene = CGameSettingScene::create();
+	CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5, newScene) );
 }
 
 void CHomeMenuLayer::QuitIconCallback( CCObject* pSender )
 {
 	//메인으로 돌아갈꺼야
+	CCScene* newScene = CMainScene::create();
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 }
