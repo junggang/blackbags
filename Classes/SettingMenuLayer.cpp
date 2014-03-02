@@ -1,6 +1,7 @@
 #include "SettingMenuLayer.h"
 #include "MainScene.h"
 #include "GameManager.h"
+#include "CreditScene.h"
 
 USING_NS_CC;
 
@@ -162,6 +163,8 @@ void CSettingMenuLayer::TutorialCallback( CCObject* pSender )
 
 void CSettingMenuLayer::CreditCallback( CCObject* pSender )
 {
+	CCScene* newScene = CCreditScene::create();
+	CCDirector::sharedDirector()->pushScene( newScene );
 
 }
 
