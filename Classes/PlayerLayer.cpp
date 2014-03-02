@@ -40,7 +40,14 @@ bool CPlayerLayer::init()
 		addChild(m_BackGround[playerId],0);
 
 		//위치, 캐릭터 Id에 따라 파일명 알아냄
-		m_Player[playerId] = CCSprite::create(SHARED_PLAYERUI_CHARACTERS[4*position+characterId].c_str());
+		if(CGameManager::GetInstance()->IsOnlineMode())
+		{
+			m_Player[playerId] = CCSprite::create(SHARED_PLAYERUI_CHARACTERS[4*position+characterId].c_str());
+		}
+		else
+		{
+			m_Player[playerId] = CCSprite::create(SHARED_PLAYERUI_CHARACTERS_OFF[4*position+characterId].c_str());
+		}
 		m_Player[playerId]->setAnchorPoint(ccp(0,0));
 		m_Player[playerId]->setPosition(m_UIposition[position]);
 		addChild(m_Player[playerId],2);
@@ -65,7 +72,7 @@ void CPlayerLayer::update( float dt )
 	//pause를 했으므로, 반드시 resume을 이용해야 한다.
 	if (m_CurrentPlayerId != -1)
 	{
-		SetWaitingCharacters();
+		//SetWaitingCharacters();
 		m_Player[m_CurrentPlayerId]->pauseSchedulerAndActions();
 	}
 
