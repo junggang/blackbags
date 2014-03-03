@@ -1,6 +1,5 @@
 #pragma once
 #include "cocos2d.h"
-#include "SettingMapLayer.h"
 
 class CHelpScene : public cocos2d::CCScene
 {
