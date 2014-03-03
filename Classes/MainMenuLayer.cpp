@@ -16,13 +16,9 @@ bool CMainMenuLayer::init()
     {
         return false;
     }
-    
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
 	/////////////////////////////
 	// 2. add a background image
-	float tempYPos = 0.0;
 	CCMenu* pMenu = nullptr;
 
 	CCMenuItemImage *pOnTable = CCMenuItemImage::create(

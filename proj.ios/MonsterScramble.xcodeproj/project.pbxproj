@@ -287,6 +287,7 @@
 		E7F5197418C49C7B002530DC /* TimerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5194018C49C7B002530DC /* TimerLayer.cpp */; };
 		E7F5197518C49C7B002530DC /* TroubleshootingLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5194218C49C7B002530DC /* TroubleshootingLayer.cpp */; };
 		E7F5197618C49C7B002530DC /* WaitingChannelId.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5194418C49C7B002530DC /* WaitingChannelId.cpp */; };
+		E7F5197918C4A7E9002530DC /* LoginWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E7F5197718C4A7E9002530DC /* LoginWebView.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -872,6 +873,8 @@
 		E7F5194318C49C7B002530DC /* TroubleshootingLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TroubleshootingLayer.h; sourceTree = "<group>"; };
 		E7F5194418C49C7B002530DC /* WaitingChannelId.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WaitingChannelId.cpp; sourceTree = "<group>"; };
 		E7F5194518C49C7B002530DC /* WaitingChannelId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitingChannelId.h; sourceTree = "<group>"; };
+		E7F5197718C4A7E9002530DC /* LoginWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LoginWebView.mm; sourceTree = "<group>"; };
+		E7F5197818C4A7E9002530DC /* LoginWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginWebView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1962,6 +1965,8 @@
 				E7F5194318C49C7B002530DC /* TroubleshootingLayer.h */,
 				E7F5194418C49C7B002530DC /* WaitingChannelId.cpp */,
 				E7F5194518C49C7B002530DC /* WaitingChannelId.h */,
+				E7F5197718C4A7E9002530DC /* LoginWebView.mm */,
+				E7F5197818C4A7E9002530DC /* LoginWebView.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -2310,6 +2315,7 @@
 				379BB9C717F03F3700829B88 /* UISlider.cpp in Sources */,
 				379BB9C917F03F3700829B88 /* UITextField.cpp in Sources */,
 				E7F5195918C49C7B002530DC /* HelpWindowLayer.cpp in Sources */,
+				E7F5197918C4A7E9002530DC /* LoginWebView.mm in Sources */,
 				379BB9CB17F03F3700829B88 /* DictionaryHelper.cpp in Sources */,
 				379BB9D317F03F3700829B88 /* GUIReader.cpp in Sources */,
 				379BB9D417F03F3700829B88 /* SceneReader.cpp in Sources */,
