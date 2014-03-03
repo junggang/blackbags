@@ -105,17 +105,26 @@ void CSettingCharacterLayer::SelectCharacterCallBack(CCObject* pSender)
 		return;
 	}
 	
+	// 분기 1 : 만약 플레이어가 선택되어 있는 상태라면 그 플레이어에게 캐릭터를 준다.
+	int selectedPlayerId = CGameManager::GetInstance()->GetPlayerFrameSelected();
+	if ( selectedPlayerId != -1 )
+	{
+		CGameManager::GetInstance()->SelectCharacter(selectedPlayerId, selectedCharacterId);
+		return;
+	}
+
+	// 분기 2 : 만약 플레이어가 선택되어 있지 않다면 다음 플레이어에게 할당해준다.
 	// 방어코드 Single : 현재 게임의 최대 사용자 수보다 캐릭터를 많이 고를 수 없다.
- 	if ( !CGameManager::GetInstance()->IsOnlineMode() &&
+	if ( !CGameManager::GetInstance()->IsOnlineMode() &&
 		CGameManager::GetInstance()->GetCurrentPlayerNumber() >= CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
- 	{
+	{
 		// 캐릭터 취소는 가능해야 하므로 선택되지 않은 캐릭터를 고르려고 할 때만 리턴시켜버린다
 		if ( !CGameManager::GetInstance()->IsCharacterSelected(selectedCharacterId) )
 		{
 			return;
 		}
- 	}
-	
+	}
+
 	CGameManager::GetInstance()->SelectCharacter(selectedCharacterId);
 	
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

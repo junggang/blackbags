@@ -38,9 +38,9 @@ bool CGameManager::init()
 	// 만약 현재 저장 된 게임데이터가 없으면 초기값으로 설정해서 생성한다.
 	if (!m_GameData->getBoolForKey("initialized") )
 	{
-		m_GameData->setStringForKey("tokenId", "token jg");
+		m_GameData->setStringForKey("tokenId", "token moon");
 
-		m_GameData->setStringForKey("usersName", "jg");
+		m_GameData->setStringForKey("usersName", "moon");
 
 		m_GameData->setBoolForKey("two", true);
 		m_GameData->setBoolForKey("three", true);
@@ -716,4 +716,31 @@ void CGameManager::SetAnimationDelay(int time)
 	{
 		m_AnimationDelay = time;
 	}
+}
+
+void CGameManager::SetPlayerFrameSelected( int playerId, bool status )
+{
+	if (m_IsOnlineGame)
+	{
+
+	}
+	else
+	{
+		CGameLogic::GetInstance()->SetPlayerFrameSelected( playerId, status );
+	}
+}
+
+int CGameManager::GetPlayerFrameSelected()
+{
+	if (m_IsOnlineGame)
+	{
+
+	}
+	else
+	{
+		return CGameLogic::GetInstance()->GetPlayerFrameSelected();
+	}
+
+	// error
+	return -1;
 }

@@ -10,6 +10,7 @@ CGameLogic::CGameLogic(void)
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
 		m_PlayerData[i] = nullptr;
+		m_PlayerSelectedStatus[i] = false;
 	}
 
 	m_currentTurn = 0;
@@ -443,7 +444,7 @@ bool CGameLogic::SetPlayerName(int playerId,  const std::string& playerName )
 bool CGameLogic::SetPlayerCharacterId( int characterId )
 {
 	// 방어코드 추가 : 음수이거나 MAX_PLAYER_NUM 보다 크면 리턴
-	if ( characterId < 0 || characterId > MAX_PLAYER_NUM )
+	if ( characterId < 0 || characterId >= MAX_PLAYER_NUM )
 	{
 		return false;
 	}
@@ -484,22 +485,47 @@ bool CGameLogic::SetPlayerCharacterId( int characterId )
 bool CGameLogic::SetPlayerCharacterId( int playerId, int characterId )
 {
 	// 방어코드 추가 : 음수이거나 MAX_PLAYER_NUM 보다 크면 리턴
-	if ( characterId < 0 || characterId > MAX_PLAYER_NUM )
+	if ( characterId < 0 || characterId >= MAX_PLAYER_NUM )
 	{
-		return false;
+		return true;
 	}
 
-	// 방어코드 추가 : 음수이거나 MAX_PLAYER_NUM 보다 크면 리턴
-	if ( playerId < 0 || playerId > MAX_PLAYER_NUM )
+	// 방어코드 추가 : 음수이거나 m_PlayerNumberOfThisGame 보다 크면 리턴
+	if ( playerId < 0 || playerId >= m_PlayerNumberOfThisGame )
 	{
-		return false;
+		return true;
 	}
 
-
-	if ( m_PlayerData[playerId] )
+	// 방어코드 추가 : 플레이어가 선택한 캐릭터가 이미 선택되어 있다면 그 캐릭터는 선택할 수 없다.
+	// 단, 이미 그 캐릭터를 선택하고 있는 플레이어가 지금 선택을 시도한 플레이어와 같다면 선택을 취소시킨다.
+	if ( m_Character[characterId].m_isCharacterSelected )
 	{
-
+		if ( m_PlayerData[playerId]->m_CharacterId == characterId )
+		{
+			m_PlayerData[playerId]->m_CharacterId = -1;
+			m_Character[characterId].m_isCharacterSelected = false;
+			m_PlayerData[playerId]->m_PlayerId = -1;
+			--m_CurrentPlayerNumber;
+		}
+		return true;
 	}
+
+	// 이미 플레이어가 선택한 캐릭터가 있었다면 그 캐릭터는 이제 선택 안 함이 되어야 한다.
+	if ( -1 != m_PlayerData[playerId]->m_CharacterId )
+	{
+		m_Character[ m_PlayerData[playerId]->m_CharacterId ].m_isCharacterSelected = false;
+		--m_CurrentPlayerNumber;
+	}
+
+	 m_PlayerData[playerId]->m_PlayerId = playerId;
+	 m_PlayerData[playerId]->m_CharacterId = characterId;
+	 m_Character[characterId].m_isCharacterSelected = true;
+	 ++m_CurrentPlayerNumber;
+
+	 // 캐릭터 선택이 끝나면 플레이어 선택을 되돌린다.
+	 m_PlayerSelectedStatus[playerId] = false;
+
+	 return true;
 }
 
 bool CGameLogic::StartGame()
@@ -918,4 +944,28 @@ bool CGameLogic::IsPlayerJoinedGame( int playerId )
 	}
 	// err
 	return false;
+}
+
+void CGameLogic::SetPlayerFrameSelected( int playerId, bool status )
+{
+	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	{
+		m_PlayerSelectedStatus[ i ] = false;
+	}
+
+	m_PlayerSelectedStatus[ playerId ] = status;
+}
+
+int CGameLogic::GetPlayerFrameSelected()
+{
+	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	{
+		if ( m_PlayerSelectedStatus[ i ] == true )
+		{
+			return i;
+		}
+	}
+
+	// exception :: no player selected
+	return -1;
 }
