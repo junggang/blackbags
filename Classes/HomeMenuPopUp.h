@@ -12,6 +12,7 @@ public:
 	void HelpIconCallback(CCObject* pSender);
 	void SettingIconCallback(CCObject* pSender);
 	void QuitIconCallback(CCObject* pSender);
+	void BackToPopUp(CCObject* pSender);
 
 	// implement the "static node()" method manually
 	CREATE_FUNC(CHomeMenuPopUp);

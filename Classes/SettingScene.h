@@ -12,6 +12,7 @@ public:
     CREATE_FUNC(CSettingScene);
 
 	void StopBackgroundMusic();
+	void MainSceneCallback(CCObject* pSender);
 
 private:
 	CSettingMenuLayer* m_SettingMenuLayer;

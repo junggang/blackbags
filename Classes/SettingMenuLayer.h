@@ -11,7 +11,6 @@ public:
 	void GoogleLoginCallback(CCObject* pSender);
 	void TutorialCallback(CCObject* pSender);
 	void CreditCallback(CCObject* pSender);
-	void MainSceneCallback(CCObject* pSender);
 
 	float getCurrentBGMVolume() { return m_pBGMVolume->getValue(); };
 	float getCurrentSEVolume() { return m_pSEVolume->getValue(); };
