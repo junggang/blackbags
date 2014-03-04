@@ -21,18 +21,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	//이것은 프레임 사이즈입니다.
 	CCEGLView::sharedOpenGLView()->setFrameSize(winSize.width,winSize.height);
-	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(winSize.width,winSize.height,kResolutionShowAll);
 #else
-	CCEGLView::sharedOpenGLView()->setFrameSize(winSize.width/2,winSize.height/2);
-	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(winSize.width/2,winSize.height,kResolutionShowAll/2);
+	CCEGLView::sharedOpenGLView()->setFrameSize(WINDOW_WIDTH/2,WINDOW_HEIGHT/2);
 #endif
-    
-    
-    
-	CCEGLView::sharedOpenGLView()->setFrameSize(winSize.width,winSize.height);
-	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(winSize.width,winSize.height,kResolutionShowAll);
-	//CCDirector::sharedDirector()->setContentScaleFactor(2.0f);
+
+	//이것은 실제 우리가 만든 화면을 나타냅니다. 이 비율에 맞춰 모든 그림들이 프레임 사이즈로 줄어드는 것!!
+	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(WINDOW_WIDTH,WINDOW_HEIGHT,kResolutionShowAll);
 
     // turn on display FPS
     pDirector->setDisplayStats(true);
