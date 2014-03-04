@@ -19,13 +19,17 @@ enum PLAYER_TAG
 };
 
 USING_NS_CC;
-// 조심해!! 현재 사용자 이름만 표시되는데 총 플레이어 수, 고른 캐릭터, Ready 여부, 방장도 표시해야 해
-// 그래서 화면에 보여줄 element가 2차원 배열일 때 cocos2d-x 에서 표현할 방법을 찾아봐야해
+
 bool CSettingOtherPlayerStatusLayer::init()
 {
 	if ( !CCLayer::init() )
 	{
 		return false;
+	}
+	// init m_PlayerStatusFrame
+	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	{
+		m_PlayerStatusFrame[i] = nullptr;
 	}
 
 	// Get Window Size
@@ -53,8 +57,15 @@ void CSettingOtherPlayerStatusLayer::update()
 		// 만약 어떤 캐릭터가 선택되었는데 화면에는 표시되지 않고 있다면 추가한다.
 		else if ( CGameManager::GetInstance()->IsCharacterSelected(i) && (this->getChildByTag(i) == NULL) )
 		{
+			int playerId = CGameManager::GetInstance()->GetPlayerIdByCharactyerId(i);
+
+			if (playerId < 0) // error
+			{
+				continue;
+			}
+
 			PlayerNames[i] = CCTextFieldTTF::textFieldWithPlaceHolder(
-				CGameManager::GetInstance()->GetPlayerName( CGameManager::GetInstance()->GetPlayerIdByCharactyerId(i) ).c_str(),
+				CGameManager::GetInstance()->GetPlayerName( playerId ).c_str(),
 				CCSize(480,30),
 				kCCTextAlignmentCenter,
 				"Arial",
@@ -67,7 +78,9 @@ void CSettingOtherPlayerStatusLayer::update()
 			this->addChild(PlayerNames[i], 3);
 		}
 	}
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////
+	// 절 취 선
+	//////////////////////////////////////////////////////////////////////////
 
 	// 캐릭터가 선택되면 해당 캐릭터를 선택한 플레이어 STATUS 창의 프로필 사진을 바꾼다.
 	for ( int playerId = 0; playerId < MAX_PLAYER_NUM; ++playerId)
@@ -111,6 +124,13 @@ void CSettingOtherPlayerStatusLayer::update()
 		}
 	}
 
+	// PlayerFrame이 선택되어 있다면 selected()로 업데이트한다.
+	int tempPlayerId = CGameManager::GetInstance()->GetPlayerFrameSelected();
+	if (tempPlayerId != -1)
+	{
+		m_PlayerStatusFrame[ tempPlayerId ]->selected();
+	}
+
 	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{
 		for (int i = 0 ; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
@@ -145,27 +165,45 @@ void CSettingOtherPlayerStatusLayer::update()
 
 void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 {
+	CCMenu* playerFrameMenu = CCMenu::create(NULL, NULL);
+
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
 		switch ( i )
 		{
 		case PLAYER_1_TAG:
-			m_PlayerStatusFrame[i] = CCSprite::create( SHARED_PLAYER_UI_BELOW_LEFT_UNSELECTED.c_str() );
+			m_PlayerStatusFrame[i] = CCMenuItemImage::create(
+				SHARED_PLAYER_UI_BELOW_LEFT_UNSELECTED.c_str(),
+				SHARED_PLAYER_UI_BELOW_LEFT_SELECTED.c_str(),
+				this,
+				menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
 			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_ONE_STATUS_POS) );
 			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_1_TAG );
 			break;
 		case PLAYER_2_TAG:
-			m_PlayerStatusFrame[i] = CCSprite::create( SHARED_PLAYER_UI_BELOW_RIGHT_UNSELECTED.c_str() );
+			m_PlayerStatusFrame[i] = CCMenuItemImage::create( 
+				SHARED_PLAYER_UI_BELOW_RIGHT_UNSELECTED.c_str(),
+				SHARED_PLAYER_UI_BELOW_RIGHT_SELECTED.c_str(),
+				this,
+				menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
 			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_TWO_STATUS_POS) );
 			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_2_TAG );
 			break;
 		case PLAYER_3_TAG:
-			m_PlayerStatusFrame[i] = CCSprite::create( SHARED_PLAYER_UI_UPPER_LEFT_UNSELECTED.c_str() );
+			m_PlayerStatusFrame[i] = CCMenuItemImage::create( 
+				SHARED_PLAYER_UI_UPPER_LEFT_UNSELECTED.c_str(),
+				SHARED_PLAYER_UI_UPPER_LEFT_SELECTED.c_str(),
+				this,
+				menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
 			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_THREE_STATUS_POS) );
 			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_3_TAG );
 			break;
 		case PLAYER_4_TAG:
-			m_PlayerStatusFrame[i] = CCSprite::create( SHARED_PLAYER_UI_UPPER_RIGHT_UNSELECTED.c_str() );
+			m_PlayerStatusFrame[i] = CCMenuItemImage::create( 
+				SHARED_PLAYER_UI_UPPER_RIGHT_UNSELECTED.c_str(),
+				SHARED_PLAYER_UI_UPPER_RIGHT_SELECTED.c_str(),
+				this,
+				menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
 			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_FOUR_STATUS_POS) );
 			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_4_TAG );
 			break;
@@ -174,8 +212,16 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		}
 		m_PlayerStatusFrame[i]->setAnchorPoint( ccp(0,0) );
 
-		this->addChild( m_PlayerStatusFrame[i] );
+		// 값이 제대로 들어왔을 때만 Menu에 추가
+		if (m_PlayerStatusFrame[i] != nullptr)
+		{
+			playerFrameMenu->addChild( m_PlayerStatusFrame[i] );
+		}
 	}
+	// add player status Frame
+	playerFrameMenu->setAnchorPoint( ccp(0, 0) );
+	playerFrameMenu->setPosition( ccp(0, 0) );
+	this->addChild(playerFrameMenu);
 
 	// 기본 얼굴을 집어넣는다.
 	for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i )
@@ -229,7 +275,7 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		pEditName->setPosition( ccp(m_PlayerStatusFrame[i]->getContentSize().width - pEditName->getContentSize().width / 2,
 									pEditName->getContentSize().height / 2) );
 		pEditName->setFontColor( ccYELLOW );
-		pEditName->setFont( GAME_FONT, 30 );
+		pEditName->setFont( GAME_FONT, 30);
 		pEditName->setMaxLength( 12 );
 		pEditName->setPlaceholderFontSize( 1 );
 		pEditName->setPlaceHolder( CGameManager::GetInstance()->GetPlayerName(i).c_str() );
@@ -272,4 +318,36 @@ void CSettingOtherPlayerStatusLayer::editBoxTextChanged( extension::CCEditBox* e
 void CSettingOtherPlayerStatusLayer::editBoxReturn( extension::CCEditBox* editBox )
 {
 
+}
+
+void CSettingOtherPlayerStatusLayer::PlayerActivateCallBack( CCObject* pSender )
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
+#else
+	int selectedPlayerId = ( static_cast<CCMenuItem*>(pSender)->getTag() / 100 ) - 1;
+	// 방어코드
+	// selectedPlayerTag / 100 - 1== playerId
+	if ( selectedPlayerId < 0 || selectedPlayerId >= MAX_PLAYER_NUM )
+	{
+		return;
+	}
+
+	// 만약 선택되어 있는 플레이어가 있다면 취소시킨다.
+	int tempPlayerId = CGameManager::GetInstance()->GetPlayerFrameSelected();
+	if ( tempPlayerId != -1 )
+	{
+			CGameManager::GetInstance()->SetPlayerFrameSelected(tempPlayerId, false);
+			m_PlayerStatusFrame[ tempPlayerId ]->unselected();
+	}
+
+	CGameManager::GetInstance()->SetPlayerFrameSelected(selectedPlayerId, true);
+	m_PlayerStatusFrame[ selectedPlayerId ]->selected();
+
+	CGameManager::GetInstance()->SetUpdateFlag(true);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	//exit(0);
+#endif
+#endif
 }

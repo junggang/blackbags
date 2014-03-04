@@ -34,11 +34,6 @@ bool CSettingMenuLayer::init()
 	pBackground->setPosition(CCPoint(SETTING_BG_POS));
 	addChild(pBackground,0);
 
-	//add Setting Title
-	CCSprite* pTitle = CCSprite::create(SETTING_TITLE.c_str());
-	pTitle->setPosition(ccp(visibleSize.width/2,SETTING_TITLE_POS));
-	addChild(pTitle,1);
-
 	//add Menu Titles(google, name, sound, tutorial, credit)
 	CCSprite* pGoogle = CCSprite::create(SETTING_MENU_GOOGLE.c_str());
 	pGoogle->setAnchorPoint(ccp(0,0));
@@ -49,7 +44,7 @@ bool CSettingMenuLayer::init()
 		SETTING_LOGIN.c_str(),
 		SETTING_LOGIN.c_str(),
 		this,
-		menu_selector(CSettingMenuLayer::MainSceneCallback)
+		menu_selector(CSettingMenuLayer::GoogleLoginCallback)
 		);
 
 	pLogin->setAnchorPoint(ccp(0,0));
@@ -89,17 +84,7 @@ bool CSettingMenuLayer::init()
 	pMenu->setPosition(SETTING_MENU_CREDIT_POS);
 	addChild(pMenu, 1);
 
-	CCMenuItemImage *pBackToMainButton = CCMenuItemImage::create(
-										SHARED_BTN_BACK.c_str(),
-										SHARED_BTN_BACK.c_str(),
-										this,
-										menu_selector(CSettingMenuLayer::MainSceneCallback)
-										);
-    
-	pBackToMainButton->setAnchorPoint(ccp(0,0));
-	pMenu = CCMenu::create(pBackToMainButton, NULL);
-	pMenu->setPosition(SHARED_BTN_BACK_POS);
-	addChild(pMenu, 1);
+	
 
 	m_pBGMVolume = extension::CCControlSlider::create(SETTING_BAR.c_str(),SETTING_BAR.c_str(),SETTING_CONTROLLER.c_str());
 	m_pSEVolume = extension::CCControlSlider::create(SETTING_BAR.c_str(),SETTING_BAR.c_str(),SETTING_CONTROLLER.c_str());
@@ -131,17 +116,6 @@ bool CSettingMenuLayer::init()
 	return true;
 }
 
-void CSettingMenuLayer::MainSceneCallback(CCObject* pSender)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-	CCDirector::sharedDirector()->popScene();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    //exit(0);
-#endif
-#endif
-}
 
 void CSettingMenuLayer::GoogleLoginCallback(CCObject* pSender)
 {

@@ -22,7 +22,10 @@ public:
 private:
 	void CreateStatusFrame(cocos2d::CCSize m_VisibleSize);
 
+	void PlayerActivateCallBack( CCObject* pSender );
+
 	cocos2d::CCSize m_VisibleSize;
 	cocos2d::CCTextFieldTTF *PlayerNames[MAX_PLAYER_NUM];
-	cocos2d::CCSprite* m_PlayerStatusFrame[MAX_PLAYER_NUM];
+	cocos2d::CCMenuItemImage* m_PlayerStatusFrame[MAX_PLAYER_NUM];
+
 };

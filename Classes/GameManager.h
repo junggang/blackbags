@@ -48,6 +48,9 @@ public:
 	int GetCharacterIdByPlayerId(int playerId);
 	int GetPlayerIdByCharactyerId(int characterId);
 
+	void SetPlayerFrameSelected(int playerId, bool status);
+	int GetPlayerFrameSelected();
+
 	// 플레이어
 	bool IsPlayerJoinedGame(int characterId);
 
