@@ -20,6 +20,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	CCEGLView::sharedOpenGLView()->setFrameSize(winSize.width,winSize.height);
+	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(winSize.width,winSize.height,kResolutionShowAll);
+#else
+	CCEGLView::sharedOpenGLView()->setFrameSize(winSize.width/2,winSize.height/2);
+	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(winSize.width/2,winSize.height,kResolutionShowAll/2);
+#endif
+    
+    
+    
 	CCEGLView::sharedOpenGLView()->setFrameSize(winSize.width,winSize.height);
 	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(winSize.width,winSize.height,kResolutionShowAll);
 	//CCDirector::sharedDirector()->setContentScaleFactor(2.0f);
