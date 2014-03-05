@@ -445,8 +445,13 @@ def authenticationCheck():
 def login():
 	try : 
 		if request.method  == "POST":  
-			tokenId = request.form['tokenId']
-			name = request.form['name']
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
+			name = user.nickname()
 
 			two = int(request.form['two'])
 			three = int(request.form['three'])
@@ -481,7 +486,12 @@ def login():
 def logout():
 	try : 
 		if request.method  == "POST":
-			tokenId = request.form['tokenId']
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
 
 			playerData = getPlayerData(tokenId)
 
@@ -520,7 +530,12 @@ def joinUpdate():
 	# 만약 아직 속한 game channel에 없다면 유저는 대기 화면을 보는 상태 유지하면서 1초 후에 다시 확인 시도
 	try : 
 		if request.method  == "POST":  
-			tokenId = request.form['tokenId']
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
 
 			# player data 불러오기 
 			playerData = getPlayerData(tokenId)
@@ -545,7 +560,12 @@ def getInitializedGameData():
 	# 이때 요청한 클라이언트의 update flag는 false로 바꿔준다.
 	try : 
 		if request.method  == "POST":  
-			tokenId = request.form['tokenId']
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
 
 			playerData = getPlayerData(tokenId)
 
@@ -581,7 +601,12 @@ def selectCharacter():
 	try : 
 		if request.method  == "POST":  
 			# parsing
-			tokenId = request.form['tokenId']
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
 			characterId = int(request.form['characterId'])
 
 			return SCSelectCharacter(tokenId, characterId)
@@ -598,8 +623,12 @@ def selectMap():
 	# 업데이트 결과를 redis에 저장하고, 요청을 보낸 유저에게는 변경된 게임 데이터를 바로 전송한다.
 	try : 
 		if request.method  == "POST": 
+			user = users.get_current_user()
 
-			tokenId = request.form['tokenId']
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
 			mapId = int(request.form['mapId'])
 
 			return SCSelctMap(tokenId, mapId)
@@ -617,7 +646,12 @@ def settingReady():
 	# 업데이트 결과를 redis에 저장하고, 요청을 보낸 유저에게는 변경된 게임 데이터를 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			tokenId = request.form['tokenId']
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
 
 			print "*** READY ***"
 
@@ -636,7 +670,12 @@ def playReady():
 	# 업데이트 결과를 redis에 저장하고, 요청을 보낸 유저에게는 변경된 게임 데이터를 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			tokenId = request.form['tokenId']
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
 
 			return PCReady(tokenId)
 
@@ -651,7 +690,12 @@ def playUpdate():
 	# 해당 game channel의 데이터를 불러와서 바로 전송한다.
 	try : 
 		if request.method  == "POST":  
-			tokenId = request.form['tokenId']
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
 
 			return PCPlayUpdate(tokenId)
 
@@ -668,7 +712,12 @@ def drawLine():
 	# (만약 게임이 종료되었다면 종료 메시지와 함께 게임 결과 데이터를 전송한다.)
 	try : 
 		if request.method  == "POST":  
-			tokenId = request.form['tokenId']
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
 			posI = int(request.form['posI'])
 			posJ = int(request.form['posJ'])
 
@@ -689,7 +738,12 @@ def gameEnd():
 	# 만약 game channel 내의 모든 유저가 이 메시지를 전송하면 game channel 정보를 DB에 저장하고 redis에서 삭제한다.
 	try : 
 		if request.method  == "POST":  
-			tokenId = request.form['tokenId']
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			tokenId = user.user_id()
 
 			playerData = getPlayerData(tokenId)
 
