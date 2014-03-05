@@ -15,7 +15,6 @@ CNetworkLogic::CNetworkLogic(void)
 	m_Request = nullptr;
 	m_NetworkGameData = nullptr;
 
-	m_TokenId = "";
 	m_UserName = "";
 
 	//m_ServerAddr = "http://10.73.43.187:8080";
@@ -28,6 +27,7 @@ CNetworkLogic::CNetworkLogic(void)
 	m_FourFlag = false;
 
 	m_CurrentPhase = NP_NOTHING;
+    m_CurrentLoginPhase = LP_WAITING;
 	m_CurrentScene = SC_NOSCENE;
 
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
@@ -84,12 +84,13 @@ NetworkPhase CNetworkLogic::GetCurrentNetworkPhase()
 	return m_CurrentPhase;
 }
 
+LoginPhase CNetworkLogic::GetCurrentLoginPhase()
+{
+    return m_CurrentLoginPhase;
+}
+
 void CNetworkLogic::GetNetworkInfo()
 {
-	// facebook token 값 받아 온다
-	m_TokenId.clear();
-	m_TokenId = CGameManager::GetInstance()->GetTokenId();
-
 	// shared data에 저장된 이름 가져온다
 	m_UserName.clear();
 	m_UserName = CGameManager::GetInstance()->GetUsersName();
@@ -262,14 +263,15 @@ void CNetworkLogic::Login()
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
-	// write the post data
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	postData.append("&name=");
-	postData.append(m_UserName);
+	// write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
 	
-	postData.append("&two=");
+	// write the post data
+	std::string postData = "two=";
 	postData.append( (m_TwoFlag) ? "1" : "0" );
 
 	postData.append("&three=");
@@ -300,11 +302,12 @@ void CNetworkLogic::Logout()
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
-	// write the post data
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	m_Request->setRequestData(postData.c_str(), postData.length() );
+	// write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
 
 	m_Request->setTag("POST logout");
 	CCHttpClient::getInstance()->send(m_Request);
@@ -323,11 +326,12 @@ void CNetworkLogic::getInitializedGameData()
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
-	// write the post data
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	m_Request->setRequestData(postData.c_str(), postData.length() );
+	// write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
 
 	m_Request->setTag("POST getInitializedGameData");
 	CCHttpClient::getInstance()->send(m_Request);
@@ -345,11 +349,15 @@ void CNetworkLogic::SelectCharacter(int characterId)
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
+    // write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
+    
 	// write the post data
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	postData.append("&characterId=");
+	std::string postData = "characterId=";
 	postData.append(std::to_string(characterId) );
 
 	m_Request->setRequestData(postData.c_str(), postData.length() );
@@ -370,11 +378,15 @@ void CNetworkLogic::SetMapSize(MapSelect mapSize)
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
+    // write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
+    
 	// write the post data
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	postData.append("&mapId=");
+	std::string postData = "mapId=";
 	postData.append(std::to_string(mapSize) );
 
 	m_Request->setRequestData(postData.c_str(), postData.length() );
@@ -395,11 +407,15 @@ void CNetworkLogic::DrawLine(IndexedPosition indexedPosition)
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
+    // write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
+    
 	// write the post data
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	postData.append("&posI=");
+	std::string postData = "posI=";
 	postData.append(std::to_string(indexedPosition.m_PosI) );
 
 	postData.append("&posJ=");
@@ -423,11 +439,12 @@ void CNetworkLogic::JoinUpdate(float dt)
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
-	// write the post data
-	std::string postData = "tokenId=";
-	postData.append(m_TokenId);
-
-	m_Request->setRequestData(postData.c_str(), postData.length() );
+	// write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
 
 	m_Request->setTag("POST joinUpdate");
 	CCHttpClient::getInstance()->send(m_Request);
@@ -445,11 +462,12 @@ void CNetworkLogic::PlayUpdate(float dt)
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
-	// write the post data
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	m_Request->setRequestData(postData.c_str(), postData.length() );
+	// write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
 
 	m_Request->setTag("POST playUpdate");
 	CCHttpClient::getInstance()->send(m_Request);
@@ -467,11 +485,12 @@ void CNetworkLogic::SettingReady()
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
-	// write the post data
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	m_Request->setRequestData(postData.c_str(), postData.length() );
+	// write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
 
 	m_Request->setTag("POST settingReady");
 	CCHttpClient::getInstance()->send(m_Request);
@@ -489,31 +508,37 @@ void CNetworkLogic::PlayReady()
 	m_Request->setRequestType(CCHttpRequest::kHttpPost);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
 
-	// write the post data
-	std::string postData  = "tokenId=";
-	postData.append(m_TokenId);
-
-	m_Request->setRequestData(postData.c_str(), postData.length() );
+	// write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
 
 	m_Request->setTag("POST playReady");
 	CCHttpClient::getInstance()->send(m_Request);
 	m_Request->release();
 }
 
-void CNetworkLogic::Authetication()
+void CNetworkLogic::AuthenticationCheck()
 {
-	m_Request = new CCHttpRequest();
+    m_Request = new CCHttpRequest();
 	
 	std::string url = m_ServerAddr;
-	url.append("/authentication");
-
+	url.append("/authentication_check");
+    
 	m_Request->setUrl(url.c_str() );
 	m_Request->setRequestType(CCHttpRequest::kHttpGet);
 	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
-	std::vector<std::string> headers;
-	headers.push_back("Cookie: ACSID=AJKiYcFnXQY6UMzCKOH9q0jtzeWFOP9o_a96oeLkwLPwsIUgXAkV2YF1Mvvk4F1Ug_VQLEK55kBBnkV5jh_a1sexfmyk9LFmOrDXq9vUaWOrmwSdz6iITquk9M6CRCWMm1NjGZidFzUK3EabhMuYhpY9B6XlBqwn5TWO3-AfE59tWFVojq0pTQU85dUUfCxxPB-rgFVqztxQORvTN8DGHHijoQkSFqKY5GSOYj_TDY3X6kdEkFMKBwUfaFOY636QBRXIFzrKjJ6uz7y2RzTOaUHHs6F705p3-ar-i3c4HasYvTnXAk5ClSb6HIis38MyZOolDOqbYr3j8HE1aPuazut68D3CHM6Peah-SCmrhSnxLo9NXi5KvqSKwIsqgUVpqHaRdQ4ODM9B3QhIQys19dNLVPdVpmJr0bVhVAja-s3FX5HkujWrIJPoh3bMhm5tRb4tch6-K36RZ5u5LzTyNJ4CV0IGxF2wB8DbjvF0BUjf3vp9C4BLJ9VE2Sgf30-3Gp9U2a9U7xlXPOgF8SNgwbgY3aWGLrb6Gkllk7JsbK9a_iVarYE24QB2oOYghzbx1_AsG62tGOPXFzTdE6dPHPoNHVU6_CrEBQ");
+	
+    // write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
 	m_Request->setHeaders(headers);
-	m_Request->setTag("GET authetication");
+    
+	m_Request->setTag("GET authenticationCheck");
 	CCHttpClient::getInstance()->send(m_Request);
 	m_Request->release();
 }
@@ -527,8 +552,9 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 
 	rapidjson::Document* gameData = CNetworkLogic::GetInstance()->GetGameData();
 
-	int statusCode = response->getResponseCode();
-	if (!response->isSucceed() ) 
+	//int statusCode = response->getResponseCode();
+	
+    if (!response->isSucceed() )
 	{
 		CCLOG("response failed");
 		CCLOG("error buffer: %s", response->getErrorBuffer() );
@@ -593,16 +619,19 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 		CNetworkLogic::GetInstance()->SetCurrentNetworkPhase(NP_GAME_SETTING);
 		CGameManager::GetInstance()->SetUpdateFlag(true);
 	}
-	else if (strcmp(response->getHttpRequest()->getTag(), "GET authetication") == 0)
+    else if (strcmp(response->getHttpRequest()->getTag(), "GET authenticationCheck") == 0)
 	{
-		if (strcmp(stringData.c_str(), "hi") == 0)
-		{
-			CCLOG("Hello world!");
+        if (strcmp(stringData.c_str(), "ok") == 0)
+        {
+            // CCLOG("OK!");
+            CGameManager::GetInstance()->SetCurrentLoginPhase(LP_OK);
 		}
-		else
-		{
-			CCLOG("fail");
-		}
+        else
+        {
+            // CCLOG("failed");
+            CGameManager::GetInstance()->SetCurrentLoginPhase(LP_FAIL);
+        }
+        // change flag status
 	}
 	else
 	{

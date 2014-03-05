@@ -3,6 +3,7 @@
 #include "CreditScene.h"
 #include "GameManager.h"
 #include "GameSettingScene.h"
+#include "LoginScene.h"
 //for test
 #include "NetworkLogic.h"
 
@@ -112,9 +113,7 @@ void CMainMenuLayer::multiplayCallback(CCObject* pSender)
 	CGameManager::GetInstance()->SetOnlineMode(true);
 	CGameManager::GetInstance()->InitNetworkLogic();
 
-	CNetworkLogic::GetInstance()->Authetication();
-
-    CCScene* newScene = CGameSettingScene::create();
+    CCScene* newScene = CLoginScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     //exit(0);

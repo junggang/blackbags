@@ -287,7 +287,9 @@
 		E7F5197418C49C7B002530DC /* TimerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5194018C49C7B002530DC /* TimerLayer.cpp */; };
 		E7F5197518C49C7B002530DC /* TroubleshootingLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5194218C49C7B002530DC /* TroubleshootingLayer.cpp */; };
 		E7F5197618C49C7B002530DC /* WaitingChannelId.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5194418C49C7B002530DC /* WaitingChannelId.cpp */; };
-		E7F5197918C4A7E9002530DC /* LoginWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E7F5197718C4A7E9002530DC /* LoginWebView.mm */; };
+		E7F5198118C5A011002530DC /* LayerWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E7F5197E18C5A011002530DC /* LayerWebView.mm */; };
+		E7F5198218C5A011002530DC /* UIWebViewBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = E7F5198018C5A011002530DC /* UIWebViewBridge.mm */; };
+		E7F5198618C6F3F9002530DC /* LoginScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5198418C6F3F9002530DC /* LoginScene.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -873,8 +875,12 @@
 		E7F5194318C49C7B002530DC /* TroubleshootingLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TroubleshootingLayer.h; sourceTree = "<group>"; };
 		E7F5194418C49C7B002530DC /* WaitingChannelId.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WaitingChannelId.cpp; sourceTree = "<group>"; };
 		E7F5194518C49C7B002530DC /* WaitingChannelId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitingChannelId.h; sourceTree = "<group>"; };
-		E7F5197718C4A7E9002530DC /* LoginWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LoginWebView.mm; sourceTree = "<group>"; };
-		E7F5197818C4A7E9002530DC /* LoginWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginWebView.h; sourceTree = "<group>"; };
+		E7F5197D18C5A011002530DC /* LayerWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayerWebView.h; sourceTree = "<group>"; };
+		E7F5197E18C5A011002530DC /* LayerWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LayerWebView.mm; sourceTree = "<group>"; };
+		E7F5197F18C5A011002530DC /* UIWebViewBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWebViewBridge.h; sourceTree = "<group>"; };
+		E7F5198018C5A011002530DC /* UIWebViewBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIWebViewBridge.mm; sourceTree = "<group>"; };
+		E7F5198418C6F3F9002530DC /* LoginScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoginScene.cpp; sourceTree = "<group>"; };
+		E7F5198518C6F3F9002530DC /* LoginScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginScene.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1866,10 +1872,68 @@
 		AFF888D418AE392F00009B7F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E7F5198918C6FB29002530DC /* Layer */,
+				E7F5198818C6FAEF002530DC /* Scene */,
+				E7F5198718C6FAA8002530DC /* Logic */,
 				E7F518E318C49C7A002530DC /* AppDelegate.cpp */,
 				E7F518E418C49C7A002530DC /* AppDelegate.h */,
 				E7F518E518C49C7A002530DC /* AudioManager.cpp */,
 				E7F518E618C49C7A002530DC /* AudioManager.h */,
+				E7F518F318C49C7A002530DC /* config.h */,
+				E7F5191C18C49C7A002530DC /* MapObject.cpp */,
+				E7F5191D18C49C7B002530DC /* MapObject.h */,
+			);
+			name = Classes;
+			path = ../Classes;
+			sourceTree = "<group>";
+		};
+		E7F5198718C6FAA8002530DC /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				E7F518FC18C49C7A002530DC /* GameLogic.cpp */,
+				E7F518FD18C49C7A002530DC /* GameLogic.h */,
+				E7F518FE18C49C7A002530DC /* GameManager.cpp */,
+				E7F518FF18C49C7A002530DC /* GameManager.h */,
+				E7F5191E18C49C7B002530DC /* NetworkLogic.cpp */,
+				E7F5191F18C49C7B002530DC /* NetworkLogic.h */,
+			);
+			name = Logic;
+			sourceTree = "<group>";
+		};
+		E7F5198818C6FAEF002530DC /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				E7F5190818C49C7A002530DC /* HelpScene.cpp */,
+				E7F5190918C49C7A002530DC /* HelpScene.h */,
+				E7F518F618C49C7A002530DC /* CreditScene.cpp */,
+				E7F518F718C49C7A002530DC /* CreditScene.h */,
+				E7F5190018C49C7A002530DC /* GameSettingScene.cpp */,
+				E7F5190118C49C7A002530DC /* GameSettingScene.h */,
+				E7F5190218C49C7A002530DC /* HelloWorldScene.cpp */,
+				E7F5190318C49C7A002530DC /* HelloWorldScene.h */,
+				E7F5191418C49C7A002530DC /* IntroScene.cpp */,
+				E7F5191518C49C7A002530DC /* IntroScene.h */,
+				E7F5191818C49C7A002530DC /* MainScene.cpp */,
+				E7F5191918C49C7A002530DC /* MainScene.h */,
+				E7F5192618C49C7B002530DC /* PlayScene.cpp */,
+				E7F5192718C49C7B002530DC /* PlayScene.h */,
+				E7F5192A18C49C7B002530DC /* ResultScene.cpp */,
+				E7F5192B18C49C7B002530DC /* ResultScene.h */,
+				E7F5193818C49C7B002530DC /* SettingScene.cpp */,
+				E7F5193918C49C7B002530DC /* SettingScene.h */,
+				E7F5198418C6F3F9002530DC /* LoginScene.cpp */,
+				E7F5198518C6F3F9002530DC /* LoginScene.h */,
+			);
+			name = Scene;
+			sourceTree = "<group>";
+		};
+		E7F5198918C6FB29002530DC /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				E7F5197D18C5A011002530DC /* LayerWebView.h */,
+				E7F5197E18C5A011002530DC /* LayerWebView.mm */,
+				E7F5197F18C5A011002530DC /* UIWebViewBridge.h */,
+				E7F5198018C5A011002530DC /* UIWebViewBridge.mm */,
 				E7F518E718C49C7A002530DC /* BackgroundAnimation.cpp */,
 				E7F518E818C49C7A002530DC /* BackgroundAnimation.h */,
 				E7F518E918C49C7A002530DC /* BackgroundLayer.cpp */,
@@ -1882,29 +1946,16 @@
 				E7F518F018C49C7A002530DC /* CMO_line.h */,
 				E7F518F118C49C7A002530DC /* CMO_tile.cpp */,
 				E7F518F218C49C7A002530DC /* CMO_tile.h */,
-				E7F518F318C49C7A002530DC /* config.h */,
 				E7F518F418C49C7A002530DC /* CreditLayer.cpp */,
 				E7F518F518C49C7A002530DC /* CreditLayer.h */,
-				E7F518F618C49C7A002530DC /* CreditScene.cpp */,
-				E7F518F718C49C7A002530DC /* CreditScene.h */,
 				E7F518F818C49C7A002530DC /* GameBoardLayer.cpp */,
 				E7F518F918C49C7A002530DC /* GameBoardLayer.h */,
 				E7F518FA18C49C7A002530DC /* GameEndLayer.cpp */,
 				E7F518FB18C49C7A002530DC /* GameEndLayer.h */,
-				E7F518FC18C49C7A002530DC /* GameLogic.cpp */,
-				E7F518FD18C49C7A002530DC /* GameLogic.h */,
-				E7F518FE18C49C7A002530DC /* GameManager.cpp */,
-				E7F518FF18C49C7A002530DC /* GameManager.h */,
-				E7F5190018C49C7A002530DC /* GameSettingScene.cpp */,
-				E7F5190118C49C7A002530DC /* GameSettingScene.h */,
-				E7F5190218C49C7A002530DC /* HelloWorldScene.cpp */,
-				E7F5190318C49C7A002530DC /* HelloWorldScene.h */,
 				E7F5190418C49C7A002530DC /* HelpButtonLayer.cpp */,
 				E7F5190518C49C7A002530DC /* HelpButtonLayer.h */,
 				E7F5190618C49C7A002530DC /* HelpPopupLayer.cpp */,
 				E7F5190718C49C7A002530DC /* HelpPopuplLayer.h */,
-				E7F5190818C49C7A002530DC /* HelpScene.cpp */,
-				E7F5190918C49C7A002530DC /* HelpScene.h */,
 				E7F5190A18C49C7A002530DC /* HelpWindowLayer.cpp */,
 				E7F5190B18C49C7A002530DC /* HelpWindowLayer.h */,
 				E7F5190C18C49C7A002530DC /* HomeMenuLayer.cpp */,
@@ -1915,30 +1966,18 @@
 				E7F5191118C49C7A002530DC /* IntroBackgroundLayer.h */,
 				E7F5191218C49C7A002530DC /* IntroLayer.cpp */,
 				E7F5191318C49C7A002530DC /* IntroLayer.h */,
-				E7F5191418C49C7A002530DC /* IntroScene.cpp */,
-				E7F5191518C49C7A002530DC /* IntroScene.h */,
 				E7F5191618C49C7A002530DC /* MainMenuLayer.cpp */,
 				E7F5191718C49C7A002530DC /* MainMenuLayer.h */,
-				E7F5191818C49C7A002530DC /* MainScene.cpp */,
-				E7F5191918C49C7A002530DC /* MainScene.h */,
 				E7F5191A18C49C7A002530DC /* MainTitleLayer.cpp */,
 				E7F5191B18C49C7A002530DC /* MainTitleLayer.h */,
-				E7F5191C18C49C7A002530DC /* MapObject.cpp */,
-				E7F5191D18C49C7B002530DC /* MapObject.h */,
-				E7F5191E18C49C7B002530DC /* NetworkLogic.cpp */,
-				E7F5191F18C49C7B002530DC /* NetworkLogic.h */,
 				E7F5192018C49C7B002530DC /* NetworkPlayerNumberLayer.cpp */,
 				E7F5192118C49C7B002530DC /* NetworkPlayerNumberLayer.h */,
 				E7F5192218C49C7B002530DC /* PlayerLayer.cpp */,
 				E7F5192318C49C7B002530DC /* PlayerLayer.h */,
 				E7F5192418C49C7B002530DC /* PlayerNumberAndMapSizeLayer.cpp */,
 				E7F5192518C49C7B002530DC /* PlayerNumberAndMapSizeLayer.h */,
-				E7F5192618C49C7B002530DC /* PlayScene.cpp */,
-				E7F5192718C49C7B002530DC /* PlayScene.h */,
 				E7F5192818C49C7B002530DC /* ResultButtonLayer.cpp */,
 				E7F5192918C49C7B002530DC /* ResultButtonLayer.h */,
-				E7F5192A18C49C7B002530DC /* ResultScene.cpp */,
-				E7F5192B18C49C7B002530DC /* ResultScene.h */,
 				E7F5192C18C49C7B002530DC /* ResultScoreLayer.cpp */,
 				E7F5192D18C49C7B002530DC /* ResultScoreLayer.h */,
 				E7F5192E18C49C7B002530DC /* ResultTitleLayer.cpp */,
@@ -1951,8 +1990,6 @@
 				E7F5193518C49C7B002530DC /* SettingMenuLayer.h */,
 				E7F5193618C49C7B002530DC /* SettingOtherPlayerStatusLayer.cpp */,
 				E7F5193718C49C7B002530DC /* SettingOtherPlayerStatusLayer.h */,
-				E7F5193818C49C7B002530DC /* SettingScene.cpp */,
-				E7F5193918C49C7B002530DC /* SettingScene.h */,
 				E7F5193A18C49C7B002530DC /* SettingSecondStepLayer.cpp */,
 				E7F5193B18C49C7B002530DC /* SettingSecondStepLayer.h */,
 				E7F5193C18C49C7B002530DC /* SettingTitleLayer.cpp */,
@@ -1965,11 +2002,8 @@
 				E7F5194318C49C7B002530DC /* TroubleshootingLayer.h */,
 				E7F5194418C49C7B002530DC /* WaitingChannelId.cpp */,
 				E7F5194518C49C7B002530DC /* WaitingChannelId.h */,
-				E7F5197718C4A7E9002530DC /* LoginWebView.mm */,
-				E7F5197818C4A7E9002530DC /* LoginWebView.h */,
 			);
-			name = Classes;
-			path = ../Classes;
+			name = Layer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2126,8 +2160,10 @@
 				15A3D9391682F7D5002FB0C5 /* b2Rope.cpp in Sources */,
 				E7F5196118C49C7B002530DC /* MainTitleLayer.cpp in Sources */,
 				15A3D9951682F7F9002FB0C5 /* chipmunk.c in Sources */,
+				E7F5198618C6F3F9002530DC /* LoginScene.cpp in Sources */,
 				15A3D9971682F7F9002FB0C5 /* cpConstraint.c in Sources */,
 				15A3D9981682F7F9002FB0C5 /* cpDampedRotarySpring.c in Sources */,
+				E7F5198118C5A011002530DC /* LayerWebView.mm in Sources */,
 				15A3D9991682F7F9002FB0C5 /* cpDampedSpring.c in Sources */,
 				15A3D99A1682F7F9002FB0C5 /* cpGearJoint.c in Sources */,
 				15A3D99B1682F7F9002FB0C5 /* cpGrooveJoint.c in Sources */,
@@ -2187,6 +2223,7 @@
 				15A3DA401682F826002FB0C5 /* CCMenuItemImageLoader.cpp in Sources */,
 				E7F5196218C49C7B002530DC /* MapObject.cpp in Sources */,
 				375BD5101868454E0024609E /* CCActionFrameEasing.cpp in Sources */,
+				E7F5198218C5A011002530DC /* UIWebViewBridge.mm in Sources */,
 				15A3DA411682F826002FB0C5 /* CCMenuItemLoader.cpp in Sources */,
 				15A3DA421682F826002FB0C5 /* CCNode+CCBRelativePositioning.cpp in Sources */,
 				15A3DA431682F826002FB0C5 /* CCNodeLoader.cpp in Sources */,
@@ -2315,7 +2352,6 @@
 				379BB9C717F03F3700829B88 /* UISlider.cpp in Sources */,
 				379BB9C917F03F3700829B88 /* UITextField.cpp in Sources */,
 				E7F5195918C49C7B002530DC /* HelpWindowLayer.cpp in Sources */,
-				E7F5197918C4A7E9002530DC /* LoginWebView.mm in Sources */,
 				379BB9CB17F03F3700829B88 /* DictionaryHelper.cpp in Sources */,
 				379BB9D317F03F3700829B88 /* GUIReader.cpp in Sources */,
 				379BB9D417F03F3700829B88 /* SceneReader.cpp in Sources */,

@@ -18,6 +18,8 @@ public:
 
 	void SetCurrentNetworkPhase(NetworkPhase phase) { m_CurrentPhase = phase; }
 	NetworkPhase GetCurrentNetworkPhase();
+    void SetCurrentLoginPhase(LoginPhase phase) { m_CurrentLoginPhase = phase; }
+    LoginPhase GetCurrentLoginPhase();
 
 	SceneName			GetCurrentScene();
 	void				SetCurrentScene(SceneName scene);
@@ -43,13 +45,13 @@ public:
 	int					GetTileAnimationTurn(IndexedPosition indexedPosition);
 	bool				GetCurrentTimerStatus();
 
-	// ³»°¡ ¹æÀå?
+	// â‰¥ÂªâˆÂ° Ï€ÃŠÂ¿Ã‚?
 	bool IsChannelMaster(); 
-	// º»ÀÎÀÌ ·¹µğ?
+	// âˆ«ÂªÂ¿Å’Â¿Ãƒ âˆ‘Ï€Âµï£¿?
 	bool IsReady();
-	// ´Ù¸¥ ³ğµéÀÌ ·¹µğ?
+	// Â¥Å¸âˆâ€¢ â‰¥ï£¿ÂµÃˆÂ¿Ãƒ âˆ‘Ï€Âµï£¿?
 	bool IsReady(int playerId);
-	// ³ª¸ÓÁö ´Ù ·¹µğ?
+	// â‰¥â„¢âˆâ€Â¡Ë† Â¥Å¸ âˆ‘Ï€Âµï£¿?
 	bool IsAllReady();
 
 	// request functions
@@ -65,8 +67,8 @@ public:
 	void SettingReady();
 	void PlayReady();
 
-	void Authetication();
-
+    void AuthenticationCheck();
+    
 	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
 	
 	rapidjson::Document* GetGameData() { return m_NetworkGameData; }
@@ -84,11 +86,11 @@ private:
 	cocos2d::extension::CCHttpRequest*			m_Request;
 
 	NetworkPhase			m_CurrentPhase;
+    LoginPhase              m_CurrentLoginPhase;
 	SceneName				m_CurrentScene;
 
 	int						m_MyPlayerId;
 	
-	std::string				m_TokenId;
 	std::string				m_UserName;
 
 	bool					m_TwoFlag;

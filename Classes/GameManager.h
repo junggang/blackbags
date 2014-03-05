@@ -93,6 +93,8 @@ public:
 
 	// network 관련 함수
 	bool InitNetworkLogic();
+    
+    void AuthenticationCheck();
 
 	void Login();
 	void Logout();
@@ -101,7 +103,9 @@ public:
 	void PlayUpdate(float dt);
 	void PlayReady();
 
-	NetworkPhase GetCurrentNetworkPhase();
+	NetworkPhase    GetCurrentNetworkPhase();
+    LoginPhase      GetCurrentLoginPhase();
+    void            SetCurrentLoginPhase(LoginPhase phase);
 
 	// network::playReady 전송을 위한 함수
 	void	SetAnimationDelay(int time);
@@ -116,7 +120,7 @@ public:
 	void SetUsersName(std::string name);
 	void SetTokenId(std::string tokenId);
 	void SetPlayerNumberSelection(int number, bool selection);
-
+    
 	bool IsChannelMaster();
 	bool IsReady();
 	bool IsReady(int playerId);

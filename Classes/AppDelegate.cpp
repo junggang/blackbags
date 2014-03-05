@@ -21,13 +21,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//ÀÌ°ÍÀº ÇÁ·¹ÀÓ »çÀÌÁîÀÔ´Ï´Ù.
+	//ì´ê²ƒì€ í”„ë ˆìž„ ì‚¬ì´ì¦ˆìž…ë‹ˆë‹¤.
 	CCEGLView::sharedOpenGLView()->setFrameSize(winSize.width,winSize.height);
 #else
 	CCEGLView::sharedOpenGLView()->setFrameSize(WINDOW_WIDTH/2,WINDOW_HEIGHT/2);
 #endif
 
-	//ÀÌ°ÍÀº ½ÇÁ¦ ¿ì¸®°¡ ¸¸µç È­¸éÀ» ³ªÅ¸³À´Ï´Ù. ÀÌ ºñÀ²¿¡ ¸ÂÃç ¸ðµç ±×¸²µéÀÌ ÇÁ·¹ÀÓ »çÀÌÁî·Î ÁÙ¾îµå´Â °Í!!
+	//ì´ê²ƒì€ ì‹¤ì œ ìš°ë¦¬ê°€ ë§Œë“  í™”ë©´ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤. ì´ ë¹„ìœ¨ì— ë§žì¶° ëª¨ë“  ê·¸ë¦¼ë“¤ì´ í”„ë ˆìž„ ì‚¬ì´ì¦ˆë¡œ ì¤„ì–´ë“œëŠ” ê²ƒ!!
 	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(WINDOW_WIDTH,WINDOW_HEIGHT,kResolutionShowAll);
 
     // turn on display FPS

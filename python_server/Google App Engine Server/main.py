@@ -414,6 +414,9 @@ def ttl_check():
 
     return 'hell...'
 
+
+
+# game server
 @app.route('/authentication')
 def authentication():
     """Return a friendly HTTP greeting."""
@@ -421,12 +424,23 @@ def authentication():
     user = users.get_current_user()
 
     if user:
-    	return ('hi' )
+    	return 'game start!'
     else:
     	return redirect(users.create_login_url(request.url) )
 
 
-# game server
+@app.route('/authentication_check')
+def authenticationCheck():
+    """Return a friendly HTTP greeting."""
+
+    user = users.get_current_user()
+
+    if user:
+    	return 'ok'
+    else:
+    	return 'fail'
+
+
 @app.route('/login', methods=['POST','GET'])
 def login():
 	try : 

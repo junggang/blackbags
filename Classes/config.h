@@ -66,6 +66,13 @@ enum NetworkPhase
 	NP_GAME_SETTING
 };
 
+enum LoginPhase
+{
+	LP_WAITING,
+    LP_FAIL,
+    LP_OK
+};
+
 enum MO_TYPE	//게임 맵 기본 자료형
 {
 	MO_SENTINEL,

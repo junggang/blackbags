@@ -38,7 +38,7 @@ bool CGameManager::init()
 	// 만약 현재 저장 된 게임데이터가 없으면 초기값으로 설정해서 생성한다.
 	if (!m_GameData->getBoolForKey("initialized") )
 	{
-		m_GameData->setStringForKey("tokenId", "token moon");
+		m_GameData->setStringForKey("tokenId", "tempToken");
 
 		m_GameData->setStringForKey("usersName", "moon");
 
@@ -47,6 +47,7 @@ bool CGameManager::init()
 		m_GameData->setBoolForKey("four", true);
 
 		m_GameData->setBoolForKey("initialized", true);
+        m_GameData->flush();
 	}
 
 	return true;
@@ -430,10 +431,8 @@ int CGameManager::GetPlayerNumberOfThisGame()
 		// 필요한가?
 		CNetworkLogic::GetInstance()->GetCurrentPlayerNumber();
 	}
-	else
-	{
-		return CGameLogic::GetInstance()->GetPlayerNumberOfThisGame();
-	}
+		
+    return CGameLogic::GetInstance()->GetPlayerNumberOfThisGame();
 }
 
 bool CGameManager::GetStatusPlayerNumber(int playerNumber)
@@ -518,6 +517,16 @@ SceneName CGameManager::GetCurrentScene()
 NetworkPhase CGameManager::GetCurrentNetworkPhase()
 {
 	return CNetworkLogic::GetInstance()->GetCurrentNetworkPhase();
+}
+
+LoginPhase CGameManager::GetCurrentLoginPhase()
+{
+    return CNetworkLogic::GetInstance()->GetCurrentLoginPhase();
+}
+
+void CGameManager::SetCurrentLoginPhase(LoginPhase phase)
+{
+    CNetworkLogic::GetInstance()->SetCurrentLoginPhase(phase);
 }
 
 bool CGameManager::InitNetworkLogic()
@@ -621,11 +630,13 @@ bool CGameManager::GetPlayerNumberSelection(int number)
 void CGameManager::SetUsersName(std::string name)
 {
 	m_GameData->setStringForKey("usersName", name);
+    m_GameData->flush();
 }
 
 void CGameManager::SetTokenId(std::string tokenId)
 {
 	m_GameData->setStringForKey("tokenId", tokenId);
+    m_GameData->flush();
 }
 
 void CGameManager::SetPlayerNumberSelection(int number, bool selection)
@@ -644,6 +655,8 @@ void CGameManager::SetPlayerNumberSelection(int number, bool selection)
 	default:
 		break;
 	}
+    
+    m_GameData->flush();
 }
 
 int CGameManager::GetPlayerIdByCharactyerId( int characterId )
@@ -743,4 +756,9 @@ int CGameManager::GetPlayerFrameSelected()
 
 	// error
 	return -1;
+}
+
+void CGameManager::AuthenticationCheck()
+{
+    CNetworkLogic::GetInstance()->AuthenticationCheck();
 }

@@ -19,102 +19,102 @@ bool CGameSettingScene::init(void)
 	{
 		return false;
 	}
-
+    
 	m_CurrentLayer = nullptr;
-
+    
 	// init current network phase
 	m_CurrentPhase = CGameManager::GetInstance()->GetCurrentNetworkPhase();
-
+    
 	/////////////////////////////
 	// 2. add layers
-	
+    
 	// background layer
 	CCLayer* BackgroundLayer = CBackgroundLayer::create();
 	this->addChild(BackgroundLayer, 0);
-
+    
 	// 2.1 add Player Number and Map Size Select layer
 	m_CurrentLayer = CSettingFirstStepLayer::create();
 	this->addChild(m_CurrentLayer);
-
-	// Ã³À½ »ý¼ºµÈ ·¹ÀÌ¾î°¡ ÃÖ½Å Á¤º¸·Î ¾÷µ¥ÀÌÆ® µÈ »óÅÂ·Î ½ÃÀÛÇÒ ¼ö ÀÖµµ·Ï ÇÃ·¡±× ¼³Á¤
+    
+	// ì²˜ìŒ ìƒì„±ëœ ë ˆì´ì–´ê°€ ìµœì‹  ì •ë³´ë¡œ ì—…ë°ì´íŠ¸ ëœ ìƒíƒœë¡œ ì‹œìž‘í•  ìˆ˜ ìžˆë„ë¡ í”Œëž˜ê·¸ ì„¤ì •
 	CGameManager::GetInstance()->SetUpdateFlag(true);
-
+    
 	this->scheduleUpdate();
-
+    
 	return true;
 }
 
 void CGameSettingScene::update(float dt)
 {
-	//dt´Â ÀÌÀü update ÀÌÈÄ Áö³­ ½Ã°£
-
+	//dtëŠ” ì´ì „ update ì´í›„ ì§€ë‚œ ì‹œê°„
+    
 	/*
-		¾÷µ¥ÀÌÆ®ÇÏ´Â ¹æ¹ýÀÌ ÀÏ´Ü ¿Â¶óÀÎÀÌµçÁö ¿ÀÇÁ¶óÀÎÀÌµçÁö °ü°è¾øÀÌ
-		ÀÏ´Ü ¾÷µ¥ÀÌÆ® ÇÃ·¡±×¸¦ È®ÀÎÇØ¼­ ¾÷µ¥ÀÌÆ®°¡ µÇ¾ú´Ù¸é ¿Â¶óÀÎ ¿ÀÇÁ¶óÀÎÀ¸·Î ±¸ºÐÇØ¼­ Ã³¸®ÇÒ °Í
-		ÇöÀç ³Ø½ºÆ® Ç¥½Ã ±âÁØÀº ¾÷µ¥ÀÌÆ® ¿©ºÎ »ó°ü ¾øÀÌ ¹Ýº¹ÀûÀ¸·Î È®ÀÎÇÏ°í ÀÖÀ½
-	*/
-
+     ì—…ë°ì´íŠ¸í•˜ëŠ” ë°©ë²•ì´ ì¼ë‹¨ ì˜¨ë¼ì¸ì´ë“ ì§€ ì˜¤í”„ë¼ì¸ì´ë“ ì§€ ê´€ê³„ì—†ì´
+     ì¼ë‹¨ ì—…ë°ì´íŠ¸ í”Œëž˜ê·¸ë¥¼ í™•ì¸í•´ì„œ ì—…ë°ì´íŠ¸ê°€ ë˜ì—ˆë‹¤ë©´ ì˜¨ë¼ì¸ ì˜¤í”„ë¼ì¸ìœ¼ë¡œ êµ¬ë¶„í•´ì„œ ì²˜ë¦¬í•  ê²ƒ
+     í˜„ìž¬ ë„¥ìŠ¤íŠ¸ í‘œì‹œ ê¸°ì¤€ì€ ì—…ë°ì´íŠ¸ ì—¬ë¶€ ìƒê´€ ì—†ì´ ë°˜ë³µì ìœ¼ë¡œ í™•ì¸í•˜ê³  ìžˆìŒ
+     */
+    
 	if ( !CGameManager::GetInstance()->IsUpdated() )
 	{
 		return;
 	}
-
+    
 	if ( CGameManager::GetInstance()->GetCurrentScene() == SC_PLAY)
 	{
 		CCScene* newScene = CPlayScene::create();
 		CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 		return;
 	}
-
+    
 	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{
-		// ¸¸¾à ¾÷µ¥ÀÌÆ® µÈ ³»¿ëÀÌ ÀÖ´Ù¸é ÇöÀç phase°¡ ¹Ù²î¾ú´ÂÁö È®ÀÎÇÑ´Ù.
-		// ·ÎÄÃ¿¡ ÇöÀç phase¸¦ ÀúÀåÇÑ ´ÙÀ½, ³×Æ®¿öÅ© phase¿Í ·ÎÄÃ phase°¡ °°À¸¸é ¾Æ·¡ switch ¹®Àº °Ç³Ê¶Ú´Ù.
+		// ë§Œì•½ ì—…ë°ì´íŠ¸ ëœ ë‚´ìš©ì´ ìžˆë‹¤ë©´ í˜„ìž¬ phaseê°€ ë°”ë€Œì—ˆëŠ”ì§€ í™•ì¸í•œë‹¤.
+		// ë¡œì»¬ì— í˜„ìž¬ phaseë¥¼ ì €ìž¥í•œ ë‹¤ìŒ, ë„¤íŠ¸ì›Œí¬ phaseì™€ ë¡œì»¬ phaseê°€ ê°™ìœ¼ë©´ ì•„ëž˜ switch ë¬¸ì€ ê±´ë„ˆë›´ë‹¤.
 		NetworkPhase tempPhase = CGameManager::GetInstance()->GetCurrentNetworkPhase();
-
+        
 		if (m_CurrentPhase != tempPhase)
 		{
-			// »óÅÂ°¡ ¹Ù²î¸é ÇöÀç »óÅÂ¸¦ ¹Ù²ãÁÖ°í 
-			// ¹Ù²ï »óÅÂ¿¡ ÇØ´çÇÏ´Â ·¹ÀÌ¾î¸¦ »ý¼ºÇÑ´Ù.
-
+			// ìƒíƒœê°€ ë°”ë€Œë©´ í˜„ìž¬ ìƒíƒœë¥¼ ë°”ê¿”ì£¼ê³ 
+			// ë°”ë€ ìƒíƒœì— í•´ë‹¹í•˜ëŠ” ë ˆì´ì–´ë¥¼ ìƒì„±í•œë‹¤.
+            
 			m_CurrentPhase = tempPhase;
 			this->removeChild(m_CurrentLayer);
 			m_CurrentLayer = nullptr;
-
+            
 			CCScene* newScene = nullptr;
-
+            
 			switch (tempPhase)
 			{
-			case NP_NOTHING:
-				// return to the main menu
-				newScene = CMainScene::create();
-				CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
-				return;
-				break;
-			case NP_GAME_SETTING:
-				// real setting layer
-				this->removeChild(m_CurrentLayer);
-				m_CurrentLayer = CSettingSecondStepLayer::create();
-				this->addChild(m_CurrentLayer);
-
-				this->unschedule(schedule_selector(CGameManager::JoinUpdate) );
-				this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
-				break;
-			case NP_PLAYER_NUMBER_SETTING:
-				// select player number layer
-				m_CurrentLayer = CSettingFirstStepLayer::create();
-				this->addChild(m_CurrentLayer, 1);
-				break;
-			case NP_WAITING_CHANNEL_ID:
-				// waiting channel id layer
-				m_CurrentLayer = CWaitingChannelId::create();
-				this->addChild(m_CurrentLayer, 1);
-    
-				// ÁÖ±âÀûÀ¸·Î Ã¤³Î ÇÒ´ç ¹Þ¾Ò´ÂÁö È®ÀÎ
-				this->schedule(schedule_selector(CGameManager::JoinUpdate), 1.0f);
-				break;
-			default:
-				break;
+                case NP_NOTHING:
+                    // return to the main menu
+                    newScene = CMainScene::create();
+                    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+                    return;
+                    break;
+                case NP_GAME_SETTING:
+                    // real setting layer
+                    this->removeChild(m_CurrentLayer);
+                    m_CurrentLayer = CSettingSecondStepLayer::create();
+                    this->addChild(m_CurrentLayer);
+                    
+                    this->unschedule(schedule_selector(CGameManager::JoinUpdate) );
+                    this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
+                    break;
+                case NP_PLAYER_NUMBER_SETTING:
+                    // select player number layer
+                    m_CurrentLayer = CSettingFirstStepLayer::create();
+                    this->addChild(m_CurrentLayer, 1);
+                    break;
+                case NP_WAITING_CHANNEL_ID:
+                    // waiting channel id layer
+                    m_CurrentLayer = CWaitingChannelId::create();
+                    this->addChild(m_CurrentLayer, 1);
+                    
+                    // ì£¼ê¸°ì ìœ¼ë¡œ ì±„ë„ í• ë‹¹ ë°›ì•˜ëŠ”ì§€ í™•ì¸
+                    this->schedule(schedule_selector(CGameManager::JoinUpdate), 1.0f);
+                    break;
+                default:
+                    break;
 			}
 		}
 	}
@@ -128,7 +128,7 @@ void CGameSettingScene::update(float dt)
 			this->addChild(m_CurrentLayer);
 		}
 	}
-
+    
 	this->m_CurrentLayer->update(dt);
 	CGameManager::GetInstance()->SetUpdateFlag(false);
 }
