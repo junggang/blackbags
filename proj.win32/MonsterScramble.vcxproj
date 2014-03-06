@@ -140,6 +140,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\CMO_tile.cpp" />
     <ClCompile Include="..\Classes\CreditLayer.cpp" />
     <ClCompile Include="..\Classes\CreditScene.cpp" />
+    <ClCompile Include="..\Classes\DisconnectedLayer.cpp" />
     <ClCompile Include="..\Classes\GameBoardLayer.cpp" />
     <ClCompile Include="..\Classes\GameEndLayer.cpp" />
     <ClCompile Include="..\Classes\GameLogic.cpp" />
@@ -156,6 +157,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\IntroBackgroundLayer.cpp" />
     <ClCompile Include="..\Classes\IntroLayer.cpp" />
     <ClCompile Include="..\Classes\IntroScene.cpp" />
+    <ClCompile Include="..\Classes\LoginScene.cpp" />
     <ClCompile Include="..\Classes\MainMenuLayer.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
     <ClCompile Include="..\Classes\MainTitleLayer.cpp" />
@@ -192,6 +194,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\config.h" />
     <ClInclude Include="..\Classes\CreditLayer.h" />
     <ClInclude Include="..\Classes\CreditScene.h" />
+    <ClInclude Include="..\Classes\DisconnectedLayer.h" />
     <ClInclude Include="..\Classes\GameBoardLayer.h" />
     <ClInclude Include="..\Classes\GameEndLayer.h" />
     <ClInclude Include="..\Classes\GameLogic.h" />
@@ -208,6 +211,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\IntroBackgroundLayer.h" />
     <ClInclude Include="..\Classes\IntroLayer.h" />
     <ClInclude Include="..\Classes\IntroScene.h" />
+    <ClInclude Include="..\Classes\LoginScene.h" />
     <ClInclude Include="..\Classes\MainMenuLayer.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
     <ClInclude Include="..\Classes\MainTitleLayer.h" />
