@@ -10,6 +10,7 @@
 #include "GameManager.h"
 #include "LayerWebView.h"
 #include "GameSettingScene.h"
+#include "BackgroundLayer.h"
 
 
 USING_NS_CC;
@@ -22,6 +23,9 @@ bool CLoginScene::init(void)
 	{
 		return false;
 	}
+    
+    CCLayer* BackgroundLayer = CBackgroundLayer::create();
+	this->addChild(BackgroundLayer, 0);
     
 	// send request for authentication
     CGameManager::GetInstance()->AuthenticationCheck();
@@ -50,7 +54,11 @@ void CLoginScene::update(float dt)
         {
             CGameManager::GetInstance()->SetCurrentLoginPhase(LP_WAITING);
             static_cast<LayerWebView *>(m_LoginLayer)->close();
-            this->removeAllChildren();
+            //this->removeAllChildren();
+            if (nullptr != m_LoginLayer)
+            {
+                this->removeChild(m_LoginLayer);
+            }
             
             // next scene gogo
             CCScene* newScene = CGameSettingScene::create();

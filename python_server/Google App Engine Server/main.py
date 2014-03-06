@@ -92,7 +92,7 @@ def playerMatching():
 		playerData = getPlayerData(each)
 
 		if playerData == None:
-			# 대기 시간이 길어서 데이터가 삭제된 경우이므로 삭제!
+			# 로그인 되어있지 않음 
 			watingList.remove(each)
 			continue
 		elif time.time() - playerData.getTimestamp() > 5:
@@ -334,7 +334,7 @@ def PCPlayUpdate(tokenId):
 		return 'disconnected'
 
 	# timestamp 갱신
-	playerData.setTimestamp(time.time() )
+	# playerData.setTimestamp(time.time() )
 
 	playerId = playerData.getPlayerId()
 	channelId = playerData.getPlayerGameChannel()
@@ -488,7 +488,9 @@ def login():
 				memcache.set(tokenId, jsonData, playerDataTTL)
 
 			# 대기열에 추가 및 바뀐 대기열 상태로 매칭 시도
-			watingList.append(tokenId)
+			if not tokenId in watingList:
+				watingList.append(tokenId)
+
 			playerMatching()
 
 			# print tokenId
@@ -515,13 +517,13 @@ def logout():
 
 			if playerData is None:
 				return 'disconnected'
-				
+
 			# timestamp 갱신
 			playerData.setTimestamp(time.time() )
 
 			channelId = playerData.getPlayerGameChannel()
 
-			if channelId == -1:
+			if channelId == 'no channel':
 				# 게임 중 아니면 대기 리스트에서 삭제
 				watingList.remove(tokenId)
 			else:
@@ -565,7 +567,7 @@ def joinUpdate():
 				return 'disconnected'
 
 			# timestamp 갱신
-			playerData.setTimestamp(time.time() )
+			# playerData.setTimestamp(time.time() )
 
 			playerId = playerData.getPlayerId()
 
