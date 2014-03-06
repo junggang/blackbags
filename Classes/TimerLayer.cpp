@@ -15,9 +15,8 @@ bool CTimerLayer::init()
 	m_CurrentServerTimerStatus = CGameManager::GetInstance()->GetCurrentTimerStatus();
 
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
-	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
-	CCSprite* timerBg = CCSprite::create(PLAYSCENE_TIMER_BAR.c_str());
+	CCSprite* timerBg = CCSprite::create(PLAYSCENE_TIMER_BG.c_str());
 	timerBg->setAnchorPoint(ccp(0,0));
 	timerBg->setPosition(CCPoint(PLAYSCENE_TIMER_POS));
 	addChild(timerBg,0);
@@ -29,11 +28,13 @@ bool CTimerLayer::init()
 	m_progressTimeBar->setAnchorPoint(ccp(0,0));
 	m_progressTimeBar->setPosition(CCPoint(PLAYSCENE_TIMER_POS));
 
+    m_progressTimeBar->setScale(m_VisibleSize.width/3.65/timerBar->getContentSize().width);
 	m_progressTimeBar->setPercentage(100.f);
 	m_progressTimeBar->setMidpoint(ccp(0, 0.5));   
 	m_progressTimeBar->setBarChangeRate(ccp(1,0));
-
-	this->addChild(m_progressTimeBar,1);
+    m_progressTimeBar->setType(kCCProgressTimerTypeBar);
+    
+	addChild(m_progressTimeBar,1);
 
 	//시작하면서 한 번 업데이트 해야되는데.
 	CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
