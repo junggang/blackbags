@@ -9,6 +9,7 @@ CGameManager::CGameManager(void)
 	m_IsOnlineGame = false;
 	m_IsUpdated = false;
 	m_GameData = nullptr;
+    m_ConnectionStatus = false;
 }
 
 CGameManager::~CGameManager(void)

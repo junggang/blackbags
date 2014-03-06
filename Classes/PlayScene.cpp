@@ -8,6 +8,7 @@
 #include "TimerLayer.h"
 #include "GameManager.h"
 #include "HomeMenuLayer.h"
+#include "DisconnectedLayer.h"
 
 USING_NS_CC;
 
@@ -39,11 +40,11 @@ bool CPlayScene::init(void)
 
 	if (CGameManager::GetInstance()->IsOnlineMode() )
 	{
-		// ¼­¹ö¿¡ ÁÖ±âÀûÀ¸·Î ¾÷µ¥ÀÌÆ® È®ÀÎ
+		// Âºâ‰ Ï€Ë†Ã¸Â° Â¡Ã·Â±â€šÂ¿ËšÂ¿âˆâˆ‘Å’ Ã¦ËœÂµâ€¢Â¿Ãƒâˆ†Ã† Â»Ã†Â¿Å’
 		this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
 	}
 
-	//ÀÌ·¸°Ô ¼³Á¤ÇÏ¸é updateÇÔ¼ö°¡ ¾Ë¾Æ¼­ ÇÁ·¹ÀÓ¸¶´Ù È£ÃâµÈ´Ù.
+	//Â¿Ãƒâˆ‘âˆâˆžâ€˜ Âºâ‰¥Â¡Â§Â«Å“âˆÃˆ updateÂ«â€˜ÂºË†âˆžÂ° Ã¦Ã€Ã¦âˆ†Âºâ‰  Â«Â¡âˆ‘Ï€Â¿â€âˆâˆ‚Â¥Å¸ Â»Â£âˆšâ€šÂµÂ»Â¥Å¸.
 	this->scheduleUpdate();
 
 	m_GameEndFlag = false;
@@ -51,8 +52,8 @@ bool CPlayScene::init(void)
 
 	if (CGameManager::GetInstance()->IsOnlineMode() )
 	{
-		// playSceneÀÌ ÁØºñµÇ¾úÀ¸¹Ç·Î ÁØºñ µÇ¾ú´Ù´Â ½ÅÈ£¸¦ ¼­¹ö·Î º¸³»°í
-		// ¾ÕÀ¸·Î ÁÖ±âÀûÀ¸·Î ¾÷µ¥ÀÌÆ® ³»¿ëÀ» È®ÀÎÇÏ´Â ½ºÄÉÁÙÀ» ½ÇÇà
+		// playSceneÂ¿Ãƒ Â¡Ã¿âˆ«Ã’ÂµÂ«Ã¦Ë™Â¿âˆÏ€Â«âˆ‘Å’ Â¡Ã¿âˆ«Ã’ ÂµÂ«Ã¦Ë™Â¥Å¸Â¥Â¬ Î©â‰ˆÂ»Â£âˆÂ¶ Âºâ‰ Ï€Ë†âˆ‘Å’ âˆ«âˆâ‰¥ÂªâˆžÃŒ
+		// Ã¦â€™Â¿âˆâˆ‘Å’ Â¡Ã·Â±â€šÂ¿ËšÂ¿âˆâˆ‘Å’ Ã¦ËœÂµâ€¢Â¿Ãƒâˆ†Ã† â‰¥ÂªÃ¸ÃŽÂ¿Âª Â»Ã†Â¿Å’Â«Å“Â¥Â¬ Î©âˆ«Æ’â€¦Â¡Å¸Â¿Âª Î©Â«Â«â€¡
 		CGameManager::GetInstance()->PlayReady();
 		this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
 	}
@@ -67,12 +68,12 @@ void CPlayScene::update(float dt)
 		return;
 	}
 
-	//°ÔÀÓ Á¾·á È®ÀÎ
+	//âˆžâ€˜Â¿â€ Â¡Ã¦âˆ‘Â· Â»Ã†Â¿Å’
 	if (CGameManager::GetInstance()->IsEnd() && !m_GameEndFlag)
 	{
-		m_GameEndFlag = true; //´Ù½Ã ÀÌ Á¶°Ç¹® ¾ÈÀ¸·Î ÁøÀÔÇØ¼­ ·¹ÀÌ¾î¸¦ Ãß°¡ÇÏÁö ¾Êµµ·Ï
+		m_GameEndFlag = true; //Â¥Å¸Î©âˆš Â¿Ãƒ Â¡âˆ‚âˆžÂ«Ï€Ã† Ã¦Â»Â¿âˆâˆ‘Å’ Â¡Â¯Â¿â€˜Â«Ã¿Âºâ‰  âˆ‘Ï€Â¿ÃƒÃ¦Ã“âˆÂ¶ âˆšï¬‚âˆžÂ°Â«Å“Â¡Ë† Ã¦Â ÂµÂµâˆ‘Å“
 
-		//Á¾·á ¸Þ½ÃÁö layer¸¦ child·Î Ãß°¡ÇØ¼­ result·Î °¥ ¼ö ÀÖ°Ô ÇÑ´Ù.
+		//Â¡Ã¦âˆ‘Â· âˆï¬Î©âˆšÂ¡Ë† layerâˆÂ¶ childâˆ‘Å’ âˆšï¬‚âˆžÂ°Â«Ã¿Âºâ‰  resultâˆ‘Å’ âˆžâ€¢ ÂºË† Â¿Ã·âˆžâ€˜ Â«â€”Â¥Å¸.
 		CCLayer* endButton = CGameEndLayer::create();
 		this->addChild(endButton, 2);
 
@@ -89,19 +90,34 @@ void CPlayScene::update(float dt)
 
 	if (CGameManager::GetInstance()->IsOnlineMode() )
 	{
-		// ¶óÀÎ Àç»ý ½Ã°£°ú Å¸ÀÏ Àç»ý ½Ã°£ÀÌ °°À¸¹Ç·Î ¾Æ·¡ÀÇ ÄÚµå¿¡¼­ 0.8ÀÇ »ó¼ö´Â
-		// ¶óÀÎ Àç»ý¸¸ ÀÖÀ» °æ¿ì¿¡´Â ¶óÀÎ Àç»ý ½Ã°£À», Å¸ÀÏ ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ Æ÷ÇÔµÇ´Â °æ¿ì¿¡´Â ¸¶Áö¸· Àç»ýµÇ´Â Å¸ÀÏ ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý ½Ã°£À» ÀÇ¹Ì
+        if (!CGameManager::GetInstance()->GetConnectionStatus())
+        {
+            // ë©”ì¸ ë©”ë‰´ë¡œ
+            // ë‚˜ì¤‘ì—ëŠ” ì ‘ì† ì¢…ë£Œ ê´€ë ¨ ë ˆì´ì–´ í•˜ë‚˜ ì¶”ê°€í•˜ê³  ê±°ê¸°ì„œ ë²„íŠ¼ ëˆ„ë¥´ë©´ ëŒì•„ê°€ë„ë¡ ë§Œë“¤ê¸°
+            this->removeAllChildren();
+            
+            CCLayer* BackgroundLayer = CBackgroundLayer::create();
+            this->addChild(BackgroundLayer, 0);
+            
+            CCLayer* DisconnectedLayer = CDisconnectedLayer::create();
+            this->addChild(DisconnectedLayer, 1);
+            
+            return;
+            
+        }
+		// âˆ‚Ã›Â¿Å’ Â¿ÃÂªË Î©âˆšâˆžÂ£âˆžË™ â‰ˆâˆÂ¿Å“ Â¿ÃÂªË Î©âˆšâˆžÂ£Â¿Ãƒ âˆžâˆžÂ¿âˆÏ€Â«âˆ‘Å’ Ã¦âˆ†âˆ‘Â°Â¿Â« Æ’â„ÂµÃ‚Ã¸Â°Âºâ‰  0.8Â¿Â« ÂªÃ›ÂºË†Â¥Â¬
+		// âˆ‚Ã›Â¿Å’ Â¿ÃÂªËâˆâˆ Â¿Ã·Â¿Âª âˆžÃŠÃ¸ÃÃ¸Â°Â¥Â¬ âˆ‚Ã›Â¿Å’ Â¿ÃÂªË Î©âˆšâˆžÂ£Â¿Âª, â‰ˆâˆÂ¿Å“ Ã¦Ã·Â¥Å“âˆï¬Â¿ÃƒÂºÂ«Â¿Ãƒ âˆ†ËœÂ«â€˜ÂµÂ«Â¥Â¬ âˆžÃŠÃ¸ÃÃ¸Â°Â¥Â¬ âˆâˆ‚Â¡Ë†âˆâˆ‘ Â¿ÃÂªËÂµÂ«Â¥Â¬ â‰ˆâˆÂ¿Å“ Ã¦Ã·Â¥Å“âˆï¬Â¿ÃƒÂºÂ« Â¿ÃÂªË Î©âˆšâˆžÂ£Â¿Âª Â¿Â«Ï€Ãƒ
 		float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 0.8f;
-
-		// ¾ó¸¶ ÈÄ¿¡ Àü¼ÛÇÏ´Â ÄÚµå »ðÀÔ!
+        
+		// Ã¦Ã›âˆâˆ‚ Â»Æ’Ã¸Â° Â¿Â¸Âºâ‚¬Â«Å“Â¥Â¬ Æ’â„ÂµÃ‚ Âªï£¿Â¿â€˜!
 		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CGameManager::PlayReady) );
 		CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
 
-		// ¾Ö´Ï¸ÞÀÌ¼Ç Àü¼Û Áö¿¬°ª ÃÊ±âÈ­
+		// Ã¦Ã·Â¥Å“âˆï¬Â¿ÃƒÂºÂ« Â¿Â¸Âºâ‚¬ Â¡Ë†Ã¸Â¨âˆžâ„¢ âˆšÂ Â±â€šÂ»â‰ 
 		CGameManager::GetInstance()->SetAnimationDelay(0.0f);
 	}
 
-	//¾÷µ¥ÀÌÆ®µÈ ³»¿ëÀ» ¸ðµÎ ¹Þ¾Æ¿Í¼­ °»½ÅÇßÀ¸¹Ç·Î flag´Â ¿ø·¡´ë·Î false·Î ¸¸µç´Ù
+	//Ã¦ËœÂµâ€¢Â¿Ãƒâˆ†Ã†ÂµÂ» â‰¥ÂªÃ¸ÃŽÂ¿Âª âˆï£¿ÂµÅ’ Ï€ï¬Ã¦âˆ†Ã¸Ã•Âºâ‰  âˆžÂªÎ©â‰ˆÂ«ï¬‚Â¿âˆÏ€Â«âˆ‘Å’ flagÂ¥Â¬ Ã¸Â¯âˆ‘Â°Â¥ÃŽâˆ‘Å’ falseâˆ‘Å’ âˆâˆÂµÃÂ¥Å¸
 	CGameManager::GetInstance()->SetUpdateFlag(false);
 }

@@ -112,6 +112,7 @@ void CMainMenuLayer::multiplayCallback(CCObject* pSender)
 #else
 	CGameManager::GetInstance()->SetOnlineMode(true);
 	CGameManager::GetInstance()->InitNetworkLogic();
+    CGameManager::GetInstance()->SetConnectionStatus(true);
 
     CCScene* newScene = CLoginScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );

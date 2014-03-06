@@ -573,6 +573,13 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 	}
 
 	std::string stringData = streamData.str();
+    
+    // disconnected
+    if (strcmp(stringData.c_str(), "disconnected") == 0)
+    {
+        CGameManager::GetInstance()->SetConnectionStatus(false);
+        CGameManager::GetInstance()->SetUpdateFlag(true);
+    }
 
 	if (strcmp(response->getHttpRequest()->getTag(), "POST login") == 0)
 	{

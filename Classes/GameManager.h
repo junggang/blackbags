@@ -93,6 +93,8 @@ public:
 
 	// network 관련 함수
 	bool InitNetworkLogic();
+    void SetConnectionStatus(bool status) { m_ConnectionStatus = status; }
+    bool GetConnectionStatus() { return m_ConnectionStatus; }
     
     void AuthenticationCheck();
 
@@ -134,6 +136,7 @@ private:
 
 	bool m_IsOnlineGame;
 	bool m_IsUpdated;
+    bool m_ConnectionStatus;
 
 	float m_AnimationDelay;
 	//CCUserDefault m_SharedData;

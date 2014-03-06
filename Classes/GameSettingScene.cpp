@@ -5,6 +5,7 @@
 #include "SettingFirstStepLayer.h"
 #include "SettingSecondStepLayer.h"
 #include "WaitingChannelId.h"
+#include "DisconnectedLayer.h"
 
 #include "GameManager.h"
 
@@ -68,6 +69,21 @@ void CGameSettingScene::update(float dt)
     
 	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{
+        if (!CGameManager::GetInstance()->GetConnectionStatus())
+        {
+            // 메인 메뉴로
+            // 나중에는 접속 종료 관련 레이어 하나 추가하고 거기서 버튼 누르면 돌아가도록 만들기
+            this->removeAllChildren();
+            
+            CCLayer* BackgroundLayer = CBackgroundLayer::create();
+            this->addChild(BackgroundLayer, 0);
+            
+            CCLayer* DisconnectedLayer = CDisconnectedLayer::create();
+            this->addChild(DisconnectedLayer, 1);
+            
+            return;
+
+        }
 		// 만약 업데이트 된 내용이 있다면 현재 phase가 바뀌었는지 확인한다.
 		// 로컬에 현재 phase를 저장한 다음, 네트워크 phase와 로컬 phase가 같으면 아래 switch 문은 건너뛴다.
 		NetworkPhase tempPhase = CGameManager::GetInstance()->GetCurrentNetworkPhase();
@@ -95,7 +111,7 @@ void CGameSettingScene::update(float dt)
                     // real setting layer
                     this->removeChild(m_CurrentLayer);
                     m_CurrentLayer = CSettingSecondStepLayer::create();
-                    this->addChild(m_CurrentLayer);
+                    this->addChild(m_CurrentLayer, 1);
                     
                     this->unschedule(schedule_selector(CGameManager::JoinUpdate) );
                     this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);

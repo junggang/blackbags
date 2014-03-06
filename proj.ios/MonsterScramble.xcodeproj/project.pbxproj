@@ -238,6 +238,7 @@
 		D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949B15BD2D8E00D803EB /* Icon-114.png */; };
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
+		E7CD626718C8A54F005F6E88 /* DisconnectedLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7CD626518C8A54F005F6E88 /* DisconnectedLayer.cpp */; };
 		E7F5194618C49C7B002530DC /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F518E318C49C7A002530DC /* AppDelegate.cpp */; };
 		E7F5194718C49C7B002530DC /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F518E518C49C7A002530DC /* AudioManager.cpp */; };
 		E7F5194818C49C7B002530DC /* BackgroundAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F518E718C49C7A002530DC /* BackgroundAnimation.cpp */; };
@@ -776,6 +777,8 @@
 		D4EF949D15BD2D9600D803EB /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../proj.ios/Icon-72.png"; sourceTree = "<group>"; };
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		E7CD626518C8A54F005F6E88 /* DisconnectedLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DisconnectedLayer.cpp; sourceTree = "<group>"; };
+		E7CD626618C8A54F005F6E88 /* DisconnectedLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisconnectedLayer.h; sourceTree = "<group>"; };
 		E7F518E318C49C7A002530DC /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		E7F518E418C49C7A002530DC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E7F518E518C49C7A002530DC /* AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioManager.cpp; sourceTree = "<group>"; };
@@ -2002,6 +2005,8 @@
 				E7F5194318C49C7B002530DC /* TroubleshootingLayer.h */,
 				E7F5194418C49C7B002530DC /* WaitingChannelId.cpp */,
 				E7F5194518C49C7B002530DC /* WaitingChannelId.h */,
+				E7CD626518C8A54F005F6E88 /* DisconnectedLayer.cpp */,
+				E7CD626618C8A54F005F6E88 /* DisconnectedLayer.h */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -2110,6 +2115,7 @@
 				E7F5195E18C49C7B002530DC /* IntroScene.cpp in Sources */,
 				15A3D9061682F7D5002FB0C5 /* b2TimeOfImpact.cpp in Sources */,
 				E7F5195C18C49C7B002530DC /* IntroBackgroundLayer.cpp in Sources */,
+				E7CD626718C8A54F005F6E88 /* DisconnectedLayer.cpp in Sources */,
 				15A3D9071682F7D5002FB0C5 /* b2ChainShape.cpp in Sources */,
 				15A3D9081682F7D5002FB0C5 /* b2CircleShape.cpp in Sources */,
 				15A3D9091682F7D5002FB0C5 /* b2EdgeShape.cpp in Sources */,

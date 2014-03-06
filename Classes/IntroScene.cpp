@@ -19,7 +19,6 @@ bool CIntroScene::init(void)
     // 2. add layers
 	//CCLayer* BackgroundLayer = CBackgroundLayer::create();
 	CCLayer* BackgroundLayer = CIntroBackgroundLayer::create();
-
 	this->addChild(BackgroundLayer, 0);
 
 	CCLayer* LogoLayer = CIntroLayer::create();
