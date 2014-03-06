@@ -134,9 +134,6 @@ def getPlayerData(tokenId):
 	if tempData is not None:
 		playerData.insertData(json.loads(tempData))
 
-		# timestamp 갱신
-		playerData.setTimestamp(time.time() )
-
 		jsonData = json.dumps(playerData.data)
 		memcache.set(tokenId, jsonData, playerDataTTL)
 
@@ -158,6 +155,9 @@ def SCSelectCharacter(tokenId, characterId):
 
 	if playerData is None:
 		return 'disconnected'
+
+	# timestamp 갱신
+	playerData.setTimestamp(time.time() )
 
 	channelId = playerData.getPlayerGameChannel()
 	playerId = playerData.getPlayerId()
@@ -187,6 +187,9 @@ def SCSelctMap(tokenId, mapId):
 	if playerData is None:
 		return 'disconnected'
 
+	# timestamp 갱신
+	playerData.setTimestamp(time.time() )
+
 	channelId = playerData.getPlayerGameChannel()
 	playerId = playerData.getPlayerId()
 
@@ -215,6 +218,9 @@ def SCReady(tokenId):
 
 	if playerData is None:
 		return 'disconnected'
+
+	# timestamp 갱신
+	playerData.setTimestamp(time.time() )
 
 	channelId = playerData.getPlayerGameChannel()
 	playerId = playerData.getPlayerId()
@@ -251,6 +257,9 @@ def PCReady(tokenId):
 	if playerData is None:
 		return 'disconnected'
 
+	# timestamp 갱신
+	playerData.setTimestamp(time.time() )
+
 	channelId = playerData.getPlayerGameChannel()
 	playerId = playerData.getPlayerId()
 
@@ -278,6 +287,9 @@ def PCDrawLine(tokenId, lineIdx):
 
 	if playerData is None:
 		return 'disconnected'
+
+	# timestamp 갱신
+	playerData.setTimestamp(time.time() )
 
 	channelId = playerData.getPlayerGameChannel()
 	playerId = playerData.getPlayerId()
@@ -320,6 +332,9 @@ def PCPlayUpdate(tokenId):
 
 	if playerData is None:
 		return 'disconnected'
+
+	# timestamp 갱신
+	playerData.setTimestamp(time.time() )
 
 	playerId = playerData.getPlayerId()
 	channelId = playerData.getPlayerGameChannel()
@@ -462,6 +477,9 @@ def login():
 			playerData.initData(tokenId, name)
 			playerData.setPlayerNumber(two, three, four)
 
+			# timestamp 갱신
+			playerData.setTimestamp(time.time() )
+
 			# 생성한 데이터 redis에 저장 
 			jsonData = json.dumps(playerData.data)
 			if memcache.get(tokenId) == None:
@@ -497,6 +515,9 @@ def logout():
 
 			if playerData is None:
 				return 'disconnected'
+				
+			# timestamp 갱신
+			playerData.setTimestamp(time.time() )
 
 			channelId = playerData.getPlayerGameChannel()
 
@@ -543,6 +564,9 @@ def joinUpdate():
 			if playerData is None:
 				return 'disconnected'
 
+			# timestamp 갱신
+			playerData.setTimestamp(time.time() )
+
 			playerId = playerData.getPlayerId()
 
 			# print playerId
@@ -571,6 +595,9 @@ def getInitializedGameData():
 
 			if playerData is None:
 				return 'disconnected'
+
+			# timestamp 갱신
+			playerData.setTimestamp(time.time() )
 
 			playerId = playerData.getPlayerId()
 			channelId = playerData.getPlayerGameChannel()
@@ -749,6 +776,9 @@ def gameEnd():
 
 			if playerData is None:
 				return 'disconnected'
+
+			# timestamp 갱신
+			playerData.setTimestamp(time.time() )
 
 			channelId = playerData.getPlayerGameChannel()
 

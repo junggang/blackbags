@@ -94,15 +94,20 @@
 
 // functions for getting token
 // get token from cookie
-- (NSString*)getTokenFromCookie {
+- (NSString*)getTokenFromCookie
+{
     NSHTTPCookie *cookie;
     NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (cookie in [cookieJar cookies]) {
+    
+    for (cookie in [cookieJar cookies])
+    {
         //NSLog(@"%@", [cookie domain]);
-        if ([[cookie domain] isEqualToString:@"blackbags-mons.appspot.com"]) {
+        if ([[cookie domain] isEqualToString:@"blackbags-mons.appspot.com"])
+        {
             //NSLog(@"same");
             //NSLog(@"%@", [cookie name]);
-            if ([[cookie name] isEqualToString:@"ACSID"]) {
+            if ([[cookie name] isEqualToString:@"ACSID"])
+            {
                 return [cookie value];
             }
         }

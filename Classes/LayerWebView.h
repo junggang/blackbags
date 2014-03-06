@@ -12,6 +12,7 @@
 
 //#include "CCCommon.h"
 #include "cocos2d.h"
+#include "config.h"
 
 class LayerWebView : public cocos2d::CCLayer
 {
@@ -23,9 +24,6 @@ public:
     
 	// implement the "static node()" method manually
     CREATE_FUNC(LayerWebView);
-    
-private:
-	int mWebViewLoadCounter;
 };
     
 

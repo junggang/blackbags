@@ -879,7 +879,7 @@
 		E7F5197E18C5A011002530DC /* LayerWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LayerWebView.mm; sourceTree = "<group>"; };
 		E7F5197F18C5A011002530DC /* UIWebViewBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWebViewBridge.h; sourceTree = "<group>"; };
 		E7F5198018C5A011002530DC /* UIWebViewBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIWebViewBridge.mm; sourceTree = "<group>"; };
-		E7F5198418C6F3F9002530DC /* LoginScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoginScene.cpp; sourceTree = "<group>"; };
+		E7F5198418C6F3F9002530DC /* LoginScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LoginScene.cpp; sourceTree = "<group>"; };
 		E7F5198518C6F3F9002530DC /* LoginScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginScene.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 

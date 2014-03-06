@@ -1,6 +1,7 @@
 #include "WaitingChannelId.h"
 #include "MainScene.h"
 #include "config.h"
+#include "GameManager.h"
 
 USING_NS_CC;
 
@@ -59,6 +60,8 @@ void CWaitingChannelId::mainSceneCallback(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
+    CGameManager::GetInstance()->Logout();
+    
 	CCScene* newScene = CMainScene::create();
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

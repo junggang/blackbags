@@ -9,7 +9,6 @@
 #include "LoginScene.h"
 #include "GameManager.h"
 #include "LayerWebView.h"
-#include "BackgroundLayer.h"
 #include "GameSettingScene.h"
 
 
@@ -24,22 +23,10 @@ bool CLoginScene::init(void)
 		return false;
 	}
     
-	// init current network phase
-	m_CurrentPhase = CGameManager::GetInstance()->GetCurrentLoginPhase();
+	// send request for authentication
     CGameManager::GetInstance()->AuthenticationCheck();
     
     m_LoginLayer = nullptr;
-    
-	/////////////////////////////
-	// 2. add layers
-	
-	// background layer
-	CCLayer* BackgroundLayer = CBackgroundLayer::create();
-	this->addChild(BackgroundLayer, 0);
-    
-	// 2.1 add Player Number and Map Size Select layer
-	//m_CurrentLayer = CSettingFirstStepLayer::create();
-    CGameManager::GetInstance()->AuthenticationCheck();
     
 	this->scheduleUpdate();
     

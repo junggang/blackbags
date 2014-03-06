@@ -12,7 +12,7 @@
 
 USING_NS_CC;
 
-static UIWebViewBridge *gUIWebViewBridge=nil;
+static UIWebViewBridge *gUIWebViewBridge = nil;
 
 bool LayerWebView::init()
 {

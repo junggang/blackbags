@@ -522,6 +522,8 @@ void CNetworkLogic::PlayReady()
 
 void CNetworkLogic::AuthenticationCheck()
 {
+    CGameManager::GetInstance()->SetCurrentLoginPhase(LP_WAITING);
+    
     m_Request = new CCHttpRequest();
 	
 	std::string url = m_ServerAddr;

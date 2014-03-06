@@ -22,7 +22,6 @@ public:
 	CREATE_FUNC(CLoginScene);
     
 private:
-	LoginPhase m_CurrentPhase;
     cocos2d::CCLayer* m_LoginLayer;
 };
 

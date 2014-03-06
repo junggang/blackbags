@@ -21,4 +21,5 @@
 
 -(void) setLayerWebView : (LayerWebView*) iLayerWebView ;
 -(void) releaseResource;
+
 @end
