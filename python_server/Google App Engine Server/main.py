@@ -102,7 +102,7 @@ def playerMatching():
 
 		if createAvailableChannel(player_2, 2, playerData, each):
 			break
-		
+
 		if createAvailableChannel(player_3, 3, playerData, each):
 			break
 
@@ -518,9 +518,6 @@ def logout():
 			if playerData is None:
 				return 'disconnected'
 
-			# timestamp 갱신
-			playerData.setTimestamp(time.time() )
-
 			channelId = playerData.getPlayerGameChannel()
 
 			if channelId == 'no channel':
@@ -567,9 +564,12 @@ def joinUpdate():
 				return 'disconnected'
 
 			# timestamp 갱신
-			# playerData.setTimestamp(time.time() )
+			playerData.setTimestamp(time.time() )
 
 			playerId = playerData.getPlayerId()
+
+			jsonData = json.dumps(playerData.data)
+			memcache.set(tokenId, jsonData, playerDataTTL)
 
 			# print playerId
 			return str(playerId)
@@ -783,6 +783,9 @@ def gameEnd():
 			playerData.setTimestamp(time.time() )
 
 			channelId = playerData.getPlayerGameChannel()
+
+			jsonData = json.dumps(playerData.data)
+			memcache.set(tokenId, jsonData, playerDataTTL)
 
 			# 게임 채널에서 삭제
 			gameData = getGameData(channelId)
