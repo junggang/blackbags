@@ -97,6 +97,8 @@ void CMainMenuLayer::newgameCallback(CCObject* pSender)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
 	//newgame load
+    CGameManager::GetInstance()->SetOnlineMode(false);
+    
 	CCScene* newScene = CGameSettingScene::create();
 	CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5, newScene) );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

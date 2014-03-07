@@ -289,6 +289,8 @@ void CNetworkLogic::Login()
 
 void CNetworkLogic::Logout()
 {
+    CGameManager::GetInstance()->SetOnlineMode(false);
+    
 	// make http request
 	m_Request = new CCHttpRequest();
 
@@ -547,12 +549,17 @@ void CNetworkLogic::AuthenticationCheck()
 
 void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpResponse* response)
 {
+    if (!CGameManager::GetInstance()->IsOnlineMode())
+    {
+        return;
+    }
+    
 	if (!response)
 	{
 		return;
 	}
-
-	rapidjson::Document* gameData = CNetworkLogic::GetInstance()->GetGameData();
+    
+    rapidjson::Document* gameData = CNetworkLogic::GetInstance()->GetGameData();
 
 	//int statusCode = response->getResponseCode();
 	

@@ -23,7 +23,7 @@ bool CIntroScene::init(void)
 	CCLayer* LogoLayer = CIntroLayer::create();
 	this->addChild(LogoLayer, 1);
 	
-	float delayTime = 1.1f;
+	float delayTime = 1.5;
 	// æÛ∏∂ »ƒø° ¿¸º€«œ¥¬ ƒ⁄µÂ ª¿‘!
 	CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CIntroScene::endIntro) );
 	CCDelayTime* delayAction = CCDelayTime::create(delayTime);

@@ -61,8 +61,11 @@ void CLoginScene::update(float dt)
             }
             
             // next scene gogo
-            CCScene* newScene = CGameSettingScene::create();
-            CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+            // 바로 바로 씬 전환을 시도하면 에러 발생 - 전환되는 시간 을 좀 두는 방식으로 일단 해결 시도
+            float delayTime = 1.5;
+            CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CLoginScene::closeScene) );
+            CCDelayTime* delayAction = CCDelayTime::create(delayTime);
+            this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
             
             break;
         }
@@ -71,4 +74,10 @@ void CLoginScene::update(float dt)
             break;
         }
     }
+}
+
+void CLoginScene::closeScene()
+{
+    CCScene* newScene = CGameSettingScene::create();
+    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
 }

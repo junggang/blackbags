@@ -18,6 +18,8 @@ public:
 	virtual bool init(void);
 	virtual void update(float dt);
     
+    void closeScene();
+    
 	// implement the "static node()" method manually
 	CREATE_FUNC(CLoginScene);
     
