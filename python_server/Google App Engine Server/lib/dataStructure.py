@@ -57,7 +57,8 @@ GDP_UPDATE_FLAG = 11
 # game data - map id
 MS_NOT_SELECTED = 0
 MS_5X5 = 1
-MS_8X8 = 2
+MS_7X7 = 2
+MS_8X8 = 3
 
 # map data index
 GDM_TYPE = 0
@@ -208,11 +209,17 @@ class GameData:
 
 		self.setUpdateFlag()
 
+	def getScene(self):
+		return self.data[GD_CURRENT_SCENE]
+
 	# 플레이어가 선택한 맵 종료에 따른 크기 설정 (가로 / 세로)
 	def setMapSize(self, mapId):
 		if mapId == MS_5X5:
 			width = 5
 			height = 5
+		elif mapId == MS_7X7:
+			width = 7
+			height = 7
 		elif mapId == MS_8X8:
 			width = 8
 			height = 8
@@ -375,7 +382,6 @@ class GameData:
 			self.data[GD_PLAYER_LIST][tempIdx][GDP_TURN] = each
 
 	# 게임을 시작할 때 맵을 생성 
-	# 조심해!! - 현재 울타리와 아이템 배치 코드 없음 
 	def makeRandomMap(self):
 		# generate map data
 		for i in range(self.data[GD_MAP_SIZE][1] * 2 + 3):
@@ -656,7 +662,7 @@ class GameData:
 	# 그을 수 있는 임의선을 선택
 	def makeRandomLine(self):
 		while True:
-			randomIdxI = random.randint(1, self.data[GD_MAP_SIZE][1]) * 2 + 1
+			randomIdxI = random.randint(1, self.data[GD_MAP_SIZE][1] * 2) + 1
 
 			if randomIdxI % 2 == 0:
 				randomIdxJ = random.randint(0, self.data[GD_MAP_SIZE][0]) * 2 + 1

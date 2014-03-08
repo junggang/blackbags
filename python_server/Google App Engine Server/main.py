@@ -28,7 +28,7 @@ sys.setdefaultencoding('utf-8')
 global watingList
 watingList = []
 gameDataTTL = 600
-playerDataTTL = 60
+playerDataTTL = 10
 playerTableTTL = 3600
 
 #################################################
@@ -164,19 +164,18 @@ def getGameData(channelId):
 	return None
 
 
-def checkPlayerConnection(channelId):
-	gameData = getGameData(channelId)
-
+def checkPlayerConnection(channelId, gameData):
 	tableName = channelId + ' table'
 	playerTable = json.loads(memcache.get(tableName))
 
 	idx = 0
 	for each in playerTable:
-		idx += 1
 		if memcache.get(each) == None:
 			if not gameData.removePlayer(idx):
 				memcache.delete(channelId, 0)
 				memcache.delete(tableName, 0)
+
+		idx += 1
 
 
 def SCSelectCharacter(tokenId, characterId):
@@ -383,18 +382,22 @@ def PCPlayUpdate(tokenId):
 	if gameData is None:
 		return 'disconnected'
 
-	currentTime = time.time()
-	if currentTime - gameData.getTurnStartTime() > 21:
-		# 랜덤으로 긋기
-		while True:
-			randomIdx = gameData.makeRandomLine()
-			if gameData.drawLine(randomIdx[0], randomIdx[1]):
-				gameData.setPlayerUpdateFlag(playerId, False)
+	checkPlayerConnection(channelId, gameData)
 
-				jsonData = json.dumps(gameData.data)
-				memcache.set(channelId, jsonData, gameDataTTL)
+	# 만약 지금이 플레이 씬이라면 아래 조건 수행 
+	if gameData.getScene() == 3: # SC_PLAY
+		currentTime = time.time()
+		if currentTime - gameData.getTurnStartTime() > 21:
+			# 랜덤으로 긋기
+			while True:
+				randomIdx = gameData.makeRandomLine()
+				if gameData.drawLine(randomIdx[0], randomIdx[1]):
+					gameData.setPlayerUpdateFlag(playerId, False)
 
-				return jsonData
+					jsonData = json.dumps(gameData.data)
+					memcache.set(channelId, jsonData, gameDataTTL)
+
+					return jsonData
 
 	# client가 확인해야 하는 업데이트 내용이 있는지 확인 
 	if gameData.getPlayerUpdateFlag(playerId):
