@@ -174,8 +174,6 @@ void CPlayerNumberAndMapSizeLayer::NextButtonCallBack( CCObject* pSender )
 
 void CPlayerNumberAndMapSizeLayer::update(float dt)
 {
-	float tempX, tempY;
-
 	// 이 게임을 몇 명이 하는지 가져와서 해당 버튼을 선택된 상태로 만든다.
 	CCMenuItemImage* pTempPlayerNumber;
 

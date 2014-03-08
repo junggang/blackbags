@@ -13,7 +13,6 @@ public:
 	// Online Mode :: StartButtonCallBack & m_StartButton == Ready Logic
 private:
 	void StartButtonCallBack( CCObject* pSender );
-	void HelpButtonCallBack( CCObject* pSender );
 	void ReadyButtonCallBack( CCObject* pSender );
 	cocos2d::CCMenuItemImage *m_StartButton;
 };
