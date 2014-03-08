@@ -276,6 +276,33 @@ class GameData:
 		self.data[GD_PLAYER_NUMBER] -= 1
 		self.data[GD_PLAYER_LIST][playerIdx][GDP_CONNECTED_FLAG] = False
 
+		if self.data[GD_CURRENT_SCENE] == SC_SETTING:
+			# 만약 지금이 세팅 중이고 인원 수 체크해서 1명이면 방폭
+			if self.data[GD_PLAYER_NUMBER] == 1:
+				return False
+		elif self.data[GD_CURRENT_SCENE] == SC_PLAY: 
+			# 지금이 플레이 중이고 인원이 0이면 방폭
+			if self.data[GD_PLAYER_NUMBER] == 0:
+				return False
+			else:
+				# 아니면 아래의 로직 진행
+				# 만약 현재 턴이 나간 사람의 차례이면 다음 턴으로 넘김
+				if self.getCurrentTurnId() == playerIdx:
+					while True:
+						self.data[GD_CURRENT_TURN_IDX] += 1
+						self.data[GD_CURRENT_TURN_IDX] %= len(self.data[GD_CURRENT_TURN_IDX])
+
+						# 중간에 나간 플레이어가 있을 수도 있으므로 접속 상태를 확인해서 접속이 끊어졌다면 다음 차례로 넘어감
+						if self.data[GD_PLAYER_LIST][self.data[GD_CURRENT_TURN_IDX]][GDP_CONNECTED_FLAG]:
+							break
+
+				return True
+
+		self.setUpdateFlag()
+
+		return True
+
+
 	def setUpdateFlag(self):
 		for each in self.data[GD_PLAYER_LIST]:
 			each[GDP_UPDATE_FLAG] = True
@@ -616,7 +643,7 @@ class GameData:
 		else:
 			while True:
 				self.data[GD_CURRENT_TURN_IDX] += 1
-				self.data[GD_CURRENT_TURN_IDX] %= self.data[GD_PLAYER_NUMBER]
+				self.data[GD_CURRENT_TURN_IDX] %= len(self.data[GD_CURRENT_TURN_IDX])
 
 				# 중간에 나간 플레이어가 있을 수도 있으므로 접속 상태를 확인해서 접속이 끊어졌다면 다음 차례로 넘어감
 				if self.data[GD_PLAYER_LIST][self.data[GD_CURRENT_TURN_IDX]][GDP_CONNECTED_FLAG]:

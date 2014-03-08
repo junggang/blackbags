@@ -144,9 +144,14 @@ def getPlayerData(tokenId):
 
 def getGameData(channelId):
 	gameData = dataStructure.GameData()
-	gameData.insertData(json.loads(memcache.get(channelId)))
+	tempData = memcache.get(channelId)
 
-	return gameData
+	if tempData is not None:
+		gameData.insertData(json.loads(tempData))
+
+		return gameData
+
+	return None
 
 
 def SCSelectCharacter(tokenId, characterId):
@@ -164,6 +169,8 @@ def SCSelectCharacter(tokenId, characterId):
 
 	# update 적용하기 위한 타겟 game data 불러오기 
 	gameData = getGameData(channelId)
+	if gameData = None:
+		return 'disconnected'
 
 	if gameData.selectCharacter(playerId, characterId):
 		# 캐릭터 선택 성공 - 결과를 다시 redis에 저장
@@ -195,6 +202,8 @@ def SCSelctMap(tokenId, mapId):
 
 	# update 적용하기 위한 타겟 game data 불러오기 
 	gameData = getGameData(channelId)
+	if gameData = None:
+		return 'disconnected'
 
 	if gameData.isChannelMaster(playerId) == 1:
 		# 요청한 유저가 방장이므로 맵 크기를 설정한다. 
@@ -227,6 +236,8 @@ def SCReady(tokenId):
 
 	# update 적용하기 위한 타겟 game data 불러오기 
 	gameData = getGameData(channelId)
+	if gameData = None:
+		return 'disconnected'
 
 	# 일단 레디 상태 변경 
 	gameData.changeReadyFlag(playerId)
@@ -265,6 +276,8 @@ def PCReady(tokenId):
 
 	# update 적용하기 위한 타겟 game data 불러오기 
 	gameData = getGameData(channelId)
+	if gameData = None:
+		return 'disconnected'
 
 	# 일단 레디 상태 변경 
 	gameData.changeReadyFlag(playerId)
@@ -296,6 +309,8 @@ def PCDrawLine(tokenId, lineIdx):
 
 	# update 적용하기 위한 타겟 game data 불러오기 
 	gameData = getGameData(channelId)
+	if gameData = None:
+		return 'disconnected'
 
 	if gameData.getWaitingReadyFlag():
 		return 'not updated'
@@ -340,6 +355,8 @@ def PCPlayUpdate(tokenId):
 	channelId = playerData.getPlayerGameChannel()
 
 	gameData = getGameData(channelId)
+	if gameData = None:
+		return 'disconnected'
 
 	currentTime = time.time()
 	if currentTime - gameData.getTurnStartTime() > 21:
@@ -526,9 +543,13 @@ def logout():
 			else:
 				# 게임 중이면 게임 채널에서 삭제
 				gameData = getGameData(channelId)
-				gameData.removePlayer(playerData.getPlayerId())
+				if gameData = None:
+					return 'disconnected'
 
-				if gameData.getCurrentPlayerNumber() == 0:
+				if !gameData.removePlayer(playerData.getPlayerId()):
+					# 유저들도 삭제해야 되는데
+					# 그냥 냅두고 유저들의 요청을 받아서 해당하는 채널데이터가 없으면 디스커넥 시킴
+					# 그럼 TTL설정에 의해서 알아서 삭제됨
 					# redis에서 채널 삭제 
 					memcache.delete(channelId, 0)
 
@@ -608,6 +629,8 @@ def getInitializedGameData():
 			# print memcache.get(channelId)
 
 			gameData = getGameData(channelId)
+			if gameData = None:
+				return 'disconnected'
 
 			# flag 상태 변경 
 			gameData.setPlayerUpdateFlag(playerId, False)
@@ -789,16 +812,18 @@ def gameEnd():
 
 			# 게임 채널에서 삭제
 			gameData = getGameData(channelId)
+			if gameData = None:
+				return 'end'
+
 			gameData.removePlayer(playerData.getPlayerId())
 
 			if gameData.getCurrentPlayerNumber() == 0:
-
 				# redis에서 채널 삭제 
 				memcache.delete(channelId, 0)
 
 			# redis에서 플레이어 삭제
 			memcache.delete(tokenId, 0)
-			return
+			return 'end'
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 
 		print 'error  ->  : ' ,err 
