@@ -336,7 +336,10 @@ const std::string PLAYER_NUMBER_FOUR_TXT = "image/gameset01_menu03_img.png";
 #define PLAYER_NUMBER_FOUR_TXT_POS 1407,515
 #define PLAYER_NUMBER_NEXT_IMG_POS 1403,94
 
+const std::string CHARACTER_SELECT_TITLE = "image/gameset02_title.png";
+const std::string CHARACTER_SELECT_TITLE_KOR = "image/gameset02_title_korean.png";
 #define GAME_SETTING_CHARACTER_SELECT_TITLE_POS 519,1025
+#define GAME_SETTING_CHARACTER_SELECT_TITLE_KOR_POS 795,925
 #define GAME_SETTING_PLAYER_ONE_STATUS_POS 44,20
 #define GAME_SETTING_PLAYER_TWO_STATUS_POS 1337,20
 #define GAME_SETTING_PLAYER_THREE_STATUS_POS 18,1091
@@ -354,6 +357,9 @@ const std::string CHARACTER_SELECT_04 = "image/gameset02_character04_selected.pn
 #define GAME_SETTING_CHARACTER_POS_02 811,474
 #define GAME_SETTING_CHARACTER_POS_03 1053,470
 #define GAME_SETTING_CHARACTER_POS_04 1393,485
+
+const std::string GAME_SETTING_PLAYER_READY_STATE_LEFT = "image/playscene_character_ready_03.png";
+const std::string GAME_SETTING_PLAYER_READY_STATE_RIGHT = "image/playscene_character_ready_04.png";
 
 const std::string GAME_SETTING_READY_BTN_UNSELECT = "image/gameset02_readyBtn_unselected.png";
 const std::string GAME_SETTING_READY_BTN_SELECT = "image/gameset02_readyBtn_selected.png";
@@ -508,6 +514,15 @@ const std::string PlayerUiCharacterUpperLeft[5] =
 	"image/shared_player_character02_01.png",
 	"image/shared_player_character03_01.png",
 	"image/shared_player_character04_01.png",
+	"image/shared_player_empty_01_on.png"
+};
+
+const std::string PlayerUiCharacterUpperLeftOffline[5] =
+{
+	"image/shared_player_character01_01.png",
+	"image/shared_player_character02_01.png",
+	"image/shared_player_character03_01.png",
+	"image/shared_player_character04_01.png",
 	"image/shared_player_empty_01.png"
 };
 
@@ -517,9 +532,17 @@ const std::string PlayerUiCharacterUpperRight[5] =
 	"image/shared_player_character02_02.png",
 	"image/shared_player_character03_02.png",
 	"image/shared_player_character04_02.png",
-	"image/shared_player_empty_02.png"
+	"image/shared_player_empty_02_on.png"
 };
 
+const std::string PlayerUiCharacterUpperRightOffline[5] =
+{
+	"image/shared_player_character01_02.png",
+	"image/shared_player_character02_02.png",
+	"image/shared_player_character03_02.png",
+	"image/shared_player_character04_02.png",
+	"image/shared_player_empty_02.png"
+};
 
 const std::string PlayerUiCharacterBelowLeft[5] =
 {

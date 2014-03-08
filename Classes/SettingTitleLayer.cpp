@@ -1,4 +1,5 @@
 #include "SettingTitleLayer.h"
+#include "config.h"
 
 USING_NS_CC;
 
@@ -10,14 +11,22 @@ bool CSettingTitleLayer::init()
 	}
 
 	// get Windows Size
-	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+	// CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 	// Create sprite
-	CCSprite* pTitle = CCSprite::create("image/setting_title.png");
-
+	CCSprite* pTitle = CCSprite::create(CHARACTER_SELECT_TITLE.c_str());
+	CCSprite* pKorTitle = CCSprite::create(CHARACTER_SELECT_TITLE_KOR.c_str());
+    
 	// Title Position : X Center + Y
-	pTitle->setPosition(ccp(visibleSize.width/2, visibleSize.height - pTitle->getContentSize().height) );
+	pTitle->setPosition(CCPoint(GAME_SETTING_CHARACTER_SELECT_TITLE_POS));
+    pKorTitle->setPosition(CCPoint(GAME_SETTING_CHARACTER_SELECT_TITLE_KOR_POS));
+    
+    // set anchor point 0
+    pTitle->setAnchorPoint(ccp(0,0));
+    pKorTitle->setAnchorPoint(ccp(0,0));
+    
 	this->addChild(pTitle, 1);
+    this->addChild(pKorTitle);
 
 	return true;
 }

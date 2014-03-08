@@ -340,7 +340,7 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 	{
 		for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
 		{
-			CCSprite* readyStateImg = CCSprite::create("image/SETTING_ready_unselected.png");
+			CCSprite* readyStateImg = CCSprite::create("image/setting_ready_unselected.png");
 			readyStateImg->setTag(READY_STATE_TAG);
 			readyStateImg->setPosition(ccp(m_PlayerStatusFrame[i]->getContentSize().width - readyStateImg->getContentSize().width / 2,
 				m_PlayerStatusFrame[i]->getContentSize().height - readyStateImg->getContentSize().height / 2));
