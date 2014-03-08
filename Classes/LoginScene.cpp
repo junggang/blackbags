@@ -53,10 +53,11 @@ void CLoginScene::update(float dt)
         case LP_OK :
         {
             CGameManager::GetInstance()->SetCurrentLoginPhase(LP_WAITING);
-            static_cast<LayerWebView *>(m_LoginLayer)->close();
+            
             //this->removeAllChildren();
             if (nullptr != m_LoginLayer)
             {
+                static_cast<LayerWebView *>(m_LoginLayer)->close();
                 this->removeChild(m_LoginLayer);
             }
             

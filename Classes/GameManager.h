@@ -100,6 +100,7 @@ public:
 
 	void Login();
 	void Logout();
+    void EndGame();
 
 	void JoinUpdate(float dt);
 	void PlayUpdate(float dt);

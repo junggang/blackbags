@@ -316,6 +316,33 @@ void CNetworkLogic::Logout()
 	m_Request->release();
 }
 
+void CNetworkLogic::GameEnd()
+{
+    // make http request
+	m_Request = new CCHttpRequest();
+    
+	// 요청 보낼 데이터를 최신 상태로 업데이트
+	GetNetworkInfo();
+    
+	std::string url = m_ServerAddr;
+	url.append("/logout");
+    
+	m_Request->setUrl(url.c_str() );
+	m_Request->setRequestType(CCHttpRequest::kHttpPost);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
+    
+	// write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
+    
+	m_Request->setTag("POST logout");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
+}
+
 void CNetworkLogic::getInitializedGameData()
 {
 	// make http request
@@ -422,6 +449,8 @@ void CNetworkLogic::DrawLine(IndexedPosition indexedPosition)
 
 	postData.append("&posJ=");
 	postData.append(std::to_string(indexedPosition.m_PosJ) );
+    
+    CCLOG("%d / %d", indexedPosition.m_PosI, indexedPosition.m_PosJ);
 
 	m_Request->setRequestData(postData.c_str(), postData.length() );
 
