@@ -40,6 +40,11 @@ void CGameLogic::ReleaseInstance()
 
 bool CGameLogic::init()
 {
+    m_currentTurn = 0;
+	m_VoidTileCount = 0;
+	m_CurrentPlayerNumber = 0;
+	m_PlayerNumberOfThisGame = 0;
+    
 	m_SelectedMapSize = MS_NOT_SELECTED;
 
 	for (int i = 0; i < MAX_MAP_HEIGHT; ++i)
