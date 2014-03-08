@@ -545,6 +545,11 @@ void CGameManager::Logout()
 	CNetworkLogic::GetInstance()->Logout();
 }
 
+void CGameManager::EndGame()
+{
+    CNetworkLogic::GetInstance()->GameEnd();
+}
+
 void CGameManager::JoinUpdate(float dt)
 {
 	CNetworkLogic::GetInstance()->JoinUpdate(dt);

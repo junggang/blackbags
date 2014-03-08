@@ -290,7 +290,7 @@ class GameData:
 				if self.getCurrentTurnId() == playerIdx:
 					while True:
 						self.data[GD_CURRENT_TURN_IDX] += 1
-						self.data[GD_CURRENT_TURN_IDX] %= len(self.data[GD_CURRENT_TURN_IDX])
+						self.data[GD_CURRENT_TURN_IDX] %= len(self.data[GD_TURN_LIST])
 
 						# 중간에 나간 플레이어가 있을 수도 있으므로 접속 상태를 확인해서 접속이 끊어졌다면 다음 차례로 넘어감
 						if self.data[GD_PLAYER_LIST][self.data[GD_CURRENT_TURN_IDX]][GDP_CONNECTED_FLAG]:
@@ -643,7 +643,7 @@ class GameData:
 		else:
 			while True:
 				self.data[GD_CURRENT_TURN_IDX] += 1
-				self.data[GD_CURRENT_TURN_IDX] %= len(self.data[GD_CURRENT_TURN_IDX])
+				self.data[GD_CURRENT_TURN_IDX] %= len(self.data[GD_TURN_LIST])
 
 				# 중간에 나간 플레이어가 있을 수도 있으므로 접속 상태를 확인해서 접속이 끊어졌다면 다음 차례로 넘어감
 				if self.data[GD_PLAYER_LIST][self.data[GD_CURRENT_TURN_IDX]][GDP_CONNECTED_FLAG]:
@@ -692,15 +692,15 @@ class GameData:
 		self.setUpdateFlag()
 	
 	# 개별 맵 오브젝트 상태 확인 및 결과 반영			
-	def checkTile(self, object):
+	def checkTile(self, element):
 		# 타일인 경우 소유주와 아이템 여부를 확인
-		if object[GDM_TYPE] == MO_TILE:
-			self.data[GD_PLAYER_LIST][object[GDM_OWNER]][GDP_TILE_COUNT] += 1
+		if element[GDM_TYPE] == MO_TILE:
+			self.data[GD_PLAYER_LIST][element[GDM_OWNER]][GDP_TILE_COUNT] += 1
 			
-			if object[GDM_ITEM] == ITEM_GOLD:
-				self.data[GD_PLAYER_LIST][object[GDM_OWNER]][GDP_GOLD_COUNT] += 1
-			elif object[GDM_ITEM] == ITEM_TRASH:
-				self.data[GD_PLAYER_LIST][object[GDM_OWNER]][GDP_TRASH_COUNT] += 1
+			if element[GDM_ITEM] == ITEM_GOLD:
+				self.data[GD_PLAYER_LIST][element[GDM_OWNER]][GDP_GOLD_COUNT] += 1
+			elif element[GDM_ITEM] == ITEM_TRASH:
+				self.data[GD_PLAYER_LIST][element[GDM_OWNER]][GDP_TRASH_COUNT] += 1
 		
 
 	# for debug

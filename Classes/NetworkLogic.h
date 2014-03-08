@@ -57,6 +57,7 @@ public:
 	// request functions
 	void Login();
 	void Logout();
+    void GameEnd();
 	void SelectCharacter(int characterId);
 	void SetMapSize(MapSelect mapSize);
 	void DrawLine(IndexedPosition indexedPosition);
