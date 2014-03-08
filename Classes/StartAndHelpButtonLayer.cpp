@@ -24,8 +24,8 @@ bool CStartAndHelpButtonLayer::init()
 	if ( CGameManager::GetInstance()->IsOnlineMode() && !CGameManager::GetInstance()->IsChannelMaster() )
 	{
 		m_StartButton = CCMenuItemImage::create(
-			"image/SETTING_ready_unselected.png",
-			"image/SETTING_ready_selected.png",
+			GAME_SETTING_READY_BTN_UNSELECT.c_str(),
+			GAME_SETTING_READY_BTN_SELECT.c_str(),
 			this,
 			menu_selector(CStartAndHelpButtonLayer::ReadyButtonCallBack)
 			);
@@ -34,8 +34,8 @@ bool CStartAndHelpButtonLayer::init()
 	else
 	{
 		m_StartButton = CCMenuItemImage::create(
-			"image/SETTING_start.png",
-			"image/SETTING_start.png",
+            GAME_SETTING_READY_BTN_UNSELECT.c_str(),
+            GAME_SETTING_READY_BTN_SELECT.c_str(),
 			this,
 			menu_selector(CStartAndHelpButtonLayer::StartButtonCallBack)
 			);
@@ -44,31 +44,19 @@ bool CStartAndHelpButtonLayer::init()
 	
 	// at init, Start button is disabled
 	m_StartButton->setEnabled(false);
+    m_StartButton->selected();
 
+    // create StartButtonMenu
 	CCMenu	*StartButtonMenu = CCMenu::create(m_StartButton, NULL);
-
-	StartButtonMenu->setPosition(visibleSize.width/2, visibleSize.height/2 + 200);
-
+    StartButtonMenu->setPosition(CCPoint(GAME_SETTING_READY_BTN_POS));
+    StartButtonMenu->setAnchorPoint(ccp(0, 0));
+    
 	// add StartButtonMenu to Layer
 	this->addChild(StartButtonMenu);
-
-	/// Help Button
-	CCMenuItemImage *HelpButton = CCMenuItemImage::create(
-		"image/icon_help.png",
-		"image/icon_help.png",
-		this,
-		menu_selector(CStartAndHelpButtonLayer::HelpButtonCallBack)
-		);
-
-	CCMenu	*HelpButtonMenu = CCMenu::create(HelpButton, NULL);
-
-	HelpButtonMenu->setPosition(visibleSize.width - HelpButton->getContentSize().width,
-								visibleSize.height - HelpButton->getContentSize().height);
-
-	this->addChild(HelpButtonMenu);
-
-	//// align menu element
-	StartButtonMenu->alignItemsHorizontally();
+    
+    // button Position & readyAnchorPoint (0, 0)
+    m_StartButton->setPosition(ccp(0, 0));
+    m_StartButton->setAnchorPoint(ccp(0, 0));
 
 	return true;
 }
@@ -106,31 +94,12 @@ void CStartAndHelpButtonLayer::ReadyButtonCallBack( CCObject* pSender )
 #endif
 }
 
-void CStartAndHelpButtonLayer::HelpButtonCallBack( CCObject* pSender )
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-	// 팝업 레이어 생성
-	CHelpPopupLayer* newLayer = CHelpPopupLayer::create();
-	
-	if (newLayer != NULL)
-	{
-		newLayer->setTag(HELP_POPUPLAYER_TAG);
-		this->addChild(newLayer);
-	}
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	//exit(0);
-#endif
-#endif
-}
-
 void CStartAndHelpButtonLayer::update()
 {
 	// Online Condition
 	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{
+        // game master
 		if ( CGameManager::GetInstance()->IsChannelMaster() )
 		{
 			if (CGameManager::GetInstance()->IsAllReady() )
@@ -142,6 +111,7 @@ void CStartAndHelpButtonLayer::update()
 				m_StartButton->setEnabled(false);
 			}
 		}
+        // just player
 		else
 		{
 			if ( CGameManager::GetInstance()->IsReady() )
@@ -170,10 +140,12 @@ void CStartAndHelpButtonLayer::update()
 		if ( CGameManager::GetInstance()->GetCurrentPlayerNumber() == CGameManager::GetInstance()->GetPlayerNumberOfThisGame() )
 		{
 			m_StartButton->setEnabled(true);
+            m_StartButton->selected();
 		}
 		else
 		{
 			m_StartButton->setEnabled(false);
+            m_StartButton->unselected();
 		}
 	}
 }

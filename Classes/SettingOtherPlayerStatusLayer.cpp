@@ -140,11 +140,11 @@ void CSettingOtherPlayerStatusLayer::update()
 
 			if ( CGameManager::GetInstance()->IsReady(i) )
 			{
-				readyStateImg = CCSprite::create("image/SETTING_ready_selected.png");
+				readyStateImg = CCSprite::create(PLAYER_STATUS_READY_IMG.c_str());
 			}
 			else
 			{
-				readyStateImg = CCSprite::create("image/SETTING_ready_unselected.png");
+				readyStateImg = CCSprite::create(PLAYER_STATUS_READY_IMG.c_str());
 			}
 
 			// if load image failed
@@ -161,6 +161,55 @@ void CSettingOtherPlayerStatusLayer::update()
 			m_PlayerStatusFrame[i]->addChild( readyStateImg );
 		}
 	}
+    /*
+    // test Function
+    if ( !CGameManager::GetInstance()->IsOnlineMode() )
+	{
+		for (int i = 0 ; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
+		{
+			CCSprite* readyStateImg = nullptr;
+			m_PlayerStatusFrame[i]->removeChildByTag(READY_STATE_TAG);
+            
+			if ( true )
+			{
+				readyStateImg = CCSprite::create(PLAYER_STATUS_READY_IMG.c_str());
+			}
+			else
+			{
+				readyStateImg = CCSprite::create(PLAYER_STATUS_READY_IMG.c_str());
+			}
+            
+			// if load image failed
+			if (nullptr == readyStateImg)
+			{
+				continue;
+			}
+            
+			readyStateImg->setTag(READY_STATE_TAG);
+            ////////// position test ///////////
+            switch (i)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+            
+            
+            
+            ////////////////////////////////////
+     
+            
+			m_PlayerStatusFrame[i]->addChild( readyStateImg );
+		}
+	}
+    */
 }
 
 void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)

@@ -324,6 +324,7 @@ const std::string MAIN_MENU_TITLE = "image/main_menu_title.png";
 /*	game setting scene	*/
 const std::string PLAYER_NUMBER_TITLE = "image/gameset01_title.png";
 #define PLAYER_NUMBER_TITLE_POS 1022,1390
+
 const std::string PLAYER_NUMBER_TWO_TXT = "image/gameset01_menu01_img.png";
 const std::string PLAYER_NUMBER_THREE_TXT = "image/gameset01_menu02_img.png";
 const std::string PLAYER_NUMBER_FOUR_TXT = "image/gameset01_menu03_img.png";
@@ -336,11 +337,11 @@ const std::string PLAYER_NUMBER_FOUR_TXT = "image/gameset01_menu03_img.png";
 #define PLAYER_NUMBER_NEXT_IMG_POS 1403,94
 
 #define GAME_SETTING_CHARACTER_SELECT_TITLE_POS 519,1025
-#define GAME_SETTING_BTN_READY_POS 519,1025
 #define GAME_SETTING_PLAYER_ONE_STATUS_POS 44,20
 #define GAME_SETTING_PLAYER_TWO_STATUS_POS 1337,20
 #define GAME_SETTING_PLAYER_THREE_STATUS_POS 18,1091
 #define GAME_SETTING_PLAYER_FOUR_STATUS_POS 1337,1091
+
 const std::string CHARACTER_UNSELECT_01 = "image/gameset02_character01_unselected.png";
 const std::string CHARACTER_SELECT_01 = "image/gameset02_character01_selected.png";
 const std::string CHARACTER_UNSELECT_02 = "image/gameset02_character02_unselected.png";
@@ -353,6 +354,12 @@ const std::string CHARACTER_SELECT_04 = "image/gameset02_character04_selected.pn
 #define GAME_SETTING_CHARACTER_POS_02 811,474
 #define GAME_SETTING_CHARACTER_POS_03 1053,470
 #define GAME_SETTING_CHARACTER_POS_04 1393,485
+
+const std::string GAME_SETTING_READY_BTN_UNSELECT = "image/gameset02_readyBtn_unselected.png";
+const std::string GAME_SETTING_READY_BTN_SELECT = "image/gameset02_readyBtn_selected.png";
+#define GAME_SETTING_READY_BTN_POS 820,248
+
+const std::string PLAYER_STATUS_READY_IMG = "image/playscene_character_ready.png";
 
 /*	result scene */
 const std::string RESULT_TITLE = "image/result_title.png";
@@ -426,8 +433,10 @@ const std::string ResultTrashImage[3] =
 /*	setting scene */
 const std::string SETTING_TITLE = "image/setting_title.png";
 #define SETTING_TITLE_POS 1390
+
 const std::string SETTING_BG = "image/setting_menu_background.png";
 #define SETTING_BG_POS 113,200
+
 const std::string SETTING_MENU_GOOGLE = "image/setting_menu_google.png";
 const std::string SETTING_MENU_NAME = "image/setting_menu_name.png";
 const std::string SETTING_MENU_SOUND = "image/setting_menu_sound.png";
@@ -441,6 +450,7 @@ const std::string SETTING_LOGIN= "image/setting_menu_google_login.png";
 #define SETTING_MENU_CREDIT_POS 1153,321
 #define SETTING_LOGIN_POS 1153,1013
 #define SETTING_NAME_POS 1153,876
+
 const std::string SETTING_ICON_MUSIC = "image/setting_icon_music.png";
 const std::string SETTING_ICON_SOUND = "image/setting_icon_sound.png";
 const std::string SETTING_BAR = "image/setting_sound_bar.png";

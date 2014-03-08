@@ -15,6 +15,8 @@ bool CMainScene::init(void)
     {
         return false;
     }
+    
+    CGameManager::GetInstance()->init();
 
 	/////////////////////////////
     // 2. add layers

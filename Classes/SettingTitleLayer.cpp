@@ -13,7 +13,7 @@ bool CSettingTitleLayer::init()
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 	// Create sprite
-	CCSprite* pTitle = CCSprite::create("image/SETTING_title.png");
+	CCSprite* pTitle = CCSprite::create("image/setting_title.png");
 
 	// Title Position : X Center + Y
 	pTitle->setPosition(ccp(visibleSize.width/2, visibleSize.height - pTitle->getContentSize().height) );
