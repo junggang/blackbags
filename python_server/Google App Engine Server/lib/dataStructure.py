@@ -279,33 +279,47 @@ class GameData:
 		return -1
 
 	def removePlayer(self, playerIdx):
-		# 참여 인원 1명 감소 
+		# 일단 업데이트 플래그 설정하고 시작
+		self.setUpdateFlag()
+
+		# 인원수 감소 및 플레이어 연결 상태 변경 - 삭제하지 않는 이유는 결과에 필요할 수 있으므로
 		self.data[GD_PLAYER_NUMBER] -= 1
 		self.data[GD_PLAYER_LIST][playerIdx][GDP_CONNECTED_FLAG] = False
+		self.data[GD_PLAYER_LIST][playerIdx][GDP_READY] = False
 
 		if self.data[GD_CURRENT_SCENE] == SC_SETTING:
 			# 만약 지금이 세팅 중이고 인원 수 체크해서 1명이면 방폭
 			if self.data[GD_PLAYER_NUMBER] == 1:
 				return False
-		elif self.data[GD_CURRENT_SCENE] == SC_PLAY: 
+
+			# 캐릭터 선택하는 단계 - 기존에 선택한 거 취소 시켜줘야 함
+			self.data[GD_PLAYER_LIST][playerIdx][GDP_CHARACTER_ID] = -1
+			
+			# 감소된 인원을 기준으로 게임을 시작할 수 있는 조건이 되는지 확인하고 작업 실행 
+			if self.isAllReady():
+				self.startGame()
+
+		elif self.data[GD_CURRENT_SCENE] == SC_PLAY:
 			# 지금이 플레이 중이고 인원이 0이면 방폭
 			if self.data[GD_PLAYER_NUMBER] == 0:
 				return False
+
+			# 플레이 레디를 기다리는 상황 - 감소된 인원을 기준으로 다음 턴을 시작할 수 있는지 확인
+			if getWaitingReadyFlag() and self.isAllReady():
+				self.startTurn()
+
+			if self.getCurrentTurnId() == playerIdx:
+				# 내 턴인 상황 - 다음 턴으로 넘긴다
+				while True:
+					self.data[GD_CURRENT_TURN_IDX] += 1
+					self.data[GD_CURRENT_TURN_IDX] %= len(self.data[GD_TURN_LIST])
+
+					# 중간에 나간 플레이어가 있을 수도 있으므로 접속 상태를 확인해서 접속이 끊어졌다면 다음 차례로 넘어감
+					if self.data[GD_PLAYER_LIST][self.data[GD_CURRENT_TURN_IDX]][GDP_CONNECTED_FLAG]:
+						break
 			else:
-				# 아니면 아래의 로직 진행
-				# 만약 현재 턴이 나간 사람의 차례이면 다음 턴으로 넘김
-				if self.getCurrentTurnId() == playerIdx:
-					while True:
-						self.data[GD_CURRENT_TURN_IDX] += 1
-						self.data[GD_CURRENT_TURN_IDX] %= len(self.data[GD_TURN_LIST])
-
-						# 중간에 나간 플레이어가 있을 수도 있으므로 접속 상태를 확인해서 접속이 끊어졌다면 다음 차례로 넘어감
-						if self.data[GD_PLAYER_LIST][self.data[GD_CURRENT_TURN_IDX]][GDP_CONNECTED_FLAG]:
-							break
-
-				return True
-
-		self.setUpdateFlag()
+				# 다른 사람 턴이면 딱히 하는 것은 없음
+				pass
 
 		return True
 

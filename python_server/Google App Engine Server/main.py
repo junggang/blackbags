@@ -105,10 +105,6 @@ def playerMatching():
 			# 로그인 되어있지 않음 
 			watingList.remove(each)
 			continue
-		elif time.time() - playerData.getTimestamp() > 5:
-			# 응답이 없는 상태이므로 삭제
-			watingList.remove(each)
-			continue
 
 		if createAvailableChannel(player_2, 2, playerData, each):
 			break
