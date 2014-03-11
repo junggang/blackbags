@@ -78,7 +78,7 @@ void CTimerLayer::update( float dt )
     // Offline
 	else
 	{
-        float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 0.8f;
+        float delayTime = CGameManager::GetInstance()->GetAnimationDelay();
         CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		   
 		m_progressTimeBar->stopAllActions();

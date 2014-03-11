@@ -79,6 +79,8 @@ public:
 	void UpdateGameMap();
 	MO_TYPE IsConnected(IndexedPosition indexedPosition);
 	void TimeOut();
+    void SetPlayReady();
+    void PausePlayReady();
 	
 	//조심해!!
 	//아래의 함수들은 호출할 필요가 없다(로직 내부에서만 사용하는 함수들)

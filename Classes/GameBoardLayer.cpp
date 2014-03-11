@@ -150,8 +150,6 @@ void CGameBoardLayer::DrawLine()
 	IndexedPosition startIndex = ConvertCoordinate(m_StartPoint);
 	IndexedPosition endIndex = ConvertCoordinate(m_EndPoint);
 	
-	//이제 두개를 비교합니다.
-	//행이 같은 경우
 	if (startIndex.m_PosI == endIndex.m_PosI)
 	{
 		if (endIndex.m_PosJ - startIndex.m_PosJ == 2)

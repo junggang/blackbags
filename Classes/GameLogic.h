@@ -116,7 +116,8 @@ public:
 	bool TimeOut();
 	bool EventHandle(IndexedPosition indexedPosition);
 	void DrawLine(const IndexedPosition& indexedPosition);
-    void PlayReady();
+    void SetPlayReady(bool state) { m_isPlayReady = state; }
+    bool isPlayReady() {return m_isPlayReady; }
 
 	/*	주어진 index의 울타리 주변 타일을 확인 합니다 */
 	void CollectClosedTile(IndexedPosition indexedPosition, Direction direction);
@@ -210,6 +211,8 @@ private:
 	int		m_TileAnimationTurnNumber;
 	int		m_TileAnimationTurn;
 	bool	m_TileAnimationTurnOver;
+    
+    bool    m_isPlayReady;
 
 	// implement the "static node()" method manually
     //CREATE_FUNC(CGameLogic);

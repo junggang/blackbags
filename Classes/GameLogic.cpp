@@ -831,6 +831,11 @@ void CGameLogic::SetItem( IndexedPosition indexedPosition, MO_ITEM item )
 
 bool CGameLogic::EventHandle(IndexedPosition indexedPosition)
 {
+    if(! m_isPlayReady)
+    {
+        return false;
+    }
+    
 	if (!IsPossible(indexedPosition) )
 	{
 		return false;
@@ -933,10 +938,6 @@ bool CGameLogic::TimeOut()
 	}
 }
 
-void CGameLogic::PlayReady()
-{
-    
-}
 bool CGameLogic::IsPlayerJoinedGame( int playerId )
 {
 	// playerId :: ( 0 <= ~ < MAX_PLAYER_NUM )

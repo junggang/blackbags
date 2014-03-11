@@ -58,6 +58,8 @@ bool CPlayScene::init(void)
 		this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
 	}
 
+    //temporary
+    CGameManager::GetInstance()->SetPlayReady();
 	return true;
 }
 
@@ -67,6 +69,8 @@ void CPlayScene::update(float dt)
 	{
 		return;
 	}
+    
+    CGameManager::GetInstance()->PausePlayReady();
 
 	//∞‘¿” ¡æ∑· »Æ¿Œ
 	if (CGameManager::GetInstance()->IsEnd() && !m_GameEndFlag)
@@ -121,7 +125,13 @@ void CPlayScene::update(float dt)
     else
     {
         CCLog("playScene");
-               
+        float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 0.8f;
+        
+		// æÛ∏∂ »ƒø° ¿¸º€«œ¥¬ ƒ⁄µÂ ª¿‘!
+		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CGameManager::SetPlayReady) );
+		CCDelayTime* delayAction = CCDelayTime::create(delayTime);
+		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
+        
         CGameManager::GetInstance()->SetAnimationDelay(0.0f);
     }
 

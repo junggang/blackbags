@@ -349,7 +349,7 @@ void CGameManager::DrawLine( IndexedPosition indexedPosition )
 	}
 	else
 	{
-		SetUpdateFlag(CGameLogic::GetInstance()->EventHandle(indexedPosition) );
+        SetUpdateFlag(CGameLogic::GetInstance()->EventHandle(indexedPosition) );
 		CCLOG("draw line : %d, %d",indexedPosition.m_PosI,indexedPosition.m_PosJ);
 	}
 }
@@ -567,14 +567,7 @@ void CGameManager::PlayUpdate(float dt)
 
 void CGameManager::PlayReady()
 {
-    if(m_IsOnlineGame)
-    {
-        CNetworkLogic::GetInstance()->PlayReady();
-    }
-	else
-    {
-        CGameLogic::GetInstance()->PlayReady();
-    }
+       CNetworkLogic::GetInstance()->PlayReady();
 }
 
 bool CGameManager::IsNextButtonSelected()
@@ -614,6 +607,16 @@ void CGameManager::TimeOut()
 		SetUpdateFlag(CGameLogic::GetInstance()->TimeOut());
 	}
 }
+
+void CGameManager::SetPlayReady()
+{
+    CGameLogic::GetInstance()->SetPlayReady(true);
+}
+void CGameManager::PausePlayReady()
+{
+    CGameLogic::GetInstance()->SetPlayReady(false);
+}
+
 
 std::string CGameManager::GetUsersName()
 {
@@ -710,7 +713,14 @@ bool CGameManager::IsChannelMaster()
 
 bool CGameManager::IsReady()
 {
-	return CNetworkLogic::GetInstance()->IsReady();
+    if(m_IsOnlineGame)
+    {
+        return CNetworkLogic::GetInstance()->IsReady();
+    }
+    else
+    {
+        return CGameLogic::GetInstance()->isPlayReady();
+    }
 }
 
 bool CGameManager::IsReady( int playerId )
