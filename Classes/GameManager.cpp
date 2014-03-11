@@ -567,7 +567,14 @@ void CGameManager::PlayUpdate(float dt)
 
 void CGameManager::PlayReady()
 {
-	CNetworkLogic::GetInstance()->PlayReady();
+    if(m_IsOnlineGame)
+    {
+        CNetworkLogic::GetInstance()->PlayReady();
+    }
+	else
+    {
+        CGameLogic::GetInstance()->PlayReady();
+    }
 }
 
 bool CGameManager::IsNextButtonSelected()

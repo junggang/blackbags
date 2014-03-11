@@ -88,7 +88,7 @@ void CMO_tile::setImage(IndexedPosition indexedPosition)
 
 void CMO_tile::update( float delta )
 {
-	//현재 타일 소유를 물어보고 업데이트
+    //현재 타일 소유를 물어보고 업데이트
 	MO_OWNER tempOwner = CGameManager::GetInstance()->GetMapOwner(m_Index);
 	if (tempOwner != m_Owner)
 	{

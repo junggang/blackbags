@@ -933,6 +933,10 @@ bool CGameLogic::TimeOut()
 	}
 }
 
+void CGameLogic::PlayReady()
+{
+    
+}
 bool CGameLogic::IsPlayerJoinedGame( int playerId )
 {
 	// playerId :: ( 0 <= ~ < MAX_PLAYER_NUM )

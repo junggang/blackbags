@@ -116,6 +116,7 @@ public:
 	bool TimeOut();
 	bool EventHandle(IndexedPosition indexedPosition);
 	void DrawLine(const IndexedPosition& indexedPosition);
+    void PlayReady();
 
 	/*	주어진 index의 울타리 주변 타일을 확인 합니다 */
 	void CollectClosedTile(IndexedPosition indexedPosition, Direction direction);

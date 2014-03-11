@@ -118,6 +118,12 @@ void CPlayScene::update(float dt)
 		// æ÷¥œ∏ﬁ¿Ãº« ¿¸º€ ¡ˆø¨∞™ √ ±‚»≠
 		CGameManager::GetInstance()->SetAnimationDelay(0.0f);
 	}
+    else
+    {
+        CCLog("playScene");
+               
+        CGameManager::GetInstance()->SetAnimationDelay(0.0f);
+    }
 
 	//æ˜µ•¿Ã∆Æµ» ≥ªøÎ¿ª ∏µŒ πﬁæ∆øÕº≠ ∞ªΩ≈«ﬂ¿∏π«∑Œ flag¥¬ ø¯∑°¥Î∑Œ false∑Œ ∏∏µÁ¥Ÿ
 	CGameManager::GetInstance()->SetUpdateFlag(false);
