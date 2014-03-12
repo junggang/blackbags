@@ -655,8 +655,6 @@ const std::string SHARED_MENU1_SELECTED = "image/shared_menu01_selected.png";
 const std::string SHARED_MENU2_SELECTED = "image/shared_menu02_selected.png";
 const std::string SHARED_MENU3_SELECTED = "image/shared_menu03_selected.png";
 
-#define GAME_FONT "fonts/paper_johnny.ttf"
-
 const std::string SHARED_PLAYER_UI_UPPER_LEFT_SELECTED = "image/shared_playerui_background_upper_left_selected.png";
 const std::string SHARED_PLAYER_UI_UPPER_LEFT_UNSELECTED = "image/shared_playerui_background_upper_left_unselected.png";
 const std::string SHARED_PLAYER_UI_UPPER_RIGHT_SELECTED = "image/shared_playerui_background_upper_right_selected.png";
@@ -671,4 +669,4 @@ const std::string SHARED_PLAYER_UI_BELOW_RIGHT_UNSELECTED = "image/shared_player
 #define SHARED_PLAYER_UI_BELOW_LEFT_POS 20,20
 #define SHARED_PLAYER_UI_BELOW_RIGHT_POS 1337,20
 // window에서 실행할 때는 해당 폰트를 설치해주세요 'Paper Johnny Eineinhalb.ttf'
-#define GAME_FONT "Paper Johnny Eineinhalb Regular"
+#define GAME_FONT "Paper Johnny Eineinhalb"

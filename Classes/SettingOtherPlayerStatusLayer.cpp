@@ -68,7 +68,7 @@ void CSettingOtherPlayerStatusLayer::update()
 				CGameManager::GetInstance()->GetPlayerName( playerId ).c_str(),
 				CCSize(480,30),
 				kCCTextAlignmentCenter,
-				"Arial",
+				GAME_FONT,
 				20);
 
 			PlayerNames[i]->setTag(i);
