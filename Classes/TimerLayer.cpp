@@ -47,7 +47,6 @@ bool CTimerLayer::init()
 
 void CTimerLayer::update( float dt )
 {
-    CCLog("Timer");
 	if (CGameManager::GetInstance()->IsOnlineMode() )
 	{
 		bool newStatus = CGameManager::GetInstance()->GetCurrentTimerStatus();
@@ -78,7 +77,7 @@ void CTimerLayer::update( float dt )
     // Offline
 	else
 	{
-        float delayTime = CGameManager::GetInstance()->GetAnimationDelay();
+        float delayTime = CGameManager::GetInstance()->GetAnimationDelay()+1.2f;
         CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		   
 		m_progressTimeBar->stopAllActions();

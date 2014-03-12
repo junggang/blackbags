@@ -125,7 +125,7 @@ void CPlayScene::update(float dt)
     else
     {
         CCLog("playScene");
-        float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 0.8f;
+        float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 1.0f;
         
 		// æÛ∏∂ »ƒø° ¿¸º€«œ¥¬ ƒ⁄µÂ ª¿‘!
 		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CGameManager::SetPlayReady) );
