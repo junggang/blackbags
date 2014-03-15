@@ -610,8 +610,6 @@ const std::string SHARED_PLAYERUI_CHARACTERS_OFF[16] =
 	"image/shared_player_character02_04_off.png",
 	"image/shared_player_character03_04_off.png",
 	"image/shared_player_character04_04_off.png",
-
-
 };
 
 const std::string SHARED_PLAYERUI_BACKGROUND[8] =

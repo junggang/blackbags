@@ -88,7 +88,7 @@ public:
 	//bool IsClosed(IndexedPosition indexedPosition);
 	
 	//result scene ฐüทร
-	int GetWinnerIdx();
+	bool IsWinner(int idx);
 	int GetElementCount (int playerIdx, MO_ITEM item);
 	int GetTotalScore(int playerIdx);
 	const std::string& GetCharacterResultFaceFileName(int playerIdx);

@@ -26,6 +26,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 global watingList
+
 watingList = []
 gameDataTTL = 600
 playerDataTTL = 10

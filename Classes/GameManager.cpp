@@ -41,7 +41,7 @@ bool CGameManager::init()
 	CGameLogic::GetInstance()->init();
 	m_GameData = cocos2d::CCUserDefault::sharedUserDefault();
 
-	// ¸¸¾à ÇöÀç ÀúÀå µÈ °ÔÀÓµ¥ÀÌÅÍ°¡ ¾øÀ¸¸é ÃÊ±â°ªÀ¸·Î ¼³Á¤ÇØ¼­ »ı¼ºÇÑ´Ù.
+	// âˆâˆÃ¦â€¡ Â«Ë†Â¿Ã Â¿Ë™Â¿Ã‚ ÂµÂ» âˆâ€˜Â¿â€Âµâ€¢Â¿Ãƒâ‰ˆÃ•âˆÂ° Ã¦Â¯Â¿âˆâˆÃˆ âˆšÂ Â±â€šâˆâ„¢Â¿âˆâˆ‘Å’ Âºâ‰¥Â¡Â§Â«Ã¿Âºâ‰  ÂªËÂºâˆ«Â«â€”Â¥Å¸.
 	if (!m_GameData->getBoolForKey("initialized") )
 	{
 		m_GameData->setStringForKey("tokenId", "tempToken");
@@ -64,8 +64,8 @@ void CGameManager::SetPlayerName(int playerId,  const std::string& playerName )
 {
 	if (m_IsOnlineGame)
 	{
-		// ´Ù¸¥ À¯ÀúÀÇ ÀÌ¸§Àº ¼­¹ö¿¡¼­ ¹Ş¾Æ¿À°í
-		// º»ÀÎ ÀÌ¸§Àº shared data¿¡ ÀúÀåµÈ °ÍÀ» »ç¿ëÇÏ¹Ç·Î ÀÌ ÇÔ¼ö´Â »ç¿ëÇÏÁö ¾ÊÀ½
+		// Â¥Å¸âˆâ€¢ Â¿Ã˜Â¿Ë™Â¿Â« Â¿ÃƒâˆÃŸÂ¿âˆ« Âºâ‰ Ï€Ë†Ã¸Â°Âºâ‰  Ï€ï¬Ã¦âˆ†Ã¸Â¿âˆÃŒ
+		// âˆ«ÂªÂ¿Å’ Â¿ÃƒâˆÃŸÂ¿âˆ« shared dataÃ¸Â° Â¿Ë™Â¿Ã‚ÂµÂ» âˆÃ•Â¿Âª ÂªÃÃ¸ÃÂ«Å“Ï€Â«âˆ‘Å’ Â¿Ãƒ Â«â€˜ÂºË†Â¥Â¬ ÂªÃÃ¸ÃÂ«Å“Â¡Ë† Ã¦Â Â¿Î©
 	}
 	else
 	{
@@ -124,13 +124,13 @@ int CGameManager::GetCurrentPlayerNumber()
 	}
 }
 
-//Á¶½ÉÇØ!!
-//ÀÌ°Å È£ÃâÇÏ´Â ÇÔ¼ö ¾Æ´Ñ °Í °°Àºµ¥
+//Â¡âˆ‚Î©â€¦Â«Ã¿!!
+//Â¿Ãƒâˆâ‰ˆ Â»Â£âˆšâ€šÂ«Å“Â¥Â¬ Â«â€˜ÂºË† Ã¦âˆ†Â¥â€” âˆÃ• âˆâˆÂ¿âˆ«Âµâ€¢
 void CGameManager::SetCurrentPlayerNumber(int PlayerNumber)
 {
 	if (m_IsOnlineGame)
 	{
-		// player number´Â ¼­¹ö°¡ matching thread¸¦ ÅëÇØ¼­ °áÁ¤ÇÏ¹Ç·Î »ç¿ëµÇÁö ¾ÊÀ½
+		// player numberÂ¥Â¬ Âºâ‰ Ï€Ë†âˆÂ° matching threadâˆÂ¶ â‰ˆÃÂ«Ã¿Âºâ‰  âˆÂ·Â¡Â§Â«Å“Ï€Â«âˆ‘Å’ ÂªÃÃ¸ÃÂµÂ«Â¡Ë† Ã¦Â Â¿Î©
 	}
 	else
 	{
@@ -138,18 +138,23 @@ void CGameManager::SetCurrentPlayerNumber(int PlayerNumber)
 	}
 }
 
-int CGameManager::GetWinnerIdx()
+bool CGameManager::IsWinner(int idx)
 {
-	if (m_IsOnlineGame)
-	{
-		// server¿¡¼­ ÇÊ¿äÇÑ Á¤º¸¸¦ ¹Ş¾Æ ¿Â´Ù.
-		// winner idx - µ¿Á¡ °æ¿ìµµ »ı°¢ÇØ¾ß ÇÔ
-		return 0;
-	}
-	else
-	{
-		return CGameLogic::GetInstance()->GetWinnerIdx();
-	}
+    int myScore = GetTotalScore(idx);
+    
+    // ë°˜ë³µë¬¸ ëŒë©´ì„œ ë§Œì•½ idx ë³´ë‹¤ ë†’ì€ ì ìˆ˜ ìˆìœ¼ë©´
+    for (int i = 0 ; i < GetCurrentPlayerNumber() ; ++i)
+    {
+        if (i == idx)
+            continue;
+
+        if (GetTotalScore(i) > myScore)
+        {
+            return false;
+        }
+    }
+    
+    return true;
 }
 
 int CGameManager::GetElementCount(int playerIdx, MO_ITEM item)
@@ -418,10 +423,10 @@ bool CGameManager::IsPlayerNumberAndMapSeleted()
 {
 	if (m_IsOnlineGame)
 	{
-		// Ã¤³Î ¸¶½ºÅÍÀÎ °æ¿ì º»ÀÎÀ» Á¦¿ÜÇÏ°í ¸ğµç »ç¶÷ÀÌ ·¹µğÇÏ¸é true
-		// ¸¶½ºÅÍ°¡ ¾Æ´Ñ °æ¿ì ÀÚ½ÅÀÇ ·¹µğ »óÅÂ È®ÀÎÇØ¼­ true / false
+		// âˆšÂ§â‰¥Å’ âˆâˆ‚Î©âˆ«â‰ˆÃ•Â¿Å’ âˆÃŠÃ¸Ã âˆ«ÂªÂ¿Å’Â¿Âª Â¡Â¶Ã¸â€¹Â«Å“âˆÃŒ âˆï£¿ÂµÃ ÂªÃâˆ‚ËœÂ¿Ãƒ âˆ‘Ï€Âµï£¿Â«Å“âˆÃˆ true
+		// âˆâˆ‚Î©âˆ«â‰ˆÃ•âˆÂ° Ã¦âˆ†Â¥â€” âˆÃŠÃ¸Ã Â¿â„Î©â‰ˆÂ¿Â« âˆ‘Ï€Âµï£¿ ÂªÃ›â‰ˆÂ¬ Â»Ã†Â¿Å’Â«Ã¿Âºâ‰  true / false
 
-		// ¸ÖÆ¼¿¡¼­´Â NEXT ¹öÆ°À» ´©¸£±â Àü¿¡´Â ¹«Á¶°Ç return false
+		// âˆÃ·âˆ†ÂºÃ¸Â°Âºâ‰ Â¥Â¬ NEXT Ï€Ë†âˆ†âˆÂ¿Âª Â¥Â©âˆÂ£Â±â€š Â¿Â¸Ã¸Â°Â¥Â¬ Ï€Â´Â¡âˆ‚âˆÂ« return false
 		return false;
 	}
 	else
@@ -434,7 +439,7 @@ int CGameManager::GetPlayerNumberOfThisGame()
 {
 	if (m_IsOnlineGame)
 	{
-		// ÇÊ¿äÇÑ°¡?
+		// Â«Â Ã¸â€°Â«â€”âˆÂ°?
 		CNetworkLogic::GetInstance()->GetCurrentPlayerNumber();
 	}
 		
@@ -467,7 +472,7 @@ void CGameManager::SetPlayerNumberOfThisGame( int PlayerNumber )
 {
 	if (m_IsOnlineGame)
 	{
-		// shared data¿¡ player number flags ¼³Á¤
+		// shared dataÃ¸Â° player number flags Âºâ‰¥Â¡Â§
 		std::string key = "";
 		switch (PlayerNumber)
 		{
@@ -510,12 +515,12 @@ SceneName CGameManager::GetCurrentScene()
 	if (m_IsOnlineGame)
 	{
 		// Logic
-		// Á¶½ÉÇØ!! Single°ú °°Àº ·ÎÁ÷À¸·Î ¸¸µé¾îµ×¾î!
+		// Â¡âˆ‚Î©â€¦Â«Ã¿!! SingleâˆË™ âˆâˆÂ¿âˆ« âˆ‘Å’Â¡ËœÂ¿âˆâˆ‘Å’ âˆâˆÂµÃˆÃ¦Ã“Âµâ—ŠÃ¦Ã“!
 		return CNetworkLogic::GetInstance()->GetCurrentScene();
 	}
 	else
 	{
-		// ¾µ ÀÏÀº ¾øÀ½
+		// Ã¦Âµ Â¿Å“Â¿âˆ« Ã¦Â¯Â¿Î©
 		return SC_MAIN;
 	}
 }
@@ -575,7 +580,7 @@ bool CGameManager::IsNextButtonSelected()
 	if (m_IsOnlineGame)
 	{
 		// Logic
-		// Á¶½ÉÇØ!! Single°ú °°Àº ·ÎÁ÷À¸·Î ¸¸µé¾îµ×¾î!
+		// Â¡âˆ‚Î©â€¦Â«Ã¿!! SingleâˆË™ âˆâˆÂ¿âˆ« âˆ‘Å’Â¡ËœÂ¿âˆâˆ‘Å’ âˆâˆÂµÃˆÃ¦Ã“Âµâ—ŠÃ¦Ã“!
 		return CGameLogic::GetInstance()->IsNextButtonSelected();
 	}
 	else
@@ -697,7 +702,7 @@ bool CGameManager::IsPlayerJoinedGame( int characterId )
 {
 	if ( m_IsOnlineGame )
 	{
-		// Á¶½ÉÇØ! Test Code
+		// Â¡âˆ‚Î©â€¦Â«Ã¿! Test Code
 		return false;
 	}
 	else

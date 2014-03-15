@@ -14,14 +14,12 @@ bool CResultScoreLayer::init()
 	}
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-
+	
 	/////////////////////////////
 	// 2. add a background image
 
 	//score part
 	int playerNum = CGameManager::GetInstance()->GetCurrentPlayerNumber();
-	int winnerIdx = CGameManager::GetInstance()->GetWinnerIdx();
 
 	CCPoint position;
 
@@ -41,7 +39,7 @@ bool CResultScoreLayer::init()
 		int characterId = CGameManager::GetInstance()->GetCharacterIdByPlayerId(i);
 		CCSprite* pFace;
 		//승패 여부에 따라 캐릭터 이미지 생성
-		if ( i == winnerIdx)
+		if ( CGameManager::GetInstance()->IsWinner(i) )
 			pFace = CCSprite::create(RESULT_CHARACTER_WIN_IMAGE[characterId].c_str());
 		else
 			pFace = CCSprite::create(RESULT_CHARACTER_LOSE_IMAGE[characterId].c_str());
