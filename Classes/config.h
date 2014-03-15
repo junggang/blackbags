@@ -519,10 +519,10 @@ const std::string PlayerUiCharacterUpperLeft[5] =
 
 const std::string PlayerUiCharacterUpperLeftOffline[5] =
 {
-	"image/shared_player_character01_01.png",
-	"image/shared_player_character02_01.png",
-	"image/shared_player_character03_01.png",
-	"image/shared_player_character04_01.png",
+	"image/shared_player_character01_01_off.png",
+	"image/shared_player_character02_01_off.png",
+	"image/shared_player_character03_01_off.png",
+	"image/shared_player_character04_01_off.png",
 	"image/shared_player_empty_01.png"
 };
 
@@ -537,10 +537,10 @@ const std::string PlayerUiCharacterUpperRight[5] =
 
 const std::string PlayerUiCharacterUpperRightOffline[5] =
 {
-	"image/shared_player_character01_02.png",
-	"image/shared_player_character02_02.png",
-	"image/shared_player_character03_02.png",
-	"image/shared_player_character04_02.png",
+	"image/shared_player_character01_02_off.png",
+	"image/shared_player_character02_02_off.png",
+	"image/shared_player_character03_02_off.png",
+	"image/shared_player_character04_02_off.png",
 	"image/shared_player_empty_02.png"
 };
 

@@ -45,92 +45,27 @@ bool CSettingOtherPlayerStatusLayer::init()
 
 void CSettingOtherPlayerStatusLayer::update()
 {
-	////////////////////////////////////////////////////////////
-	// Á¶½ÉÇØ!! ÀÌ ºÎºĞÀº µğ¹ö±ë¿ëÀÌ¾ß!! ³ªÁß¿¡ ³¯·Á¹ö·Á! Ä¼!
-	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
-	{
-		// ¸¸¾à ¾î¶² Ä³¸¯ÅÍ°¡ ¼±ÅÃµÇÁö ¾Ê¾Ò´Âµ¥ È­¸é¿¡ Ç¥½ÃµÇ°í ÀÖ´Ù¸é Á¦°ÅÇÑ´Ù.
-		if ( !CGameManager::GetInstance()->IsCharacterSelected(i) && (this->getChildByTag(i) != NULL) )
-		{
-			this->removeChildByTag(i);
-		}
-		// ¸¸¾à ¾î¶² Ä³¸¯ÅÍ°¡ ¼±ÅÃµÇ¾ú´Âµ¥ È­¸é¿¡´Â Ç¥½ÃµÇÁö ¾Ê°í ÀÖ´Ù¸é Ãß°¡ÇÑ´Ù.
-		else if ( CGameManager::GetInstance()->IsCharacterSelected(i) && (this->getChildByTag(i) == NULL) )
-		{
-			int playerId = CGameManager::GetInstance()->GetPlayerIdByCharactyerId(i);
-
-			if (playerId < 0) // error
-			{
-				continue;
-			}
-
-			PlayerNames[i] = CCTextFieldTTF::textFieldWithPlaceHolder(
-				CGameManager::GetInstance()->GetPlayerName( playerId ).c_str(),
-				CCSize(480,30),
-				kCCTextAlignmentCenter,
-				GAME_FONT,
-				20);
-
-			PlayerNames[i]->setTag(i);
-
-			PlayerNames[i]->setPosition(ccp(m_VisibleSize.width / 6, m_VisibleSize.height * 0.75 - 50 * i));
-
-			this->addChild(PlayerNames[i], 3);
-		}
-	}
-	//////////////////////////////////////////////////////////////////////////
-	// Àı Ãë ¼±
-	//////////////////////////////////////////////////////////////////////////
-
-	// Ä³¸¯ÅÍ°¡ ¼±ÅÃµÇ¸é ÇØ´ç Ä³¸¯ÅÍ¸¦ ¼±ÅÃÇÑ ÇÃ·¹ÀÌ¾î STATUS Ã¢ÀÇ ÇÁ·ÎÇÊ »çÁøÀ» ¹Ù²Û´Ù.
-	for ( int playerId = 0; playerId < MAX_PLAYER_NUM; ++playerId)
-	{
-		int characterId = CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId);
-		if ( characterId != -1 ) // selected
-		{
-			// create selected face
-			CCSprite* pSelectedFace = nullptr;
-
-			switch (playerId)
-			{
-			case 0: // player 1 :: below left
-				pSelectedFace = CCSprite::create( PlayerUiCharacterBelowLeft[characterId].c_str() );
-				break;
-			case 1: // player 2 :: below right
-				pSelectedFace = CCSprite::create( PlayerUiCharacterBelowRight[characterId].c_str() );
-				break;
-			case 2: // player 3 :: upper left
-				pSelectedFace = CCSprite::create( PlayerUiCharacterUpperLeft[characterId].c_str() );
-				break;
-			case 3: // player 4 :: upper right
-				pSelectedFace = CCSprite::create( PlayerUiCharacterUpperRight[characterId].c_str() );
-				break;
-			}
-
-			// ¹æ¾îÄÚµå
-			if ( nullptr == pSelectedFace )
-			{
-				return;
-			}
-
-			// set position
-			pSelectedFace->setPosition( ccp(0, 0) );
-			pSelectedFace->setAnchorPoint( ccp(0, 0) );
-
-			pSelectedFace->setTag(CURRENT_FACE_TAG);
-
-			m_PlayerStatusFrame[playerId]->removeChildByTag(CURRENT_FACE_TAG);
-			m_PlayerStatusFrame[playerId]->addChild(pSelectedFace);
-		}
-	}
-
-	// PlayerFrameÀÌ ¼±ÅÃµÇ¾î ÀÖ´Ù¸é selected()·Î ¾÷µ¥ÀÌÆ®ÇÑ´Ù.
+    // online mode only
+    UpdateNamesToPlayerFrame();
+    
+    // update status frames if select characters
+    if ( CGameManager::GetInstance()->IsOnlineMode() )
+    {
+        UpdatePlayerAndCharacterPairsOnline();
+    }
+    else
+    {
+        UpdatePlayerAndCharacterPairsOffline();
+    }
+    
+	// PlayerFrameì´ ì„ íƒë˜ì–´ ìˆë‹¤ë©´ selected()ë¡œ ì—…ë°ì´íŠ¸í•œë‹¤.
 	int tempPlayerId = CGameManager::GetInstance()->GetPlayerFrameSelected();
 	if (tempPlayerId != -1)
 	{
 		m_PlayerStatusFrame[ tempPlayerId ]->selected();
 	}
-
+    
+    // update Ready status
 	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{
 		for (int i = 0 ; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
@@ -161,55 +96,6 @@ void CSettingOtherPlayerStatusLayer::update()
 			m_PlayerStatusFrame[i]->addChild( readyStateImg );
 		}
 	}
-    /*
-    // test Function
-    if ( !CGameManager::GetInstance()->IsOnlineMode() )
-	{
-		for (int i = 0 ; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
-		{
-			CCSprite* readyStateImg = nullptr;
-			m_PlayerStatusFrame[i]->removeChildByTag(READY_STATE_TAG);
-            
-			if ( true )
-			{
-				readyStateImg = CCSprite::create(PLAYER_STATUS_READY_IMG.c_str());
-			}
-			else
-			{
-				readyStateImg = CCSprite::create(PLAYER_STATUS_READY_IMG.c_str());
-			}
-            
-			// if load image failed
-			if (nullptr == readyStateImg)
-			{
-				continue;
-			}
-            
-			readyStateImg->setTag(READY_STATE_TAG);
-            ////////// position test ///////////
-            switch (i)
-            {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                default:
-                    break;
-            }
-            
-            
-            
-            ////////////////////////////////////
-     
-            
-			m_PlayerStatusFrame[i]->addChild( readyStateImg );
-		}
-	}
-    */
 }
 
 void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
@@ -261,7 +147,7 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 		}
 		m_PlayerStatusFrame[i]->setAnchorPoint( ccp(0,0) );
 
-		// °ªÀÌ Á¦´ë·Î µé¾î¿ÔÀ» ¶§¸¸ Menu¿¡ Ãß°¡
+		// âˆâ„¢Â¿Ãƒ Â¡Â¶Â¥Ãâˆ‘Å’ ÂµÃˆÃ¦Ã“Ã¸â€˜Â¿Âª âˆ‚ÃŸâˆâˆ MenuÃ¸Â° âˆšï¬‚âˆÂ°
 		if (m_PlayerStatusFrame[i] != nullptr)
 		{
 			playerFrameMenu->addChild( m_PlayerStatusFrame[i] );
@@ -272,101 +158,14 @@ void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 	playerFrameMenu->setPosition( ccp(0, 0) );
 	this->addChild(playerFrameMenu);
 
-	// ±âº» ¾ó±¼À» Áı¾î³Ö´Â´Ù.
-	for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i )
-	{
-		CCSprite* pDefaultFaceImg = nullptr;
-
-		switch (i)
-		{
-		case PLAYER_1_TAG:
-			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowLeft[4].c_str() );
-			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
-			break;
-		case PLAYER_2_TAG:
-			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowRight[4].c_str() );
-			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
-			break;
-		case PLAYER_3_TAG:
-			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpperLeft[4].c_str() );
-			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
-			break;
-		case PLAYER_4_TAG:
-			pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpperRight[4].c_str() );
-			pDefaultFaceImg->setPosition( CCPoint(0, 0) );
-			break;
-		default:
-			break;
-		}
-
-		// ¹æ¾îÄÚµå : »ı¼º ½ÇÆĞ½Ã ¸®ÅÏ
-		if ( nullptr == pDefaultFaceImg )
-		{
-			return;
-		}
-
-		pDefaultFaceImg->setTag( CURRENT_FACE_TAG );
-		pDefaultFaceImg->setAnchorPoint( ccp(0,0) );
-
-		// °¢ »óÅÂÃ¢¿¡ ±âº» ¾ó±¼À» Áı¾î³Ö¾îµĞ´Ù.
-		m_PlayerStatusFrame[i]->addChild(pDefaultFaceImg);
-	}
-
-	// ÇÃ·¹ÀÌ¾î ÀÌ¸§ ¼³Á¤Ã¢ »ı¼º
-	for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
-	{
-		extension::CCEditBox* pEditName;
-		extension::CCScale9Sprite* NameEditBox = extension::CCScale9Sprite::create("image/PLAYER_NAME.png");
-
-		pEditName = extension::CCEditBox::create( CCSize(NameEditBox->getContentSize() ),
-			NameEditBox);
-
-		pEditName->setPosition( ccp(m_PlayerStatusFrame[i]->getContentSize().width - pEditName->getContentSize().width / 2,
-									pEditName->getContentSize().height / 2) );
-		pEditName->setFontColor( ccYELLOW );
-		pEditName->setFont( GAME_FONT, 30);
-		pEditName->setMaxLength( 12 );
-		pEditName->setPlaceholderFontSize( 1 );
-		pEditName->setPlaceHolder( CGameManager::GetInstance()->GetPlayerName(i).c_str() );
-		pEditName->setReturnType( extension::kKeyboardReturnTypeDone );
-		pEditName->setDelegate( this );
-		pEditName->setTag( i );
-
-		m_PlayerStatusFrame[i]->addChild( pEditName );
-	}
-
-	// Ready State Ç¥½Ã
-	if ( CGameManager::GetInstance()->IsOnlineMode() )
-	{
-		for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
-		{
-			CCSprite* readyStateImg = CCSprite::create("image/setting_ready_unselected.png");
-			readyStateImg->setTag(READY_STATE_TAG);
-			readyStateImg->setPosition(ccp(m_PlayerStatusFrame[i]->getContentSize().width - readyStateImg->getContentSize().width / 2,
-				m_PlayerStatusFrame[i]->getContentSize().height - readyStateImg->getContentSize().height / 2));
-			m_PlayerStatusFrame[i]->addChild( readyStateImg );
-		}
-	}
-}
-
-void CSettingOtherPlayerStatusLayer::editBoxEditingDidBegin( extension::CCEditBox* editBox )
-{
-
-}
-
-void CSettingOtherPlayerStatusLayer::editBoxEditingDidEnd( extension::CCEditBox* editBox )
-{
-	CGameManager::GetInstance()->SetPlayerName( editBox->getTag(), editBox->getText() );
-}
-
-void CSettingOtherPlayerStatusLayer::editBoxTextChanged( extension::CCEditBox* editBox, const std::string& text )
-{
-
-}
-
-void CSettingOtherPlayerStatusLayer::editBoxReturn( extension::CCEditBox* editBox )
-{
-
+    if ( CGameManager::GetInstance()->IsOnlineMode() )
+    {
+        CreateOnlineEmptyPortrait();
+    }
+    else
+    {
+        CreateOfflineEmptyPortrait();
+    }
 }
 
 void CSettingOtherPlayerStatusLayer::PlayerActivateCallBack( CCObject* pSender )
@@ -375,14 +174,14 @@ void CSettingOtherPlayerStatusLayer::PlayerActivateCallBack( CCObject* pSender )
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
 	int selectedPlayerId = ( static_cast<CCMenuItem*>(pSender)->getTag() / 100 ) - 1;
-	// ¹æ¾îÄÚµå
+	// Ï€ÃŠÃ¦Ã“Æ’â„ÂµÃ‚
 	// selectedPlayerTag / 100 - 1== playerId
 	if ( selectedPlayerId < 0 || selectedPlayerId >= MAX_PLAYER_NUM )
 	{
 		return;
 	}
 
-	// ¸¸¾à ¼±ÅÃµÇ¾î ÀÖ´Â ÇÃ·¹ÀÌ¾î°¡ ÀÖ´Ù¸é Ãë¼Ò½ÃÅ²´Ù.
+	// âˆâˆÃ¦â€¡ ÂºÂ±â‰ˆâˆšÂµÂ«Ã¦Ã“ Â¿Ã·Â¥Â¬ Â«âˆšâˆ‘Ï€Â¿ÃƒÃ¦Ã“âˆÂ° Â¿Ã·Â¥Å¸âˆÃˆ âˆšÃÂºâ€œÎ©âˆšâ‰ˆâ‰¤Â¥Å¸.
 	int tempPlayerId = CGameManager::GetInstance()->GetPlayerFrameSelected();
 	if ( tempPlayerId != -1 )
 	{
@@ -399,4 +198,218 @@ void CSettingOtherPlayerStatusLayer::PlayerActivateCallBack( CCObject* pSender )
 	//exit(0);
 #endif
 #endif
+}
+
+
+void CSettingOtherPlayerStatusLayer::UpdatePlayerAndCharacterPairsOnline()
+{
+    // ìºë¦­í„°ê°€ ì„ íƒë˜ë©´ í•´ë‹¹ ìºë¦­í„°ë¥¼ ì„ íƒí•œ í”Œë ˆì´ì–´ STATUS ì°½ì˜ í”„ë¡œí•„ ì‚¬ì§„ì„ ë°”ê¾¼ë‹¤.
+	for ( int playerId = 0; playerId < MAX_PLAYER_NUM; ++playerId)
+	{
+		int characterId = CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId);
+		if ( characterId != -1 ) // selected
+		{
+			// create selected face
+			CCSprite* pSelectedFace = nullptr;
+            
+			switch (playerId)
+			{
+                case 0: // player 1 :: below left
+                    pSelectedFace = CCSprite::create( PlayerUiCharacterBelowLeft[characterId].c_str() );
+                    break;
+                case 1: // player 2 :: below right
+                    pSelectedFace = CCSprite::create( PlayerUiCharacterBelowRight[characterId].c_str() );
+                    break;
+                case 2: // player 3 :: upper left
+                    pSelectedFace = CCSprite::create( PlayerUiCharacterUpperLeft[characterId].c_str() );
+                    break;
+                case 3: // player 4 :: upper right
+                    pSelectedFace = CCSprite::create( PlayerUiCharacterUpperRight[characterId].c_str() );
+                    break;
+			}
+            
+            // ë°©ì–´ì½”ë“œ
+			if ( nullptr == pSelectedFace )
+			{
+				return;
+			}
+            
+			// set position
+			pSelectedFace->setPosition( ccp(0, 0) );
+			pSelectedFace->setAnchorPoint( ccp(0, 0) );
+            
+			pSelectedFace->setTag(CURRENT_FACE_TAG);
+            
+			m_PlayerStatusFrame[playerId]->removeChildByTag(CURRENT_FACE_TAG);
+			m_PlayerStatusFrame[playerId]->addChild(pSelectedFace);
+		}
+	}
+}
+
+void CSettingOtherPlayerStatusLayer::UpdatePlayerAndCharacterPairsOffline()
+{
+    // ìºë¦­í„°ê°€ ì„ íƒë˜ë©´ í•´ë‹¹ ìºë¦­í„°ë¥¼ ì„ íƒí•œ í”Œë ˆì´ì–´ STATUS ì°½ì˜ í”„ë¡œí•„ ì‚¬ì§„ì„ ë°”ê¾¼ë‹¤.
+	for ( int playerId = 0; playerId < MAX_PLAYER_NUM; ++playerId)
+	{
+		int characterId = CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId);
+		if ( characterId != -1 ) // selected
+		{
+			// create selected face
+			CCSprite* pSelectedFace = nullptr;
+            
+			switch (playerId)
+			{
+                case 0: // player 1 :: below left
+                    pSelectedFace = CCSprite::create( PlayerUiCharacterBelowLeft[characterId].c_str() );
+                    break;
+                case 1: // player 2 :: below right
+                    pSelectedFace = CCSprite::create( PlayerUiCharacterBelowRight[characterId].c_str() );
+                    break;
+                case 2: // player 3 :: upper left
+                    pSelectedFace = CCSprite::create( PlayerUiCharacterUpperLeftOffline[characterId].c_str() );
+                    break;
+                case 3: // player 4 :: upper right
+                    pSelectedFace = CCSprite::create( PlayerUiCharacterUpperRightOffline[characterId].c_str() );
+                    break;
+			}
+            
+            // ë°©ì–´ì½”ë“œ
+			if ( nullptr == pSelectedFace )
+			{
+				return;
+			}
+            
+			// set position
+			pSelectedFace->setPosition( ccp(0, 0) );
+			pSelectedFace->setAnchorPoint( ccp(0, 0) );
+            
+			pSelectedFace->setTag(CURRENT_FACE_TAG);
+            
+			m_PlayerStatusFrame[playerId]->removeChildByTag(CURRENT_FACE_TAG);
+			m_PlayerStatusFrame[playerId]->addChild(pSelectedFace);
+		}
+	}
+}
+
+void CSettingOtherPlayerStatusLayer::CreateOfflineEmptyPortrait()
+{
+    
+	// Â±â€šâˆ«Âª Ã¦Ã›Â±ÂºÂ¿Âª Â¡ËÃ¦Ã“â‰¥Ã·Â¥Â¬Â¥Å¸.
+	for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i )
+	{
+		CCSprite* pDefaultFaceImg = nullptr;
+        
+		switch (i)
+		{
+            case PLAYER_1_TAG:
+                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowLeft[4].c_str() );
+                pDefaultFaceImg->setPosition( CCPoint(0, 0) );
+                break;
+            case PLAYER_2_TAG:
+                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowRight[4].c_str() );
+                pDefaultFaceImg->setPosition( CCPoint(0, 0) );
+                break;
+            case PLAYER_3_TAG:
+                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpperLeftOffline[4].c_str() );
+                pDefaultFaceImg->setPosition( CCPoint(0, 0) );
+                break;
+            case PLAYER_4_TAG:
+                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpperRightOffline[4].c_str() );
+                pDefaultFaceImg->setPosition( CCPoint(0, 0) );
+                break;
+            default:
+                break;
+		}
+        
+		// Ï€ÃŠÃ¦Ã“Æ’â„ÂµÃ‚ : ÂªËÂºâˆ« Î©Â«âˆ†â€“Î©âˆš âˆÃ†â‰ˆÅ“
+		if ( nullptr == pDefaultFaceImg )
+		{
+			return;
+		}
+        
+		pDefaultFaceImg->setTag( CURRENT_FACE_TAG );
+		pDefaultFaceImg->setAnchorPoint( ccp(0,0) );
+        
+		// âˆÂ¢ ÂªÃ›â‰ˆÂ¬âˆšÂ¢Ã¸Â° Â±â€šâˆ«Âª Ã¦Ã›Â±ÂºÂ¿Âª Â¡ËÃ¦Ã“â‰¥Ã·Ã¦Ã“Âµâ€“Â¥Å¸.
+		m_PlayerStatusFrame[i]->addChild(pDefaultFaceImg);
+	}
+}
+
+void CSettingOtherPlayerStatusLayer::CreateOnlineEmptyPortrait()
+{
+    
+	// Â±â€šâˆ«Âª Ã¦Ã›Â±ÂºÂ¿Âª Â¡ËÃ¦Ã“â‰¥Ã·Â¥Â¬Â¥Å¸.
+	for (int i = 0; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i )
+	{
+		CCSprite* pDefaultFaceImg = nullptr;
+        
+		switch (i)
+		{
+            case PLAYER_1_TAG:
+                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowLeft[4].c_str() );
+                pDefaultFaceImg->setPosition( CCPoint(0, 0) );
+                break;
+            case PLAYER_2_TAG:
+                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowRight[4].c_str() );
+                pDefaultFaceImg->setPosition( CCPoint(0, 0) );
+                break;
+            case PLAYER_3_TAG:
+                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpperLeft[4].c_str() );
+                pDefaultFaceImg->setPosition( CCPoint(0, 0) );
+                break;
+            case PLAYER_4_TAG:
+                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterUpperRight[4].c_str() );
+                pDefaultFaceImg->setPosition( CCPoint(0, 0) );
+                break;
+            default:
+                break;
+		}
+        
+		// Ï€ÃŠÃ¦Ã“Æ’â„ÂµÃ‚ : ÂªËÂºâˆ« Î©Â«âˆ†â€“Î©âˆš âˆÃ†â‰ˆÅ“
+		if ( nullptr == pDefaultFaceImg )
+		{
+			return;
+		}
+        
+		pDefaultFaceImg->setTag( CURRENT_FACE_TAG );
+		pDefaultFaceImg->setAnchorPoint( ccp(0,0) );
+        
+		// âˆÂ¢ ÂªÃ›â‰ˆÂ¬âˆšÂ¢Ã¸Â° Â±â€šâˆ«Âª Ã¦Ã›Â±ÂºÂ¿Âª Â¡ËÃ¦Ã“â‰¥Ã·Ã¦Ã“Âµâ€“Â¥Å¸.
+		m_PlayerStatusFrame[i]->addChild(pDefaultFaceImg);
+	}
+}
+
+void CSettingOtherPlayerStatusLayer::UpdateNamesToPlayerFrame()
+{
+    for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	{
+		// ë§Œì•½ ì–´ë–¤ ìºë¦­í„°ê°€ ì„ íƒë˜ì§€ ì•Šì•˜ëŠ”ë° í™”ë©´ì— í‘œì‹œë˜ê³  ìˆë‹¤ë©´ ì œê±°í•œë‹¤.
+		if ( !CGameManager::GetInstance()->IsCharacterSelected(i) && (this->getChildByTag(i) != NULL) )
+		{
+			this->removeChildByTag(i);
+		}
+		// ë§Œì•½ ì–´ë–¤ ìºë¦­í„°ê°€ ì„ íƒë˜ì—ˆëŠ”ë° í™”ë©´ì—ëŠ” í‘œì‹œë˜ì§€ ì•Šê³  ìˆë‹¤ë©´ ì¶”ê°€í•œë‹¤.
+		else if ( CGameManager::GetInstance()->IsCharacterSelected(i) && (this->getChildByTag(i) == NULL) )
+		{
+			int playerId = CGameManager::GetInstance()->GetPlayerIdByCharactyerId(i);
+            
+			if (playerId < 0) // error
+			{
+				continue;
+			}
+            
+			PlayerNames[i] = CCTextFieldTTF::textFieldWithPlaceHolder(
+                                                                      CGameManager::GetInstance()->GetPlayerName( playerId ).c_str(),
+                                                                      CCSize(480,30),
+                                                                      kCCTextAlignmentCenter,
+                                                                      GAME_FONT,
+                                                                      20);
+            
+			PlayerNames[i]->setTag(i);
+            
+			PlayerNames[i]->setPosition(ccp(m_VisibleSize.width / 6, m_VisibleSize.height * 0.75 - 50 * i));
+            
+			this->addChild(PlayerNames[i], 3);
+		}
+	}
 }
