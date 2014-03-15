@@ -4,23 +4,24 @@
 #include "config.h"
 #include <array>
 
-class CSettingOtherPlayerStatusLayer : public cocos2d::CCLayer,
-	public cocos2d::extension::CCEditBoxDelegate
+class CSettingOtherPlayerStatusLayer : public cocos2d::CCLayer
 {
 public:
 	virtual bool init();
 	virtual void update();
 
 	CREATE_FUNC(CSettingOtherPlayerStatusLayer);
-
-	// functions for edit Player Name
-	virtual void editBoxEditingDidBegin(cocos2d::extension::CCEditBox* editBox);
-	virtual void editBoxEditingDidEnd(cocos2d::extension::CCEditBox* editBox);
-	virtual void editBoxTextChanged(cocos2d::extension::CCEditBox* editBox, const std::string& text);
-	virtual void editBoxReturn(cocos2d::extension::CCEditBox* editBox);
-
+    
 private:
 	void CreateStatusFrame(cocos2d::CCSize m_VisibleSize);
+    
+    void CreateOnlineEmptyPortrait();
+    void CreateOfflineEmptyPortrait();
+    
+    void UpdatePlayerAndCharacterPairsOnline();
+    void UpdatePlayerAndCharacterPairsOffline();
+    
+    void UpdateNamesToPlayerFrame();
 
 	void PlayerActivateCallBack( CCObject* pSender );
 
