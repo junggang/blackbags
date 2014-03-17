@@ -29,5 +29,6 @@ public:
 private:
 	cocos2d::extension::CCControlSlider *m_pBGMVolume;
 	cocos2d::extension::CCControlSlider *m_pSEVolume;
+    cocos2d::CCLayer* m_LoginLayer;
 };
 

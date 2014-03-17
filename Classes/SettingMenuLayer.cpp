@@ -2,6 +2,7 @@
 #include "MainScene.h"
 #include "GameManager.h"
 #include "CreditScene.h"
+#include "LayerWebView.h"
 
 USING_NS_CC;
 
@@ -20,9 +21,6 @@ bool CSettingMenuLayer::init()
         return false;
     }
     
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-
 	/////////////////////////////
 	// 2. add menus
 	
@@ -35,6 +33,7 @@ bool CSettingMenuLayer::init()
 	addChild(pBackground,0);
 
 	//add Menu Titles(google, name, sound, tutorial, credit)
+    // 로그인 되어 있으면 로그인 되어 있는 계정 닉네임이 있어야 할 듯 
 	CCSprite* pGoogle = CCSprite::create(SETTING_MENU_GOOGLE.c_str());
 	pGoogle->setAnchorPoint(ccp(0,0));
 	pGoogle->setPosition(CCPoint(SETTING_MENU_GOOGLE_POS));
@@ -112,6 +111,8 @@ bool CSettingMenuLayer::init()
 	m_pSEVolume->setMinimumValue(0.0);
 	m_pSEVolume->setValue(DEFAULT_SE_VOLUME);
 	m_pSEVolume->setTag(SE_SLIDER_TAG);
+    
+    m_LoginLayer = nullptr;
 
 	return true;
 }
@@ -122,8 +123,10 @@ void CSettingMenuLayer::GoogleLoginCallback(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
-	//Logic
-
+	// Logic
+    // webview 창하나 만들어서 로그인 시키자
+    m_LoginLayer = LayerWebView::create();
+    this->addChild(m_LoginLayer, 1);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	//exit(0);
 #endif
@@ -145,7 +148,14 @@ void CSettingMenuLayer::CreditCallback( CCObject* pSender )
 
 void CSettingMenuLayer::update( float dt )
 {
-	
+	if (CGameManager::GetInstance()->GetCurrentLoginPhase() == LP_OK)
+    {
+        if (nullptr != m_LoginLayer)
+        {
+            static_cast<LayerWebView *>(m_LoginLayer)->close();
+            this->removeChild(m_LoginLayer);
+        }
+    }
 }
 
 void CSettingMenuLayer::ccTouchEnded( CCTouch *pTouch, CCEvent *pEvent )

@@ -36,6 +36,7 @@ void LayerWebView::webViewDidFinishLoad(std::string newToken)
     // 현재 떠있는 웹페이지 종료시키기
     // 플래그 설정을 해서 씬에서 이 레이어를 삭제하도록
     CGameManager::GetInstance()->SetCurrentLoginPhase(LP_OK);
+    CGameManager::GetInstance()->SetUpdateFlag(true);
 }
 
 void LayerWebView::close()

@@ -437,7 +437,7 @@ const std::string ResultTrashImage[3] =
 #define RESULT_TRASH_COUNT_X_MARGIN 414
 
 /*	setting scene */
-const std::string SETTING_TITLE = "image/setting_title.png";
+const std::string SETTING_TITLE = "image/SETTING_title.png";
 #define SETTING_TITLE_POS 1390
 
 const std::string SETTING_BG = "image/setting_menu_background.png";
