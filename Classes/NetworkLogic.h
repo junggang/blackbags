@@ -69,6 +69,7 @@ public:
 	void PlayReady();
 
     void AuthenticationCheck();
+    void GetGoogleNick();
     
 	void OnHttpRequestCompleted(cocos2d::CCNode* sender, cocos2d::extension::CCHttpResponse* response);
 	

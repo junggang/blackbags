@@ -33,28 +33,36 @@ bool CSettingMenuLayer::init()
 	addChild(pBackground,0);
 
 	//add Menu Titles(google, name, sound, tutorial, credit)
-    // 로그인 되어 있으면 로그인 되어 있는 계정 닉네임이 있어야 할 듯 
-	CCSprite* pGoogle = CCSprite::create(SETTING_MENU_GOOGLE.c_str());
+    CCSprite* pGoogle = CCSprite::create(SETTING_MENU_GOOGLE.c_str());
 	pGoogle->setAnchorPoint(ccp(0,0));
 	pGoogle->setPosition(CCPoint(SETTING_MENU_GOOGLE_POS));
 	addChild(pGoogle,1);
-
-	CCMenuItemImage *pLogin = CCMenuItemImage::create(
-		SETTING_LOGIN.c_str(),
-		SETTING_LOGIN.c_str(),
+    
+    CCLabelTTF* pName = nullptr;
+    // 로그인 되어 있으면 로그인 되어 있는 계정 닉네임이 있어야 할 듯
+    m_Name = CGameManager::GetInstance()->GetUsersName();
+    if (strcmp(m_Name.c_str(), "no name") == 0) {
+        // login button
+        pName = CCLabelTTF::create("Login", GAME_FONT, 82 );
+        pName->setColor(ccc3(183, 50, 35));
+    }
+    else
+    {
+        // google nick name
+        pName = CCLabelTTF::create(m_Name.c_str(), GAME_FONT, 82 );
+        pName->setColor(ccc3(43, 46, 46));
+    }
+    
+    
+    CCMenuItemLabel *pLogin = CCMenuItemLabel::create(
+		pName,
 		this,
 		menu_selector(CSettingMenuLayer::GoogleLoginCallback)
 		);
-
 	pLogin->setAnchorPoint(ccp(0,0));
-	pMenu = CCMenu::create(pLogin, NULL);
-	pMenu->setPosition(SETTING_LOGIN_POS);
-	addChild(pMenu, 1);
-
-	CCSprite* pName = CCSprite::create(SETTING_MENU_NAME.c_str());
-	pName->setAnchorPoint(ccp(0,0));
-	pName->setPosition(CCPoint(SETTING_MENU_NAME_POS));
-	addChild(pName,1);
+	m_pLoginMenu = CCMenu::create(pLogin, NULL);
+	m_pLoginMenu->setPosition(SETTING_LOGIN_POS);
+	addChild(m_pLoginMenu, 1);
 
 	CCSprite* pSound = CCSprite::create(SETTING_MENU_SOUND.c_str());
 	pSound->setAnchorPoint(ccp(0,0));
@@ -145,9 +153,9 @@ void CSettingMenuLayer::CreditCallback( CCObject* pSender )
 
 }
 
-
 void CSettingMenuLayer::update( float dt )
 {
+    /*
 	if (CGameManager::GetInstance()->GetCurrentLoginPhase() == LP_OK)
     {
         if (nullptr != m_LoginLayer)
@@ -155,6 +163,43 @@ void CSettingMenuLayer::update( float dt )
             static_cast<LayerWebView *>(m_LoginLayer)->close();
             this->removeChild(m_LoginLayer);
         }
+    }
+     */
+    
+    std::string tempName = CGameManager::GetInstance()->GetUsersName();
+    if (strcmp(m_Name.c_str(), tempName.c_str() ) != 0)
+    {
+        if (nullptr != m_LoginLayer)
+        {
+            static_cast<LayerWebView *>(m_LoginLayer)->close();
+            this->removeChild(m_LoginLayer);
+        }
+        
+        this->removeChild(m_pLoginMenu);
+        
+        m_Name = tempName;
+        CCLabelTTF* pName = nullptr;
+        if (strcmp(m_Name.c_str(), "no name") == 0) {
+            // login button
+            pName = CCLabelTTF::create("Login", GAME_FONT, 82 );
+            pName->setColor(ccc3(183, 50, 35));
+        }
+        else
+        {
+            // google nick name
+            pName = CCLabelTTF::create(m_Name.c_str(), GAME_FONT, 82 );
+            pName->setColor(ccc3(43, 46, 46));
+        }
+        
+        CCMenuItemLabel *pLogin = CCMenuItemLabel::create(
+                                                          pName,
+                                                          this,
+                                                          menu_selector(CSettingMenuLayer::GoogleLoginCallback)
+                                                          );
+        pLogin->setAnchorPoint(ccp(0,0));
+        m_pLoginMenu = CCMenu::create(pLogin, NULL);
+        m_pLoginMenu->setPosition(SETTING_LOGIN_POS);
+        addChild(m_pLoginMenu, 1);
     }
 }
 

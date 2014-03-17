@@ -26,9 +26,12 @@ public:
 
 	// implement the "static node()" method manually
     CREATE_FUNC(CSettingMenuLayer);
+    
 private:
 	cocos2d::extension::CCControlSlider *m_pBGMVolume;
 	cocos2d::extension::CCControlSlider *m_pSEVolume;
+    cocos2d::CCMenu* m_pLoginMenu;
     cocos2d::CCLayer* m_LoginLayer;
+    std::string m_Name;
 };
 

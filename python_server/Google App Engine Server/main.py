@@ -857,6 +857,24 @@ def gameEnd():
 		return 'error code'
 		
 
+@app.route('/get_google_nick', methods=['POST','GET'])
+def getGoogleNick():
+	try : 
+		if request.method  == "GET":  
+			user = users.get_current_user()
+
+			if not user:
+				return 'disconnected'
+
+			name = user.nickname()
+			
+			return name
+
+	except KeyError, err:
+		print 'error  ->  : ' ,err 
+		return '서버에서 알 수 없는 요청데이터가 있습니다.(잘못된 요청일 수도 있고요)\n'
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     """Return a custom 404 error."""

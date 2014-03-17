@@ -576,17 +576,43 @@ void CNetworkLogic::AuthenticationCheck()
 	m_Request->release();
 }
 
+void CNetworkLogic::GetGoogleNick()
+{
+    CGameManager::GetInstance()->SetCurrentLoginPhase(LP_WAITING);
+    
+    m_Request = new CCHttpRequest();
+	
+	std::string url = m_ServerAddr;
+	url.append("/get_google_nick");
+    
+	m_Request->setUrl(url.c_str() );
+	m_Request->setRequestType(CCHttpRequest::kHttpGet);
+	m_Request->setResponseCallback(m_Request, httpresponse_selector(CNetworkLogic::OnHttpRequestCompleted) );
+	
+    // write cookie
+    std::vector<std::string> headers;
+    std::string cookieHeader = "Cookie: ACSID=";
+    cookieHeader.append(CGameManager::GetInstance()->GetTokenId());
+    headers.push_back(cookieHeader);
+	m_Request->setHeaders(headers);
+    
+	m_Request->setTag("GET googleNick");
+	CCHttpClient::getInstance()->send(m_Request);
+	m_Request->release();
+}
+
 void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpResponse* response)
 {
-    if (!CGameManager::GetInstance()->IsOnlineMode())
-    {
-        return;
-    }
-    
 	if (!response)
 	{
 		return;
 	}
+    
+    if (!CGameManager::GetInstance()->IsOnlineMode()
+        && strcmp(response->getHttpRequest()->getTag(), "GET googleNick") != 0)
+    {
+        return;
+    }
     
     rapidjson::Document* gameData = CNetworkLogic::GetInstance()->GetGameData();
 
@@ -677,6 +703,11 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
             CGameManager::GetInstance()->SetCurrentLoginPhase(LP_FAIL);
         }
         // change flag status
+	}
+    else if (strcmp(response->getHttpRequest()->getTag(), "GET googleNick") == 0)
+	{
+        CGameManager::GetInstance()->SetUsersName(stringData);
+        CGameManager::GetInstance()->SetUpdateFlag(true);
 	}
 	else
 	{

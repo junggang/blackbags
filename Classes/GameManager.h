@@ -99,6 +99,7 @@ public:
     bool GetConnectionStatus() { return m_ConnectionStatus; }
     
     void AuthenticationCheck();
+    void GetGoogleNick();
 
 	void Login();
 	void Logout();

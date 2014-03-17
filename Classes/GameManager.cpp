@@ -44,9 +44,9 @@ bool CGameManager::init()
 	// ∏∏æ‡ «ˆ¿Á ¿˙¿Â µ» ∞‘¿”µ•¿Ã≈Õ∞° æ¯¿∏∏È √ ±‚∞™¿∏∑Œ º≥¡§«ÿº≠ ª˝º∫«—¥Ÿ.
 	if (!m_GameData->getBoolForKey("initialized") )
 	{
-		m_GameData->setStringForKey("tokenId", "tempToken");
+		m_GameData->setStringForKey("tokenId", "no token");
 
-		m_GameData->setStringForKey("usersName", "moon");
+		m_GameData->setStringForKey("usersName", "no name");
 
 		m_GameData->setBoolForKey("two", true);
 		m_GameData->setBoolForKey("three", true);
@@ -794,4 +794,9 @@ int CGameManager::GetPlayerFrameSelected()
 void CGameManager::AuthenticationCheck()
 {
     CNetworkLogic::GetInstance()->AuthenticationCheck();
+}
+
+void CGameManager::GetGoogleNick()
+{
+    CNetworkLogic::GetInstance()->GetGoogleNick();
 }

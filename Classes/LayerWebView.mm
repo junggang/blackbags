@@ -37,6 +37,7 @@ void LayerWebView::webViewDidFinishLoad(std::string newToken)
     // 플래그 설정을 해서 씬에서 이 레이어를 삭제하도록
     CGameManager::GetInstance()->SetCurrentLoginPhase(LP_OK);
     CGameManager::GetInstance()->SetUpdateFlag(true);
+    CGameManager::GetInstance()->GetGoogleNick();
 }
 
 void LayerWebView::close()
