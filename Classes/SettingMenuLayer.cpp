@@ -3,6 +3,7 @@
 #include "GameManager.h"
 #include "CreditScene.h"
 #include "LayerWebView.h"
+#include "TutorialScene.h"
 
 USING_NS_CC;
 
@@ -143,6 +144,9 @@ void CSettingMenuLayer::GoogleLoginCallback(CCObject* pSender)
 
 void CSettingMenuLayer::TutorialCallback( CCObject* pSender )
 {
+    CCScene* newScene = CTutorialScene::create();
+	CCDirector::sharedDirector()->pushScene( newScene );
+
 
 }
 
