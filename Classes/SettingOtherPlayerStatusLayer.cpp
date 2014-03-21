@@ -100,64 +100,9 @@ void CSettingOtherPlayerStatusLayer::update()
 
 void CSettingOtherPlayerStatusLayer::CreateStatusFrame(CCSize m_VisibleSize)
 {
-	CCMenu* playerFrameMenu = CCMenu::create(NULL, NULL);
-
-	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
-	{
-		switch ( i )
-		{
-		case PLAYER_1_TAG:
-			m_PlayerStatusFrame[i] = CCMenuItemImage::create(
-				SHARED_PLAYER_UI_BELOW_LEFT_UNSELECTED.c_str(),
-				SHARED_PLAYER_UI_BELOW_LEFT_SELECTED.c_str(),
-				this,
-				menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
-			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_ONE_STATUS_POS) );
-			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_1_TAG );
-			break;
-		case PLAYER_2_TAG:
-			m_PlayerStatusFrame[i] = CCMenuItemImage::create( 
-				SHARED_PLAYER_UI_BELOW_RIGHT_UNSELECTED.c_str(),
-				SHARED_PLAYER_UI_BELOW_RIGHT_SELECTED.c_str(),
-				this,
-				menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
-			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_TWO_STATUS_POS) );
-			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_2_TAG );
-			break;
-		case PLAYER_3_TAG:
-			m_PlayerStatusFrame[i] = CCMenuItemImage::create( 
-				SHARED_PLAYER_UI_UPPER_LEFT_UNSELECTED.c_str(),
-				SHARED_PLAYER_UI_UPPER_LEFT_SELECTED.c_str(),
-				this,
-				menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
-			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_THREE_STATUS_POS) );
-			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_3_TAG );
-			break;
-		case PLAYER_4_TAG:
-			m_PlayerStatusFrame[i] = CCMenuItemImage::create( 
-				SHARED_PLAYER_UI_UPPER_RIGHT_UNSELECTED.c_str(),
-				SHARED_PLAYER_UI_UPPER_RIGHT_SELECTED.c_str(),
-				this,
-				menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
-			m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_FOUR_STATUS_POS) );
-			m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_4_TAG );
-			break;
-		default:
-			break;
-		}
-		m_PlayerStatusFrame[i]->setAnchorPoint( ccp(0,0) );
-
-		// ∞™¿Ã ¡¶¥Î∑Œ µÈæÓø‘¿ª ∂ß∏∏ Menuø° √ﬂ∞°
-		if (m_PlayerStatusFrame[i] != nullptr)
-		{
-			playerFrameMenu->addChild( m_PlayerStatusFrame[i] );
-		}
-	}
-	// add player status Frame
-	playerFrameMenu->setAnchorPoint( ccp(0, 0) );
-	playerFrameMenu->setPosition( ccp(0, 0) );
-	this->addChild(playerFrameMenu);
-
+	
+    CreateEmptyFrame();
+    
     if ( CGameManager::GetInstance()->IsOnlineMode() )
     {
         CreateOnlineEmptyPortrait();
@@ -260,10 +205,10 @@ void CSettingOtherPlayerStatusLayer::UpdatePlayerAndCharacterPairsOffline()
 			switch (playerId)
 			{
                 case 0: // player 1 :: below left
-                    pSelectedFace = CCSprite::create( PlayerUiCharacterBelowLeft[characterId].c_str() );
+                    pSelectedFace = CCSprite::create( PlayerUiCharacterBelowLeftOffline[characterId].c_str() );
                     break;
                 case 1: // player 2 :: below right
-                    pSelectedFace = CCSprite::create( PlayerUiCharacterBelowRight[characterId].c_str() );
+                    pSelectedFace = CCSprite::create( PlayerUiCharacterBelowRightOffline[characterId].c_str() );
                     break;
                 case 2: // player 3 :: upper left
                     pSelectedFace = CCSprite::create( PlayerUiCharacterUpperLeftOffline[characterId].c_str() );
@@ -302,11 +247,11 @@ void CSettingOtherPlayerStatusLayer::CreateOfflineEmptyPortrait()
 		switch (i)
 		{
             case PLAYER_1_TAG:
-                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowLeft[4].c_str() );
+                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowLeftOffline[4].c_str() );
                 pDefaultFaceImg->setPosition( CCPoint(0, 0) );
                 break;
             case PLAYER_2_TAG:
-                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowRight[4].c_str() );
+                pDefaultFaceImg = CCSprite::create( PlayerUiCharacterBelowRightOffline[4].c_str() );
                 pDefaultFaceImg->setPosition( CCPoint(0, 0) );
                 break;
             case PLAYER_3_TAG:
@@ -381,14 +326,20 @@ void CSettingOtherPlayerStatusLayer::CreateOnlineEmptyPortrait()
 
 void CSettingOtherPlayerStatusLayer::UpdateNamesToPlayerFrame()
 {
+    // update name works online-mode only
+    if (!CGameManager::GetInstance()->IsOnlineMode())
+    {
+        return;
+    }
+    
     for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
-		// 만약 어떤 캐릭터가 선택되지 않았는데 화면에 표시되고 있다면 제거한다.
+		// 만약 어떤 캐릭터가 선택되지 않았는데 화면에 이름이 표시되고 있다면 제거한다.
 		if ( !CGameManager::GetInstance()->IsCharacterSelected(i) && (this->getChildByTag(i) != NULL) )
 		{
 			this->removeChildByTag(i);
 		}
-		// 만약 어떤 캐릭터가 선택되었는데 화면에는 표시되지 않고 있다면 추가한다.
+		// 만약 어떤 캐릭터가 선택되었는데 화면에는 이름이 표시되지 않고 있다면 추가한다.
 		else if ( CGameManager::GetInstance()->IsCharacterSelected(i) && (this->getChildByTag(i) == NULL) )
 		{
 			int playerId = CGameManager::GetInstance()->GetPlayerIdByCharactyerId(i);
@@ -398,18 +349,93 @@ void CSettingOtherPlayerStatusLayer::UpdateNamesToPlayerFrame()
 				continue;
 			}
             
-			PlayerNames[i] = CCTextFieldTTF::textFieldWithPlaceHolder(
-                                                                      CGameManager::GetInstance()->GetPlayerName( playerId ).c_str(),
-                                                                      CCSize(480,30),
-                                                                      kCCTextAlignmentCenter,
-                                                                      GAME_FONT,
-                                                                      20);
-            
+			PlayerNames[i] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(),
+                                                "Arial",
+                                                50,
+                                                CCSizeMake(400, 100), kCCTextAlignmentLeft);
 			PlayerNames[i]->setTag(i);
             
-			PlayerNames[i]->setPosition(ccp(m_VisibleSize.width / 6, m_VisibleSize.height * 0.75 - 50 * i));
-            
+            int playerNumber = CGameManager::GetInstance()->GetPlayerIdByCharactyerId(i);
+            switch(playerNumber)
+            {
+                case 0:
+                    PlayerNames[i]->setPosition( ccp( CCPoint(GAME_SETTING_PLAYER_ONE_STATUS_POS).x+300.0f, CCPoint(GAME_SETTING_PLAYER_ONE_STATUS_POS).y + 50.0f ) );
+                    break;
+                case 1:
+                    PlayerNames[i]->setPosition( ccp( CCPoint(GAME_SETTING_PLAYER_TWO_STATUS_POS).x+100.0f, CCPoint(GAME_SETTING_PLAYER_TWO_STATUS_POS).y + 50.0f ) );
+                    break;
+                case 2:
+                     PlayerNames[i]->setPosition( ccp( CCPoint(GAME_SETTING_PLAYER_THREE_STATUS_POS).x+300.0f, CCPoint(GAME_SETTING_PLAYER_THREE_STATUS_POS).y + 150.0f ) );
+                    break;
+                case 3:
+                     PlayerNames[i]->setPosition( ccp( CCPoint(GAME_SETTING_PLAYER_FOUR_STATUS_POS).x+100.0f, CCPoint(GAME_SETTING_PLAYER_FOUR_STATUS_POS).y + 150.0f ) );
+                    break;
+                default:
+                    break;
+            }
+            PlayerNames[i]->setAnchorPoint(ccp(0, 0));
 			this->addChild(PlayerNames[i], 3);
 		}
 	}
+}
+
+
+void CSettingOtherPlayerStatusLayer::CreateEmptyFrame()
+{
+    CCMenu* playerFrameMenu = CCMenu::create(NULL, NULL);
+    
+	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+	{
+		switch ( i )
+		{
+            case PLAYER_1_TAG:
+                m_PlayerStatusFrame[i] = CCMenuItemImage::create(SHARED_PLAYER_UI_BELOW_LEFT_UNSELECTED.c_str(),
+                                                                 SHARED_PLAYER_UI_BELOW_LEFT_SELECTED.c_str(),
+                                                                 this,
+                                                                 menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
+                m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_ONE_STATUS_POS) );
+                m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_1_TAG );
+                break;
+            case PLAYER_2_TAG:
+                m_PlayerStatusFrame[i] = CCMenuItemImage::create(
+                                                                 SHARED_PLAYER_UI_BELOW_RIGHT_UNSELECTED.c_str(),
+                                                                 SHARED_PLAYER_UI_BELOW_RIGHT_SELECTED.c_str(),
+                                                                 this,
+                                                                 menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
+                m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_TWO_STATUS_POS) );
+                m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_2_TAG );
+                break;
+            case PLAYER_3_TAG:
+                m_PlayerStatusFrame[i] = CCMenuItemImage::create(
+                                                                 SHARED_PLAYER_UI_UPPER_LEFT_UNSELECTED.c_str(),
+                                                                 SHARED_PLAYER_UI_UPPER_LEFT_SELECTED.c_str(),
+                                                                 this,
+                                                                 menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
+                m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_THREE_STATUS_POS) );
+                m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_3_TAG );
+                break;
+            case PLAYER_4_TAG:
+                m_PlayerStatusFrame[i] = CCMenuItemImage::create( 
+                                                                 SHARED_PLAYER_UI_UPPER_RIGHT_UNSELECTED.c_str(),
+                                                                 SHARED_PLAYER_UI_UPPER_RIGHT_SELECTED.c_str(),
+                                                                 this,
+                                                                 menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
+                m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_FOUR_STATUS_POS) );
+                m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_4_TAG );
+                break;
+            default:
+                break;
+		}
+		m_PlayerStatusFrame[i]->setAnchorPoint( ccp(0,0) );
+        
+		// ∞™¿Ã ¡¶¥Î∑Œ µÈæÓø‘¿ª ∂ß∏∏ Menuø° √ﬂ∞°
+		if (m_PlayerStatusFrame[i] != nullptr)
+		{
+			playerFrameMenu->addChild( m_PlayerStatusFrame[i] );
+		}
+	}
+	// add player status Frame
+	playerFrameMenu->setAnchorPoint( ccp(0, 0) );
+	playerFrameMenu->setPosition( ccp(0, 0) );
+	this->addChild(playerFrameMenu);
 }
