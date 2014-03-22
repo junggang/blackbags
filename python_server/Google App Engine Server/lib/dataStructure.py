@@ -305,7 +305,7 @@ class GameData:
 				return False
 
 			# 플레이 레디를 기다리는 상황 - 감소된 인원을 기준으로 다음 턴을 시작할 수 있는지 확인
-			if getWaitingReadyFlag() and self.isAllReady():
+			if self.getWaitingReadyFlag() and self.isAllReady():
 				self.startTurn()
 
 			if self.getCurrentTurnId() == playerIdx:

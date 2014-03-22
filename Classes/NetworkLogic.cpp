@@ -578,7 +578,7 @@ void CNetworkLogic::AuthenticationCheck()
 
 void CNetworkLogic::GetGoogleNick()
 {
-    CGameManager::GetInstance()->SetCurrentLoginPhase(LP_WAITING);
+    // CGameManager::GetInstance()->SetCurrentLoginPhase(LP_WAITING);
     
     m_Request = new CCHttpRequest();
 	

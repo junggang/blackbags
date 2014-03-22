@@ -24,11 +24,13 @@ bool CDisconnectedLayer::init()
 	/////////////////////////////
 	// 2. add a background image
     
-	// disconnected message - 나중에 이미지 바꿔
-	CCSprite* pTextAnimation = CCSprite::create(CREDIT_MEMBER_IMAGE);
-	pTextAnimation->setAnchorPoint(ccp(0, 0) );
-	pTextAnimation->setPosition(CCPoint(CREDIT_MEMBER_POSITION) );
-	addChild(pTextAnimation, 0);
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+
+    CCLabelTTF* pName = nullptr;
+    pName = CCLabelTTF::create("disconnected", GAME_FONT, 82 );
+    pName->setColor(ccc3(43, 46, 46));
+    pName->setPosition(ccp(visibleSize.width / 2, visibleSize.height / 2));
+    addChild(pName, 1);
     
 	// mainmenu button part
 	CCMenuItemImage *pMainScene = CCMenuItemImage::create(

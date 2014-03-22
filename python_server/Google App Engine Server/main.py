@@ -163,7 +163,10 @@ def getGameData(channelId):
 
 def checkPlayerConnection(channelId, gameData):
 	tableName = channelId + ' table'
-	playerTable = json.loads(memcache.get(tableName))
+	jsonData = memcache.get(tableName)
+
+	if jsonData is not None: 
+		playerTable = json.loads(jsonData)
 
 	idx = 0
 	for each in playerTable:
@@ -171,8 +174,11 @@ def checkPlayerConnection(channelId, gameData):
 			if not gameData.removePlayer(idx):
 				memcache.delete(channelId, 0)
 				memcache.delete(tableName, 0)
+				return False
 
 		idx += 1
+
+	return True
 
 
 def SCSelectCharacter(tokenId, characterId):
@@ -336,19 +342,6 @@ def PCDrawLine(tokenId, lineIdx):
 	if gameData.getWaitingReadyFlag():
 		return 'not updated'
 
-	currentTime = time.time()
-	if currentTime - gameData.getTurnStartTime() > 21:
-		# 랜덤으로 긋기
-		while True:
-			randomIdx = gameData.makeRandomLine()
-			if gameData.drawLine(randomIdx[0], randomIdx[1]):
-				gameData.setPlayerUpdateFlag(playerId, False)
-
-				jsonData = json.dumps(gameData.data)
-				memcache.set(channelId, jsonData, gameDataTTL)
-
-				return jsonData
-
 	if gameData.getCurrentTurnId() == playerId:
 		# 입력한 좌표로 긋기
 		if gameData.drawLine(lineIdx[0], lineIdx[1]):
@@ -379,7 +372,9 @@ def PCPlayUpdate(tokenId):
 	if gameData is None:
 		return 'disconnected'
 
-	checkPlayerConnection(channelId, gameData)
+	# 그냥 혼자 남으면 무조건 방폭 시키자 
+	if not checkPlayerConnection(channelId, gameData):
+		return 'disconnected'
 
 	# 만약 지금이 플레이 씬이라면 아래 조건 수행 
 	if gameData.getScene() == 3: # SC_PLAY
