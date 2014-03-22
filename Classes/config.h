@@ -437,7 +437,7 @@ const std::string ResultTrashImage[3] =
 #define RESULT_TRASH_COUNT_X_MARGIN 414
 
 /*	setting scene */
-const std::string SETTING_TITLE = "image/SETTING_title.png";
+const std::string SETTING_TITLE = "image/setting_title.png";
 #define SETTING_TITLE_POS 1390
 
 const std::string SETTING_BG = "image/setting_menu_background.png";
@@ -553,6 +553,14 @@ const std::string PlayerUiCharacterBelowLeft[5] =
 	"image/shared_player_empty_03.png"
 };
 
+const std::string PlayerUiCharacterBelowLeftOffline[5] =
+{
+	"image/shared_player_character01_03_off.png",
+	"image/shared_player_character02_03_off.png",
+	"image/shared_player_character03_03_off.png",
+	"image/shared_player_character04_03_off.png",
+	"image/shared_player_empty_03.png"
+};
 
 const std::string PlayerUiCharacterBelowRight[5] =
 {
@@ -563,6 +571,14 @@ const std::string PlayerUiCharacterBelowRight[5] =
 	"image/shared_player_empty_04.png"
 };
 
+const std::string PlayerUiCharacterBelowRightOffline[5] =
+{
+	"image/shared_player_character01_04_off.png",
+	"image/shared_player_character02_04_off.png",
+	"image/shared_player_character03_04_off.png",
+	"image/shared_player_character04_04_off.png",
+	"image/shared_player_empty_04.png"
+};
 
 const std::string SHARED_PLAYERUI_CHARACTERS[16] =
 {

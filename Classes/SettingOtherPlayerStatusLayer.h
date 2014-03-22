@@ -15,6 +15,7 @@ public:
 private:
 	void CreateStatusFrame(cocos2d::CCSize m_VisibleSize);
     
+    void CreateEmptyFrame();
     void CreateOnlineEmptyPortrait();
     void CreateOfflineEmptyPortrait();
     
@@ -26,7 +27,7 @@ private:
 	void PlayerActivateCallBack( CCObject* pSender );
 
 	cocos2d::CCSize m_VisibleSize;
-	cocos2d::CCTextFieldTTF *PlayerNames[MAX_PLAYER_NUM];
+	cocos2d::CCLabelTTF *PlayerNames[MAX_PLAYER_NUM];
 	cocos2d::CCMenuItemImage* m_PlayerStatusFrame[MAX_PLAYER_NUM];
 
 };
