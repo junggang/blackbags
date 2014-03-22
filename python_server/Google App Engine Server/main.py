@@ -309,9 +309,10 @@ def PCReady(tokenId):
 	# 일단 레디 상태 변경 
 	gameData.changeReadyFlag(playerId)
 
-	# 모두 레디 상태이면 다음 턴 시작
-	if gameData.isAllReady():
-		gameData.startTurn()
+	if gameData.getWaitingReadyFlag():
+		# 모두 레디 상태이면 다음 턴 시작
+		if gameData.isAllReady():
+			gameData.startTurn()
 
 	# request를 보낸 클라이언트는 바로 응답을 받으므로 update flag를 false로 바꿔준다
 	gameData.setUpdateFlag()
@@ -379,7 +380,9 @@ def PCPlayUpdate(tokenId):
 	# 만약 지금이 플레이 씬이라면 아래 조건 수행 
 	if gameData.getScene() == 3: # SC_PLAY
 		currentTime = time.time()
-		if currentTime - gameData.getTurnStartTime() > 21:
+		if (time.time() - gameData.getTurnStartTime() ) > 21:
+			# 여기에 안 들어 온다!!!!
+
 			# 랜덤으로 긋기
 			randomIdx = gameData.makeRandomLine()
 			if gameData.drawLine(randomIdx[0], randomIdx[1]):
