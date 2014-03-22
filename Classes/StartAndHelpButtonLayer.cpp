@@ -99,39 +99,23 @@ void CStartAndHelpButtonLayer::update()
 	// Online Condition
 	if ( CGameManager::GetInstance()->IsOnlineMode() )
 	{
-        // game master
-		if ( CGameManager::GetInstance()->IsChannelMaster() )
-		{
-			if (CGameManager::GetInstance()->IsAllReady() )
-			{
-				m_StartButton->setEnabled(true);
-			}
-			else
-			{
-				m_StartButton->setEnabled(false);
-			}
-		}
-        // just player
-		else
-		{
-			if ( CGameManager::GetInstance()->IsReady() )
-			{
-				m_StartButton->selected();
-			}
-			else
-			{
-				m_StartButton->unselected();
-			}
+        if ( CGameManager::GetInstance()->IsReady() )
+        {
+            m_StartButton->selected();
+        }
+        else
+        {
+            m_StartButton->unselected();
+        }
 
-			if (CGameManager::GetInstance()->GetCharacterIdByPlayerId( CGameManager::GetInstance()->GetMyPlayerId() ) != -1 )
-			{
-				m_StartButton->setEnabled(true);
-			}
-			else
-			{
-				m_StartButton->setEnabled(false);
-			}
-		}
+        if ( CGameManager::GetInstance()->GetCharacterIdByPlayerId( CGameManager::GetInstance()->GetMyPlayerId() ) != -1 )
+        {
+            m_StartButton->setEnabled(true);
+        }
+        else
+        {
+            m_StartButton->setEnabled(false);
+        }
 	}
 
 	// Single :: StartButton Condition
