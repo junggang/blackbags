@@ -108,7 +108,8 @@ const std::string& CNetworkLogic::GetPlayerName(int playerIdx)
 
 int CNetworkLogic::GetCurrentPlayerNumber()
 {
-	return (*m_NetworkGameData)[SizeType(GD_PLAYER_NUMBER)].GetInt();
+	// return (*m_NetworkGameData)[SizeType(GD_PLAYER_NUMBER)].GetInt();
+    return (*m_NetworkGameData)[SizeType(GD_TURN_LIST)].Size();
 }
 
 int CNetworkLogic::GetPlayerResult(int playerIdx, MO_ITEM item)

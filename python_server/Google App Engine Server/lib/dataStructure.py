@@ -182,7 +182,7 @@ class GameData:
 			[],				# GD_PLAYER_LIST
 			[0, 0],			# GD_MAP_SIZE
 			[],				# GD_MAP
-			time,	# GD_TURN_START_TIME
+			time,			# GD_TURN_START_TIME
 			False			# GD_WAITING_READY
 		]
 
@@ -641,7 +641,10 @@ class GameData:
 		if not self.isPossible(idxI, idxJ):
 			return False
 
-		self.setWaitingReadyFlag(True)
+		if self.data[GD_WAITING_READY]:
+			return False
+		else:
+			self.setWaitingReadyFlag(True)
 
 		self.data[GD_RECENTLY_CONNECTED_LINE][0] = idxI
 		self.data[GD_RECENTLY_CONNECTED_LINE][1] = idxJ

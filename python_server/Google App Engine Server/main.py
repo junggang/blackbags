@@ -381,16 +381,15 @@ def PCPlayUpdate(tokenId):
 		currentTime = time.time()
 		if currentTime - gameData.getTurnStartTime() > 21:
 			# 랜덤으로 긋기
-			while True:
-				randomIdx = gameData.makeRandomLine()
-				if gameData.drawLine(randomIdx[0], randomIdx[1]):
-					gameData.setPlayerUpdateFlag(playerId, False)
+			randomIdx = gameData.makeRandomLine()
+			if gameData.drawLine(randomIdx[0], randomIdx[1]):
+				gameData.setPlayerUpdateFlag(playerId, False)
 
-					jsonData = json.dumps(gameData.data)
-					memcache.set(channelId, jsonData, gameDataTTL)
+				jsonData = json.dumps(gameData.data)
+				memcache.set(channelId, jsonData, gameDataTTL)
 
-					return jsonData
-
+				return jsonData
+				
 	# client가 확인해야 하는 업데이트 내용이 있는지 확인 
 	if gameData.getPlayerUpdateFlag(playerId):
 		gameData.setPlayerUpdateFlag(playerId, False)
