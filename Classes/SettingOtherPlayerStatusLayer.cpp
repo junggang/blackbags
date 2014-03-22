@@ -7,6 +7,7 @@ const int PLAYER_FRAME_2_TAG = 200;
 const int PLAYER_FRAME_3_TAG = 300;
 const int PLAYER_FRAME_4_TAG = 400;
 
+const int PLAYER_READYSTATE_TAG = 1000;
 
 enum PLAYER_TAG
 {
@@ -47,6 +48,7 @@ void CSettingOtherPlayerStatusLayer::update()
 {
     // online mode only
     UpdateNamesToPlayerFrame();
+    UpdateReadyStateToPlayerFrame();
     
     // update status frames if select characters
     if ( CGameManager::GetInstance()->IsOnlineMode() )
@@ -389,14 +391,27 @@ void CSettingOtherPlayerStatusLayer::CreateEmptyFrame()
 		switch ( i )
 		{
             case PLAYER_1_TAG:
+            {
                 m_PlayerStatusFrame[i] = CCMenuItemImage::create(SHARED_PLAYER_UI_BELOW_LEFT_UNSELECTED.c_str(),
                                                                  SHARED_PLAYER_UI_BELOW_LEFT_SELECTED.c_str(),
                                                                  this,
                                                                  menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
                 m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_ONE_STATUS_POS) );
+                
                 m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_1_TAG );
+                
+                // create ready state button (Multiplay Only)
+                CCSprite* readyStateImg = CCSprite::create( GAME_SETTING_PLAYER_READY_STATE_LEFT.c_str() );
+                readyStateImg->setAnchorPoint( ccp(0,0) );
+                readyStateImg->setTag(READY_STATE_TAG);
+                m_PlayerStatusFrame[i]->addChild(readyStateImg);
+                
+                // ready state img == invisible when initialized
+                readyStateImg->setVisible(false);
                 break;
+            }
             case PLAYER_2_TAG:
+            {
                 m_PlayerStatusFrame[i] = CCMenuItemImage::create(
                                                                  SHARED_PLAYER_UI_BELOW_RIGHT_UNSELECTED.c_str(),
                                                                  SHARED_PLAYER_UI_BELOW_RIGHT_SELECTED.c_str(),
@@ -404,8 +419,19 @@ void CSettingOtherPlayerStatusLayer::CreateEmptyFrame()
                                                                  menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
                 m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_TWO_STATUS_POS) );
                 m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_2_TAG );
+                
+                // create ready state button (Multiplay Only)
+                CCSprite* readyStateImg = CCSprite::create( GAME_SETTING_PLAYER_READY_STATE_RIGHT.c_str() );
+                readyStateImg->setAnchorPoint( ccp(0,0) );
+                readyStateImg->setTag(READY_STATE_TAG);
+                m_PlayerStatusFrame[i]->addChild(readyStateImg);
+                
+                // ready state img == invisible when initialized
+                readyStateImg->setVisible(false);
                 break;
+            }
             case PLAYER_3_TAG:
+            {
                 m_PlayerStatusFrame[i] = CCMenuItemImage::create(
                                                                  SHARED_PLAYER_UI_UPPER_LEFT_UNSELECTED.c_str(),
                                                                  SHARED_PLAYER_UI_UPPER_LEFT_SELECTED.c_str(),
@@ -413,16 +439,39 @@ void CSettingOtherPlayerStatusLayer::CreateEmptyFrame()
                                                                  menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
                 m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_THREE_STATUS_POS) );
                 m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_3_TAG );
+                
+                // create ready state button (Multiplay Only)
+                CCSprite* readyStateImg = CCSprite::create( GAME_SETTING_PLAYER_READY_STATE_LEFT.c_str() );
+                readyStateImg->setAnchorPoint( ccp(0,0) );
+                readyStateImg->setPosition(ccp(0, 100));
+                readyStateImg->setTag(READY_STATE_TAG);
+                m_PlayerStatusFrame[i]->addChild(readyStateImg);
+                
+                // ready state img == invisible when initialized
+                readyStateImg->setVisible(false);
                 break;
+            }
             case PLAYER_4_TAG:
-                m_PlayerStatusFrame[i] = CCMenuItemImage::create( 
+            {
+                m_PlayerStatusFrame[i] = CCMenuItemImage::create(
                                                                  SHARED_PLAYER_UI_UPPER_RIGHT_UNSELECTED.c_str(),
                                                                  SHARED_PLAYER_UI_UPPER_RIGHT_SELECTED.c_str(),
                                                                  this,
                                                                  menu_selector( CSettingOtherPlayerStatusLayer::PlayerActivateCallBack) );
                 m_PlayerStatusFrame[i]->setPosition( CCPoint(GAME_SETTING_PLAYER_FOUR_STATUS_POS) );
                 m_PlayerStatusFrame[i]->setTag( PLAYER_FRAME_4_TAG );
+                
+                // create ready state button (Multiplay Only)
+                CCSprite* readyStateImg = CCSprite::create( GAME_SETTING_PLAYER_READY_STATE_RIGHT.c_str() );
+                readyStateImg->setAnchorPoint( ccp(0,0) );
+                readyStateImg->setPosition(ccp(0, 100));
+                readyStateImg->setTag(READY_STATE_TAG);
+                m_PlayerStatusFrame[i]->addChild(readyStateImg);
+                
+                // ready state img == invisible when initialized
+                readyStateImg->setVisible(false);
                 break;
+            }
             default:
                 break;
 		}
@@ -443,5 +492,28 @@ void CSettingOtherPlayerStatusLayer::CreateEmptyFrame()
 
 void CSettingOtherPlayerStatusLayer::UpdateReadyStateToPlayerFrame()
 {
-   
+    if (!CGameManager::GetInstance()->IsOnlineMode())
+    {
+        return;
+    }
+    
+    for (int i = 0; i < MAX_PLAYER_NUM; ++i)
+    {
+        CCSprite* ready = (CCSprite*)m_PlayerStatusFrame[i]->getChildByTag(READY_STATE_TAG);
+        // if player i is ready, show ready image
+        if (CGameManager::GetInstance()->IsReady(i))
+        {
+            if (ready != nullptr)
+            {
+                ready->setVisible(true);
+            }
+        }
+        else
+        {
+            if (ready != nullptr)
+            {
+                ready->setVisible(false);
+            }
+        }
+    }
 }
