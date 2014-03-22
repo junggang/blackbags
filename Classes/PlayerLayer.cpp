@@ -45,7 +45,7 @@ bool CPlayerLayer::init()
 			m_Player[playerId] = CCSprite::create(SHARED_PLAYERUI_CHARACTERS[4*position+characterId].c_str());
 			
 			//이름을 돌려줘야한다. config에 추가할 것.
-			m_PlayerName[playerId] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(), "Arial", 50, 
+			m_PlayerName[playerId] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(), GAME_FONT, 50,
 				CCSizeMake(400, 100), kCCTextAlignmentLeft);
 			m_PlayerName[playerId]->setAnchorPoint(ccp(0,0));
 			switch (position)

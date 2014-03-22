@@ -23,6 +23,7 @@ private:
     void UpdatePlayerAndCharacterPairsOffline();
     
     void UpdateNamesToPlayerFrame();
+    void UpdateReadyStateToPlayerFrame();
 
 	void PlayerActivateCallBack( CCObject* pSender );
 

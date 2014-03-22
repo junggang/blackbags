@@ -329,7 +329,7 @@ void CSettingOtherPlayerStatusLayer::UpdateNamesToPlayerFrame()
     // update name works online-mode only
     if (!CGameManager::GetInstance()->IsOnlineMode())
     {
-        return;
+        //return;
     }
     
     for (int i = 0; i < MAX_PLAYER_NUM; ++i)
@@ -350,7 +350,7 @@ void CSettingOtherPlayerStatusLayer::UpdateNamesToPlayerFrame()
 			}
             
 			PlayerNames[i] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(),
-                                                "Arial",
+                                                GAME_FONT,
                                                 50,
                                                 CCSizeMake(400, 100), kCCTextAlignmentLeft);
 			PlayerNames[i]->setTag(i);
@@ -438,4 +438,10 @@ void CSettingOtherPlayerStatusLayer::CreateEmptyFrame()
 	playerFrameMenu->setAnchorPoint( ccp(0, 0) );
 	playerFrameMenu->setPosition( ccp(0, 0) );
 	this->addChild(playerFrameMenu);
+}
+
+
+void CSettingOtherPlayerStatusLayer::UpdateReadyStateToPlayerFrame()
+{
+   
 }
