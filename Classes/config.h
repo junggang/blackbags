@@ -466,6 +466,40 @@ const std::string SETTING_CONTROLLER = "image/setting_sound_controller.png";
 #define SETTING_MUSIC_BAR_POS 1153,803
 #define SETTING_SOUND_BAR_POS 1153,660
 
+/* tutorial scene */
+const std::string TUTORIAL_TITLE = "image/tutorial_title.png";
+#define TUTORIAL_TITLE_POS 794,1317
+const std::string TUTORIAL_BOARD = "image/tutorial_board.png";
+const std::string TUTORIAL_TURN = "image/tutorial_cindy.png";
+const std::string TUTORIAL_TIMER = "image/tutorial_timer.png";
+const std::string TUTORIAL_TEXT_DRAW0 = "image/tutorial_text_draw0.png";
+const std::string TUTORIAL_TEXT_DRAW1 = "image/tutorial_text_draw1.png";
+const std::string TUTORIAL_TEXT_MENU = "image/tutorial_text_menu.png";
+const std::string TUTORIAL_TEXT_SCORE0 = "image/tutorial_text_score0.png";
+const std::string TUTORIAL_TEXT_SCORE1 = "image/tutorial_text_score1.png";
+const std::string TUTORIAL_TEXT_SCORE2 = "image/tutorial_text_score2.png";
+const std::string TUTORIAL_TEXT_SCORE3 = "image/tutorial_text_score3.png";
+const std::string TUTORIAL_TEXT_TIMER0 = "image/tutorial_text_timer0.png";
+const std::string TUTORIAL_TEXT_TIMER1 = "image/tutorial_text_timer1.png";
+#define TUTORIAL_BOARD_POS 324,276
+#define TUTORIAL_TURN_POS 1402,519
+#define TUTORIAL_TIMER_POS 859,1074
+#define TUTORIAL_TEXT_TIMER_POS 1142,1134
+#define TUTORIAL_TEXT_DRAW_POS 283,826
+#define TUTORIAL_TEXT_SCORE_POS 1260,723
+#define TUTORIAL_TEXT_MENU_POS 496,422
+#define TUTORIAL_TURN_POS 1402,519
+#define TUTORIAL_DRAW_ANIMATION_POS 856,643
+
+const std::string TUTORIAL_ANI_TIMER = "image/tutorial_animation_timer.png";
+const std::string TUTORIAL_ANI_TIMER_PLIST = "image/tutorial_animation_timer.plist";
+const std::string TUTORIAL_ANI_DRAW = "image/tutorial_ani_draw.png";
+const std::string TUTORIAL_ANI_DRAW_PLIST = "image/tutorial_ani_draw.plist";
+const std::string TUTORIAL_ANI_LAND = "image/tutorial_animation_land.png";
+const std::string TUTORIAL_ANI_LAND_PLIST = "image/tutorial_animation_land.plist";
+
+
+
 // troubleshooting layer
 #define TROUBLESHOOTING_BACKGROUND_IMAGE "image/login_troubleshooting.png"
 #define TROUBLESHOOTING_BACKGROUND_POS 555,248

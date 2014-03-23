@@ -221,6 +221,7 @@
 		379BB9D417F03F3700829B88 /* SceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379BB99317F03F3700829B88 /* SceneReader.cpp */; };
 		46513EB1187BFBA200B5ABE1 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46513EAF187BFBA200B5ABE1 /* UITouchGroup.cpp */; };
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
+		AF37D14518DF2A150018FE15 /* TutorialBoardLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF37D14318DF2A150018FE15 /* TutorialBoardLayer.cpp */; };
 		AF46EB4718ADE85B00AEDC11 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF46EB4618ADE85B00AEDC11 /* libcurl.a */; };
 		AF46EB4F18ADF81000AEDC11 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4C18ADF81000AEDC11 /* fonts */; };
 		AF46EB5018ADF81000AEDC11 /* image in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4D18ADF81000AEDC11 /* image */; };
@@ -760,6 +761,8 @@
 		46513EAF187BFBA200B5ABE1 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
 		46513EB0187BFBA200B5ABE1 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
+		AF37D14318DF2A150018FE15 /* TutorialBoardLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialBoardLayer.cpp; sourceTree = "<group>"; };
+		AF37D14418DF2A150018FE15 /* TutorialBoardLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBoardLayer.h; sourceTree = "<group>"; };
 		AF46EB4618ADE85B00AEDC11 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		AF46EB4C18ADF81000AEDC11 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		AF46EB4D18ADF81000AEDC11 /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = image; sourceTree = "<group>"; };
@@ -2012,6 +2015,8 @@
 				E7F5194518C49C7B002530DC /* WaitingChannelId.h */,
 				E7CD626518C8A54F005F6E88 /* DisconnectedLayer.cpp */,
 				E7CD626618C8A54F005F6E88 /* DisconnectedLayer.h */,
+				AF37D14318DF2A150018FE15 /* TutorialBoardLayer.cpp */,
+				AF37D14418DF2A150018FE15 /* TutorialBoardLayer.h */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -2186,6 +2191,7 @@
 				15A3D9A01682F7F9002FB0C5 /* cpSimpleMotor.c in Sources */,
 				15A3D9A11682F7F9002FB0C5 /* cpSlideJoint.c in Sources */,
 				E7F5194A18C49C7B002530DC /* CMO_dot.cpp in Sources */,
+				AF37D14518DF2A150018FE15 /* TutorialBoardLayer.cpp in Sources */,
 				15A3D9A21682F7F9002FB0C5 /* cpArbiter.c in Sources */,
 				15A3D9A31682F7F9002FB0C5 /* cpArray.c in Sources */,
 				15A3D9A41682F7F9002FB0C5 /* cpBB.c in Sources */,

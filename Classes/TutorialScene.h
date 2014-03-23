@@ -11,6 +11,8 @@ public:
     CREATE_FUNC(CTutorialScene);
     
 	void SettingSceneCallback(CCObject* pSender);
+
     
 private:
+    int m_clickedNum;
 };
