@@ -76,6 +76,7 @@ void CTutorialBoardLayer::ShowNextAnimation(int num)
         case 2:
         {
             removeChildByTag(1);
+            removeChildByTag(9);
             CCSprite* text_draw0 = CCSprite::create(TUTORIAL_TEXT_DRAW0.c_str());
             text_draw0->setAnchorPoint(ccp(0,0));
             text_draw0->setPosition(CCPoint(TUTORIAL_TEXT_DRAW_POS));
@@ -89,6 +90,7 @@ void CTutorialBoardLayer::ShowNextAnimation(int num)
         case 3:
         {
             removeChildByTag(2);
+            removeChildByTag(10);
             CCSprite* text_draw1 = CCSprite::create(TUTORIAL_TEXT_DRAW1.c_str());
             text_draw1->setAnchorPoint(ccp(0,0));
             text_draw1->setPosition(CCPoint(TUTORIAL_TEXT_DRAW_POS));
@@ -158,6 +160,10 @@ void CTutorialBoardLayer::ShowNextAnimation(int num)
 
 void CTutorialBoardLayer::ShowTimerAnimation()
 {
+    //
+    CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(TUTORIAL_ANI_TIMER.c_str());
+    //
+    
     CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
     cache->addSpriteFramesWithFile(TUTORIAL_ANI_TIMER_PLIST.c_str());
     
@@ -175,9 +181,11 @@ void CTutorialBoardLayer::ShowTimerAnimation()
     CCSprite *pTimer = CCSprite::createWithSpriteFrameName("tutorial_ani_timer_00001.png");
     pTimer->setPosition( CCPoint(TUTORIAL_TIMER_POS) );
     pTimer->setAnchorPoint(ccp(0,0));
-    addChild(pTimer,3);
+    spritebatch->addChild(pTimer);
+    spritebatch->setTag(9);
+    addChild(spritebatch,3);
     
-    CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames);
+    CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,0.3f);
     //CCAction* myTimer = CCAnimate::create(animation);
     
     CCRepeatForever* repeatAction = CCRepeatForever::create(CCAnimate::create(animation));
@@ -187,9 +195,69 @@ void CTutorialBoardLayer::ShowTimerAnimation()
 }
 void CTutorialBoardLayer::ShowDrawAnimation()
 {
+    //
+    CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(TUTORIAL_ANI_DRAW.c_str());
+    //
     
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile(TUTORIAL_ANI_DRAW_PLIST.c_str());
+    
+    
+    CCArray* animFrames = CCArray::createWithCapacity(60);
+    
+    char str[100] = {0};
+    for(int i = 1; i < 61; i++)
+    {
+        sprintf(str, "tutorial_animation_draw_000%02d.png", i);
+        CCSpriteFrame* frame = cache->spriteFrameByName( str );
+        animFrames->addObject(frame);
+    }
+    
+    CCSprite *pElement = CCSprite::createWithSpriteFrameName("tutorial_animation_draw_00001.png");
+    pElement->setPosition( CCPoint(TUTORIAL_DRAW_ANIMATION_POS) );
+    pElement->setAnchorPoint(ccp(0,0));
+    spritebatch->addChild(pElement);
+    spritebatch->setTag(10);
+    addChild(spritebatch,3);
+    
+    CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,0.1f);
+    //CCAction* myTimer = CCAnimate::create(animation);
+    
+    CCRepeatForever* repeatAction = CCRepeatForever::create(CCAnimate::create(animation));
+    
+    pElement->runAction(repeatAction);
 }
 void CTutorialBoardLayer::ShowLandAnimation()
 {
+    //
+    CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(TUTORIAL_ANI_LAND.c_str());
+    //
     
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile(TUTORIAL_ANI_LAND_PLIST.c_str());
+    
+    
+    CCArray* animFrames = CCArray::createWithCapacity(26);
+    
+    char str[100] = {0};
+    for(int i = 1; i < 27; i++)
+    {
+        sprintf(str, "tutorial_animation_land_000%02d.png", i);
+        CCSpriteFrame* frame = cache->spriteFrameByName( str );
+        animFrames->addObject(frame);
+    }
+    
+    CCSprite *pElement = CCSprite::createWithSpriteFrameName("tutorial_animation_land_00001.png");
+    pElement->setPosition( CCPoint(TUTORIAL_DRAW_ANIMATION_POS) );
+    pElement->setAnchorPoint(ccp(0,0));
+    spritebatch->addChild(pElement);
+    spritebatch->setTag(11);
+    addChild(spritebatch,3);
+    
+    CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,0.1f);
+    //CCAction* myTimer = CCAnimate::create(animation);
+    
+    CCAction* repeatAction = CCAnimate::create(animation);
+    
+    pElement->runAction(repeatAction);
 }

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/TutorialBoardLayer.cpp"
-            timestampString = "417279930.139637"
+            timestampString = "417282376.49577"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "CTutorialBoardLayer::ShowTimerAnimation()"
             landmarkType = "5">
          </BreakpointContent>
