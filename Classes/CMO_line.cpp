@@ -113,6 +113,7 @@ void CMO_line::setImage(IndexedPosition indexedPosition)
 
 void CMO_line::update( float delta )
 {
+    /*
 	//CCLog("Line updated");
 	//현재 타일 소유를 물어보고 업데이트
 	if (!m_Connected && CGameManager::GetInstance()->IsConnected(m_Index) == MO_LINE_CONNECTED)
@@ -152,7 +153,57 @@ void CMO_line::update( float delta )
 			CCCallFunc::create(this, callfunc_selector(CMO_line::changeImage)), NULL);
 
 		pLine->runAction(pAction);
-	} 
+	}
+    */
+    
+    
+    //////////
+    if (!m_Connected && CGameManager::GetInstance()->IsConnected(m_Index) == MO_LINE_CONNECTED)
+	{
+		m_Connected = true;
+        
+        CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(LineAnimationFileList[m_ImageFileIdx % 2].c_str());
+        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        cache->addSpriteFramesWithFile(LineAnimationFileListPlist[m_ImageFileIdx % 2].c_str());
+        
+        
+        CCArray* animFrames = CCArray::createWithCapacity(48);
+        
+        char str[100] = {0};
+        for(int i = 1; i < 49; i++)
+        {
+            if(m_ImageFileIdx % 2==0)
+            {
+                sprintf(str, "ani_playscene_line_recent_v_000%02d.png", i);
+            }
+            else
+            {
+                sprintf(str, "ani_playscene_line_recent_000%02d.png", i);
+            }
+            
+            CCSpriteFrame* frame = cache->spriteFrameByName( str );
+            animFrames->addObject(frame);
+        }
+        
+        if(m_ImageFileIdx % 2==0)
+        {
+            pLine = CCSprite::createWithSpriteFrameName("ani_playscene_line_recent_v_00001.png");
+            pLine->setAnchorPoint(ccp(1,0));
+        }
+        else
+        {
+            pLine = CCSprite::createWithSpriteFrameName("ani_playscene_line_recent_00001.png");
+            pLine->setAnchorPoint(ccp(0,0));
+        }
+        
+        spritebatch->addChild(pLine);
+        addChild(spritebatch,2);
+        
+        CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,0.2f);
+        CCAction* myLine = CCAnimate::create(animation);
+        pLine->runAction(myLine);
+    }
+    
 }
 
 void CMO_line::setAnchorPoint()

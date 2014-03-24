@@ -261,6 +261,20 @@ const std::string lineImageFileList[5] =
 	"image/playscene_line_recent.png"
 };
 
+const std::string LineAnimationFileList[2] =
+{
+    "image/ani_playscene_line_recent_v.png",
+    "image/ani_playscene_line_recent.png"
+};
+
+const std::string LineAnimationFileListPlist[2] =
+{
+    "image/ani_playscene_line_recent_v.plist",
+    "image/ani_playscene_line_recent.plist"
+};
+
+
+
 const std::string TileImageFileList[5] =
 	{
 		"image/playscene_land_occupied.png",
@@ -673,6 +687,30 @@ const std::string SHARED_PLAYERUI_BACKGROUND[8] =
 	"image/shared_playerui_bg_selected03.png",
 	"image/shared_playerui_bg_selected04.png",
 };
+
+/*added animation*/
+
+const std::string PLAYSCENE_LAND_ANI[4] =
+{
+    "image/PLAYSCENE_ani_land_1.png",
+    "image/PLAYSCENE_ani_land_2.png",
+    "image/PLAYSCENE_ani_land_3.png",
+    "image/PLAYSCENE_ani_land_4.png"
+};
+
+const int PLAYSCENE_LAND_FRAME = 48;
+
+const std::string PLAYSCENE_LAND_ANI_PLIST[4] =
+{
+    "image/PLAYSCENE_ani_land_1.plist",
+    "image/PLAYSCENE_ani_land_2.plist",
+    "image/PLAYSCENE_ani_land_3.plist",
+    "image/PLAYSCENE_ani_land_4.plist"
+};
+
+
+
+
 
 const std::string SHARED_BTN_HOME = "image/shared_icon_home.png";
 const std::string SHARED_BTN_BACK = "image/shared_backButton.png";

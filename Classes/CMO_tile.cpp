@@ -88,7 +88,7 @@ void CMO_tile::setImage(IndexedPosition indexedPosition)
 
 void CMO_tile::update( float delta )
 {
-    //현재 타일 소유를 물어보고 업데이트
+    /*
 	MO_OWNER tempOwner = CGameManager::GetInstance()->GetMapOwner(m_Index);
 	if (tempOwner != m_Owner)
 	{
@@ -120,6 +120,62 @@ void CMO_tile::update( float delta )
 		pTile->setAnchorPoint(ccp(0,0.5f));
 		pTile->runAction(actions);
 	}
+     */
+    
+    
+    MO_OWNER tempOwner = CGameManager::GetInstance()->GetMapOwner(m_Index);
+	if (tempOwner != m_Owner)
+	{
+		m_Owner = tempOwner;
+        int characterId = CGameManager::GetInstance()->GetCharacterIdByPlayerId(m_Owner);
+        
+        //
+        CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(PLAYSCENE_LAND_ANI[characterId].c_str());
+        //
+        
+        CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        cache->addSpriteFramesWithFile(PLAYSCENE_LAND_ANI_PLIST[characterId].c_str());
+        
+        
+        CCArray* animFrames = CCArray::createWithCapacity(PLAYSCENE_LAND_FRAME);
+        
+        char str[100] = {0};
+        
+        characterId++;
+        
+        for(int i = 1; i <= PLAYSCENE_LAND_FRAME; i++)
+        {
+            sprintf(str, "PLAYSCENE_ani_land_%d_000%02d.png",characterId,i);
+            CCSpriteFrame* frame = cache->spriteFrameByName( str );
+            animFrames->addObject(frame);
+        }
+        
+        //first frame
+        sprintf(str, "PLAYSCENE_ani_land_%d_00001.png",characterId);
+        CCSprite *pElement = CCSprite::createWithSpriteFrameName(str);
+        
+        pElement->setAnchorPoint(ccp(0,0.5f));
+        spritebatch->addChild(pElement);
+        addChild(spritebatch,2);
+        
+        CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,0.05f);
+        CCAction* myTile = CCAnimate::create(animation);
+    
+
+        
+        float delayTime = 0.8f + 0.8f * (CGameManager::GetInstance()->GetTileAnimationTurn(m_Index) - 1);
+        
+		CGameManager::GetInstance()->SetAnimationDelay(delayTime);
+        
+		CCDelayTime *dt = CCDelayTime::create(delayTime);
+		CCAction *actions = CCSequence::create(dt, myTile, NULL);
+        
+        pElement->runAction(actions);
+        
+        
+	}
+    
+    
 }
 
 void CMO_tile::changeImage()
