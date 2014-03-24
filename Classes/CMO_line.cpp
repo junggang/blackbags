@@ -113,52 +113,7 @@ void CMO_line::setImage(IndexedPosition indexedPosition)
 
 void CMO_line::update( float delta )
 {
-    /*
-	//CCLog("Line updated");
-	//현재 타일 소유를 물어보고 업데이트
-	if (!m_Connected && CGameManager::GetInstance()->IsConnected(m_Index) == MO_LINE_CONNECTED)
-	{
-		m_Connected = true;
-
-		//애니메이션 등록
-		CCAnimation *lineAnimation = CCAnimation::create();
-		lineAnimation->setDelayPerUnit(0.2);
-
-		if (m_ImageFileIdx % 2 == 0)
-		{
-			//vertical
-			lineAnimation->addSpriteFrameWithFileName("image/line_connectedv_0.png");
-			lineAnimation->addSpriteFrameWithFileName("image/line_connectedv_1.png");
-			lineAnimation->addSpriteFrameWithFileName("image/line_connectedv_2.png");
-			lineAnimation->addSpriteFrameWithFileName("image/line_connectedv_3.png");
-			lineAnimation->addSpriteFrameWithFileName("image/line_connectedv_4.png");
-
-		}
-		else
-		{
-			//horizontal
-			
-
-			lineAnimation->addSpriteFrameWithFileName("image/line_connected0.png");
-			lineAnimation->addSpriteFrameWithFileName("image/line_connected1.png");
-			lineAnimation->addSpriteFrameWithFileName("image/line_connected2.png");
-			lineAnimation->addSpriteFrameWithFileName("image/line_connected3.png");
-			lineAnimation->addSpriteFrameWithFileName("image/line_connected4.png");
-		}
-
-		CCAnimate *lineAnimate = CCAnimate::create(lineAnimation);
-
-		//애니메이션 재생이 끝난 후에 그어진 선 이미지로 교체하는 함수를 호출
-		CCFiniteTimeAction *pAction = CCSequence::create(lineAnimate, 
-			CCCallFunc::create(this, callfunc_selector(CMO_line::changeImage)), NULL);
-
-		pLine->runAction(pAction);
-	}
-    */
-    
-    
-    //////////
-    if (!m_Connected && CGameManager::GetInstance()->IsConnected(m_Index) == MO_LINE_CONNECTED)
+    if ( !m_Connected && CGameManager::GetInstance()->IsConnected(m_Index) == MO_LINE_CONNECTED)
 	{
 		m_Connected = true;
         
@@ -170,6 +125,7 @@ void CMO_line::update( float delta )
         CCArray* animFrames = CCArray::createWithCapacity(48);
         
         char str[100] = {0};
+        
         for(int i = 1; i < 49; i++)
         {
             if(m_ImageFileIdx % 2==0)
@@ -203,6 +159,7 @@ void CMO_line::update( float delta )
         CCAction* myLine = CCAnimate::create(animation);
         pLine->runAction(myLine);
     }
+  
     
 }
 

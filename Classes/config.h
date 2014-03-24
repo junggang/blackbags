@@ -284,6 +284,7 @@ const std::string TileImageFileList[5] =
 		"image/playscene_land_unoccupied.png"
 	};
 
+
 const std::string LandImageFileList[4] =
 {
 	"image/plascene_land_character01.png",
