@@ -154,6 +154,9 @@ void CTutorialBoardLayer::ShowNextAnimation(int num)
             addChild(text_menu,2);
         }
             break;
+        case 9:
+            CCDirector::sharedDirector()->popScene();
+            break;
             
     }
 }

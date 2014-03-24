@@ -54,6 +54,7 @@ void CTutorialScene::update(float dt)
 
 void CTutorialScene::SettingSceneCallback(CCObject* pSender)
 {
+    CCDirector::sharedDirector()->popScene();
     //go back to SettingScene
 }
 
