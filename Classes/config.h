@@ -649,6 +649,109 @@ const std::string SHARED_PLAYERUI_CHARACTERS[16] =
 	"image/shared_player_character04_04.png",	
 };
 
+//for animation
+const std::string SHARED_PLAYERUI_CHARACTERS_ANI[16] =
+{
+    "image/ani_player_character01_01.png",
+	"image/ani_player_character02_01.png",
+	"image/ani_player_character03_01.png",
+	"image/ani_player_character04_01.png",
+    "image/ani_player_character01_02.png",
+	"image/ani_player_character02_02.png",
+	"image/ani_player_character03_02.png",
+	"image/ani_player_character04_02.png",
+    "image/ani_player_character01_03.png",
+	"image/ani_player_character02_03.png",
+	"image/ani_player_character03_03.png",
+	"image/ani_player_character04_03.png",
+    "image/ani_player_character01_04.png",
+	"image/ani_player_character02_04.png",
+	"image/ani_player_character03_04.png",
+	"image/ani_player_character04_04.png"
+};
+
+const std::string SHARED_PLAYERUI_CHARACTERS_ANI_PLIST[16] =
+{
+    "image/ani_player_character01_01.plist",
+	"image/ani_player_character02_01.plist",
+	"image/ani_player_character03_01.plist",
+	"image/ani_player_character04_01.plist",
+    "image/ani_player_character01_02.plist",
+	"image/ani_player_character02_02.plist",
+	"image/ani_player_character03_02.plist",
+	"image/ani_player_character04_02.plist",
+    "image/ani_player_character01_03.plist",
+	"image/ani_player_character02_03.plist",
+	"image/ani_player_character03_03.plist",
+	"image/ani_player_character04_03.plist",
+    "image/ani_player_character01_04.plist",
+	"image/ani_player_character02_04.plist",
+	"image/ani_player_character03_04.plist",
+	"image/ani_player_character04_04.plist"
+};
+
+const std::string SHARED_PLAYERUI_CHARACTERS_ANI_OFF[16] =
+{
+    "image/ani_player_character01_01_off.png",
+    "image/ani_player_character02_01_off.png",
+    "image/ani_player_character03_01_off.png",
+    "image/ani_player_character04_01_off.png",
+    "image/ani_player_character01_02_off.png",
+    "image/ani_player_character02_02_off.png",
+    "image/ani_player_character03_02_off.png",
+    "image/ani_player_character04_02_off.png",
+    "image/ani_player_character01_03.png",
+	"image/ani_player_character02_03.png",
+	"image/ani_player_character03_03.png",
+	"image/ani_player_character04_03.png",
+    "image/ani_player_character01_04.png",
+	"image/ani_player_character02_04.png",
+	"image/ani_player_character03_04.png",
+	"image/ani_player_character04_04.png"
+    
+};
+
+const std::string SHARED_PLAYERUI_NAME_OFF[16]=
+{
+    "image/shared_player_character01_01_name.png",
+    "image/shared_player_character02_01_name.png",
+    "image/shared_player_character03_01_name.png",
+    "image/shared_player_character04_01_name.png",
+    "image/shared_player_character01_02_name.png",
+    "image/shared_player_character02_02_name.png",
+    "image/shared_player_character03_02_name.png",
+    "image/shared_player_character04_02_name.png",
+    "image/shared_player_character01_03_name.png",
+    "image/shared_player_character02_03_name.png",
+    "image/shared_player_character03_03_name.png",
+    "image/shared_player_character04_03_name.png",
+    "image/shared_player_character01_03_name.png",
+    "image/shared_player_character02_03_name.png",
+    "image/shared_player_character03_03_name.png",
+    "image/shared_player_character04_03_name.png",
+};
+const std::string SHARED_PLAYERUI_CHARACTERS_ANI_OFF_PLIST[16] =
+{
+    "image/ani_player_character01_01_off.plist",
+    "image/ani_player_character02_01_off.plist",
+    "image/ani_player_character03_01_off.plist",
+    "image/ani_player_character04_01_off.plist",
+    "image/ani_player_character01_02_off.plist",
+    "image/ani_player_character02_02_off.plist",
+    "image/ani_player_character03_02_off.plist",
+    "image/ani_player_character04_02_off.plist",
+    "image/ani_player_character01_03.plist",
+	"image/ani_player_character02_03.plist",
+	"image/ani_player_character03_03.plist",
+	"image/ani_player_character04_03.plist",
+    "image/ani_player_character01_04.plist",
+	"image/ani_player_character02_04.plist",
+	"image/ani_player_character03_04.plist",
+	"image/ani_player_character04_04.plist"
+};
+
+const int SHARED_PLAYERUI_CHARACTERS_ANI_FRAME[4] = {22,40,30,25};
+
 const std::string SHARED_PLAYERUI_CHARACTERS_OFF_EMPTY[4] =
 {
 	"image/shared_player_empty_01.png",
@@ -677,6 +780,7 @@ const std::string SHARED_PLAYERUI_CHARACTERS_OFF[16] =
 	"image/shared_player_character04_04_off.png",
 };
 
+////********this will be deleted**************
 const std::string SHARED_PLAYERUI_BACKGROUND[8] =
 {
 	"image/shared_playerui_bg_unselected01.png",
@@ -687,6 +791,24 @@ const std::string SHARED_PLAYERUI_BACKGROUND[8] =
 	"image/shared_playerui_bg_selected02.png",
 	"image/shared_playerui_bg_selected03.png",
 	"image/shared_playerui_bg_selected04.png",
+};
+///
+
+
+const std::string SHARED_PLAYERUI_BG_WAIT[4] =
+{
+    "image/shared_playerui_bg_unselected01.png",
+    "image/shared_playerui_bg_unselected02.png",
+	"image/shared_playerui_bg_unselected03.png",
+	"image/shared_playerui_bg_unselected04.png"
+};
+
+const std::string SHARED_PLAYERUI_BG_TURN[4] =
+{
+    "image/shared_playerui_bg_selected01.png",
+	"image/shared_playerui_bg_selected02.png",
+	"image/shared_playerui_bg_selected03.png",
+	"image/shared_playerui_bg_selected04.png"
 };
 
 /*added animation*/

@@ -163,7 +163,6 @@ void CGameBoardLayer::DrawLine()
 			m_LineDirection = DI_DOWN;
 		}
 	}
-	//열이 같은 경우
 	else if (startIndex.m_PosJ == endIndex.m_PosJ)
 	{
 		if (endIndex.m_PosI - startIndex.m_PosI == 2)
