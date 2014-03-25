@@ -15,7 +15,7 @@ bool CPlayerLayer::init()
     
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
     
-	int playerNumber = CGameManager::GetInstance()->GetPlayerNumberOfThisGame();
+	//int playerNumber = CGameManager::GetInstance()->GetPlayerNumberOfThisGame();
     
     //Init setting
     //1.prepare positions for UI.

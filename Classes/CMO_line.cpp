@@ -115,6 +115,7 @@ void CMO_line::update( float delta )
 {
     if ( !m_Connected && CGameManager::GetInstance()->IsConnected(m_Index) == MO_LINE_CONNECTED)
 	{
+        changeImage();
 		m_Connected = true;
         
         CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(LineAnimationFileList[m_ImageFileIdx % 2].c_str());
@@ -141,23 +142,30 @@ void CMO_line::update( float delta )
             animFrames->addObject(frame);
         }
         
+        CCSprite*pElement;
         if(m_ImageFileIdx % 2==0)
         {
-            pLine = CCSprite::createWithSpriteFrameName("ani_playscene_line_recent_v_00001.png");
-            pLine->setAnchorPoint(ccp(1,0));
+            pElement = CCSprite::createWithSpriteFrameName("ani_playscene_line_recent_v_00001.png");
+            pElement->setAnchorPoint(ccp(1,0));
         }
         else
         {
-            pLine = CCSprite::createWithSpriteFrameName("ani_playscene_line_recent_00001.png");
-            pLine->setAnchorPoint(ccp(0,0));
+            pElement = CCSprite::createWithSpriteFrameName("ani_playscene_line_recent_00001.png");
+            pElement->setAnchorPoint(ccp(0,0));
         }
         
-        spritebatch->addChild(pLine);
+        spritebatch->addChild(pElement);
         addChild(spritebatch,2);
+        spritebatch->setTag(0);
         
         CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,0.2f);
         CCAction* myLine = CCAnimate::create(animation);
-        pLine->runAction(myLine);
+        pElement->runAction(myLine);
+    }
+    else if( m_Connected )
+    {
+        removeChildByTag(0);
+        pLine->setVisible(true);
     }
   
     
@@ -179,11 +187,7 @@ void CMO_line::setAnchorPoint()
 
 void CMO_line::changeImage()
 {
-	//기존의 이미지는 삭제하고
-
-	this->removeChild(pLine, true);
-		
-	//애니메이션 종료 후 화면에 표시될 이미지 등록
+	//removeChild(pLine,false);
 	pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx + 2].c_str());
 
 	if (m_ImageFileIdx % 2== 0)
@@ -192,6 +196,7 @@ void CMO_line::changeImage()
 		pLine->setAnchorPoint( ccp (0,0));
 
 	pLine->setPosition(ccp(0,0));
+    pLine->setVisible(false);
 	this->addChild(pLine, 0);
 }
 
