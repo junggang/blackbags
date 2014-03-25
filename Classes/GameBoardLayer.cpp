@@ -78,6 +78,16 @@ bool CGameBoardLayer::init()
 				pTile->setPosition(ccp(m_OriginX+m_DeltaX*(j/2-1),m_OriginY+m_DeltaY*(j/2-1)));
 
 				m_Board->addChild(pTile, 0);
+                
+                //add item
+                if (CGameManager::GetInstance()->GetItem(IndexedPosition(i,j))!= ITEM_NOTHING)
+                {
+                    CMO_item* pItem = CMO_item::create();
+                    pItem->setImage(IndexedPosition(i,j));
+                    pItem->setPosition( ccp(m_OriginX+m_DeltaX*(j/2-1),m_OriginY+m_DeltaY*(j/2-1)) );
+                    m_Board->addChild(pItem, 3);
+                }
+                
 			}
 			// 행, 열 모두 홀수일 경우 닷을 그린다.
 			else if ( i % 2 == 1 && j % 2 == 1)

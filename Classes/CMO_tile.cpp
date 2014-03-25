@@ -28,12 +28,9 @@ void CMO_tile::setImage(IndexedPosition indexedPosition)
 	pTile->setAnchorPoint( ccp(0, 0.5f) );
 	pTile->setPosition( ccp(0.0f, 0.0f) );
 	this->addChild(pTile, 0);
-
-	// item Ãß°¡
-	//pItem = CCSprite::create(TileImageFileList[0].c_str(), CCRectMake(0.0f, 0.0f, DEFAULT_TILE_WIDTH,  DEFAULT_TILE_HEIGHT) );
-	//pItem->setAnchorPoint( ccp(0, 0) );
-	//pItem->setPosition( ccp(0.0f, 0.0f) );
-	if (CGameManager::GetInstance()->GetItem(indexedPosition) != ITEM_NOTHING)
+	
+    /*
+    if (CGameManager::GetInstance()->GetItem(indexedPosition) != ITEM_NOTHING)
 	{
 		CMO_item* pItem = CMO_item::create();
 		pItem->setImage(indexedPosition);
@@ -41,6 +38,7 @@ void CMO_tile::setImage(IndexedPosition indexedPosition)
 		pItem->setPosition( ccp(0.0f, 0.0f) );
 		this->addChild(pItem, 3);
 	}
+     */
 }
 
 void CMO_tile::update( float delta )
