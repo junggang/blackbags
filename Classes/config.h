@@ -725,10 +725,10 @@ const std::string SHARED_PLAYERUI_NAME_OFF[16]=
     "image/shared_player_character02_03_name.png",
     "image/shared_player_character03_03_name.png",
     "image/shared_player_character04_03_name.png",
-    "image/shared_player_character01_03_name.png",
-    "image/shared_player_character02_03_name.png",
-    "image/shared_player_character03_03_name.png",
-    "image/shared_player_character04_03_name.png",
+    "image/shared_player_character01_04_name.png",
+    "image/shared_player_character02_04_name.png",
+    "image/shared_player_character03_04_name.png",
+    "image/shared_player_character04_04_name.png",
 };
 const std::string SHARED_PLAYERUI_CHARACTERS_ANI_OFF_PLIST[16] =
 {
