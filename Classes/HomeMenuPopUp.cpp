@@ -33,7 +33,7 @@ bool CHomeMenuPopUp::init()
 
 	CCSprite* pTitle = CCSprite::create(SHARED_POPUP_TITLE.c_str());
 	pTitle->setPosition(ccp(centerX,SHARED_POPUP_TITLE_POS));
-	addChild(pTitle);
+	addChild(pTitle,1);
 
 
 	// 팝업 창 아이콘들
