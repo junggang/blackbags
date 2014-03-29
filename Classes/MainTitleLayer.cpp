@@ -12,9 +12,6 @@ bool CMainTitleLayer::init()
         return false;
     }
     
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-
 	/////////////////////////////
     // 2. add a background image
 	CCSprite* pTitle = CCSprite::create(MAIN_TITLE.c_str());

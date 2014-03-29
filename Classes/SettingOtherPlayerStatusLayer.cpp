@@ -7,8 +7,6 @@ const int PLAYER_FRAME_2_TAG = 200;
 const int PLAYER_FRAME_3_TAG = 300;
 const int PLAYER_FRAME_4_TAG = 400;
 
-const int PLAYER_READYSTATE_TAG = 1000;
-
 enum PLAYER_TAG
 {
 	PLAYER_1_TAG,

@@ -1,4 +1,3 @@
-#pragma once
 #include "CMO_dot.h"
 
 USING_NS_CC;

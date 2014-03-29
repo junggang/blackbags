@@ -35,8 +35,6 @@ bool CTutorialBoardLayer::init()
 
 void CTutorialBoardLayer::ccTouchesBegan( CCSet* pTouches, CCEvent* pEvent )
 {
-	CCTouch *pTouch = (CCTouch*)pTouches->anyObject();
-    
     ShowNextAnimation(m_clickedNum);
     m_clickedNum++;
     
@@ -44,7 +42,6 @@ void CTutorialBoardLayer::ccTouchesBegan( CCSet* pTouches, CCEvent* pEvent )
 
 void CTutorialBoardLayer::ccTouchesEnded( CCSet *pTouches, CCEvent *pEvent )
 {
-	CCTouch *pTouch = (CCTouch*)pTouches->anyObject();
 }
 
 void CTutorialBoardLayer::ShowNextAnimation(int num)

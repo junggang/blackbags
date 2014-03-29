@@ -19,7 +19,6 @@ bool CGameBoardLayer::init()
 	//////////////////////////////
 	// 2. add resources
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
-	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
 	int rowNum = 0;
 	int columnNum = 0;

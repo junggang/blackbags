@@ -6,7 +6,6 @@
 
 USING_NS_CC;
 
-const int HELP_POPUPLAYER_TAG = 1000;
 const int START_BUTTON_TAG = 2000;
 const int READY_BUTTON_TAG = 3000;
 
@@ -18,7 +17,6 @@ bool CStartAndHelpButtonLayer::init()
 	}
 
 	// get Windows Size
-	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 	//// start Button
 	if ( CGameManager::GetInstance()->IsOnlineMode() && !CGameManager::GetInstance()->IsChannelMaster() )
