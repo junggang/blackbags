@@ -912,6 +912,8 @@ MO_TYPE CGameLogic::IsConnected(IndexedPosition indexedPosition)
 	{
 		CCLOG("what a %d", tempType);
 	}
+    
+    return MO_TILE;
 }
 
 bool CGameLogic::TimeOut()

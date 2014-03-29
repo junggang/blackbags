@@ -13,8 +13,6 @@ bool CSettingCharacterLayer::init()
 	}
 
 	// Get Window Size
-	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize(); 
-
 	CreateCharacters();
 
 	return true;

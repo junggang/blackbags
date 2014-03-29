@@ -16,13 +16,9 @@ bool CHomeMenuPopUp::init()
 	}
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
 	/////////////////////////////
 	// 2. add a background image
-	float tempYPos = 0.0;
-	CCMenu* pMenu = nullptr;
-
 	m_backLayer = CCSprite::create(SHARED_POPUP_BG.c_str());
 	m_backLayer->setAnchorPoint(ccp(0,0));
 	m_backLayer->setPosition(CCPoint(SHARED_POPUP_BG_POS));
