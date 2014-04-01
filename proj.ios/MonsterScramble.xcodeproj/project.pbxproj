@@ -2489,7 +2489,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
-					"/Users/wooq/Documents/dev/cocos2d-x-2.2.2/cocos2dx/platform/third_party/ios/libraries",
 					"$(PROJECT_DIR)",
 				);
 				OTHER_CFLAGS = "-O2";
@@ -2540,7 +2539,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
-					"/Users/wooq/Documents/dev/cocos2d-x-2.2.2/cocos2dx/platform/third_party/ios/libraries",
 					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "-ObjC";

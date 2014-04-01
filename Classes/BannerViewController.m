@@ -26,7 +26,7 @@ NSString * const BannerViewActionDidFinish = @"BannerViewActionDidFinish";
 {
     self = [super init];
     if (self != nil) {
-        _bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+        _bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerLandscape];
         // Mediation ID or Publisher ID
         _bannerView.adUnitID = @"INSERT_YOUR_ADMOB_ID_HERE";
         _bannerView.delegate = self;

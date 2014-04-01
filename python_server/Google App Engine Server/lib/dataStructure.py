@@ -430,7 +430,11 @@ class GameData:
 			startLineNumber = 13
 			startGoldNumber = 5
 			startTrashNumber = 4
-		elif self.data[GD_MAP_SIZE][1] == 8:
+		elif self.data[GD_MAP_SIZE][1] == 7:
+			startLineNumber = 20
+			startGoldNumber = 6
+			startTrashNumber = 5
+		else:
 			startLineNumber = 27
 			startGoldNumber = 8
 			startTrashNumber = 7
