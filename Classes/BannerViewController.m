@@ -28,7 +28,7 @@ NSString * const BannerViewActionDidFinish = @"BannerViewActionDidFinish";
     if (self != nil) {
         _bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerLandscape];
         // Mediation ID or Publisher ID
-        _bannerView.adUnitID = @"INSERT_YOUR_ADMOB_ID_HERE";
+        _bannerView.adUnitID = @"a1533baec6aa47d";
         _bannerView.delegate = self;
         _contentController = contentController;
         _bannerLoaded = NO;
@@ -100,7 +100,7 @@ NSString * const BannerViewActionDidFinish = @"BannerViewActionDidFinish";
     
     GADRequest *request = [GADRequest request];
     // For testing
-    // request.testDevices = [NSArray arrayWithObjects:@"YOUR_DEVICE_ID", nil];
+    request.testDevices = @[ GAD_SIMULATOR_ID ];
     [_bannerView loadRequest:request];
 }
 
