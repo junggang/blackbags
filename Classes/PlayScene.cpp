@@ -38,28 +38,23 @@ bool CPlayScene::init(void)
 	menu = CHomeMenuLayer::create();
 	this->addChild(menu,2);
 
-	if (CGameManager::GetInstance()->IsOnlineMode() )
-	{
-		// º≠πˆø° ¡÷±‚¿˚¿∏∑Œ æ˜µ•¿Ã∆Æ »Æ¿Œ
-		this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
-	}
-
-	//¿Ã∑∏∞‘ º≥¡§«œ∏È update«‘ºˆ∞° æÀæ∆º≠ «¡∑π¿”∏∂¥Ÿ »£√‚µ»¥Ÿ.
-	this->scheduleUpdate();
-
-	m_GameEndFlag = false;
+    m_GameEndFlag = false;
 	m_AnimationDelay = 0.0f;
 
 	if (CGameManager::GetInstance()->IsOnlineMode() )
 	{
-		// playScene¿Ã ¡ÿ∫Òµ«æ˙¿∏π«∑Œ ¡ÿ∫Ò µ«æ˙¥Ÿ¥¬ Ω≈»£∏¶ º≠πˆ∑Œ ∫∏≥ª∞Ì
-		// æ’¿∏∑Œ ¡÷±‚¿˚¿∏∑Œ æ˜µ•¿Ã∆Æ ≥ªøÎ¿ª »Æ¿Œ«œ¥¬ Ω∫ƒ…¡Ÿ¿ª Ω««‡
+		// 플레이 준비가 되었다는 신호를 서버로 보내고
+		// 주기적으로 게임 상태를 확인 요청하는 스케줄 생성
 		CGameManager::GetInstance()->PlayReady();
 		this->schedule(schedule_selector(CGameManager::PlayUpdate), 1.0f);
 	}
-
-    //temporary
+    
+	// 등록된 스케줄 실행
+	this->scheduleUpdate();
+    
+    //temporary - 이거 뭐임?
     CGameManager::GetInstance()->SetPlayReady();
+    
 	return true;
 }
 
@@ -72,34 +67,38 @@ void CPlayScene::update(float dt)
     
     CGameManager::GetInstance()->PausePlayReady();
 
-	//∞‘¿” ¡æ∑· »Æ¿Œ
+	// 종료 조건 확인
 	if (CGameManager::GetInstance()->IsEnd() && !m_GameEndFlag)
 	{
-		m_GameEndFlag = true; //¥ŸΩ√ ¿Ã ¡∂∞«πÆ æ»¿∏∑Œ ¡¯¿‘«ÿº≠ ∑π¿ÃæÓ∏¶ √ﬂ∞°«œ¡ˆ æ µµ∑œ
+		m_GameEndFlag = true; // 다음 루프에서 다시 진입하지 않도록 플래그 설정
 
-		//¡æ∑· ∏ﬁΩ√¡ˆ layer∏¶ child∑Œ √ﬂ∞°«ÿº≠ result∑Œ ∞• ºˆ ¿÷∞‘ «—¥Ÿ.
+		// 게임 종료 버튼 생성
 		CCLayer* endButton = CGameEndLayer::create();
 		this->addChild(endButton, 2);
 
 		if (CGameManager::GetInstance()->IsOnlineMode() )
 		{
+            // 온라인 모드인 경우 게임 종료 요청을 서버로 전송 후 업데이트 스케줄 삭제
 			CGameManager::GetInstance()->EndGame();
 			this->unschedule(schedule_selector(CGameManager::PlayUpdate) );
 		}
 	}
 
+    // 종료가 아닌 경우 각종 업데이트 실행
 	gameBoard->update(dt);
 	player->update(dt);
 	timer->update(dt);
 
 	if (CGameManager::GetInstance()->IsOnlineMode() )
 	{
+        // 접속 상태 확인
         if (!CGameManager::GetInstance()->GetConnectionStatus()
             && !CGameManager::GetInstance()->IsEnd())
         {
+            // 업데이트 중단
             this->unscheduleAllSelectors();
             
-            // 메인 메뉴로
+            // 오류 레이어 생성
             this->removeAllChildren();
             
             CCLayer* BackgroundLayer = CBackgroundLayer::create();
@@ -111,16 +110,16 @@ void CPlayScene::update(float dt)
             return;
             
         }
-		// ∂Û¿Œ ¿Áª˝ Ω√∞£∞˙ ≈∏¿œ ¿Áª˝ Ω√∞£¿Ã ∞∞¿∏π«∑Œ æ∆∑°¿« ƒ⁄µÂø°º≠ 0.8¿« ªÛºˆ¥¬
-		// ∂Û¿Œ ¿Áª˝∏∏ ¿÷¿ª ∞ÊøÏø°¥¬ ∂Û¿Œ ¿Áª˝ Ω√∞£¿ª, ≈∏¿œ æ÷¥œ∏ﬁ¿Ãº«¿Ã ∆˜«‘µ«¥¬ ∞ÊøÏø°¥¬ ∏∂¡ˆ∏∑ ¿Áª˝µ«¥¬ ≈∏¿œ æ÷¥œ∏ﬁ¿Ãº« ¿Áª˝ Ω√∞£¿ª ¿«πÃ
+		// 라인 재생 시간과 타일 재생 시간이 같으므로 아래의 코드에서 0.8의 상수는
+        // 라인 재생만 있을 경우에는 라인 재생 시간을, 타일 애니메이션이 포함되는 경우에는 마지막 재생되는 타일 애니메이션 재생 시간을 의미
 		float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 0.8f;
         
-		// æÛ∏∂ »ƒø° ¿¸º€«œ¥¬ ƒ⁄µÂ ª¿‘!
+		// 애니메이션 끝나면 레디 전송하는 코드 삽입!
 		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CGameManager::PlayReady) );
 		CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
 
-		// æ÷¥œ∏ﬁ¿Ãº« ¿¸º€ ¡ˆø¨∞™ √ ±‚»≠
+		// 애니메이션 전송 지연값 초기화
 		CGameManager::GetInstance()->SetAnimationDelay(0.0f);
 	}
     else
@@ -128,7 +127,7 @@ void CPlayScene::update(float dt)
         CCLog("playScene");
         float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 1.0f;
         
-		// æÛ∏∂ »ƒø° ¿¸º€«œ¥¬ ƒ⁄µÂ ª¿‘!
+		// 애니메이션 끝내고 다음 턴 시작
 		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CGameManager::SetPlayReady) );
 		CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
@@ -136,6 +135,6 @@ void CPlayScene::update(float dt)
         CGameManager::GetInstance()->SetAnimationDelay(0.0f);
     }
 
-	//æ˜µ•¿Ã∆Æµ» ≥ªøÎ¿ª ∏µŒ πﬁæ∆øÕº≠ ∞ªΩ≈«ﬂ¿∏π«∑Œ flag¥¬ ø¯∑°¥Î∑Œ false∑Œ ∏∏µÁ¥Ÿ
+	// 모든 업데이트가 완료되었으므로 플래그 초기화
 	CGameManager::GetInstance()->SetUpdateFlag(false);
 }

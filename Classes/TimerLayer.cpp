@@ -58,26 +58,22 @@ void CTimerLayer::update( float dt )
 
 		m_CurrentServerTimerStatus = newStatus;
 
-		if (!m_CurrentServerTimerStatus)
+		if (m_CurrentServerTimerStatus)
 		{
-			// true >>> false 이므로 타이머 새로 시작(각 클라이언트의 레디 신호를 모두 수신해서 새로운 턴이 시작)
-			// 일단 기존 타이머 삭제
-			m_progressTimeBar->stopAllActions();
-
-			CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
-			CCFiniteTimeAction* pAction = CCSequence::create(progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
-			m_progressTimeBar->runAction(pAction);
-		}
-		else
-		{
-			// false >>> true 이므로 타이머 일시 정지
-			m_progressTimeBar->pauseSchedulerAndActions();
+			float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 1.2f;
+            CCDelayTime* delayAction = CCDelayTime::create(delayTime);
+            
+            m_progressTimeBar->stopAllActions();
+            //다른 애니메이션들 끝날 때 까지 기다렸다가 타이머를 재생해주도록 하자.
+            CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
+            CCFiniteTimeAction* pAction = CCSequence::create(delayAction,progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
+            m_progressTimeBar->runAction(pAction);
 		}
 	}
     // Offline
 	else
 	{
-        float delayTime = CGameManager::GetInstance()->GetAnimationDelay()+1.2f;
+        float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 1.2f;
         CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		   
 		m_progressTimeBar->stopAllActions();
