@@ -22,10 +22,10 @@ bool CPlayerLayer::init()
     //2.prepare wating background
     //3.set name
     
-	m_UIposition[0] = CCPoint(SHARED_PLAYER_UI_UPPER_LEFT_POS);
-	m_UIposition[1] = CCPoint(SHARED_PLAYER_UI_UPPER_RIGHT_POS);
-	m_UIposition[2] = CCPoint(SHARED_PLAYER_UI_BELOW_LEFT_POS);
-	m_UIposition[3] = CCPoint(SHARED_PLAYER_UI_BELOW_RIGHT_POS);
+	m_UIposition[0] = CCPoint(SHARED_PLAYER_UI_BELOW_LEFT_POS);
+	m_UIposition[1] = CCPoint(SHARED_PLAYER_UI_BELOW_RIGHT_POS);
+	m_UIposition[2] = CCPoint(SHARED_PLAYER_UI_UPPER_LEFT_POS);
+	m_UIposition[3] = CCPoint(SHARED_PLAYER_UI_UPPER_RIGHT_POS);
 	
     
 	for (int playerId = 0; playerId<MAX_PLAYER_NUM; ++playerId)
