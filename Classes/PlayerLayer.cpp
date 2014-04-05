@@ -22,10 +22,10 @@ bool CPlayerLayer::init()
     //2.prepare wating background
     //3.set name
     
-	m_UIposition[0] = CCPoint(SHARED_PLAYER_UI_BELOW_LEFT_POS);
-	m_UIposition[1] = CCPoint(SHARED_PLAYER_UI_BELOW_RIGHT_POS);
-	m_UIposition[2] = CCPoint(SHARED_PLAYER_UI_UPPER_LEFT_POS);
-	m_UIposition[3] = CCPoint(SHARED_PLAYER_UI_UPPER_RIGHT_POS);
+	m_UIposition[0] = CCPoint(SHARED_PLAYER_UI_UPPER_LEFT_POS);
+	m_UIposition[1] = CCPoint(SHARED_PLAYER_UI_UPPER_RIGHT_POS);
+	m_UIposition[2] = CCPoint(SHARED_PLAYER_UI_BELOW_LEFT_POS);
+	m_UIposition[3] = CCPoint(SHARED_PLAYER_UI_BELOW_RIGHT_POS);
 	
     
 	for (int playerId = 0; playerId<MAX_PLAYER_NUM; ++playerId)
@@ -36,6 +36,11 @@ bool CPlayerLayer::init()
 		int position = CGameManager::GetInstance()->GetPlayerTurn(playerId);
 		int characterId = CGameManager::GetInstance()->GetCharacterIdByPlayerId(playerId);
         
+        if ( !CGameManager::GetInstance()->IsOnlineMode() )
+        {
+            position = 3 - position;
+            CCLog("%d",position);
+        }
         
 		m_BackGround[playerId] = CCSprite::create(SHARED_PLAYERUI_BG_WAIT[position].c_str());
 		m_BackGround[playerId]->setAnchorPoint(ccp(0,0));
@@ -47,7 +52,7 @@ bool CPlayerLayer::init()
 		{
 			m_Player[playerId] = CCSprite::create(SHARED_PLAYERUI_CHARACTERS[4*position+characterId].c_str());
 			
-			//ÀÌ¸§À» µ¹·ÁÁà¾ßÇÑ´Ù. config¿¡ Ãß°¡ÇÒ °Í.
+			//Â¿ÃƒâˆÃŸÂ¿Âª ÂµÏ€âˆ‘Â¡Â¡â€¡Ã¦ï¬‚Â«â€”Â¥Å¸. configÃ¸Â° âˆšï¬‚âˆžÂ°Â«â€œ âˆžÃ•.
 			m_PlayerName[playerId] = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(playerId).c_str(), GAME_FONT, 50,
                                                         CCSizeMake(400, 100), kCCTextAlignmentLeft);
 			m_PlayerName[playerId]->setAnchorPoint(ccp(0,0));
@@ -79,11 +84,12 @@ bool CPlayerLayer::init()
             addChild(name,3);
 		}
 		m_Player[playerId]->setAnchorPoint(ccp(0,0));
+        CCLog("%d",position);
 		m_Player[playerId]->setPosition(m_UIposition[position]);
 		addChild(m_Player[playerId],2);
     }
     
-	//ÇöÀç ÅÏ(Ã¹¹øÂ° ÅÏ)ºÎÅÍ ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ Àç»ýµÉ ¼ö ÀÖµµ·Ï update()¸¦ ÇÑ ¹ø ÇØÁØ´Ù.
+	//Â«Ë†Â¿Ã â‰ˆÅ“(âˆšÏ€Ï€Â¯Â¬âˆž â‰ˆÅ“)âˆ«Å’â‰ˆÃ• Ã¦Ã·Â¥Å“âˆï¬Â¿ÃƒÂºÂ«Â¿Ãƒ Â¿ÃÂªËÂµâ€¦ ÂºË† Â¿Ã·ÂµÂµâˆ‘Å“ update()âˆÂ¶ Â«â€” Ï€Â¯ Â«Ã¿Â¡Ã¿Â¥Å¸.
 	update(0);
     
 	return true;
@@ -102,9 +108,16 @@ void CPlayerLayer::update( float dt )
     
 	m_CurrentPlayerId = CGameManager::GetInstance()->GetCurrentPlayerId();
 	int position = CGameManager::GetInstance()->GetPlayerTurn(m_CurrentPlayerId);
+    
+    if ( !CGameManager::GetInstance()->IsOnlineMode() )
+    {
+        position = 3 - position;
+    }
+    
+    
     int characterId = CGameManager::GetInstance()->GetCharacterIdByPlayerId(m_CurrentPlayerId);
     m_Player[m_CurrentPlayerId]->setVisible(false);
-	   
+    
 	removeChildByTag(0);
     
 	CCSprite* currentTurnUI = CCSprite::create(SHARED_PLAYERUI_BG_TURN[position].c_str());
@@ -178,5 +191,5 @@ void CPlayerLayer::SetWaitingCharacters()
             m_Player[playerId] = CCSprite::create(SHARED_PLAYERUI_CHARACTERS_OFF[4*position+characterId].c_str());
         }
         
-	}	
+	}
 }
