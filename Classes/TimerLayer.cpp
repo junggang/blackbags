@@ -46,7 +46,7 @@ bool CTimerLayer::init()
 }
 
 void CTimerLayer::update( float dt )
-{
+{    
 	if (CGameManager::GetInstance()->IsOnlineMode() )
 	{
 		bool newStatus = CGameManager::GetInstance()->GetCurrentTimerStatus();
@@ -90,3 +90,6 @@ void CTimerLayer::timerEndFunc()
 	//타이머가 끝난 후 취해질 액션
 	CGameManager::GetInstance()->TimeOut();
 }
+
+
+

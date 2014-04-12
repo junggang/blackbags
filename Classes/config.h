@@ -552,6 +552,8 @@ const std::string PLAYSCENE_DOT = "image/playscene_dot.png";
 const std::string PLAYSCENE_LAND_UNOCCUPIED = "image/playscene_land_unoccupied.png";
 const std::string PLAYSCENE_LAND_OCCUPIED = "image/playscene_land_occupied.png";
 
+const std::string PLAYSCENE_GAMEOVER = "image/playscene_gameover.png";
+
 /* shared images */
 const std::string SHARED_BACKGROUND = "image/shared_background.png";
 const std::string SHARED_PLAYERUI_GREY = "image/shared_playerui_background_unselected.png";
