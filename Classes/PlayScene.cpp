@@ -67,7 +67,7 @@ bool CPlayScene::init(void)
 
 void CPlayScene::update(float dt)
 {
-	if (!CGameManager::GetInstance()->IsUpdated() )
+	if (!CGameManager::GetInstance()->IsUpdated() || m_GameEndFlag)
 	{
 		return;
 	}
@@ -78,6 +78,8 @@ void CPlayScene::update(float dt)
 	if (CGameManager::GetInstance()->IsEnd() && !m_GameEndFlag)
 	{
 		m_GameEndFlag = true; // 다음 루프에서 다시 진입하지 않도록 플래그 설정
+        removeChild(timer);
+        player->stopAllActions();
 
 		// 게임 종료 버튼 생성
 		CCLayer* endButton = CGameEndLayer::create();
@@ -89,7 +91,8 @@ void CPlayScene::update(float dt)
 			CGameManager::GetInstance()->EndGame();
 			this->unschedule(schedule_selector(CGameManager::PlayUpdate) );
 		}
-	}
+        return;
+    }
 
     // 종료가 아닌 경우 각종 업데이트 실행
 	gameBoard->update(dt);

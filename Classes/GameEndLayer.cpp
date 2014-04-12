@@ -1,5 +1,6 @@
 #include "GameEndLayer.h"
 #include "ResultScene.h"
+#include "config.h"
 
 USING_NS_CC;
 
@@ -15,13 +16,14 @@ bool CGameEndLayer::init()
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 	CCMenuItemImage *pEndButton = CCMenuItemImage::create(
-										"image/NAMESETTING_next.png",
-										"image/NAMESETTING_next_selected.png",
+                                        PLAYSCENE_GAMEOVER.c_str(),
+                                        PLAYSCENE_GAMEOVER.c_str(),
 										this,
 										menu_selector(CGameEndLayer::gameEndCallback)
 										);
     
-	pEndButton->setPosition(ccp(visibleSize.width / 2, visibleSize.height / 2) );
+	pEndButton->setPosition(CCPointZero);
+    pEndButton->setAnchorPoint(ccp(0,0));
 
 	// create menu, it's an autorelease object
 	CCMenu* pMenu = CCMenu::create(pEndButton, NULL);
