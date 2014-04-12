@@ -33,9 +33,10 @@ const int CHECKLIST_LENGTH = 100;
 const float TOUCH_AREA = 20.0f;
 
 /*	결과 화면 오브젝트들의 기본 크기입니다 */
+// gold and trash add 2 (because if has tile)
 const int	SC_RT_SCORE_TILE = 2;
-const int	SC_RT_SCORE_GOLD = 5;
-const int	SC_RT_SCORE_TRASH = -10;
+const int	SC_RT_SCORE_GOLD = 7;
+const int	SC_RT_SCORE_TRASH = -8;
 
 /* 캐릭터 색상입니다 */
 #define _COLOR_CHARACTER_1_  26,196,98,255
