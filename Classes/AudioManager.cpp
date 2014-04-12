@@ -37,12 +37,13 @@ bool CAudioManager::init()
 		switch (i)
 		{
 		case BGM_MAIN:
+            m_BGMList[i] = "Sound/BGM/main_loop.mp3";
 			break;
 		case BGM_PLAY:
+            m_BGMList[i] = "Sound/BGM/playscene_loop.mp3";
 			break;
-		case BGM_SETTING:
-			// 조심해!! 테스트 코드야!
-			m_BGMList[i] = "Sound/simpleMusic.mp3";
+		case BGM_RESULT:
+			m_BGMList[i] = "Sound/BGM/result_loop.mp3";
 			break;
 		default:
 			break;
@@ -55,7 +56,7 @@ bool CAudioManager::init()
 		{
 		case SE_BUTTON_CLICK:
 			// 조심해!! 테스트 코드야!
-			m_BGMList[j] = "Sound/PLAYER_3_good.mp3";
+			m_SEList[j] = "Sound/PLAYER_3_good.mp3";
 			break;
 		default:
 			break;

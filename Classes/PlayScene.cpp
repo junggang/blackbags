@@ -9,6 +9,7 @@
 #include "GameManager.h"
 #include "HomeMenuLayer.h"
 #include "DisconnectedLayer.h"
+#include "AudioManager.h"
 
 USING_NS_CC;
 
@@ -52,8 +53,14 @@ bool CPlayScene::init(void)
 	// 등록된 스케줄 실행
 	this->scheduleUpdate();
     
-    //temporary - 이거 뭐임?
+    //temporary - 이거 뭐임? - playReady 보내는거 아님??
     CGameManager::GetInstance()->SetPlayReady();
+    
+    // play music "BGM_PLAY" made by Junggang
+    CAudioManager::GetInstance()->StopBGM();
+    
+	CAudioManager::GetInstance()->ChangeMusic(BGM_PLAY);
+	CAudioManager::GetInstance()->PlayBGM();
     
 	return true;
 }

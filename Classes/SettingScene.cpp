@@ -52,11 +52,6 @@ bool CSettingScene::init(void)
 	// 3. active schedule
 	this->scheduleUpdate();
 
-	/////////////////////////////
-	// 4. play music
-	CAudioManager::GetInstance()->ChangeMusic(BGM_SETTING);
-	CAudioManager::GetInstance()->PlayBGM();
-
 	// 5. initial update
 	CGameManager::GetInstance()->SetUpdateFlag(true);
 

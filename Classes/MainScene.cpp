@@ -4,6 +4,7 @@
 #include "MainMenuLayer.h"
 #include "GameManager.h"
 #include "BackgroundAnimation.h"
+#include "AudioManager.h"
 
 USING_NS_CC;
 
@@ -37,6 +38,14 @@ bool CMainScene::init(void)
 	this->addChild(mainMenuLayer, 2);
 
 	CGameManager::GetInstance()->init();
+    
+    
+    /////////////////////////////
+	// 4. play music
+    CAudioManager::GetInstance()->StopBGM();
+    
+	CAudioManager::GetInstance()->ChangeMusic(BGM_MAIN);
+	CAudioManager::GetInstance()->PlayBGM();
 
 	return true;
 }

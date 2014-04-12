@@ -3,6 +3,7 @@
 #include "ResultScoreLayer.h"
 #include "ResultTitleLayer.h"
 #include "ResultButtonLayer.h"
+#include "AudioManager.h"
 
 USING_NS_CC;
 
@@ -29,5 +30,12 @@ bool CResultScene::init(void)
 	CCLayer* buttonLayer = CResultButtonLayer::create();
 	this->addChild(buttonLayer, 3);
 
+    
+    // play music "BGM_RESULT" made by C.Carmack
+    CAudioManager::GetInstance()->StopBGM();
+    
+	CAudioManager::GetInstance()->ChangeMusic(BGM_RESULT);
+	CAudioManager::GetInstance()->PlayBGM();
+    
 	return true;
 }

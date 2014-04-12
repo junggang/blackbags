@@ -6,7 +6,7 @@
 enum MusicList
 {
 	BGM_MAIN = 0,
-	BGM_SETTING,
+	BGM_RESULT,
 	BGM_PLAY,
 	MAX_BGM_LIST
 };
