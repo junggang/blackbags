@@ -11,7 +11,7 @@
 #include "LayerWebView.h"
 #include "GameSettingScene.h"
 #include "BackgroundLayer.h"
-
+#include "AdMobObjectCPP.h"
 
 USING_NS_CC;
 
@@ -23,6 +23,10 @@ bool CLoginScene::init(void)
 	{
 		return false;
 	}
+    
+    // 광고 끄기
+    gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
+    admob->hideAdMob();
     
     CCLayer* BackgroundLayer = CBackgroundLayer::create();
 	this->addChild(BackgroundLayer, 0);

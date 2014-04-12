@@ -1,6 +1,7 @@
 #include "HelpScene.h"
 #include "BackgroundLayer.h"
 #include "HelpPopuplLayer.h"
+#include "AdMobObjectCPP.h"
 
 USING_NS_CC;
 
@@ -13,6 +14,10 @@ bool CHelpScene::init(void)
 		return false;
 	}
 
+    // 광고 끄기
+    gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
+    admob->hideAdMob();
+    
 	/////////////////////////////
 	// 2. add layers
 	CCLayer* BackgroundLayer = CBackgroundLayer::create();

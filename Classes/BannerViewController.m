@@ -22,6 +22,17 @@ NSString * const BannerViewActionDidFinish = @"BannerViewActionDidFinish";
     Boolean _bannerLoaded;
 }
 
+static BannerViewController* instance;
+
++ (BannerViewController *) shared{
+    @synchronized(self){
+        if( instance == nil ){
+            instance = [[self alloc] init];
+        }
+    }
+    return instance;
+}
+
 - (instancetype)initWithContentViewController:(UIViewController *)contentController
 {
     self = [super init];
@@ -36,6 +47,16 @@ NSString * const BannerViewActionDidFinish = @"BannerViewActionDidFinish";
     return self;
 }
 
+- (void) showAdMob{
+    // SHOW
+    [_bannerView setHidden:NO];
+}
+
+- (void) hideAdMob{
+    // HIDE SOME THING
+    [_bannerView setHidden:YES];
+}
+
 - (void)loadView
 {
     UIView *contentView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -44,6 +65,7 @@ NSString * const BannerViewActionDidFinish = @"BannerViewActionDidFinish";
     [_contentController didMoveToParentViewController:self];
     [contentView addSubview:_bannerView];
     self.view = contentView;
+
 }
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_6_0
@@ -97,7 +119,6 @@ NSString * const BannerViewActionDidFinish = @"BannerViewActionDidFinish";
     
     _bannerView.rootViewController = self;
     [self.view addSubview:_bannerView];
-    
     GADRequest *request = [GADRequest request];
     // For testing
     request.testDevices = @[ GAD_SIMULATOR_ID ];

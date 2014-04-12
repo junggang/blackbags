@@ -241,6 +241,7 @@
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
 		D5C4733418F816B700F5770F /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C4733318F816B700F5770F /* libGoogleAdMobAds.a */; };
+		E751DE4A18F92CC20001879E /* AdMobObjectCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */; };
 		E7B3F36718E5DB3600024DDF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36618E5DB3600024DDF /* AdSupport.framework */; };
 		E7B3F36918E5DB5800024DDF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36818E5DB5800024DDF /* MessageUI.framework */; };
 		E7B3F36B18E5DB6900024DDF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36A18E5DB6900024DDF /* StoreKit.framework */; };
@@ -263,7 +264,6 @@
 		E7F5195218C49C7B002530DC /* GameLogic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F518FC18C49C7A002530DC /* GameLogic.cpp */; };
 		E7F5195318C49C7B002530DC /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F518FE18C49C7A002530DC /* GameManager.cpp */; };
 		E7F5195418C49C7B002530DC /* GameSettingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190018C49C7A002530DC /* GameSettingScene.cpp */; };
-		E7F5195518C49C7B002530DC /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190218C49C7A002530DC /* HelloWorldScene.cpp */; };
 		E7F5195618C49C7B002530DC /* HelpButtonLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190418C49C7A002530DC /* HelpButtonLayer.cpp */; };
 		E7F5195718C49C7B002530DC /* HelpPopupLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190618C49C7A002530DC /* HelpPopupLayer.cpp */; };
 		E7F5195818C49C7B002530DC /* HelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190818C49C7A002530DC /* HelpScene.cpp */; };
@@ -791,6 +791,8 @@
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		D5C4733318F816B700F5770F /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "../Classes/GoogleAdMobAdsSdkiOS-6.8.0/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
+		E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdMobObjectCPP.mm; sourceTree = "<group>"; };
+		E751DE4918F92CC20001879E /* AdMobObjectCPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdMobObjectCPP.h; sourceTree = "<group>"; };
 		E7B3F35B18E5DB0800024DDF /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
 		E7B3F35C18E5DB0800024DDF /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
 		E7B3F35D18E5DB0800024DDF /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
@@ -840,8 +842,6 @@
 		E7F518FF18C49C7A002530DC /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
 		E7F5190018C49C7A002530DC /* GameSettingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSettingScene.cpp; sourceTree = "<group>"; };
 		E7F5190118C49C7A002530DC /* GameSettingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSettingScene.h; sourceTree = "<group>"; };
-		E7F5190218C49C7A002530DC /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		E7F5190318C49C7A002530DC /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		E7F5190418C49C7A002530DC /* HelpButtonLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelpButtonLayer.cpp; sourceTree = "<group>"; };
 		E7F5190518C49C7A002530DC /* HelpButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpButtonLayer.h; sourceTree = "<group>"; };
 		E7F5190618C49C7A002530DC /* HelpPopupLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelpPopupLayer.cpp; sourceTree = "<group>"; };
@@ -1955,6 +1955,8 @@
 			children = (
 				E7C969C618E69435004306B0 /* BannerViewController.m */,
 				E7C969C718E69435004306B0 /* BannerViewController.h */,
+				E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */,
+				E751DE4918F92CC20001879E /* AdMobObjectCPP.h */,
 			);
 			name = Ad;
 			sourceTree = "<group>";
@@ -1981,8 +1983,6 @@
 				E7F518F718C49C7A002530DC /* CreditScene.h */,
 				E7F5190018C49C7A002530DC /* GameSettingScene.cpp */,
 				E7F5190118C49C7A002530DC /* GameSettingScene.h */,
-				E7F5190218C49C7A002530DC /* HelloWorldScene.cpp */,
-				E7F5190318C49C7A002530DC /* HelloWorldScene.h */,
 				E7F5191418C49C7A002530DC /* IntroScene.cpp */,
 				E7F5191518C49C7A002530DC /* IntroScene.h */,
 				E7F5191818C49C7A002530DC /* MainScene.cpp */,
@@ -2179,7 +2179,6 @@
 				E7F5197118C49C7B002530DC /* SettingSecondStepLayer.cpp in Sources */,
 				15A3D9011682F7D5002FB0C5 /* b2CollideEdge.cpp in Sources */,
 				E7F5196518C49C7B002530DC /* PlayerLayer.cpp in Sources */,
-				E7F5195518C49C7B002530DC /* HelloWorldScene.cpp in Sources */,
 				15A3D9021682F7D5002FB0C5 /* b2CollidePolygon.cpp in Sources */,
 				15A3D9031682F7D5002FB0C5 /* b2Collision.cpp in Sources */,
 				E7F5195618C49C7B002530DC /* HelpButtonLayer.cpp in Sources */,
@@ -2414,6 +2413,7 @@
 				379BB9B317F03F3700829B88 /* UIWidget.cpp in Sources */,
 				379BB9B417F03F3700829B88 /* UILayout.cpp in Sources */,
 				379BB9B617F03F3700829B88 /* UILayoutParameter.cpp in Sources */,
+				E751DE4A18F92CC20001879E /* AdMobObjectCPP.mm in Sources */,
 				E7F5195218C49C7B002530DC /* GameLogic.cpp in Sources */,
 				E7F5194918C49C7B002530DC /* BackgroundLayer.cpp in Sources */,
 				379BB9B717F03F3700829B88 /* UILayoutDefine.cpp in Sources */,
@@ -2490,7 +2490,6 @@
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 					"$(PROJECT_DIR)",
-					"/Users/blastingzone/Desktop/NHN\\ NEXT/1_3/cocos2d-x-2.2.2/MS/Monsc/Classes/GoogleAdMobAdsSdkiOS-6.8.0",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-O2";
@@ -2542,7 +2541,6 @@
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 					"$(PROJECT_DIR)",
-					"/Users/blastingzone/Desktop/NHN\\ NEXT/1_3/cocos2d-x-2.2.2/MS/Monsc/Classes/GoogleAdMobAdsSdkiOS-6.8.0",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";

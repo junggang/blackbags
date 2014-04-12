@@ -4,6 +4,7 @@
 #include "ResultTitleLayer.h"
 #include "ResultButtonLayer.h"
 #include "AudioManager.h"
+#include "AdMobObjectCPP.h"
 
 USING_NS_CC;
 
@@ -16,6 +17,10 @@ bool CResultScene::init(void)
         return false;
     }
 
+    // 광고 켜기
+    gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
+    admob->showAdMob();
+    
 	/////////////////////////////
     // 2. add layers
 	CCLayer* BackgroundLayer = CBackgroundLayer::create();

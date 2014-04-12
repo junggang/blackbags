@@ -10,6 +10,7 @@
 #include "HomeMenuLayer.h"
 #include "DisconnectedLayer.h"
 #include "AudioManager.h"
+#include "AdMobObjectCPP.h"
 
 USING_NS_CC;
 
@@ -22,6 +23,9 @@ bool CPlayScene::init(void)
 		return false;
 	}
 
+    gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
+    admob->hideAdMob();
+    
 	/////////////////////////////
     // 2. add layers
 	CCLayer* BackgroundLayer = CBackgroundLayer::create();

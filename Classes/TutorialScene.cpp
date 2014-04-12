@@ -2,6 +2,8 @@
 #include "BackgroundLayer.h"
 #include "TutorialBoardLayer.h"
 #include "GameManager.h"
+#include "AdMobObjectCPP.h"
+
 USING_NS_CC;
 
 bool CTutorialScene::init(void)
@@ -12,6 +14,10 @@ bool CTutorialScene::init(void)
     {
         return false;
     }
+    
+    // 광고 끄기
+    gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
+    admob->hideAdMob();
     
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     

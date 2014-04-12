@@ -1,28 +1,15 @@
 #import "RootViewController.h"
-#import "BannerViewController.h"
-
 
 @implementation RootViewController
 
-
+/*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willBeginBannerViewActionNotification:) name:BannerViewActionWillBegin object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishBannerViewActionNotification:) name:BannerViewActionDidFinish object:nil];
-    }
+        // Custom initialization
+        }
     return self;
 }
-
-- (void)willBeginBannerViewActionNotification:(NSNotification *)notification
-{
-    NSLog(@"willBeginBannerViewActionNotification");
-}
-
-- (void)didFinishBannerViewActionNotification:(NSNotification *)notification
-{
-    NSLog(@"didFinishBannerViewActionNotification");
-}
-
+*/
 
 /*
 // Implement loadView to create a view hierarchy programmatically, without using a nib.

@@ -6,9 +6,8 @@
 #include "SettingSecondStepLayer.h"
 #include "WaitingChannelId.h"
 #include "DisconnectedLayer.h"
-
 #include "GameManager.h"
-
+#include "AdMobObjectCPP.h"
 
 USING_NS_CC;
 
@@ -26,6 +25,10 @@ bool CGameSettingScene::init(void)
 	// init current network phase
 	m_CurrentPhase = CGameManager::GetInstance()->GetCurrentNetworkPhase();
     
+    // 광고 끄기
+    gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
+    admob->hideAdMob();
+
 	/////////////////////////////
 	// 2. add layers
     

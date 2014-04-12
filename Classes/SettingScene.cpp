@@ -2,6 +2,7 @@
 #include "BackgroundLayer.h"
 #include "GameManager.h"
 #include "AudioManager.h"
+#include "AdMobObjectCPP.h"
 
 USING_NS_CC;
 
@@ -16,7 +17,10 @@ bool CSettingScene::init(void)
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
-
+    // 광고 켜기
+    gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
+    admob->showAdMob();
+    
 	/////////////////////////////
     // 2. add layers
 	CCLayer* BackgroundLayer = CBackgroundLayer::create();

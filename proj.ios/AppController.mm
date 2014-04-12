@@ -6,7 +6,6 @@
 #import "BannerViewController.h"
 
 @implementation AppController {
-    BannerViewController *_bannerViewController;
 }
 
 #pragma mark -
@@ -48,15 +47,15 @@ static AppDelegate s_sharedApplication;
         // use this method on ios6
         [window setRootViewController:viewController];
     }
-    */
-    
-    _bannerViewController = [[BannerViewController alloc] initWithContentViewController:viewController];
-    //self.window.rootViewController = _bannerViewController;
-    [window setRootViewController:_bannerViewController];
+     */
     
     [window makeKeyAndVisible];
     
     [[UIApplication sharedApplication] setStatusBarHidden:true];
+    
+    BannerViewController* _bannerViewController = [BannerViewController shared];
+    [_bannerViewController initWithContentViewController:viewController];
+    [window setRootViewController:_bannerViewController];
     
     cocos2d::CCApplication::sharedApplication()->run();
 

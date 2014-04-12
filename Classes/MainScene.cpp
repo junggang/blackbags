@@ -5,6 +5,7 @@
 #include "GameManager.h"
 #include "BackgroundAnimation.h"
 #include "AudioManager.h"
+#include "AdMobObjectCPP.h"
 
 USING_NS_CC;
 
@@ -19,6 +20,10 @@ bool CMainScene::init(void)
     
     CGameManager::GetInstance()->init();
 
+    // 광고 켜기
+    gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
+    admob->showAdMob();
+    
 	/////////////////////////////
     // 2. add layers
 	CCLayer* BackgroundLayer = CBackgroundLayer::create();

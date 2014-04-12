@@ -17,6 +17,8 @@ extern NSString * const BannerViewActionDidFinish;
 @interface BannerViewController : UIViewController
 
 - (instancetype)initWithContentViewController:(UIViewController *)contentController;
+- (void) showAdMob;
+- (void) hideAdMob;
 
 @end
 
