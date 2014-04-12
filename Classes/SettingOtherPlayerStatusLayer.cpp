@@ -14,6 +14,7 @@ enum PLAYER_TAG
 	PLAYER_3_TAG,
 	PLAYER_4_TAG,
 	CURRENT_FACE_TAG,
+    CURRENT_NAME_TAG,
 	READY_STATE_TAG
 };
 
@@ -71,29 +72,29 @@ void CSettingOtherPlayerStatusLayer::update()
 		for (int i = 0 ; i < CGameManager::GetInstance()->GetPlayerNumberOfThisGame(); ++i)
 		{
 			CCSprite* readyStateImg = nullptr;
-			m_PlayerStatusFrame[i]->removeChildByTag(READY_STATE_TAG);
 
 			if ( CGameManager::GetInstance()->IsReady(i) )
 			{
 				readyStateImg = CCSprite::create(PLAYER_STATUS_READY_IMG.c_str());
+                
+                // if load image failed
+                if (nullptr == readyStateImg)
+                {
+                    continue;
+                }
+
+                readyStateImg->setTag(READY_STATE_TAG);
+                
+                readyStateImg->setPosition(ccp(m_PlayerStatusFrame[i]->getContentSize().width - readyStateImg->getContentSize().width / 2,
+                                               m_PlayerStatusFrame[i]->getContentSize().height - readyStateImg->getContentSize().height / 2));
+                
+                m_PlayerStatusFrame[i]->addChild( readyStateImg );
 			}
 			else
 			{
-				readyStateImg = CCSprite::create(PLAYER_STATUS_READY_IMG.c_str());
+				m_PlayerStatusFrame[i]->removeChildByTag(READY_STATE_TAG);
 			}
-
-			// if load image failed
-			if (nullptr == readyStateImg)
-			{
-				continue;
-			}
-
-			readyStateImg->setTag(READY_STATE_TAG);
-
-			readyStateImg->setPosition(ccp(m_PlayerStatusFrame[i]->getContentSize().width - readyStateImg->getContentSize().width / 2,
-				m_PlayerStatusFrame[i]->getContentSize().height - readyStateImg->getContentSize().height / 2));
-
-			m_PlayerStatusFrame[i]->addChild( readyStateImg );
+			
 		}
 	}
 }
@@ -202,19 +203,26 @@ void CSettingOtherPlayerStatusLayer::UpdatePlayerAndCharacterPairsOffline()
 			// create selected face
 			CCSprite* pSelectedFace = nullptr;
             
+            // create character's name
+            CCSprite* pSelectedName = nullptr;
+            
 			switch (playerId)
 			{
                 case 0: // player 1 :: below left
                     pSelectedFace = CCSprite::create( PlayerUiCharacterBelowLeftOffline[characterId].c_str() );
+                    pSelectedName = CCSprite::create( PlayerUiNameBelowLeftOffline[characterId].c_str() );
                     break;
                 case 1: // player 2 :: below right
                     pSelectedFace = CCSprite::create( PlayerUiCharacterBelowRightOffline[characterId].c_str() );
+                    pSelectedName = CCSprite::create( PlayerUiNameBelowRightOffline[characterId].c_str() );
                     break;
                 case 2: // player 3 :: upper left
                     pSelectedFace = CCSprite::create( PlayerUiCharacterUpperLeftOffline[characterId].c_str() );
+                    pSelectedName = CCSprite::create( PlayerUiNameUpperLeftOffline[characterId].c_str() );
                     break;
                 case 3: // player 4 :: upper right
                     pSelectedFace = CCSprite::create( PlayerUiCharacterUpperRightOffline[characterId].c_str() );
+                    pSelectedName = CCSprite::create( PlayerUiNameUpperRightOffline[characterId].c_str() );
                     break;
 			}
             
@@ -224,14 +232,23 @@ void CSettingOtherPlayerStatusLayer::UpdatePlayerAndCharacterPairsOffline()
 				return;
 			}
             
-			// set position
+			// face set position
 			pSelectedFace->setPosition( ccp(0, 0) );
 			pSelectedFace->setAnchorPoint( ccp(0, 0) );
             
 			pSelectedFace->setTag(CURRENT_FACE_TAG);
             
+            // name set position
+            pSelectedName->setPosition( ccp(0, 0) );
+            pSelectedName->setAnchorPoint( ccp(0, 0) );
+            
+            pSelectedName->setTag(CURRENT_NAME_TAG);
+            
 			m_PlayerStatusFrame[playerId]->removeChildByTag(CURRENT_FACE_TAG);
 			m_PlayerStatusFrame[playerId]->addChild(pSelectedFace);
+            
+            m_PlayerStatusFrame[playerId]->removeChildByTag(CURRENT_NAME_TAG);
+            m_PlayerStatusFrame[playerId]->addChild(pSelectedName);
 		}
 	}
 }
@@ -329,7 +346,7 @@ void CSettingOtherPlayerStatusLayer::UpdateNamesToPlayerFrame()
     // update name works online-mode only
     if (!CGameManager::GetInstance()->IsOnlineMode())
     {
-        //return;
+        return;
     }
     
     for (int i = 0; i < MAX_PLAYER_NUM; ++i)

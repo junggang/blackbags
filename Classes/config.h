@@ -575,6 +575,14 @@ const std::string PlayerUiCharacterUpperLeftOffline[5] =
 	"image/shared_player_empty_01.png"
 };
 
+const std::string PlayerUiNameUpperLeftOffline[4] =
+{
+    "image/shared_player_character01_01_name.png",
+    "image/shared_player_character02_01_name.png",
+    "image/shared_player_character03_01_name.png",
+    "image/shared_player_character04_01_name.png",
+};
+
 const std::string PlayerUiCharacterUpperRight[5] =
 {
 	"image/shared_player_character01_02.png",
@@ -591,6 +599,14 @@ const std::string PlayerUiCharacterUpperRightOffline[5] =
 	"image/shared_player_character03_02_off.png",
 	"image/shared_player_character04_02_off.png",
 	"image/shared_player_empty_02.png"
+};
+
+const std::string PlayerUiNameUpperRightOffline[4] =
+{
+    "image/shared_player_character01_02_name.png",
+    "image/shared_player_character02_02_name.png",
+    "image/shared_player_character03_02_name.png",
+    "image/shared_player_character04_02_name.png",
 };
 
 const std::string PlayerUiCharacterBelowLeft[5] =
@@ -611,6 +627,14 @@ const std::string PlayerUiCharacterBelowLeftOffline[5] =
 	"image/shared_player_empty_03.png"
 };
 
+const std::string PlayerUiNameBelowLeftOffline[4] =
+{
+    "image/shared_player_character01_03_name.png",
+    "image/shared_player_character02_03_name.png",
+    "image/shared_player_character03_03_name.png",
+    "image/shared_player_character04_03_name.png",
+};
+
 const std::string PlayerUiCharacterBelowRight[5] =
 {
 	"image/shared_player_character01_04.png",
@@ -627,6 +651,14 @@ const std::string PlayerUiCharacterBelowRightOffline[5] =
 	"image/shared_player_character03_04_off.png",
 	"image/shared_player_character04_04_off.png",
 	"image/shared_player_empty_04.png"
+};
+
+const std::string PlayerUiNameBelowRightOffline[4] =
+{
+    "image/shared_player_character01_04_name.png",
+    "image/shared_player_character02_04_name.png",
+    "image/shared_player_character03_04_name.png",
+    "image/shared_player_character04_04_name.png",
 };
 
 const std::string SHARED_PLAYERUI_CHARACTERS[16] =

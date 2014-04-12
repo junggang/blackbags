@@ -87,7 +87,7 @@ bool CMainMenuLayer::init()
 	pMenuTitle->setPosition(CCPoint(MAIN_MENU_TITLE_POS));
 	pMenuTitle->setAnchorPoint(ccp(0,0));
 	addChild(pMenuTitle,3);
-    
+    /*
     //create particle animation
     CCParticleSystem* m_star0 = CCParticleFlower::create();
     m_star0->retain();
@@ -118,7 +118,7 @@ bool CMainMenuLayer::init()
     m_star2->setPosition(CCPoint(MAIN_MENU1_IMG_POS));
     m_star2->setTexture( CCTextureCache::sharedTextureCache()->addImage("image/particle-star.png"));
     addChild(m_star2,2);
-    
+    */
 	return true;
 }
 

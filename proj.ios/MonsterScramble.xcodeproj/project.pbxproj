@@ -240,7 +240,7 @@
 		D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949B15BD2D8E00D803EB /* Icon-114.png */; };
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
-		E7B3F36518E5DB0800024DDF /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36418E5DB0800024DDF /* libGoogleAdMobAds.a */; };
+		D5C4733418F816B700F5770F /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C4733318F816B700F5770F /* libGoogleAdMobAds.a */; };
 		E7B3F36718E5DB3600024DDF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36618E5DB3600024DDF /* AdSupport.framework */; };
 		E7B3F36918E5DB5800024DDF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36818E5DB5800024DDF /* MessageUI.framework */; };
 		E7B3F36B18E5DB6900024DDF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36A18E5DB6900024DDF /* StoreKit.framework */; };
@@ -790,6 +790,7 @@
 		D4EF949D15BD2D9600D803EB /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../proj.ios/Icon-72.png"; sourceTree = "<group>"; };
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		D5C4733318F816B700F5770F /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "../Classes/GoogleAdMobAdsSdkiOS-6.8.0/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
 		E7B3F35B18E5DB0800024DDF /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
 		E7B3F35C18E5DB0800024DDF /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
 		E7B3F35D18E5DB0800024DDF /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
@@ -799,7 +800,6 @@
 		E7B3F36118E5DB0800024DDF /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
 		E7B3F36218E5DB0800024DDF /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
 		E7B3F36318E5DB0800024DDF /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
-		E7B3F36418E5DB0800024DDF /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		E7B3F36618E5DB3600024DDF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		E7B3F36818E5DB5800024DDF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		E7B3F36A18E5DB6900024DDF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -932,12 +932,12 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */,
+				D5C4733418F816B700F5770F /* libGoogleAdMobAds.a in Frameworks */,
 				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
-				E7B3F36518E5DB0800024DDF /* libGoogleAdMobAds.a in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
 				1AB8703C175E0A92005D39BF /* libwebsockets.a in Frameworks */,
 			);
@@ -1936,6 +1936,7 @@
 		E7B3F35A18E5DA9600024DDF /* AdMob */ = {
 			isa = PBXGroup;
 			children = (
+				D5C4733318F816B700F5770F /* libGoogleAdMobAds.a */,
 				E7B3F35B18E5DB0800024DDF /* GADAdMobExtras.h */,
 				E7B3F35C18E5DB0800024DDF /* GADAdNetworkExtras.h */,
 				E7B3F35D18E5DB0800024DDF /* GADAdSize.h */,
@@ -1945,7 +1946,6 @@
 				E7B3F36118E5DB0800024DDF /* GADInterstitialDelegate.h */,
 				E7B3F36218E5DB0800024DDF /* GADRequest.h */,
 				E7B3F36318E5DB0800024DDF /* GADRequestError.h */,
-				E7B3F36418E5DB0800024DDF /* libGoogleAdMobAds.a */,
 			);
 			name = AdMob;
 			sourceTree = "<group>";
@@ -2490,7 +2490,9 @@
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 					"$(PROJECT_DIR)",
+					"/Users/blastingzone/Desktop/NHN\\ NEXT/1_3/cocos2d-x-2.2.2/MS/Monsc/Classes/GoogleAdMobAdsSdkiOS-6.8.0",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-O2";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = MonsterScramble;
@@ -2499,7 +2501,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "armv6 armv7 i386";
+				VALID_ARCHS = "";
 			};
 			name = Debug;
 		};
@@ -2540,7 +2542,9 @@
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 					"$(PROJECT_DIR)",
+					"/Users/blastingzone/Desktop/NHN\\ NEXT/1_3/cocos2d-x-2.2.2/MS/Monsc/Classes/GoogleAdMobAdsSdkiOS-6.8.0",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = MonsterScramble;
 				PROVISIONING_PROFILE = "";
@@ -2549,6 +2553,7 @@
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "";
 			};
 			name = Release;
 		};
