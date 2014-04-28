@@ -233,7 +233,7 @@ struct MapObject
 
 /*	credit scene */
 #define CREDIT_TITLE_IMAGE "image/credit_title.png"
-#define CREDIT_TITLE_POSITION 1022,1390
+#define CREDIT_TITLE_POSITION 842,1317
 
 #define CREDIT_MEMBER_IMAGE "image/credit_members.png"
 #define CREDIT_MEMBER_POSITION 113,200

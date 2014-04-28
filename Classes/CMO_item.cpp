@@ -22,6 +22,6 @@ void CMO_item::setImage( IndexedPosition indexedPosition )
 	int objectIdx = CGameManager::GetInstance()->GetItem(indexedPosition);
 	pItem = CCSprite::create(ItemImageFileList[objectIdx].c_str());
 	pItem->setAnchorPoint(ccp(0.5f, 0.5f));
-	pItem->setPosition(ccp(DEFAULT_TILE_WIDTH/2,0));
+	pItem->setPosition(ccp(DEFAULT_TILE_WIDTH/2,20.0f));
 	this->addChild(pItem,0);
 }

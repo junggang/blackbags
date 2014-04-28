@@ -27,11 +27,12 @@ bool CHomeMenuLayer::init()
 		menu_selector(CHomeMenuLayer::homeMenuCallback)
 		);
 
-	pMenuIcon->setPosition(CCPoint(SHARED_BTN_HOME_POS) );
+	pMenuIcon->setPosition(ccp(0,0));
+    pMenuIcon->setAnchorPoint(ccp(0,0));
 
 	// create menu, it's an autorelease object
 	pMenu = CCMenu::create(pMenuIcon, NULL);
-	pMenu->setPosition(CCPointZero);
+	pMenu->setPosition(CCPoint(SHARED_BTN_HOME_POS));
 	this->addChild(pMenu, 1);
 	return true;
 }
