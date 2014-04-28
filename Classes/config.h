@@ -554,6 +554,7 @@ const std::string PLAYSCENE_LAND_UNOCCUPIED = "image/playscene_land_unoccupied.p
 const std::string PLAYSCENE_LAND_OCCUPIED = "image/playscene_land_occupied.png";
 
 const std::string PLAYSCENE_GAMEOVER = "image/playscene_gameover.png";
+const std::string PLAYSCENE_GAMEOVER_TITLE = "image/playscene_gameover_text.png";
 
 const float PLAYSCENE_ANIMATION_TIME = 0.8f;
 

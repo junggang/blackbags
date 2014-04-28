@@ -14,21 +14,26 @@ bool CGameEndLayer::init()
 	}
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    
+    CCSprite *pEndBackground = CCSprite::create(PLAYSCENE_GAMEOVER.c_str());
+    pEndBackground->setPosition(ccp(0,0));
+    pEndBackground->setAnchorPoint(ccp(0,0));
+    addChild(pEndBackground,1);
+    
 
 	CCMenuItemImage *pEndButton = CCMenuItemImage::create(
-                                        PLAYSCENE_GAMEOVER.c_str(),
-                                        PLAYSCENE_GAMEOVER.c_str(),
+                                        PLAYSCENE_GAMEOVER_TITLE.c_str(),
+                                        PLAYSCENE_GAMEOVER_TITLE.c_str(),
 										this,
 										menu_selector(CGameEndLayer::gameEndCallback)
 										);
     
-	pEndButton->setPosition(CCPointZero);
-    pEndButton->setAnchorPoint(ccp(0,0));
+	pEndButton->setPosition(ccp(visibleSize.width/2,visibleSize.height/2));
 
 	// create menu, it's an autorelease object
 	CCMenu* pMenu = CCMenu::create(pEndButton, NULL);
 	pMenu->setPosition(CCPointZero);
-	this->addChild(pMenu, 1);
+	this->addChild(pMenu, 2);
     
     return true;
 }
