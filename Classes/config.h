@@ -555,6 +555,8 @@ const std::string PLAYSCENE_LAND_OCCUPIED = "image/playscene_land_occupied.png";
 
 const std::string PLAYSCENE_GAMEOVER = "image/playscene_gameover.png";
 
+const float PLAYSCENE_ANIMATION_TIME = 0.8f;
+
 /* shared images */
 const std::string SHARED_BACKGROUND = "image/shared_background.png";
 const std::string SHARED_PLAYERUI_GREY = "image/shared_playerui_background_unselected.png";

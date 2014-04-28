@@ -158,7 +158,8 @@ void CMO_line::update( float delta )
         addChild(spritebatch,2);
         spritebatch->setTag(0);
         
-        CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,0.2f);
+        
+        CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,PLAYSCENE_ANIMATION_TIME/48);
         CCAction* myLine = CCAnimate::create(animation);
         pElement->runAction(myLine);
     }

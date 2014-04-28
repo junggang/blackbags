@@ -94,7 +94,7 @@ void CMO_tile::update( float delta )
         spritebatch->addChild(pElement);
         addChild(spritebatch,2);
         
-        CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,0.2f);
+        CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,PLAYSCENE_ANIMATION_TIME/PLAYSCENE_LAND_FRAME);
         CCAction* myTile = CCAnimate::create(animation);
 
 		CCAction *actions = CCSequence::create(dt, myTile, NULL);
