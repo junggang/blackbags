@@ -116,6 +116,7 @@ public:
 	// network::playReady 전송을 위한 함수
 	void	SetAnimationDelay(int time);
 	float	GetAnimationDelay() { return m_AnimationDelay; }
+    void    InitAnimationDelay();
 
 	// game data 접근 관련
 	std::string GetUsersName();

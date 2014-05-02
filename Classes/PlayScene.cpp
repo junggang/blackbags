@@ -126,7 +126,8 @@ void CPlayScene::update(float dt)
         }
 		// 라인 재생 시간과 타일 재생 시간이 같으므로 아래의 코드에서 0.8의 상수는
         // 라인 재생만 있을 경우에는 라인 재생 시간을, 타일 애니메이션이 포함되는 경우에는 마지막 재생되는 타일 애니메이션 재생 시간을 의미
-		float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 0.8f;
+		float delayTime = CGameManager::GetInstance()->GetAnimationDelay();
+        delayTime = ( delayTime == 0.0f ) ? PLAYSCENE_ANIMATION_TIME : delayTime;
         
 		// 애니메이션 끝나면 레디 전송하는 코드 삽입!
 		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CGameManager::PlayReady) );
@@ -134,19 +135,20 @@ void CPlayScene::update(float dt)
 		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
 
 		// 애니메이션 전송 지연값 초기화
-		CGameManager::GetInstance()->SetAnimationDelay(0.0f);
+		CGameManager::GetInstance()->InitAnimationDelay();
 	}
     else
     {
         CCLog("playScene");
-        float delayTime = CGameManager::GetInstance()->GetAnimationDelay() + 1.0f;
+        float delayTime = CGameManager::GetInstance()->GetAnimationDelay();
+        delayTime = ( delayTime == 0.0f ) ? PLAYSCENE_ANIMATION_TIME : delayTime;
         
 		// 애니메이션 끝내고 다음 턴 시작
 		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CGameManager::SetPlayReady) );
 		CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
         
-        CGameManager::GetInstance()->SetAnimationDelay(0.0f);
+        CGameManager::GetInstance()->InitAnimationDelay();
     }
 
 	// 모든 업데이트가 완료되었으므로 플래그 초기화
