@@ -2,6 +2,8 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 
+class LayerWebView;
+
 class CSettingMenuLayer : public cocos2d::CCLayer
 {
 public:
@@ -31,7 +33,7 @@ private:
 	cocos2d::extension::CCControlSlider *m_pBGMVolume;
 	cocos2d::extension::CCControlSlider *m_pSEVolume;
     cocos2d::CCMenu* m_pLoginMenu;
-    cocos2d::CCLayer* m_LoginLayer;
+    LayerWebView* m_LoginLayer;
     std::string m_Name;
 };
 

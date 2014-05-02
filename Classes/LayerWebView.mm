@@ -24,7 +24,7 @@ bool LayerWebView::init()
     }
     
     gUIWebViewBridge = [[UIWebViewBridge alloc] init];
-    [gUIWebViewBridge setLayerWebView : this];
+    
     return true;
 }
 
@@ -44,4 +44,14 @@ void LayerWebView::close()
 {
     [gUIWebViewBridge releaseResource];
     [gUIWebViewBridge dealloc];
+}
+
+void LayerWebView::clearCookie()
+{
+    [gUIWebViewBridge clearCookie];
+}
+
+void LayerWebView::run()
+{
+    [gUIWebViewBridge setLayerWebView : this];
 }

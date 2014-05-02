@@ -12,6 +12,8 @@
 #include "cocos2d.h"
 #include "config.h"
 
+class LayerWebView;
+
 class CLoginScene : public cocos2d::CCScene
 {
 public:
@@ -24,7 +26,7 @@ public:
 	CREATE_FUNC(CLoginScene);
     
 private:
-    cocos2d::CCLayer* m_LoginLayer;
+    LayerWebView* m_LoginLayer;
 };
 
 #endif /* defined(__MonsterScramble__LoginScene__) */

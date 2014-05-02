@@ -21,6 +21,8 @@ public:
     
     void webViewDidFinishLoad(std::string newToken);
     void close();
+    void clearCookie();
+    void run();
     
 	// implement the "static node()" method manually
     CREATE_FUNC(LayerWebView);

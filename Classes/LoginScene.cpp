@@ -50,6 +50,7 @@ void CLoginScene::update(float dt)
             CGameManager::GetInstance()->SetCurrentLoginPhase(LP_WAITING);
             
             m_LoginLayer = LayerWebView::create();
+            m_LoginLayer->run();
             this->addChild(m_LoginLayer, 1);
             
             break;

@@ -92,6 +92,27 @@
 	[mView removeFromSuperview];
 }
 
+-(void) clearCookie
+{
+    /*
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray* monsterScrambleCookie = [cookies cookiesForURL:
+                                [NSURL URLWithString:@"blackbags-mons.appspot.com"]];
+    for (NSHTTPCookie* cookie in monsterScrambleCookie) {
+        [cookies deleteCookie:cookie];
+    }
+    */
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *each in cookieStorage.cookies) {
+        NSLog(@"%@", [each domain]);
+        if ([[each domain] isEqualToString:@"blackbags-mons.appspot.com"]
+            || [[each domain] isEqualToString:@"accounts.google.com"])
+        {
+            [cookieStorage deleteCookie:each];
+        }
+    }
+}
+
 // functions for getting token
 // get token from cookie
 - (NSString*)getTokenFromCookie
@@ -104,8 +125,8 @@
         //NSLog(@"%@", [cookie domain]);
         if ([[cookie domain] isEqualToString:@"blackbags-mons.appspot.com"])
         {
-            //NSLog(@"same");
-            //NSLog(@"%@", [cookie name]);
+            // NSLog(@"same");
+            // NSLog(@"%@", [cookie name]);
             if ([[cookie name] isEqualToString:@"ACSID"])
             {
                 return [cookie value];

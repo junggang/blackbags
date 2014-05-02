@@ -21,5 +21,6 @@
 
 -(void) setLayerWebView : (LayerWebView*) iLayerWebView ;
 -(void) releaseResource;
+-(void) clearCookie;
 
 @end

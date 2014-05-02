@@ -135,6 +135,11 @@ void CSettingMenuLayer::GoogleLoginCallback(CCObject* pSender)
 	// Logic
     // webview 창하나 만들어서 로그인 시키자
     m_LoginLayer = LayerWebView::create();
+    
+    // 이미 로그인 되어 있다면 계정을 바꾸는 것이므로 게임에 저장된 닉네임을 초기화한다.
+    m_LoginLayer->clearCookie();
+    m_LoginLayer->run();
+    
     this->addChild(m_LoginLayer, 1);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	//exit(0);
@@ -159,16 +164,15 @@ void CSettingMenuLayer::CreditCallback( CCObject* pSender )
 
 void CSettingMenuLayer::update( float dt )
 {
-    /*
 	if (CGameManager::GetInstance()->GetCurrentLoginPhase() == LP_OK)
     {
         if (nullptr != m_LoginLayer)
         {
-            static_cast<LayerWebView *>(m_LoginLayer)->close();
+            m_LoginLayer->close();
             this->removeChild(m_LoginLayer);
+            m_LoginLayer = nullptr;
         }
     }
-     */
     
     std::string tempName = CGameManager::GetInstance()->GetUsersName();
     if (strcmp(m_Name.c_str(), tempName.c_str() ) != 0)
