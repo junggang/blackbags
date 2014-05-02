@@ -21,8 +21,8 @@ void CMO_tile::setImage(IndexedPosition indexedPosition)
 {
 	m_Index = indexedPosition;
 
-	// ���ξ��� �̹����� �־��ش�.
-	// (������ ���� �� �ƹ��͵� �� ���δٸ� �߰� �� �ϸ� �ȴ�)
+	// ¡÷¿Œæ¯¥¬ ¿ÃπÃ¡ˆ∏¶ ≥÷æÓ¡ÿ¥Ÿ.
+	// (¡÷¿Œ¿Ã æ¯¿ª ∂ß æ∆π´∞Õµµ æ» ∫∏¿Œ¥Ÿ∏È √ﬂ∞° æ» «œ∏È µ»¥Ÿ)
 	//pTile = CCSprite::create(TileImageFileList[4].c_str(), CCRectMake(0.0f, 0.0f, DEFAULT_TILE_SIZE,  DEFAULT_TILE_SIZE) );
 	pTile = CCSprite::create(PLAYSCENE_LAND_UNOCCUPIED.c_str(), CCRectMake(0.0f, 0.0f, DEFAULT_TILE_WIDTH,  DEFAULT_TILE_HEIGHT) );
 	pTile->setAnchorPoint( ccp(0, 0.5f) );
@@ -46,8 +46,10 @@ void CMO_tile::update( float delta )
     MO_OWNER tempOwner = CGameManager::GetInstance()->GetMapOwner(m_Index);
 	if (tempOwner != m_Owner)
 	{
-        float delayTime = 0.8f + 0.8f * (CGameManager::GetInstance()->GetTileAnimationTurn(m_Index) - 1);
+        // 애니메이션이 시작하는 시간은 라인이 재생되는 시간 + 인덱스가 낮은 타일들이 모두 그려지는 시간(애니메이션이 있는 타일은 인덱스 1부터 시작하므로 자신의 인덱스에서 1을 빼서 재생시간 곱함)
+        float delayTime = PLAYSCENE_ANIMATION_TIME + PLAYSCENE_ANIMATION_TIME * (CGameManager::GetInstance()->GetTileAnimationTurn(m_Index) - 1);
         
+        // 애니메이션이 끝나는 시간을 지정함 
 		CGameManager::GetInstance()->SetAnimationDelay(delayTime);
         
 		CCDelayTime *dt = CCDelayTime::create(delayTime);
@@ -109,11 +111,11 @@ void CMO_tile::update( float delta )
 
 void CMO_tile::changeImage()
 {
-	// ������ �̹����� �����Ѵ�.
+	// ±‚¡∏¿« ¿ÃπÃ¡ˆ∏¶ ªË¡¶«—¥Ÿ.
 	this->removeChild(pTile, true);
 
-	// ���Ӱ� ������ �����ڿ� ���� �̹��� ���� ���� �Ҵ�
-	// ���� m_Owner�� MO_NOBODY ���·� �����ϸ� ū�ϳ�
+	// ªı∑”∞‘ º≥¡§µ» º“¿Ø¿⁄ø° µ˚∂Ûº≠ ¿ÃπÃ¡ˆ ªı∑Œ ª˝º∫ «“¥Á
+	// ∏∏æ‡ m_Owner∞° MO_NOBODY ªÛ≈¬∑Œ ¡¯¿‘«œ∏È ≈´¿œ≥≤
 	pTile = CCSprite::create(TileImageFileList[static_cast<int>(CGameManager::GetInstance()->GetCharacterIdByPlayerId(m_Owner))].c_str());
 	pTile->setAnchorPoint( ccp(0, 0.5) );
 	pTile->setPosition( ccp(0.0f, 0.0f) );

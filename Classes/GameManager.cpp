@@ -764,6 +764,11 @@ void CGameManager::SetAnimationDelay(int time)
 	}
 }
 
+void CGameManager::InitAnimationDelay()
+{
+	m_AnimationDelay = 0.0f;
+}
+
 void CGameManager::SetPlayerFrameSelected( int playerId, bool status )
 {
 	if (m_IsOnlineGame)
