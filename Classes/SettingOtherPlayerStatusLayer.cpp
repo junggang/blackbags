@@ -206,6 +206,9 @@ void CSettingOtherPlayerStatusLayer::UpdatePlayerAndCharacterPairsOffline()
             // create character's name
             CCSprite* pSelectedName = nullptr;
             
+            // create player's name :: when offline mode, player's name == character's name
+            std::string name;
+            
 			switch (playerId)
 			{
                 case 0: // player 1 :: below left
@@ -225,6 +228,27 @@ void CSettingOtherPlayerStatusLayer::UpdatePlayerAndCharacterPairsOffline()
                     pSelectedName = CCSprite::create( PlayerUiNameUpperRightOffline[characterId].c_str() );
                     break;
 			}
+            
+            // name update
+            switch (characterId)
+            {
+                case 0:
+                    name = "Brocola";
+                    break;
+                case 1:
+                    name = "Saphia";
+                    break;
+                case 2:
+                    name = "Cinder";
+                    break;
+                case 3:
+                    name = "Yellow the cat";
+                    break;
+                default:
+                    break;
+            }
+            
+            CGameManager::GetInstance()->SetPlayerName(playerId, name);
             
             // 방어코드
 			if ( nullptr == pSelectedFace )
