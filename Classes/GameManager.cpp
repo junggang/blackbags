@@ -55,8 +55,8 @@ bool CGameManager::init()
 		m_GameData->setBoolForKey("initialized", true);
         m_GameData->flush();
 	}
-
-	return true;
+    
+    return true;
 }
 
 
