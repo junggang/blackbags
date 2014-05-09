@@ -69,7 +69,7 @@ bool CGameBoardLayer::init()
 			pos.m_PosI = i;
 			pos.m_PosJ = j;
 
-			//Çà, ¿­ ¸ğµÎ Â¦¼ö ÀÏ °æ¿ì Å¸ÀÏÀ» ±×¸°´Ù.
+			//Â«â€¡, Ã¸â‰  âˆï£¿ÂµÅ’ Â¬Â¶ÂºË† Â¿Å“ âˆÃŠÃ¸Ã â‰ˆâˆÂ¿Å“Â¿Âª Â±â—ŠâˆâˆÂ¥Å¸.
 			if ( i % 2 == 0 && j % 2 == 0)
 			{
 				CMO_tile* pTile = CMO_tile::create();
@@ -84,11 +84,11 @@ bool CGameBoardLayer::init()
                     CMO_item* pItem = CMO_item::create();
                     pItem->setImage(IndexedPosition(i,j));
                     pItem->setPosition( ccp(m_OriginX+m_DeltaX*(j/2-1),m_OriginY+m_DeltaY*(j/2-1)) );
-                    m_Board->addChild(pItem, 3);
+                    m_Board->addChild(pItem, 4);
                 }
                 
 			}
-			// Çà, ¿­ ¸ğµÎ È¦¼öÀÏ °æ¿ì ´åÀ» ±×¸°´Ù.
+			// Â«â€¡, Ã¸â‰  âˆï£¿ÂµÅ’ Â»Â¶ÂºË†Â¿Å“ âˆÃŠÃ¸Ã Â¥Ã‚Â¿Âª Â±â—ŠâˆâˆÂ¥Å¸.
 			else if ( i % 2 == 1 && j % 2 == 1)
 			{
 				CMO_dot* pDot = CMO_dot::Create();
@@ -97,7 +97,7 @@ bool CGameBoardLayer::init()
 				m_Board->addChild(pDot, 2);
 			}
 			
-			//±× ¿Ü¿¡´Â ¼±ÀÌ´Ù.(iÂ¦¼ö/jÈ¦¼ö ¶Ç´Â iÈ¦¼ö/jÂ¦¼ö)
+			//Â±â—Š Ã¸â€¹Ã¸Â°Â¥Â¬ ÂºÂ±Â¿ÃƒÂ¥Å¸.(iÂ¬Â¶ÂºË†/jÂ»Â¶ÂºË† âˆ‚Â«Â¥Â¬ iÂ»Â¶ÂºË†/jÂ¬Â¶ÂºË†)
 			else
 			{
 				CMO_line* pLine = CMO_line::create();
@@ -141,8 +141,16 @@ void CGameBoardLayer::ccTouchesBegan( CCSet* pTouches, CCEvent* pEvent )
 	CCTouch *pTouch = (CCTouch*)pTouches->anyObject();
 
 	m_StartPoint = pTouch->getLocationInView();
+    Highlight(m_StartPoint, 1);
 	CCLog("Start point =  %f, %f", m_StartPoint.x,m_StartPoint.y);
 
+}
+
+void CGameBoardLayer::ccTouchesMoved(CCSet* pTouches, cocos2d::CCEvent* pEvent)
+{
+    CCTouch *pTouch = (CCTouch*)pTouches->anyObject();
+    m_middlePoint = pTouch->getLocationInView();
+    Highlight(m_middlePoint, 0);
 }
 
 void CGameBoardLayer::ccTouchesEnded( CCSet *pTouches, CCEvent *pEvent )
@@ -151,6 +159,8 @@ void CGameBoardLayer::ccTouchesEnded( CCSet *pTouches, CCEvent *pEvent )
 
 	m_EndPoint  = pTouch->getLocationInView();
 	CCLog("End point =  %f, %f", m_EndPoint.x,m_EndPoint.y);
+    removeChildByTag(0);
+    removeChildByTag(1);
 	DrawLine();
 }
 
@@ -189,18 +199,18 @@ void CGameBoardLayer::DrawLine()
 
 IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 {
-	//»õ·Î¿î º¯È¯ ÇÔ¼ö ÀÛ¼º
-	//°¢ Çà¸¶´Ù ±â¿ï±â´Â y = (DeltaY/DeltaX) x ·Î µ¿ÀÏÇÏÁö¸¸, yÀıÆíÀÌ -deltaY/2¸¸Å­¾¿ °¨¼ÒÇÑ´Ù.
-	//µû¶ó¼­ ¸¶¿ì½º ÁÂÇ¥°ªÀ¸·Î ÇØ´ç ÇàÀ» ±¸ÇÑ µÚ, x°ªÀ» °è»êÇÏ¿© ¿­À» ±¸ÇØ³¾ ¼ö ÀÖ´Ù.
-
-	// (0,0)À» ¾ÀÀÇ ¿ŞÂÊ ¾Æ·¡·Î ¿Å°Ü¿Â´Ù.
+	//ìƒˆë¡œìš´ ë³€í™˜ í•¨ìˆ˜ ì‘ì„±
+	//ê° í–‰ë§ˆë‹¤ ê¸°ìš¸ê¸°ëŠ” y = (DeltaY/DeltaX) x ë¡œ ë™ì¼í•˜ì§€ë§Œ, yì ˆí¸ì´ -deltaY/2ë§Œí¼ì”© ê°ì†Œí•œë‹¤.
+	//ë”°ë¼ì„œ ë§ˆìš°ìŠ¤ ì¢Œí‘œê°’ìœ¼ë¡œ í•´ë‹¹ í–‰ì„ êµ¬í•œ ë’¤, xê°’ì„ ê³„ì‚°í•˜ì—¬ ì—´ì„ êµ¬í•´ë‚¼ ìˆ˜ ìˆë‹¤.
+    
+	// (0,0)ì„ ì”¬ì˜ ì™¼ìª½ ì•„ë˜ë¡œ ì˜®ê²¨ì˜¨ë‹¤.
 	point.y = m_VisibleSize.height - point.y - m_BoardOrigin.y;
 	point.x -= m_BoardOrigin.x;
 
-	//ÀÌÁ¦ ÀÎµ¦½º·Î ¹Ù²Û´Ù.
+	//ì´ì œ ì¸ë±ìŠ¤ë¡œ ë°”ê¾¼ë‹¤.
 	IndexedPosition indexedPosition;
 
-	//¸ÕÀú, ¹üÀ§¸¦ ¹ş¾î³µ´ÂÁö È®ÀÎÇÑ´Ù.
+	//ë¨¼ì €, ë²”ìœ„ë¥¼ ë²—ì–´ë‚¬ëŠ”ì§€ í™•ì¸í•œë‹¤.
 	if ( point.x > m_Board->getContentSize().width + TOUCH_AREA ||
 		point.x< - TOUCH_AREA||
 		point.y > m_Board->getContentSize().height/2 + TOUCH_AREA ||
@@ -218,7 +228,7 @@ IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 	float remainderX = static_cast<int>(point.x) % static_cast<int>(deltaX);
 	float remainderY = static_cast<int>(point.y) % static_cast<int>(deltaY) ;
 
-	//ÀÏ´Ü ÀÌ ¾ÆÀÌ¸¦ ´Ùµë¾î¾ß ÇØ.
+	//ì¼ë‹¨ ì´ ì•„ì´ë¥¼ ë‹¤ë“¬ì–´ì•¼ í•´.
 
 	if ( remainderX < TOUCH_AREA)
 	{
@@ -244,16 +254,16 @@ IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 			point.y -=(deltaY + remainderY);
 	}
 
-	//yÀıÆíÀ» °è»êÇÑ´Ù.
+	//yì ˆí¸ì„ ê³„ì‚°í•œë‹¤.
 	interceptY = point.y - (deltaY/deltaX)*point.x;
 
-	//ÇàÀ» °è»êÇÑ´Ù.
+	//í–‰ì„ ê³„ì‚°í•œë‹¤.
 	indexedPosition.m_PosI = static_cast<int>(interceptY/-DEFAULT_TILE_HEIGHT);
 
-	//¿­À» °è»êÇÑ´Ù.
+	//ì—´ì„ ê³„ì‚°í•œë‹¤.
 	indexedPosition.m_PosJ = static_cast<int>(point.x - deltaX*indexedPosition.m_PosI)/deltaX;
 
-	//Á¡¿¡ ÇØ´çÇÏµµ·Ï °è»êÇÑ´Ù.
+	//ì ì— í•´ë‹¹í•˜ë„ë¡ ê³„ì‚°í•œë‹¤.
 	indexedPosition.m_PosI = indexedPosition.m_PosI*2+1;
 	indexedPosition.m_PosJ = indexedPosition.m_PosJ*2+1;
 
@@ -262,10 +272,56 @@ IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 	return indexedPosition;
 }
 
+void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
+{
+    if(getChildByTag(0)!=nullptr)
+    {
+        removeChildByTag(0);
+    }
+    //Dotì— í•´ë‹¹í•˜ëŠ”ì§€ ê²€ì‚¬.
+    //ë§ˆìš°ìŠ¤ ì˜¤ë²„ì‹œ ë¬´ì¡°ê±´ highlight, í´ë¦­ëœ ê²ƒì€ í´ë¦­ì´ ëë‚  ë•Œ ê¹Œì§€ highlight ìœ ì§€.
+    
+    IndexedPosition indexedPosition = ConvertCoordinate(point);
+    point.y = m_VisibleSize.height - point.y - m_BoardOrigin.y;
+	point.x -= m_BoardOrigin.x;
+    
+    //ë²”ìœ„ë¥¼ ë²—ì–´ë‚  ê²½ìš°. ê·¸ëƒ¥ ì¢…ë£Œ.
+	if ( point.x > m_Board->getContentSize().width + TOUCH_AREA ||
+		point.x< - TOUCH_AREA||
+		point.y > m_Board->getContentSize().height/2 + TOUCH_AREA ||
+		point.y < -m_Board->getContentSize().height/2- TOUCH_AREA)
+	{
+		return;
+	}
+    
+    float deltaX = DEFAULT_TILE_WIDTH/2;
+	float deltaY = DEFAULT_TILE_HEIGHT/2;
+	
+    //2. converted IndexPositionì´ Dotì— í•´ë‹¹í•˜ëŠ”ì§€ ê²€ì‚¬.
+    if(indexedPosition.m_PosI%2==1 && indexedPosition.m_PosJ%2 ==1)
+    {
+        CCPoint tempP;
+        //ì‹œì‘ì 
+        tempP.x = m_BoardOrigin.x + (indexedPosition.m_PosI/2) * deltaX;
+        tempP.y = m_BoardOrigin.y - (indexedPosition.m_PosI/2) * deltaY;
+        
+        tempP.x += deltaX * (indexedPosition.m_PosJ/2) ;
+        tempP.y += deltaY * (indexedPosition.m_PosJ/2) ;
+        
+        
+        CCSprite* pHighlight = CCSprite::create("image/playscene_dot_highlight.png");
+        
+        pHighlight->setPosition(tempP);
+        pHighlight->setTag(isClicked);
+        addChild(pHighlight,3);
+    }
+    return;
+	
+}
 
 void CGameBoardLayer::update(float dt)
 {
-	//¿©±â¼­ childµéÀ» ¾÷µ¥ÀÌÆ® ÇØ¾ß ÇÕ´Ï´Ù.
+	//Ã¸Â©Â±â€šÂºâ‰  childÂµÃˆÂ¿Âª Ã¦ËœÂµâ€¢Â¿Ãƒâˆ†Ã† Â«Ã¿Ã¦ï¬‚ Â«â€™Â¥Å“Â¥Å¸.
 	//CCLog("1111 Board layer updated");
 	CCArray* mapObjects = m_Board->getChildren();
 
