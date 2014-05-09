@@ -53,8 +53,8 @@ void CNetworkPlayerNumberLayer::CreateNumberOfPlayerMenu( CCSize visibleSize )
 
 	// set Tag
 	pPlayerNumber2->setTag( MS_5X5 );
-	pPlayerNumber3->setTag( MS_7X7 );
-	pPlayerNumber4->setTag( MS_8X8 );
+	pPlayerNumber3->setTag( MS_6X6 );
+	pPlayerNumber4->setTag( MS_7X7 );
 
 	// add buttons to MENU
 	PlayerNumberSelectTable->addChild( pPlayerNumber2 );

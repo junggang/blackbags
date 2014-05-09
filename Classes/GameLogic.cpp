@@ -647,13 +647,13 @@ void CGameLogic::CreateMap()
 		mapSize.m_Width = 5;
 		mapSize.m_Height = 5;
 		break;
+	case MS_6X6:
+		mapSize.m_Width = 6;
+		mapSize.m_Height = 6;
+		break;
 	case MS_7X7:
 		mapSize.m_Width = 7;
 		mapSize.m_Height = 7;
-		break;
-	case MS_8X8:
-		mapSize.m_Width = 8;
-		mapSize.m_Height = 8;
 		break;
 	default:
 		// 조심해!! 방어코드를 넣어야해!! 여기 들어오면 뭔가 잘못된거다
@@ -710,15 +710,15 @@ void CGameLogic::InitRandomMap()
 		startGoldNumber = 5;
 		startTrashNumber = 4;
 		break;
-	case MS_7X7: 
-		startLineNumber = 20;
+	case MS_6X6:
+		startLineNumber = 15;
 		startGoldNumber = 6;
 		startTrashNumber = 5;
 		break;
-	case MS_8X8:
-		startLineNumber = 27;
-		startGoldNumber = 8;
-		startTrashNumber = 7;
+	case MS_7X7:
+		startLineNumber = 20;
+		startGoldNumber = 7;
+		startTrashNumber = 6;
 		break;
 	default:
 		break;

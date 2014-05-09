@@ -112,8 +112,8 @@ enum MapSelect
 {
 	MS_NOT_SELECTED,
 	MS_5X5,
-	MS_7X7,
-	MS_8X8
+	MS_6X6,
+	MS_7X7
 };
 
 struct MapSize //맵 크기값을 위한 구조체입니다

@@ -29,13 +29,13 @@ bool CGameBoardLayer::init()
 		rowNum = 5;
 		columnNum = 5;
 		break;
+	case MS_6X6:
+		rowNum = 6;
+		columnNum = 6;
+		break;
 	case MS_7X7:
 		rowNum = 7;
 		columnNum = 7;
-		break;
-	case MS_8X8:
-		rowNum = 8;
-		columnNum = 8;
 		break;
 	default:
 		break;

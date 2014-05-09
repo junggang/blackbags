@@ -57,8 +57,8 @@ GDP_UPDATE_FLAG = 11
 # game data - map id
 MS_NOT_SELECTED = 0
 MS_5X5 = 1
-MS_7X7 = 2
-MS_8X8 = 3
+MS_6X6 = 2
+MS_7X7 = 3
 
 # map data index
 GDM_TYPE = 0
@@ -217,12 +217,12 @@ class GameData:
 		if mapId == MS_5X5:
 			width = 5
 			height = 5
+		elif mapId == MS_6X6:
+			width = 6
+			height = 6
 		elif mapId == MS_7X7:
 			width = 7
 			height = 7
-		elif mapId == MS_8X8:
-			width = 8
-			height = 8
 
 		self.data[GD_MAP_ID] = mapId
 		self.data[GD_VOID_TILE_COUNT] = width * height
@@ -431,13 +431,13 @@ class GameData:
 			startGoldNumber = 5
 			startTrashNumber = 4
 		elif self.data[GD_MAP_SIZE][1] == 7:
-			startLineNumber = 20
+			startLineNumber = 15
 			startGoldNumber = 6
 			startTrashNumber = 5
 		else:
-			startLineNumber = 27
-			startGoldNumber = 8
-			startTrashNumber = 7
+			startLineNumber = 20
+			startGoldNumber = 7
+			startTrashNumber = 6
 
 		# generate random objects
 		while startLineNumber > 0:
