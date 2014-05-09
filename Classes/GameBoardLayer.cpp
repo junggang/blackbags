@@ -84,7 +84,7 @@ bool CGameBoardLayer::init()
                     CMO_item* pItem = CMO_item::create();
                     pItem->setImage(IndexedPosition(i,j));
                     pItem->setPosition( ccp(m_OriginX+m_DeltaX*(j/2-1),m_OriginY+m_DeltaY*(j/2-1)) );
-                    m_Board->addChild(pItem, 4);
+                    m_Board->addChild(pItem, 5);
                 }
                 
 			}
@@ -274,13 +274,6 @@ IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 
 void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
 {
-    if(getChildByTag(0)!=nullptr)
-    {
-        removeChildByTag(0);
-    }
-    
-    
-    
     //Dot에 해당하는지 검사.
     //마우스 오버시 무조건 highlight, 클릭된 것은 클릭이 끝날 때 까지 highlight 유지.
     
@@ -296,6 +289,44 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
 	{
 		return;
 	}
+    ///
+    
+    if(getChildByTag(0)!=nullptr)
+    {
+        removeChildByTag(0);
+    }
+    
+    //line
+    if(isClicked==0)
+    {
+        if(getChildByTag(3)!=nullptr)
+        {
+            //removeChildByTag(3);
+        }
+        getChildByTag(3)->setScaleX(sqrt(powf(m_middlePoint.x-m_StartPoint.x,2)+powf(m_middlePoint.y-m_StartPoint.y,2)));
+        
+        //angle direction
+        IndexedPosition startIdx = ConvertCoordinate(m_StartPoint);
+        if(indexedPosition.m_PosI-startIdx.m_PosI==2)
+        {
+            getChildByTag(3)->setRotation(33.0f);
+        }
+        else if(indexedPosition.m_PosI-startIdx.m_PosI==-2)
+        {
+            getChildByTag(3)->setRotation(213.0f);
+        }
+        else if(indexedPosition.m_PosJ-startIdx.m_PosJ==-2)
+        {
+            getChildByTag(3)->setRotation(147.0f);
+        }
+        else if(indexedPosition.m_PosJ-startIdx.m_PosJ==2)
+        {
+            getChildByTag(3)->setRotation(327.0f);
+        }
+        
+    }
+    
+    ///
     
     float deltaX = DEFAULT_TILE_WIDTH/2;
 	float deltaY = DEFAULT_TILE_HEIGHT/2;
@@ -322,20 +353,21 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
         
         pHighlight->setPosition(tempP);
         pHighlight->setTag(isClicked);
-        addChild(pHighlight,3);
+        addChild(pHighlight,4);
         
         //line
-        if (isClicked!=3)
+        if (isClicked==1)
         {
             removeChildByTag(3);
             CCSprite * lineHighlight = CCSprite::create();
-            float wide = sqrtf(powf(m_middlePoint.x-tempP.x, 2)+powf(m_middlePoint.y-tempP.y,2));
-            lineHighlight->setTextureRect(CCRectMake(0, 0, wide, 100));
+            lineHighlight->setTextureRect(CCRectMake(0, 0, 1, 25));
             lineHighlight->setColor(ccc3(192,41,20));
-            lineHighlight->setPosition(ccp(500,500));
+            lineHighlight->setPosition(tempP);
+            lineHighlight->setAnchorPoint(ccp(0,0.5));
             lineHighlight->setTag(3);
-            addChild(lineHighlight,5);
+            addChild(lineHighlight,3);
         }
+
     }
     return;
 	
