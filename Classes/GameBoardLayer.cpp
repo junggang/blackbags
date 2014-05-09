@@ -278,6 +278,9 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
     {
         removeChildByTag(0);
     }
+    
+    
+    
     //Dot에 해당하는지 검사.
     //마우스 오버시 무조건 highlight, 클릭된 것은 클릭이 끝날 때 까지 highlight 유지.
     
@@ -300,10 +303,12 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
     //2. converted IndexPosition이 Dot에 해당하는지 검사.
     if(indexedPosition.m_PosI%2==1 && indexedPosition.m_PosJ%2 ==1)
     {
-        if(isClicked == 0 && abs(indexedPosition.m_PosI-ConvertCoordinate(m_StartPoint).m_PosI)>1  && abs(indexedPosition.m_PosJ-ConvertCoordinate(m_StartPoint).m_PosJ)>1  )
+        //고쳐라.
+        if(isClicked == 0 && (abs(indexedPosition.m_PosI-ConvertCoordinate(m_StartPoint).m_PosI)+abs(indexedPosition.m_PosJ-ConvertCoordinate(m_StartPoint).m_PosJ))>2 )
         {
             return;
         }
+        
         CCPoint tempP;
         //시작점
         tempP.x = m_BoardOrigin.x + (indexedPosition.m_PosI/2) * deltaX;
@@ -318,6 +323,19 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
         pHighlight->setPosition(tempP);
         pHighlight->setTag(isClicked);
         addChild(pHighlight,3);
+        
+        //line
+        if (isClicked!=3)
+        {
+            removeChildByTag(3);
+            CCSprite * lineHighlight = CCSprite::create();
+            float wide = sqrtf(powf(m_middlePoint.x-tempP.x, 2)+powf(m_middlePoint.y-tempP.y,2));
+            lineHighlight->setTextureRect(CCRectMake(0, 0, wide, 100));
+            lineHighlight->setColor(ccc3(192,41,20));
+            lineHighlight->setPosition(ccp(500,500));
+            lineHighlight->setTag(3);
+            addChild(lineHighlight,5);
+        }
     }
     return;
 	
