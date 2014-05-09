@@ -9,9 +9,11 @@ public:
 
 	void CreateNumberOfPlayerMenu(cocos2d::CCSize visibleSize);
 	void CreateNextButtonMenu(cocos2d::CCSize visibleSize);
+    void CreateBackButtonMenu(cocos2d::CCSize visibleSize);
 
 	void NumberOfPlayerCallBack(cocos2d::CCObject* pSender);
 	void NextButtonCallBack(cocos2d::CCObject* pSender);
+    void MainSceneCallback(cocos2d::CCObject* pSender);
 
 	virtual void update(float dt);
 

@@ -1,5 +1,6 @@
 #include "NetworkPlayerNumberLayer.h"
 #include "GameManager.h"
+#include "MainScene.h"
 
 USING_NS_CC;
 
@@ -18,6 +19,7 @@ bool CNetworkPlayerNumberLayer::init()
 	// CCMenu
 	CreateNumberOfPlayerMenu(visibleSize);
 	CreateNextButtonMenu(visibleSize);
+    CreateBackButtonMenu(visibleSize);
 
 	return true;
 }
@@ -110,15 +112,35 @@ void CNetworkPlayerNumberLayer::CreateNextButtonMenu( CCSize visibleSize )
 	this->addChild(NextButtonTable);
 }
 
+void CNetworkPlayerNumberLayer::CreateBackButtonMenu( CCSize visibleSize )
+{
+	CCMenu *BackButtonTable = CCMenu::createWithItems(NULL, NULL);
+    
+	CCMenuItemImage* pBackButton = CCMenuItemImage::create(
+                                                           SHARED_BTN_BACK.c_str(),
+                                                           SHARED_BTN_BACK.c_str(),
+                                                           this,
+                                                           menu_selector(CNetworkPlayerNumberLayer::MainSceneCallback)
+                                                           );
+    
+	pBackButton->setAnchorPoint( ccp(0, 0) );
+	pBackButton->setPosition( CCPoint( WAITING_CHANNEL_BACK_BUTTON_POSITION ) );
+    
+	BackButtonTable->addChild(pBackButton);
+	BackButtonTable->setPosition( ccp(0, 0) );
+    
+	this->addChild(BackButtonTable);
+}
+
 void CNetworkPlayerNumberLayer::NumberOfPlayerCallBack( CCObject* pSender )
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
-	// ¸î ¸íÀÌ ÇÃ·¹ÀÌÇÒÁö¸¦ °ñ¶ú´Ù¸é °ªÀ» Àü´ŞÇÔ
+	// âˆÃ“ âˆÃŒÂ¿Ãƒ Â«âˆšâˆ‘Ï€Â¿ÃƒÂ«â€œÂ¡Ë†âˆÂ¶ âˆÃ’âˆ‚Ë™Â¥Å¸âˆÃˆ âˆâ„¢Â¿Âª Â¿Â¸Â¥ï¬Â«â€˜
 	int selectedPlayerNumber = static_cast<CCMenuItem*>(pSender)->getTag();
 
-	// Á¶½ÉÇØ! HardCoding^^;
+	// Â¡âˆ‚Î©â€¦Â«Ã¿! HardCoding^^;
 	CGameManager::GetInstance()->SetPlayerNumberOfThisGame(selectedPlayerNumber + 1);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -139,25 +161,41 @@ void CNetworkPlayerNumberLayer::NextButtonCallBack( CCObject* pSender )
 #endif
 }
 
+void CNetworkPlayerNumberLayer::MainSceneCallback(cocos2d::CCObject* pSender)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
+#else
+    // ì—¬ê¸°ì„œ ë‹¤ìŒ ë‹¨ê³„ë¡œ ë„˜ì–´ê°€ë©´ì„œ ë¡œê·¸ì¸ì„ í•˜ë¯€ë¡œ ë’¤ë¡œ ê°€ë©´ ë¡œê·¸ì•„ì›ƒ í•  í•„ìš”ëŠ” ì—†ë‹¤.
+	// CGameManager::GetInstance()->Logout();
+    
+	CCScene* newScene = CMainScene::create();
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	//exit(0);
+#endif
+#endif
+}
+
 
 void CNetworkPlayerNumberLayer::update(float dt)
 {
-	// ÀÌ °ÔÀÓÀ» ¸î ¸íÀÌ ÇÏ´ÂÁö °¡Á®¿Í¼­ ÇØ´ç ¹öÆ°À» ¼±ÅÃµÈ »óÅÂ·Î ¸¸µç´Ù.
+	// Â¿Ãƒ âˆâ€˜Â¿â€Â¿Âª âˆÃ“ âˆÃŒÂ¿Ãƒ Â«Å“Â¥Â¬Â¡Ë† âˆÂ°Â¡Ã†Ã¸Ã•Âºâ‰  Â«Ã¿Â¥Ã Ï€Ë†âˆ†âˆÂ¿Âª ÂºÂ±â‰ˆâˆšÂµÂ» ÂªÃ›â‰ˆÂ¬âˆ‘Å’ âˆâˆÂµÃÂ¥Å¸.
 	CCMenuItemImage* pTempPlayerNumber;
 
 	for (int i = 2; i <= MAX_PLAYER_NUM; ++i)
 	{
-		// ÇöÀç ÀÎ¿ø¼ö¿¡ ÇØ´çÇÏ´Â ¹öÆ° Æ÷ÀÎÅÍ¸¦ °¡Á®¿Â´Ù.
+		// Â«Ë†Â¿Ã Â¿Å’Ã¸Â¯ÂºË†Ã¸Â° Â«Ã¿Â¥ÃÂ«Å“Â¥Â¬ Ï€Ë†âˆ†âˆ âˆ†ËœÂ¿Å’â‰ˆÃ•âˆÂ¶ âˆÂ°Â¡Ã†Ã¸Â¬Â¥Å¸.
 		pTempPlayerNumber = static_cast<CCMenuItemImage*>( this->getChildByTag(PLAYER_SELECT_TABLE_TAG)->getChildByTag(i - 1) );
 
-		// ¹æ¾îÄÚµå
+		// Ï€ÃŠÃ¦Ã“Æ’â„ÂµÃ‚
 		if ( pTempPlayerNumber == nullptr )
 		{
 			return;
 		}
 		
 		// PLAYER NUMBER == i
-		// PLAYER NUMBER 2 == TAG (1), 3 == TAG (2), 4 == TAG (3) ÀÌ¹Ç·Î
+		// PLAYER NUMBER 2 == TAG (1), 3 == TAG (2), 4 == TAG (3) Â¿ÃƒÏ€Â«âˆ‘Å’
 		// TAG == i - 1
 		if (CGameManager::GetInstance()->GetStatusPlayerNumber(i) )
 		{
