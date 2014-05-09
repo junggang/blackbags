@@ -30,7 +30,7 @@ const int MAX_MAP_HEIGHT = 23;
 const int CHECKLIST_LENGTH = 100;
 
 /*	터치 인식 범위 */
-const float TOUCH_AREA = 20.0f;
+const float TOUCH_AREA = 60.0f;
 
 /*	결과 화면 오브젝트들의 기본 크기입니다 */
 // gold and trash add 2 (because if has tile)
