@@ -300,6 +300,10 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
     //2. converted IndexPosition이 Dot에 해당하는지 검사.
     if(indexedPosition.m_PosI%2==1 && indexedPosition.m_PosJ%2 ==1)
     {
+        if(isClicked == 0 && abs(indexedPosition.m_PosI-ConvertCoordinate(m_StartPoint).m_PosI)>1  && abs(indexedPosition.m_PosJ-ConvertCoordinate(m_StartPoint).m_PosJ)>1  )
+        {
+            return;
+        }
         CCPoint tempP;
         //시작점
         tempP.x = m_BoardOrigin.x + (indexedPosition.m_PosI/2) * deltaX;
