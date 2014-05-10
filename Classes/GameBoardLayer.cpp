@@ -150,6 +150,8 @@ void CGameBoardLayer::ccTouchesMoved(CCSet* pTouches, cocos2d::CCEvent* pEvent)
 {
     CCTouch *pTouch = (CCTouch*)pTouches->anyObject();
     m_middlePoint = pTouch->getLocationInView();
+    CCLog("Middle point =  %f, %f", m_middlePoint.x,m_middlePoint.y);
+
     Highlight(m_middlePoint, 0);
 }
 
@@ -161,6 +163,7 @@ void CGameBoardLayer::ccTouchesEnded( CCSet *pTouches, CCEvent *pEvent )
 	CCLog("End point =  %f, %f", m_EndPoint.x,m_EndPoint.y);
     removeChildByTag(0);
     removeChildByTag(1);
+    removeChildByTag(3);
 	DrawLine();
 }
 
@@ -306,23 +309,24 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
         getChildByTag(3)->setScaleX(sqrt(powf(m_middlePoint.x-m_StartPoint.x,2)+powf(m_middlePoint.y-m_StartPoint.y,2)));
         
         //angle direction
-        IndexedPosition startIdx = ConvertCoordinate(m_StartPoint);
-        if(indexedPosition.m_PosI-startIdx.m_PosI==2)
+        //좌표 원점이 왼쪽상단임을 잊지말것
+        if(m_middlePoint.x>m_StartPoint.x && m_middlePoint.y>m_StartPoint.y)
         {
             getChildByTag(3)->setRotation(33.0f);
         }
-        else if(indexedPosition.m_PosI-startIdx.m_PosI==-2)
-        {
-            getChildByTag(3)->setRotation(213.0f);
-        }
-        else if(indexedPosition.m_PosJ-startIdx.m_PosJ==-2)
+        else if(m_middlePoint.x<m_StartPoint.x && m_middlePoint.y>m_StartPoint.y)
         {
             getChildByTag(3)->setRotation(147.0f);
         }
-        else if(indexedPosition.m_PosJ-startIdx.m_PosJ==2)
+        else if(m_middlePoint.x<m_StartPoint.x && m_middlePoint.y<m_StartPoint.y)
+        {
+            getChildByTag(3)->setRotation(213.0f);
+        }
+        else if(m_middlePoint.x>m_StartPoint.x && m_middlePoint.y<m_StartPoint.y)
         {
             getChildByTag(3)->setRotation(327.0f);
         }
+
         
     }
     
