@@ -93,7 +93,7 @@ enum MO_OWNER	//게임 맵 각 타일 소유주
 	MO_PLAYER4
 };
 
-enum MO_ITEM	//타일에 지정된 아이템
+enum MO_ITEM	//Item
 {
 	ITEM_NOTHING = -1,
 	ITEM_GOLD,
