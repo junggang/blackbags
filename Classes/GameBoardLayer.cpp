@@ -4,6 +4,7 @@
 #include "CMO_dot.h"
 #include "CMO_line.h"
 #include "CMO_item.h"
+#include "AudioManager.h"
 
 USING_NS_CC;
 
@@ -40,8 +41,8 @@ bool CGameBoardLayer::init()
 	default:
 		break;
 	}
-
-	m_Board = CCSprite::create(
+    
+    	m_Board = CCSprite::create(
 		PLAYSCENE_BOARD.c_str(), 
 		CCRect(0, 0, columnNum * DEFAULT_TILE_WIDTH, rowNum * DEFAULT_TILE_HEIGHT)
 		);
@@ -166,6 +167,7 @@ void CGameBoardLayer::ccTouchesEnded( CCSet *pTouches, CCEvent *pEvent )
 
 void CGameBoardLayer::DrawLine()
 {
+    
 	IndexedPosition startIndex = ConvertCoordinate(m_StartPoint);
 	IndexedPosition endIndex = ConvertCoordinate(m_EndPoint);
 	
@@ -175,11 +177,23 @@ void CGameBoardLayer::DrawLine()
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI, endIndex.m_PosJ - 1) );
 			m_LineDirection = DI_UP;
+            
+            // play SE
+            CAudioManager::GetInstance()->ChangeSE(SE_LINE_DRAW);
+            CAudioManager::GetInstance()->PlaySE();
+            
+            return;
 		}
 		else if (startIndex.m_PosJ - endIndex.m_PosJ == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI, startIndex.m_PosJ - 1) );
 			m_LineDirection = DI_DOWN;
+            
+            // play SE
+            CAudioManager::GetInstance()->ChangeSE(SE_LINE_DRAW);
+            CAudioManager::GetInstance()->PlaySE();
+            
+            return;
 		}
 	}
 	else if (startIndex.m_PosJ == endIndex.m_PosJ)
@@ -188,13 +202,31 @@ void CGameBoardLayer::DrawLine()
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(endIndex.m_PosI - 1, startIndex.m_PosJ) );
 			m_LineDirection = DI_DOWN;
+            
+            // play SE
+            CAudioManager::GetInstance()->ChangeSE(SE_LINE_DRAW);
+            CAudioManager::GetInstance()->PlaySE();
+            
+            return;
 		}
 		else if (startIndex.m_PosI - endIndex.m_PosI == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI - 1, startIndex.m_PosJ) );
 			m_LineDirection = DI_UP;
+            
+            // play SE
+            CAudioManager::GetInstance()->ChangeSE(SE_LINE_DRAW);
+            CAudioManager::GetInstance()->PlaySE();
+            
+            return;
 		}
 	}
+    
+    // play SE
+    CAudioManager::GetInstance()->ChangeSE(SE_LINE_DRAW_FAIL);
+    CAudioManager::GetInstance()->PlaySE();
+    
+    return;
 }
 
 IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)

@@ -2,6 +2,8 @@
 #include "cocos2d.h"
 #include "config.h"
 
+class CAudioManager;
+
 class CGameBoardLayer : public cocos2d::CCLayer
 {
 public:

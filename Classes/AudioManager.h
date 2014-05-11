@@ -14,6 +14,8 @@ enum MusicList
 enum SEList
 {
 	SE_BUTTON_CLICK = 0,
+    SE_LINE_DRAW,
+    SE_LINE_DRAW_FAIL,
 	MAX_SE_LIST
 };
 

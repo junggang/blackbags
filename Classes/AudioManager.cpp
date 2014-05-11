@@ -56,9 +56,14 @@ bool CAudioManager::init()
 		{
 		case SE_BUTTON_CLICK:
 			// 조심해!! 테스트 코드야!
-			m_SEList[j] = "Sound/PLAYER_3_good.mp3";
+			m_SEList[j] = "Sound/SE/PLAYER_3_good.mp3";
 			break;
-		default:
+        case SE_LINE_DRAW:
+            m_SEList[j] = "Sound/SE/SE_Line_Draw.mp3";
+            break;
+        case SE_LINE_DRAW_FAIL:
+            m_SEList[j] = "Sound/SE/SE_Line_Draw_fail.mp3";
+        default:
 			break;
 		}
 	}
@@ -98,7 +103,7 @@ void CAudioManager::StopBGM()
 
 void CAudioManager::ChangeSE( SEList SENumber )
 {
-	m_CurrentSE = m_BGMList[SENumber];
+	m_CurrentSE = m_SEList[SENumber];
 }
 
 void CAudioManager::PlaySE()
