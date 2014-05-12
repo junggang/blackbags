@@ -336,6 +336,13 @@ const std::string MAIN_MENU3_IMG = "image/main_menu03_img.png";
 #define MAIN_MENU3_IMG_POS 1394,244
 const std::string MAIN_MENU_TITLE = "image/main_menu_title.png";
 #define MAIN_MENU_TITLE_POS 140,712
+const std::string MAIN_MENU1_ANI = "image/main_menu01_img_ani.png";
+const std::string MAIN_MENU2_ANI = "image/main_menu02_img_ani.png";
+const std::string MAIN_MENU3_ANI = "image/main_menu03_img_ani.png";
+const std::string MAIN_MENU1_ANI_PLIST = "image/main_menu01_img_ani.plist";
+const std::string MAIN_MENU2_ANI_PLIST = "image/main_menu02_img_ani.plist";
+const std::string MAIN_MENU3_ANI_PLIST = "image/main_menu03_img_ani.plist";
+
 
 /*	game setting scene	*/
 const std::string PLAYER_NUMBER_TITLE = "image/gameset01_title.png";

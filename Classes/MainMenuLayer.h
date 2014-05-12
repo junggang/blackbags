@@ -10,6 +10,8 @@ public:
 	void newgameCallback(CCObject* pSender);
 	void multiplayCallback(CCObject* pSender);
 	void settingCallback(CCObject* pSender);
+    
+    void drawAnimation();
 
 	// implement the "static node()" method manually
     CREATE_FUNC(CMainMenuLayer);

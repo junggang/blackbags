@@ -6,6 +6,8 @@
 #include "LoginScene.h"
 //for test
 #include "NetworkLogic.h"
+#include "config.h"
+#include <array>
 
 USING_NS_CC;
 
@@ -87,39 +89,11 @@ bool CMainMenuLayer::init()
 	pMenuTitle->setPosition(CCPoint(MAIN_MENU_TITLE_POS));
 	pMenuTitle->setAnchorPoint(ccp(0,0));
 	addChild(pMenuTitle,3);
-    /*
-    //create particle animation
-    CCParticleSystem* m_star0 = CCParticleFlower::create();
-    m_star0->retain();
-    m_star0->setStartSize(50.0f);
-    m_star0->setEmissionRate(20.0f);
-    m_star0->setLife(1.0f);
-    m_star0->setDuration(INFINITY);
-    m_star0->setPosition(pMenuImg01->getPosition());
-    m_star0->setTexture( CCTextureCache::sharedTextureCache()->addImage("image/particle-star.png"));
-    addChild(m_star0,2);
-
-    CCParticleSystem* m_star1 = CCParticleFlower::create();
-    m_star1->retain();
-    m_star1->setStartSize(50.0f);
-    m_star1->setEmissionRate(20.0f);
-    m_star1->setLife(1.0f);
-    m_star1->setDuration(INFINITY);
-    m_star1->setPosition(CCPoint(MAIN_MENU2_IMG_POS));
-    m_star1->setTexture( CCTextureCache::sharedTextureCache()->addImage("image/particle-star.png"));
-    addChild(m_star1,2);
     
-    CCParticleSystem* m_star2 = CCParticleFlower::create();
-    m_star2->retain();
-    m_star2->setStartSize(50.0f);
-    m_star2->setEmissionRate(20.0f);
-    m_star2->setLife(1.0f);
-    m_star2->setDuration(INFINITY);
-    m_star2->setPosition(CCPoint(MAIN_MENU1_IMG_POS));
-    m_star2->setTexture( CCTextureCache::sharedTextureCache()->addImage("image/particle-star.png"));
-    addChild(m_star2,2);
-    */
-	return true;
+    drawAnimation();
+    
+    
+    return true;
 }
 
 void CMainMenuLayer::newgameCallback(CCObject* pSender)
@@ -167,4 +141,95 @@ void CMainMenuLayer::settingCallback(CCObject* pSender)
     //exit(0);
 #endif
 #endif
+}
+
+void CMainMenuLayer::drawAnimation()
+{
+    
+    CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(MAIN_MENU1_ANI.c_str());
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile(MAIN_MENU1_ANI_PLIST.c_str());
+    
+    
+    CCArray* animFrames1 = CCArray::createWithCapacity(40);
+    
+    char str[100] = {0};
+    
+    for(int i = 1; i < 41; i++)
+    {
+        sprintf(str, "manin_menu1_000%02d.png", i);
+        
+        CCSpriteFrame* frame = cache->spriteFrameByName( str );
+        animFrames1->addObject(frame);
+    }
+    
+    CCSprite*pElement1 = CCSprite::createWithSpriteFrameName("manin_menu1_00001.png");
+    pElement1->setAnchorPoint(ccp(0,0));
+    
+    spritebatch->addChild(pElement1);
+    addChild(spritebatch,2);
+    spritebatch->setTag(0);
+    
+    CCAnimation* animation1 = CCAnimation::createWithSpriteFrames(animFrames1,0.05f);
+    CCRepeatForever* repeatAction1 = CCRepeatForever::create(CCAnimate::create(animation1));
+    pElement1->runAction(repeatAction1);
+    pElement1->setPosition(CCPoint(MAIN_MENU1_IMG_POS));
+     
+    
+    //menu2
+    spritebatch = CCSpriteBatchNode::create(MAIN_MENU2_ANI.c_str());
+    //cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile(MAIN_MENU2_ANI_PLIST.c_str());
+    
+    
+    CCArray* animFrames2 = CCArray::createWithCapacity(4);
+    
+    for(int i = 0; i < 4; i++)
+    {
+        sprintf(str, "main_img2_ani%d.PNG", i);
+        
+        CCSpriteFrame* frame = cache->spriteFrameByName( str );
+        animFrames2->addObject(frame);
+    }
+    
+    CCSprite*pElement2 = CCSprite::createWithSpriteFrameName("main_img2_ani0.PNG");
+    pElement2->setAnchorPoint(ccp(0,0));
+    
+    spritebatch->addChild(pElement2);
+    addChild(spritebatch,4);
+    spritebatch->setTag(0);
+    
+    CCAnimation* animation2 = CCAnimation::createWithSpriteFrames(animFrames2,0.1f);
+    CCRepeatForever* repeatAction2 = CCRepeatForever::create(CCAnimate::create(animation2));
+    pElement2->runAction(repeatAction2);
+    pElement2->setPosition(CCPoint(MAIN_MENU2_IMG_POS));
+    
+    //menu3
+    spritebatch = CCSpriteBatchNode::create(MAIN_MENU3_ANI.c_str());
+    //cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile(MAIN_MENU3_ANI_PLIST.c_str());
+    
+    
+    CCArray* animFrames3 = CCArray::createWithCapacity(4);
+    
+    for(int i = 0; i < 4; i++)
+    {
+        sprintf(str, "main_img3_ani%d.PNG", i);
+        
+        CCSpriteFrame* frame = cache->spriteFrameByName( str );
+        animFrames3->addObject(frame);
+    }
+    
+    CCSprite*pElement3 = CCSprite::createWithSpriteFrameName("main_img3_ani0.PNG");
+    pElement3->setAnchorPoint(ccp(0,0));
+    
+    spritebatch->addChild(pElement3);
+    addChild(spritebatch,4);
+    spritebatch->setTag(0);
+    
+    CCAnimation* animation3 = CCAnimation::createWithSpriteFrames(animFrames3,0.1f);
+    CCRepeatForever* repeatAction3 = CCRepeatForever::create(CCAnimate::create(animation3));
+    pElement3->runAction(repeatAction3);
+    pElement3->setPosition(CCPoint(MAIN_MENU3_IMG_POS));
+
 }
