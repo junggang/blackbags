@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>main_menu01_img_ani_00001.png</key>
+            <key>manin_menu1_00001.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{156,987},{15,6}}</string>
@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00002.png</key>
+            <key>manin_menu1_00002.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{500,2},{21,10}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00003.png</key>
+            <key>manin_menu1_00003.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,995},{27,12}}</string>
@@ -43,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00004.png</key>
+            <key>manin_menu1_00004.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{305,20},{183,14}}</string>
@@ -56,7 +56,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00005.png</key>
+            <key>manin_menu1_00005.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{305,2},{193,16}}</string>
@@ -69,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00006.png</key>
+            <key>manin_menu1_00006.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{489,246},{207,18}}</string>
@@ -82,7 +82,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00007.png</key>
+            <key>manin_menu1_00007.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{490,25},{219,18}}</string>
@@ -95,7 +95,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00008.png</key>
+            <key>manin_menu1_00008.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{16,995},{227,22}}</string>
@@ -108,7 +108,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00009.png</key>
+            <key>manin_menu1_00009.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{126,750},{237,28}}</string>
@@ -121,7 +121,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00010.png</key>
+            <key>manin_menu1_00010.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{245,792},{247,34}}</string>
@@ -134,7 +134,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00011.png</key>
+            <key>manin_menu1_00011.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{245,750},{255,40}}</string>
@@ -147,7 +147,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00012.png</key>
+            <key>manin_menu1_00012.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{245,702},{263,46}}</string>
@@ -160,7 +160,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00013.png</key>
+            <key>manin_menu1_00013.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{212,828},{275,50}}</string>
@@ -173,7 +173,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00014.png</key>
+            <key>manin_menu1_00014.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{156,702},{283,54}}</string>
@@ -186,7 +186,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00015.png</key>
+            <key>manin_menu1_00015.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{66,702},{289,58}}</string>
@@ -199,7 +199,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00016.png</key>
+            <key>manin_menu1_00016.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,702},{291,62}}</string>
@@ -212,7 +212,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00017.png</key>
+            <key>manin_menu1_00017.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,632},{295,68}}</string>
@@ -225,7 +225,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00018.png</key>
+            <key>manin_menu1_00018.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,556},{299,74}}</string>
@@ -238,7 +238,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00019.png</key>
+            <key>manin_menu1_00019.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,476},{299,78}}</string>
@@ -251,7 +251,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00020.png</key>
+            <key>manin_menu1_00020.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,394},{301,80}}</string>
@@ -264,7 +264,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00021.png</key>
+            <key>manin_menu1_00021.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{407,36},{301,80}}</string>
@@ -277,7 +277,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00022.png</key>
+            <key>manin_menu1_00022.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{305,339},{301,84}}</string>
@@ -290,7 +290,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00023.png</key>
+            <key>manin_menu1_00023.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,302},{301,90}}</string>
@@ -303,7 +303,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00024.png</key>
+            <key>manin_menu1_00024.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,204},{301,96}}</string>
@@ -316,7 +316,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00025.png</key>
+            <key>manin_menu1_00025.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,104},{301,98}}</string>
@@ -329,7 +329,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00026.png</key>
+            <key>manin_menu1_00026.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{305,36},{301,100}}</string>
@@ -342,7 +342,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00027.png</key>
+            <key>manin_menu1_00027.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -355,7 +355,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00028.png</key>
+            <key>manin_menu1_00028.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -368,7 +368,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00029.png</key>
+            <key>manin_menu1_00029.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -381,7 +381,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00030.png</key>
+            <key>manin_menu1_00030.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -394,7 +394,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00031.png</key>
+            <key>manin_menu1_00031.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -407,7 +407,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00032.png</key>
+            <key>manin_menu1_00032.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -420,7 +420,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00033.png</key>
+            <key>manin_menu1_00033.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -433,7 +433,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00034.png</key>
+            <key>manin_menu1_00034.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -446,7 +446,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00035.png</key>
+            <key>manin_menu1_00035.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -459,7 +459,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00036.png</key>
+            <key>manin_menu1_00036.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -472,7 +472,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00037.png</key>
+            <key>manin_menu1_00037.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -485,7 +485,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00038.png</key>
+            <key>manin_menu1_00038.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -498,7 +498,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00039.png</key>
+            <key>manin_menu1_00039.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>
@@ -511,7 +511,7 @@
                 <key>sourceSize</key>
                 <string>{559,614}</string>
             </dict>
-            <key>main_menu01_img_ani_00040.png</key>
+            <key>manin_menu1_00040.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{301,100}}</string>

@@ -23,16 +23,63 @@ bool CWaitingChannelId::init()
 	addChild(pMonster, 0);
 
 	// magnifier part
-	CCSprite* pMagnifier = CCSprite::create(WAITING_CHANNEL_MAGNIFIER_IMAGE);
-	pMagnifier->setAnchorPoint(ccp(0, 0) );
-	pMagnifier->setPosition(CCPoint(WAITING_CHANNEL_MAGNIFIER_POSITION) );
-	addChild(pMagnifier, 1);
+    
+    CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(WAITING_CHANNEL_MAGNIFIER_IMAGE.c_str());
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile(WAITING_CHANNEL_MAGNIFIER_IMAGE_PLIST.c_str());
+    
+    
+    CCArray* animFrames1 = CCArray::createWithCapacity(32);
+    
+    char str[100] = {0};
+    
+    for(int i = 1; i < 33; i++)
+    {
+        sprintf(str, "searching_eye_ani_000%02d.png", i);
+        
+        CCSpriteFrame* frame = cache->spriteFrameByName( str );
+        animFrames1->addObject(frame);
+    }
+    
+    CCSprite*pElement1 = CCSprite::createWithSpriteFrameName("searching_eye_ani_00001.png");
+    pElement1->setAnchorPoint(ccp(0,0));
+    
+    spritebatch->addChild(pElement1);
+    addChild(spritebatch,1);
+    spritebatch->setTag(0);
+    
+    CCAnimation* animation1 = CCAnimation::createWithSpriteFrames(animFrames1,0.05f);
+    CCRepeatForever* repeatAction1 = CCRepeatForever::create(CCAnimate::create(animation1));
+    pElement1->runAction(repeatAction1);
+    pElement1->setPosition(CCPoint(WAITING_CHANNEL_MAGNIFIER_POSITION));
+    // searching animation
+    spritebatch = CCSpriteBatchNode::create(WAITING_CHANNEL_TEXT_IMAGE.c_str());
+    //cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cache->addSpriteFramesWithFile(WAITING_CHANNEL_TEXT_IMAGE_PLIST.c_str());
+    
+    
+    CCArray* animFrames2 = CCArray::createWithCapacity(4);
+    
+    for(int i = 1; i < 5; i++)
+    {
+        sprintf(str, "searching_text0%d.png", i);
+        
+        CCSpriteFrame* frame = cache->spriteFrameByName( str );
+        animFrames2->addObject(frame);
+    }
+    
+    CCSprite*pElement2 = CCSprite::createWithSpriteFrameName("searching_text01.png");
+    pElement2->setAnchorPoint(ccp(0,0));
+    
+    spritebatch->addChild(pElement2);
+    addChild(spritebatch,4);
+    spritebatch->setTag(0);
+    
+    CCAnimation* animation2 = CCAnimation::createWithSpriteFrames(animFrames2,0.1f);
+    CCRepeatForever* repeatAction2 = CCRepeatForever::create(CCAnimate::create(animation2));
+    pElement2->runAction(repeatAction2);
+    pElement2->setPosition(CCPoint(WAITING_CHANNEL_TEXT_POSITION));
 
-	// searching animation
-	CCSprite* pTextAnimation = CCSprite::create(WAITING_CHANNEL_TEXT_IMAGE);
-	pTextAnimation->setAnchorPoint(ccp(0, 0) );
-	pTextAnimation->setPosition(CCPoint(WAITING_CHANNEL_TEXT_POSITION) );
-	addChild(pTextAnimation, 2);
 
 	// mainmenu button part
 	CCMenuItemImage *pMainScene = CCMenuItemImage::create(

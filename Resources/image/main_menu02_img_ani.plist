@@ -7,6 +7,19 @@
             <key>main_img2_ani0.PNG</key>
             <dict>
                 <key>frame</key>
+                <string>{{108,2},{1,1}}</string>
+                <key>offset</key>
+                <string>{-251.5,266}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{1,1}}</string>
+                <key>sourceSize</key>
+                <string>{504,533}</string>
+            </dict>
+            <key>main_img2_ani1.PNG</key>
+            <dict>
+                <key>frame</key>
                 <string>{{77,99},{50,27}}</string>
                 <key>offset</key>
                 <string>{-61,36}</string>
@@ -17,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{504,533}</string>
             </dict>
-            <key>main_img2_ani1.PNG</key>
+            <key>main_img2_ani2.PNG</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,99},{64,73}}</string>
@@ -30,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{504,533}</string>
             </dict>
-            <key>main_img2_ani2.PNG</key>
+            <key>main_img2_ani3.PNG</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{104,95}}</string>
@@ -53,7 +66,7 @@
             <key>size</key>
             <string>{128,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:8b053aa2695e0b3764d4f66b22371da8:71f76cc91c6a9d168ed6594689b8a548:ea6ee4794fe6238653ebec1c69a4f53d$</string>
+            <string>$TexturePacker:SmartUpdate:9dc5370e3e4c9914afd6cb83a96a875e:24c2eeb8aae4ebb101f9184b9a800ee4:ea6ee4794fe6238653ebec1c69a4f53d$</string>
             <key>textureFileName</key>
             <string>main_menu02_img_ani.png</string>
         </dict>

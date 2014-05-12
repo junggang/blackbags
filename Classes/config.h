@@ -244,11 +244,13 @@ struct MapObject
 #define WAITING_CHANNEL_MONSTER_IMAGE "image/searching_monster.png"
 #define WAITING_CHANNEL_MONSTER_POSITION 875,601
 
-#define WAITING_CHANNEL_TEXT_IMAGE "image/searching_text01.png"
+const std::string WAITING_CHANNEL_TEXT_IMAGE="image/searching_text.png";
+const std::string WAITING_CHANNEL_TEXT_IMAGE_PLIST="image/searching_text.plist";
 #define WAITING_CHANNEL_TEXT_POSITION 1051,511
 
-#define WAITING_CHANNEL_MAGNIFIER_IMAGE "image/searching_eye.png"
-#define WAITING_CHANNEL_MAGNIFIER_POSITION 757,680
+const std::string WAITING_CHANNEL_MAGNIFIER_IMAGE ="image/searching_eye_ani.png";
+const std::string WAITING_CHANNEL_MAGNIFIER_IMAGE_PLIST ="image/searching_eye_ani.plist";
+#define WAITING_CHANNEL_MAGNIFIER_POSITION 500,500
 
 #define WAITING_CHANNEL_BACK_BUTTON_POSITION 90,94
 
