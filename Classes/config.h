@@ -240,6 +240,12 @@ struct MapObject
 
 #define CREDIT_BACK_BUTTON_POSITION 90,94
 
+/* contact scene */
+const std::string CONTACT_TITLE="image/contact_title.png";
+#define CONTACT_TITLE_POS 842,1317
+const std::string CONTACT_MAIL = "image/contact_mail.png";
+
+
 // waiting gamechannel
 #define WAITING_CHANNEL_MONSTER_IMAGE "image/searching_monster.png"
 #define WAITING_CHANNEL_MONSTER_POSITION 875,601
@@ -469,27 +475,28 @@ const std::string SETTING_BG = "image/setting_menu_background.png";
 #define SETTING_BG_POS 113,200
 
 const std::string SETTING_MENU_GOOGLE = "image/setting_menu_google.png";
-const std::string SETTING_MENU_NAME = "image/setting_menu_name.png";
 const std::string SETTING_MENU_SOUND = "image/setting_menu_sound.png";
 const std::string SETTING_MENU_TUTORIAL = "image/setting_menu_tutorial.png";
+const std::string SETTING_MENU_CONTACT= "image/setting_menu_contact.png";
 const std::string SETTING_MENU_CREDIT = "image/setting_menu_credit.png";
 const std::string SETTING_LOGIN= "image/setting_menu_google_login.png";
-#define SETTING_MENU_GOOGLE_POS 463,1013
-#define SETTING_MENU_NAME_POS 463,876
-#define SETTING_MENU_SOUND_POS 463,743
-#define SETTING_MENU_TUTORIAL_POS 1153,458
-#define SETTING_MENU_CREDIT_POS 1153,321
-#define SETTING_LOGIN_POS 1153,1013
-#define SETTING_NAME_POS 1153,876
+
+#define SETTING_MENU_GOOGLE_POS 463,1063
+#define SETTING_MENU_SOUND_POS 463,902
+#define SETTING_MENU_TUTORIAL_POS 1153,607
+#define SETTING_MENU_CREDIT_POS 1153,487
+#define SETTING_MENU_CONTACT_POS 1153,366
+#define SETTING_LOGIN_POS 1153,1063
+#define SETTING_NAME_POS 1153,926
 
 const std::string SETTING_ICON_MUSIC = "image/setting_icon_music.png";
 const std::string SETTING_ICON_SOUND = "image/setting_icon_sound.png";
 const std::string SETTING_BAR = "image/setting_sound_bar.png";
 const std::string SETTING_CONTROLLER = "image/setting_sound_controller.png";
-#define SETTING_ICON_MUSIC_POS 1042,766
-#define SETTING_ICON_SOUND_POS 1042,628
-#define SETTING_MUSIC_BAR_POS 1153,803
-#define SETTING_SOUND_BAR_POS 1153,660
+#define SETTING_ICON_MUSIC_POS 1042,923
+#define SETTING_ICON_SOUND_POS 1042,792
+#define SETTING_MUSIC_BAR_POS 1153,953
+#define SETTING_SOUND_BAR_POS 1153,811
 
 /* tutorial scene */
 const std::string TUTORIAL_TITLE = "image/tutorial_title.png";

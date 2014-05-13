@@ -4,6 +4,7 @@
 #include "CreditScene.h"
 #include "LayerWebView.h"
 #include "TutorialScene.h"
+#include "ContactScene.h"
 
 USING_NS_CC;
 
@@ -69,6 +70,17 @@ bool CSettingMenuLayer::init()
 	pSound->setAnchorPoint(ccp(0,0));
 	pSound->setPosition(CCPoint(SETTING_MENU_SOUND_POS));
 	addChild(pSound,1);
+    
+    CCSprite* pMusicIcon = CCSprite::create(SETTING_ICON_MUSIC.c_str());
+	pMusicIcon->setAnchorPoint(ccp(0,0));
+	pMusicIcon->setPosition(CCPoint(SETTING_ICON_MUSIC_POS));
+	addChild(pMusicIcon,1);
+    
+    CCSprite* pSoundIcon = CCSprite::create(SETTING_ICON_SOUND.c_str());
+	pSoundIcon->setAnchorPoint(ccp(0,0));
+	pSoundIcon->setPosition(CCPoint(SETTING_ICON_SOUND_POS));
+	addChild(pSoundIcon,1);
+    
 
 	CCMenuItemImage *pTutorial = CCMenuItemImage::create(
 		SETTING_MENU_TUTORIAL.c_str(),
@@ -91,6 +103,18 @@ bool CSettingMenuLayer::init()
 	pMenu = CCMenu::create(pCredit, NULL);
 	pMenu->setPosition(SETTING_MENU_CREDIT_POS);
 	addChild(pMenu, 1);
+    
+    CCMenuItemImage *pContact = CCMenuItemImage::create(
+       SETTING_MENU_CONTACT.c_str(),
+       SETTING_MENU_CONTACT.c_str(),
+       this,
+       menu_selector(CSettingMenuLayer::ContactCallback)
+       );
+    pContact->setAnchorPoint(ccp(0,0));
+	pMenu = CCMenu::create(pContact, NULL);
+	pMenu->setPosition(SETTING_MENU_CONTACT_POS);
+	addChild(pMenu, 1);
+    
 
 	
 
@@ -155,9 +179,16 @@ void CSettingMenuLayer::TutorialCallback( CCObject* pSender )
 
 }
 
+void CSettingMenuLayer::ContactCallback(CCObject* pSender)
+{
+    CCScene* newScene = CContactScene::create();
+	CCDirector::sharedDirector()->pushScene( newScene );
+
+}
+
 void CSettingMenuLayer::CreditCallback( CCObject* pSender )
 {
-	CCScene* newScene = CCreditScene::create();
+	CCScene* newScene = CContactScene::create();
 	CCDirector::sharedDirector()->pushScene( newScene );
 
 }
