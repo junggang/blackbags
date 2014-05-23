@@ -7,7 +7,7 @@ public:
 	virtual bool init();
 
 	// a selector callback
-    void mainSceneCallback(CCObject* pSender);
+    void SettingSceneCallback(CCObject* pSender);
 
 	// implement the "static node()" method manually
     CREATE_FUNC(CCreditLayer);

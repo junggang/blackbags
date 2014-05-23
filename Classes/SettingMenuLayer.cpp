@@ -188,7 +188,7 @@ void CSettingMenuLayer::ContactCallback(CCObject* pSender)
 
 void CSettingMenuLayer::CreditCallback( CCObject* pSender )
 {
-	CCScene* newScene = CContactScene::create();
+	CCScene* newScene = CCreditScene::create();
 	CCDirector::sharedDirector()->pushScene( newScene );
 
 }

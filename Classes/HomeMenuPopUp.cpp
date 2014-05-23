@@ -3,6 +3,7 @@
 #include "config.h"
 #include "HelpScene.h"
 #include "SettingScene.h"
+#include "HelpPopuplLayer.h"
 
 USING_NS_CC;
 
@@ -87,8 +88,12 @@ bool CHomeMenuPopUp::init()
 void CHomeMenuPopUp::HelpIconCallback(CCObject* pSender)
 {
 	//help 창으로 간다
-	CCScene* newScene = CHelpScene::create();
-	CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5, newScene) );
+	//CCScene* newScene = CHelpScene::create();
+	//CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5, newScene) );
+    
+    CCLayer* helpLayer = CHelpPopupLayer::create();
+    helpLayer->setTag(0);
+    addChild(helpLayer, 2);
 }
 
 void CHomeMenuPopUp::ResumeIconCallback(CCObject* pSender)
