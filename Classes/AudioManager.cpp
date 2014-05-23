@@ -102,6 +102,16 @@ void CAudioManager::SetSEVolume( float SEVolume )
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->setEffectsVolume(SEVolume);
 }
 
+float CAudioManager::GetBGMVolume()
+{
+    return CocosDenshion::SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume();
+}
+
+float CAudioManager::GetSEVolume()
+{
+    return CocosDenshion::SimpleAudioEngine::sharedEngine()->getEffectsVolume();
+}
+
 void CAudioManager::PlayBGM()
 {
 	if ( !m_CurrentMusic.empty() )

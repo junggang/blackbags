@@ -116,8 +116,6 @@ bool CSettingMenuLayer::init()
 	addChild(pMenu, 1);
     
 
-	
-
 	m_pBGMVolume = extension::CCControlSlider::create(SETTING_BAR.c_str(),SETTING_BAR.c_str(),SETTING_CONTROLLER.c_str());
 	m_pSEVolume = extension::CCControlSlider::create(SETTING_BAR.c_str(),SETTING_BAR.c_str(),SETTING_CONTROLLER.c_str());
 
@@ -144,6 +142,11 @@ bool CSettingMenuLayer::init()
 	m_pSEVolume->setMinimumValue(0.0);
 	m_pSEVolume->setValue(DEFAULT_SE_VOLUME);
 	m_pSEVolume->setTag(SE_SLIDER_TAG);
+    
+    
+    // set BGM & SE slider to current volume
+    showCurrentBGMVolume();
+    showCurrentSEVolume();
     
     m_LoginLayer = nullptr;
 

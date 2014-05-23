@@ -51,6 +51,8 @@ public:
 
 	void SetBGMVolume(float BGMVolume);
 	void SetSEVolume(float SEVolume);
+    float GetBGMVolume();
+    float GetSEVolume();
 
 private:
 	static CAudioManager* m_pInstance;

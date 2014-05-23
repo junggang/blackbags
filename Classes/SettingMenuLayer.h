@@ -1,6 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "AudioManager.h"
 
 class LayerWebView;
 
@@ -17,7 +18,9 @@ public:
 
 	float getCurrentBGMVolume() { return m_pBGMVolume->getValue(); };
 	float getCurrentSEVolume() { return m_pSEVolume->getValue(); };
-
+    void showCurrentBGMVolume() { m_pBGMVolume->setValue(CAudioManager::GetInstance()->GetBGMVolume()); }
+    void showCurrentSEVolume() { m_pSEVolume->setValue(CAudioManager::GetInstance()->GetSEVolume()); }
+    
 	virtual void update(float dt);
 
 	virtual void onEnter();
