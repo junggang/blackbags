@@ -58,15 +58,36 @@ bool CAudioManager::init()
 			// 조심해!! 테스트 코드야!
 			m_SEList[j] = "Sound/SE/PLAYER_3_good.mp3";
 			break;
-        case SE_LINE_DRAW:
-            m_SEList[j] = "Sound/SE/SE_Line_Draw.mp3";
-            break;
         case SE_LINE_DRAW_FAIL:
-            m_SEList[j] = "Sound/SE/SE_Line_Draw_fail.mp3";
+            m_SEList[j] = "Sound/SE/SE_Line_Draw_Fail.mp3";
         default:
 			break;
 		}
 	}
+    
+    for (int k = 0; k < MAX_SE_DRAW_LINE_LIST; ++k)
+    {
+        switch (k)
+        {
+            case SE_DRAW_LINE_1:
+                m_SEDrawLineList[k] = "Sound/SE/SE_Line_Draw_1.mp3";
+                break;
+            case SE_DRAW_LINE_2:
+                m_SEDrawLineList[k] = "Sound/SE/SE_Line_Draw_2.mp3";
+                break;
+            case SE_DRAW_LINE_3:
+                m_SEDrawLineList[k] = "Sound/SE/SE_Line_Draw_3.mp3";
+                break;
+            case SE_DRAW_LINE_4:
+                m_SEDrawLineList[k] = "Sound/SE/SE_Line_Draw_4.mp3";
+                break;
+            case SE_DRAW_LINE_5:
+                m_SEDrawLineList[k] = "Sound/SE/SE_Line_Draw_5.mp3";
+                break;
+            default:
+                break;
+        }
+    }
 
 	return true;
 }
@@ -106,6 +127,11 @@ void CAudioManager::ChangeSE( SEList SENumber )
 	m_CurrentSE = m_SEList[SENumber];
 }
 
+void CAudioManager::ChangeSE( SEDrawLineList SENumber )
+{
+    m_CurrentSE = m_SEDrawLineList[SENumber];
+}
+
 void CAudioManager::PlaySE()
 {
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(m_CurrentSE.c_str());
@@ -114,4 +140,13 @@ void CAudioManager::PlaySE()
 void CAudioManager::StopAllSE()
 {
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->stopAllEffects();
+}
+
+void CAudioManager::PlayLineDrawRandomSE()
+{
+    int a = rand();
+    a = a % MAX_SE_DRAW_LINE_LIST;
+    ChangeSE(static_cast<SEDrawLineList>(a));
+    cocos2d::CCLog("%d", a);
+    PlaySE();
 }

@@ -182,8 +182,7 @@ void CGameBoardLayer::DrawLine()
 			m_LineDirection = DI_UP;
             
             // play SE
-            CAudioManager::GetInstance()->ChangeSE(SE_LINE_DRAW);
-            CAudioManager::GetInstance()->PlaySE();
+            CAudioManager::GetInstance()->PlayLineDrawRandomSE();
             
             return;
 		}
@@ -193,8 +192,7 @@ void CGameBoardLayer::DrawLine()
 			m_LineDirection = DI_DOWN;
             
             // play SE
-            CAudioManager::GetInstance()->ChangeSE(SE_LINE_DRAW);
-            CAudioManager::GetInstance()->PlaySE();
+            CAudioManager::GetInstance()->PlayLineDrawRandomSE();
             
             return;
 		}
@@ -207,8 +205,7 @@ void CGameBoardLayer::DrawLine()
 			m_LineDirection = DI_DOWN;
             
             // play SE
-            CAudioManager::GetInstance()->ChangeSE(SE_LINE_DRAW);
-            CAudioManager::GetInstance()->PlaySE();
+            CAudioManager::GetInstance()->PlayLineDrawRandomSE();
             
             return;
 		}
@@ -218,8 +215,7 @@ void CGameBoardLayer::DrawLine()
 			m_LineDirection = DI_UP;
             
             // play SE
-            CAudioManager::GetInstance()->ChangeSE(SE_LINE_DRAW);
-            CAudioManager::GetInstance()->PlaySE();
+            CAudioManager::GetInstance()->PlayLineDrawRandomSE();
             
             return;
 		}
@@ -359,7 +355,6 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
             getChildByTag(3)->setRotation(327.0f);
         }
 
-        
     }
     
     ///
