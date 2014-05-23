@@ -226,6 +226,7 @@
 		AF46EB4F18ADF81000AEDC11 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4C18ADF81000AEDC11 /* fonts */; };
 		AF46EB5018ADF81000AEDC11 /* image in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4D18ADF81000AEDC11 /* image */; };
 		AF46EB5118ADF81000AEDC11 /* Sound in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4E18ADF81000AEDC11 /* Sound */; };
+		AF58430B19227BA5006295A1 /* ContactScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF58430919227BA5006295A1 /* ContactScene.cpp */; };
 		AF96E3F418D98014002877BF /* TutorialScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF96E3F318D98014002877BF /* TutorialScene.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
@@ -774,6 +775,8 @@
 		AF46EB4C18ADF81000AEDC11 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		AF46EB4D18ADF81000AEDC11 /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = image; sourceTree = "<group>"; };
 		AF46EB4E18ADF81000AEDC11 /* Sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sound; sourceTree = "<group>"; };
+		AF58430919227BA5006295A1 /* ContactScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContactScene.cpp; sourceTree = "<group>"; };
+		AF58430A19227BA5006295A1 /* ContactScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactScene.h; sourceTree = "<group>"; };
 		AF96E3F218D98007002877BF /* TutorialScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TutorialScene.h; sourceTree = "<group>"; };
 		AF96E3F318D98014002877BF /* TutorialScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialScene.cpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1997,6 +2000,8 @@
 				E7F5198518C6F3F9002530DC /* LoginScene.h */,
 				AF96E3F218D98007002877BF /* TutorialScene.h */,
 				AF96E3F318D98014002877BF /* TutorialScene.cpp */,
+				AF58430919227BA5006295A1 /* ContactScene.cpp */,
+				AF58430A19227BA5006295A1 /* ContactScene.h */,
 			);
 			name = Scene;
 			sourceTree = "<group>";
@@ -2206,6 +2211,7 @@
 				15A3D90E1682F7D5002FB0C5 /* b2Settings.cpp in Sources */,
 				15A3D90F1682F7D5002FB0C5 /* b2StackAllocator.cpp in Sources */,
 				15A3D9101682F7D5002FB0C5 /* b2Timer.cpp in Sources */,
+				AF58430B19227BA5006295A1 /* ContactScene.cpp in Sources */,
 				E7F5196818C49C7B002530DC /* ResultButtonLayer.cpp in Sources */,
 				15A3D9111682F7D5002FB0C5 /* b2Body.cpp in Sources */,
 				15A3D9121682F7D5002FB0C5 /* b2ContactManager.cpp in Sources */,
