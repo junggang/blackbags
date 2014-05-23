@@ -777,6 +777,10 @@
 		AF46EB4E18ADF81000AEDC11 /* Sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sound; sourceTree = "<group>"; };
 		AF58430919227BA5006295A1 /* ContactScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContactScene.cpp; sourceTree = "<group>"; };
 		AF58430A19227BA5006295A1 /* ContactScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactScene.h; sourceTree = "<group>"; };
+		AF88B935192F40D500F909EB /* icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-76.png"; path = "../proj.ios/icon-76.png"; sourceTree = "<group>"; };
+		AF88B936192F40F400F909EB /* icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-152.png"; path = "../proj.ios/icon-152.png"; sourceTree = "<group>"; };
+		AF88B939192F423100F909EB /* landscape_nonretina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_nonretina.png; path = ../proj.ios/landscape_nonretina.png; sourceTree = "<group>"; };
+		AF88B93A192F423A00F909EB /* landscape_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_retina.png; path = ../proj.ios/landscape_retina.png; sourceTree = "<group>"; };
 		AF96E3F218D98007002877BF /* TutorialScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TutorialScene.h; sourceTree = "<group>"; };
 		AF96E3F318D98014002877BF /* TutorialScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialScene.cpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1896,6 +1900,10 @@
 			children = (
 				D41A0AD0160F154A004552AE /* Default-568h@2x.png */,
 				7855E0DF153FEF240059DD9A /* Default.png */,
+				AF88B936192F40F400F909EB /* icon-152.png */,
+				AF88B93A192F423A00F909EB /* landscape_retina.png */,
+				AF88B939192F423100F909EB /* landscape_nonretina.png */,
+				AF88B935192F40D500F909EB /* icon-76.png */,
 				D446FD6D16102124000ADA7B /* Default@2x.png */,
 				D4EF949B15BD2D8E00D803EB /* Icon-114.png */,
 				D4EF949F15BD2D9800D803EB /* Icon-144.png */,
