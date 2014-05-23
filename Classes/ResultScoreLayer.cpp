@@ -91,11 +91,11 @@ bool CResultScoreLayer::init()
             cache->addSpriteFramesWithFile(RESULT_WINNER_PLIST.c_str());
             
             
-            CCArray* animFrames = CCArray::createWithCapacity(6);
+            CCArray* animFrames = CCArray::createWithCapacity(7);
             
             char str[100] = {0};
             
-            for(int i = 1; i < 7; i++)
+            for(int i = 1; i < 8; i++)
             {
                 sprintf(str, "result_winner_ani_000%02d.png", i);
                 
@@ -109,7 +109,7 @@ bool CResultScoreLayer::init()
             spritebatch->addChild(pWinner);
             addChild(spritebatch,2);
 
-            CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,1.0f);
+            CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,0.3f);
             CCRepeatForever* repeatAction = CCRepeatForever::create(CCAnimate::create(animation));
             pWinner->runAction(repeatAction);
             pWinner->setPosition(ccp(position.x + RESULT_CHARACTER_IMAGE_POSITION_X_MARGIN, position.y + RESULT_CHARACTER_IMAGE_POSITION_Y_MARGIN));
