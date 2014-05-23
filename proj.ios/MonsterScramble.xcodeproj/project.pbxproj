@@ -226,6 +226,7 @@
 		AF46EB4F18ADF81000AEDC11 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4C18ADF81000AEDC11 /* fonts */; };
 		AF46EB5018ADF81000AEDC11 /* image in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4D18ADF81000AEDC11 /* image */; };
 		AF46EB5118ADF81000AEDC11 /* Sound in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4E18ADF81000AEDC11 /* Sound */; };
+		AF58430B19227BA5006295A1 /* ContactScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF58430919227BA5006295A1 /* ContactScene.cpp */; };
 		AF96E3F418D98014002877BF /* TutorialScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF96E3F318D98014002877BF /* TutorialScene.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
@@ -241,7 +242,6 @@
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
 		D56D272E1913916B00A06389 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D56D272D1913916B00A06389 /* libGoogleAdMobAds.a */; };
-		D59AEDF1192F2EFF00137761 /* ContactScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D59AEDEF192F2EFF00137761 /* ContactScene.cpp */; };
 		E751DE4A18F92CC20001879E /* AdMobObjectCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */; };
 		E7B3F36718E5DB3600024DDF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36618E5DB3600024DDF /* AdSupport.framework */; };
 		E7B3F36918E5DB5800024DDF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36818E5DB5800024DDF /* MessageUI.framework */; };
@@ -268,7 +268,6 @@
 		E7F5195618C49C7B002530DC /* HelpButtonLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190418C49C7A002530DC /* HelpButtonLayer.cpp */; };
 		E7F5195718C49C7B002530DC /* HelpPopupLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190618C49C7A002530DC /* HelpPopupLayer.cpp */; };
 		E7F5195818C49C7B002530DC /* HelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190818C49C7A002530DC /* HelpScene.cpp */; };
-		E7F5195918C49C7B002530DC /* HelpWindowLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190A18C49C7A002530DC /* HelpWindowLayer.cpp */; };
 		E7F5195A18C49C7B002530DC /* HomeMenuLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190C18C49C7A002530DC /* HomeMenuLayer.cpp */; };
 		E7F5195B18C49C7B002530DC /* HomeMenuPopUp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5190E18C49C7A002530DC /* HomeMenuPopUp.cpp */; };
 		E7F5195C18C49C7B002530DC /* IntroBackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F5191018C49C7A002530DC /* IntroBackgroundLayer.cpp */; };
@@ -775,6 +774,12 @@
 		AF46EB4C18ADF81000AEDC11 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		AF46EB4D18ADF81000AEDC11 /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = image; sourceTree = "<group>"; };
 		AF46EB4E18ADF81000AEDC11 /* Sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sound; sourceTree = "<group>"; };
+		AF58430919227BA5006295A1 /* ContactScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContactScene.cpp; sourceTree = "<group>"; };
+		AF58430A19227BA5006295A1 /* ContactScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactScene.h; sourceTree = "<group>"; };
+		AF88B935192F40D500F909EB /* icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-76.png"; path = "../proj.ios/icon-76.png"; sourceTree = "<group>"; };
+		AF88B936192F40F400F909EB /* icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-152.png"; path = "../proj.ios/icon-152.png"; sourceTree = "<group>"; };
+		AF88B939192F423100F909EB /* landscape_nonretina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_nonretina.png; path = ../proj.ios/landscape_nonretina.png; sourceTree = "<group>"; };
+		AF88B93A192F423A00F909EB /* landscape_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_retina.png; path = ../proj.ios/landscape_retina.png; sourceTree = "<group>"; };
 		AF96E3F218D98007002877BF /* TutorialScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TutorialScene.h; sourceTree = "<group>"; };
 		AF96E3F318D98014002877BF /* TutorialScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialScene.cpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -792,8 +797,6 @@
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		D56D272D1913916B00A06389 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "../Classes/GoogleAdMobAdsSdkiOS-6.8.0/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
-		D59AEDEF192F2EFF00137761 /* ContactScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContactScene.cpp; sourceTree = "<group>"; };
-		D59AEDF0192F2EFF00137761 /* ContactScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactScene.h; sourceTree = "<group>"; };
 		E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdMobObjectCPP.mm; sourceTree = "<group>"; };
 		E751DE4918F92CC20001879E /* AdMobObjectCPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdMobObjectCPP.h; sourceTree = "<group>"; };
 		E7B3F35B18E5DB0800024DDF /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
@@ -851,8 +854,6 @@
 		E7F5190718C49C7A002530DC /* HelpPopuplLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpPopuplLayer.h; sourceTree = "<group>"; };
 		E7F5190818C49C7A002530DC /* HelpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelpScene.cpp; sourceTree = "<group>"; };
 		E7F5190918C49C7A002530DC /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpScene.h; sourceTree = "<group>"; };
-		E7F5190A18C49C7A002530DC /* HelpWindowLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelpWindowLayer.cpp; sourceTree = "<group>"; };
-		E7F5190B18C49C7A002530DC /* HelpWindowLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpWindowLayer.h; sourceTree = "<group>"; };
 		E7F5190C18C49C7A002530DC /* HomeMenuLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HomeMenuLayer.cpp; sourceTree = "<group>"; };
 		E7F5190D18C49C7A002530DC /* HomeMenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeMenuLayer.h; sourceTree = "<group>"; };
 		E7F5190E18C49C7A002530DC /* HomeMenuPopUp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HomeMenuPopUp.cpp; sourceTree = "<group>"; };
@@ -1896,6 +1897,10 @@
 			children = (
 				D41A0AD0160F154A004552AE /* Default-568h@2x.png */,
 				7855E0DF153FEF240059DD9A /* Default.png */,
+				AF88B936192F40F400F909EB /* icon-152.png */,
+				AF88B93A192F423A00F909EB /* landscape_retina.png */,
+				AF88B939192F423100F909EB /* landscape_nonretina.png */,
+				AF88B935192F40D500F909EB /* icon-76.png */,
 				D446FD6D16102124000ADA7B /* Default@2x.png */,
 				D4EF949B15BD2D8E00D803EB /* Icon-114.png */,
 				D4EF949F15BD2D9800D803EB /* Icon-144.png */,
@@ -1980,8 +1985,6 @@
 		E7F5198818C6FAEF002530DC /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				D59AEDEF192F2EFF00137761 /* ContactScene.cpp */,
-				D59AEDF0192F2EFF00137761 /* ContactScene.h */,
 				E7F5190818C49C7A002530DC /* HelpScene.cpp */,
 				E7F5190918C49C7A002530DC /* HelpScene.h */,
 				E7F518F618C49C7A002530DC /* CreditScene.cpp */,
@@ -2002,6 +2005,8 @@
 				E7F5198518C6F3F9002530DC /* LoginScene.h */,
 				AF96E3F218D98007002877BF /* TutorialScene.h */,
 				AF96E3F318D98014002877BF /* TutorialScene.cpp */,
+				AF58430919227BA5006295A1 /* ContactScene.cpp */,
+				AF58430A19227BA5006295A1 /* ContactScene.h */,
 			);
 			name = Scene;
 			sourceTree = "<group>";
@@ -2035,8 +2040,6 @@
 				E7F5190518C49C7A002530DC /* HelpButtonLayer.h */,
 				E7F5190618C49C7A002530DC /* HelpPopupLayer.cpp */,
 				E7F5190718C49C7A002530DC /* HelpPopuplLayer.h */,
-				E7F5190A18C49C7A002530DC /* HelpWindowLayer.cpp */,
-				E7F5190B18C49C7A002530DC /* HelpWindowLayer.h */,
 				E7F5190C18C49C7A002530DC /* HomeMenuLayer.cpp */,
 				E7F5190D18C49C7A002530DC /* HomeMenuLayer.h */,
 				E7F5190E18C49C7A002530DC /* HomeMenuPopUp.cpp */,
@@ -2211,7 +2214,7 @@
 				15A3D90E1682F7D5002FB0C5 /* b2Settings.cpp in Sources */,
 				15A3D90F1682F7D5002FB0C5 /* b2StackAllocator.cpp in Sources */,
 				15A3D9101682F7D5002FB0C5 /* b2Timer.cpp in Sources */,
-				D59AEDF1192F2EFF00137761 /* ContactScene.cpp in Sources */,
+				AF58430B19227BA5006295A1 /* ContactScene.cpp in Sources */,
 				E7F5196818C49C7B002530DC /* ResultButtonLayer.cpp in Sources */,
 				15A3D9111682F7D5002FB0C5 /* b2Body.cpp in Sources */,
 				15A3D9121682F7D5002FB0C5 /* b2ContactManager.cpp in Sources */,
@@ -2444,7 +2447,6 @@
 				379BB9C617F03F3700829B88 /* UILoadingBar.cpp in Sources */,
 				379BB9C717F03F3700829B88 /* UISlider.cpp in Sources */,
 				379BB9C917F03F3700829B88 /* UITextField.cpp in Sources */,
-				E7F5195918C49C7B002530DC /* HelpWindowLayer.cpp in Sources */,
 				379BB9CB17F03F3700829B88 /* DictionaryHelper.cpp in Sources */,
 				379BB9D317F03F3700829B88 /* GUIReader.cpp in Sources */,
 				379BB9D417F03F3700829B88 /* SceneReader.cpp in Sources */,

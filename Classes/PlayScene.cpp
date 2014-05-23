@@ -3,7 +3,6 @@
 #include "GameBoardLayer.h"
 #include "GameEndLayer.h"
 #include "HelpButtonLayer.h"
-#include "HelpWindowLayer.h"
 #include "PlayerLayer.h"
 #include "TimerLayer.h"
 #include "GameManager.h"
