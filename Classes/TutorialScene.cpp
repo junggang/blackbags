@@ -18,9 +18,7 @@ bool CTutorialScene::init(void)
     // 광고 끄기
     gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
     admob->hideAdMob();
-    
-	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    
+        
     //1.background
     CCLayer* BackgroundLayer = CBackgroundLayer::create();
     this->addChild(BackgroundLayer, 0);
