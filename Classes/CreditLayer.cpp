@@ -32,7 +32,7 @@ bool CCreditLayer::init()
 										SHARED_BTN_BACK.c_str(),
 										SHARED_BTN_BACK.c_str(),
 										this,
-										menu_selector(CCreditLayer::mainSceneCallback)
+										menu_selector(CCreditLayer::SettingSceneCallback)
 										);
 	pMainScene->setAnchorPoint(ccp(0.0, 0.0) );
 	pMainScene->setPosition(CCPoint(CREDIT_BACK_BUTTON_POSITION) );
@@ -45,16 +45,7 @@ bool CCreditLayer::init()
 	return true;
 }
 
-void CCreditLayer::mainSceneCallback(CCObject* pSender)
+void CCreditLayer::SettingSceneCallback(CCObject* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-	//세팅창으로 가야됑~
-	CCScene* newScene = CMainScene::create();
-	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    //exit(0);
-#endif
-#endif
+    CCDirector::sharedDirector()->popScene();
 }
