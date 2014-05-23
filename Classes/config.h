@@ -438,6 +438,9 @@ const std::string RESULT_CHARACTER_LOSE_IMAGE[MAX_PLAYER_NUM] =
 #define RESULT_CHARACTER_IMAGE_POSITION_X_MARGIN 248
 #define RESULT_CHARACTER_IMAGE_POSITION_Y_MARGIN 450
 
+const std::string RESULT_WINNER = "image/result_winner_ani.png";
+const std::string RESULT_WINNER_PLIST = "image/result_winner_ani.plist";
+
 #define RESULT_ITEM_IMAGE_Y_MARGIN 175
 const std::string RESULT_FLOWER_IMAGE[MAX_PLAYER_NUM] =
 {

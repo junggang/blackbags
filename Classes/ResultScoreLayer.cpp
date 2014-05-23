@@ -82,6 +82,38 @@ bool CResultScoreLayer::init()
 		pFace->setAnchorPoint(ccp(0.5,0) );
 		pFace->setPosition(ccp(position.x + RESULT_CHARACTER_IMAGE_POSITION_X_MARGIN, position.y + RESULT_CHARACTER_IMAGE_POSITION_Y_MARGIN));
 		addChild(pFace,1);
+        
+        //winner flag
+        if ( CGameManager::GetInstance()->IsWinner(i) )
+        {
+            CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(RESULT_WINNER.c_str());
+            CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+            cache->addSpriteFramesWithFile(RESULT_WINNER_PLIST.c_str());
+            
+            
+            CCArray* animFrames = CCArray::createWithCapacity(6);
+            
+            char str[100] = {0};
+            
+            for(int i = 1; i < 7; i++)
+            {
+                sprintf(str, "result_winner_ani_000%02d.png", i);
+                
+                CCSpriteFrame* frame = cache->spriteFrameByName( str );
+                animFrames->addObject(frame);
+            }
+            
+            CCSprite*pWinner = CCSprite::createWithSpriteFrameName("result_winner_ani_00001.png");
+            pWinner->setAnchorPoint(ccp(0.5,0));
+            
+            spritebatch->addChild(pWinner);
+            addChild(spritebatch,2);
+
+            CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,1.0f);
+            CCRepeatForever* repeatAction = CCRepeatForever::create(CCAnimate::create(animation));
+            pWinner->runAction(repeatAction);
+            pWinner->setPosition(ccp(position.x + RESULT_CHARACTER_IMAGE_POSITION_X_MARGIN, position.y + RESULT_CHARACTER_IMAGE_POSITION_Y_MARGIN));
+        }
 
 		//player name
 		CCLabelTTF* pName = CCLabelTTF::create(CGameManager::GetInstance()->GetPlayerName(i).c_str(), GAME_FONT, 48 );
