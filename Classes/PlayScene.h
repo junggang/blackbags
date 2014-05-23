@@ -17,6 +17,8 @@ private:
 	cocos2d::CCLayer* player;
 	cocos2d::CCLayer* timer;
 	cocos2d::CCLayer* menu;
+    
+    void startNewTurn();
 
 	float m_AnimationDelay;
 };

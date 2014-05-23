@@ -77,26 +77,9 @@ void CPlayScene::update(float dt)
     
     CGameManager::GetInstance()->PausePlayReady();
 
-	// 종료 조건 확인
-	if (CGameManager::GetInstance()->IsEnd() && !m_GameEndFlag)
-	{
-		m_GameEndFlag = true; // 다음 루프에서 다시 진입하지 않도록 플래그 설정
-        removeChild(timer);
-        player->stopAllActions();
-
-		// 게임 종료 버튼 생성
-		CCLayer* endButton = CGameEndLayer::create();
-		this->addChild(endButton, 2);
-
-		if (CGameManager::GetInstance()->IsOnlineMode() )
-		{
-            // 온라인 모드인 경우 게임 종료 요청을 서버로 전송 후 업데이트 스케줄 삭제
-			CGameManager::GetInstance()->EndGame();
-			this->unschedule(schedule_selector(CGameManager::PlayUpdate) );
-		}
+    if (m_GameEndFlag)
         return;
-    }
-
+    
     // 종료가 아닌 경우 각종 업데이트 실행
 	gameBoard->update(dt);
 	player->update(dt);
@@ -129,7 +112,7 @@ void CPlayScene::update(float dt)
         delayTime = ( delayTime == 0.0f ) ? PLAYSCENE_ANIMATION_TIME : delayTime;
         
 		// 애니메이션 끝나면 레디 전송하는 코드 삽입!
-		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CGameManager::PlayReady) );
+		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CPlayScene::startNewTurn) );
 		CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
 
@@ -143,7 +126,7 @@ void CPlayScene::update(float dt)
         delayTime = ( delayTime == 0.0f ) ? PLAYSCENE_ANIMATION_TIME : delayTime;
         
 		// 애니메이션 끝내고 다음 턴 시작
-		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CGameManager::SetPlayReady) );
+		CCCallFunc* readyRequestCallback = CCCallFunc::create(this, callfunc_selector(CPlayScene::startNewTurn) );
 		CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
         
@@ -152,4 +135,29 @@ void CPlayScene::update(float dt)
 
 	// 모든 업데이트가 완료되었으므로 플래그 초기화
 	CGameManager::GetInstance()->SetUpdateFlag(false);
+}
+
+void CPlayScene::startNewTurn()
+{
+    // 종료 조건 확인
+	if (CGameManager::GetInstance()->IsEnd() && !m_GameEndFlag)
+	{
+		m_GameEndFlag = true; // 다음 루프에서 다시 진입하지 않도록 플래그 설정
+        removeChild(timer);
+        player->stopAllActions();
+        
+		// 게임 종료 버튼 생성
+		CCLayer* endButton = CGameEndLayer::create();
+		this->addChild(endButton, 2);
+        
+		if (CGameManager::GetInstance()->IsOnlineMode() )
+		{
+            // 온라인 모드인 경우 게임 종료 요청을 서버로 전송 후 업데이트 스케줄 삭제
+			CGameManager::GetInstance()->EndGame();
+			this->unschedule(schedule_selector(CGameManager::PlayUpdate) );
+		}
+        return;
+    }
+    
+    CGameManager::GetInstance()->SetPlayReady();
 }
