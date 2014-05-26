@@ -33,8 +33,7 @@ void CHelpPopupLayer::onEnter()
 
 void CHelpPopupLayer::onExit()
 {
-	CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
-
+    this->removeAllChildrenWithCleanup(true);
 	CCLayer::onExit();
 }
 
@@ -51,6 +50,7 @@ void CHelpPopupLayer::ccTouchMoved( cocos2d::CCTouch *pTouch, cocos2d::CCEvent* 
 
 void CHelpPopupLayer::ccTouchEnded( cocos2d::CCTouch *pTouch, cocos2d::CCEvent* event )
 {
-	this->removeAllChildren();
-	onExit();
+	CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    
+    onExit();
 }

@@ -92,8 +92,12 @@ void CHomeMenuPopUp::HelpIconCallback(CCObject* pSender)
 	//CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5, newScene) );
     
     CCLayer* helpLayer = CHelpPopupLayer::create();
-    helpLayer->setTag(0);
+    helpLayer->setTag(3);    // because if tag == 0 or 1,
+                             // BackToPopUp func delete this layer
+                             // => and make BUG!
+    
     addChild(helpLayer, 2);
+    
 }
 
 void CHomeMenuPopUp::ResumeIconCallback(CCObject* pSender)
