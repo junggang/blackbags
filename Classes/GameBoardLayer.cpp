@@ -321,7 +321,6 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
 		return;
 	}
     ///
-    
     if(getChildByTag(0)!=nullptr)
     {
         removeChildByTag(0);
@@ -334,7 +333,20 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
         {
             //removeChildByTag(3);
         }
-        getChildByTag(3)->setScaleX(sqrt(powf(m_middlePoint.x-m_StartPoint.x,2)+powf(m_middlePoint.y-m_StartPoint.y,2)));
+        float scaleFactor = sqrt(powf(m_middlePoint.x-m_StartPoint.x,2)+powf(m_middlePoint.y-m_StartPoint.y,2));
+        
+        if (scaleFactor >= (DEFAULT_TILE_DIAGONAL+TOUCH_AREA))
+        {
+            getChildByTag(3)->setScaleX(0);
+        }
+        else if (scaleFactor >= DEFAULT_TILE_DIAGONAL)
+        {
+            getChildByTag(3)->setScaleX(DEFAULT_TILE_DIAGONAL);
+        }
+        else
+        {
+            getChildByTag(3)->setScaleX(sqrt(powf(m_middlePoint.x-m_StartPoint.x,2)+powf(m_middlePoint.y-m_StartPoint.y,2)));
+        }
         
         //angle direction
         //좌표 원점이 왼쪽상단임을 잊지말것

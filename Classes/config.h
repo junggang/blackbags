@@ -18,6 +18,7 @@ const int CHARACTER_NUM = 4;
 /*	게임 맵 오브젝트들의 기본 크기입니다 */
 const float DEFAULT_TILE_WIDTH = 240.0f;
 const float DEFAULT_TILE_HEIGHT = 160.0f;
+const float DEFAULT_TILE_DIAGONAL = 144.0f;
 
 const float DEFAULT_CHARACTER_MARGIN_H = 100.0f;
 const float DEFAULT_CHARACTER_MARGIN_V = 100.0f;
