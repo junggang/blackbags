@@ -248,6 +248,10 @@ void CSettingMenuLayer::update( float dt )
 void CSettingMenuLayer::ccTouchEnded( CCTouch *pTouch, CCEvent *pEvent )
 {
 	CGameManager::GetInstance()->SetUpdateFlag(true);
+    
+    // update Music & SE Volume
+	CAudioManager::GetInstance()->SetBGMVolume( getCurrentBGMVolume() );
+	CAudioManager::GetInstance()->SetSEVolume( getCurrentSEVolume() );
 }
 
 bool CSettingMenuLayer::ccTouchBegan( CCTouch *pTouch, CCEvent *pEvent )

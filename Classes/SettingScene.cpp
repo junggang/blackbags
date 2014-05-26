@@ -71,10 +71,6 @@ void CSettingScene::update( float dt )
 
 	m_SettingMenuLayer->update(dt);
 
-	// update Music & SE Volume
-	CAudioManager::GetInstance()->SetBGMVolume( m_SettingMenuLayer->getCurrentBGMVolume() );
-	CAudioManager::GetInstance()->SetSEVolume( m_SettingMenuLayer->getCurrentSEVolume() );
-
 	CGameManager::GetInstance()->SetUpdateFlag(false);
 }
 
