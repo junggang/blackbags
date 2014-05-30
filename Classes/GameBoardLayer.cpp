@@ -4,6 +4,7 @@
 #include "CMO_dot.h"
 #include "CMO_line.h"
 #include "CMO_item.h"
+#include "CMO_score.h"
 #include "AudioManager.h"
 
 USING_NS_CC;
@@ -78,6 +79,11 @@ bool CGameBoardLayer::init()
 				pTile->setPosition(ccp(m_OriginX+m_DeltaX*(j/2-1),m_OriginY+m_DeltaY*(j/2-1)));
 
 				m_Board->addChild(pTile, 0);
+                
+                //add score layer : 아이템 레이어 보다 상위에 있어야 해서 레이어 따로 뺌.
+                CMO_score* pScore = CMO_score::create();
+                pScore->setImage(pos);
+                pScore->setPosition(ccp(m_OriginX+m_DeltaX*(j/2-1),m_OriginY+m_DeltaY*(j/2-1)));
                 
                 //add item
                 if (CGameManager::GetInstance()->GetItem(IndexedPosition(i,j))!= ITEM_NOTHING)
