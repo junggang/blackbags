@@ -29,16 +29,6 @@ void CMO_tile::setImage(IndexedPosition indexedPosition)
 	pTile->setPosition( ccp(0.0f, 0.0f) );
 	this->addChild(pTile, 0);
 	
-    /*
-    if (CGameManager::GetInstance()->GetItem(indexedPosition) != ITEM_NOTHING)
-	{
-		CMO_item* pItem = CMO_item::create();
-		pItem->setImage(indexedPosition);
-		pItem->setAnchorPoint( ccp(0, 0.5f) );
-		pItem->setPosition( ccp(0.0f, 0.0f) );
-		this->addChild(pItem, 3);
-	}
-     */
 }
 
 void CMO_tile::update( float delta )

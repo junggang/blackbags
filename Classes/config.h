@@ -261,6 +261,8 @@ const std::string WAITING_CHANNEL_MAGNIFIER_IMAGE_PLIST ="image/searching_eye_an
 
 #define WAITING_CHANNEL_BACK_BUTTON_POSITION 90,94
 
+const std::string WAITING_ONLINE_IMAGE = "image/searching_online.png";
+
 /* play scene	*/
 const std::string lineImageFileList[5] =
 {
@@ -577,6 +579,11 @@ const std::string PLAYSCENE_GAMEOVER = "image/playscene_gameover.png";
 const std::string PLAYSCENE_GAMEOVER_TITLE = "image/playscene_gameover_text.png";
 
 const float PLAYSCENE_ANIMATION_TIME = 0.8f;
+
+const std::string PLAYSCENE_SCORE_LAND = "image/playscene_score_land.png";
+const std::string PLAYSCENE_SCORE_CAKE = "image/playscene_score_cake.png";
+const std::string PLAYSCENE_SCORE_TRASH = "image/playscene_score_trash.png";
+
 
 /* shared images */
 const std::string SHARED_BACKGROUND = "image/shared_background.png";
