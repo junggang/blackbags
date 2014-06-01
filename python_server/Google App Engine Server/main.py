@@ -63,8 +63,10 @@ def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
 
 			if playerNumber == 2:
 				gameData.setMapSize(1) # MS_5X5
+			elif playerNumber == 3:
+				gameData.setMapSize(2) # MS_6X6
 			else:
-				gameData.setMapSize(2) # MS_8X8
+				gameData.setMapSize(3) # MS_7X7
 
 			# 생성한 게임 데이터 redis에 저장 
 			jsonData = json.dumps(gameData.data)
@@ -354,6 +356,8 @@ def PCDrawLine(tokenId, lineIdx):
 			memcache.set(channelId, jsonData, gameDataTTL)
 
 			return jsonData
+
+		return 'not updated'
 
 	return 'not updated'
 
@@ -797,7 +801,7 @@ def drawLine():
 			posI = int(request.form['posI'])
 			posJ = int(request.form['posJ'])
 
-			print(str(tokenId) + ' : ' + str(posI) + ' / ' + str(posJ))
+			# print(str(tokenId) + ' : ' + str(posI) + ' / ' + str(posJ))
 
 			return PCDrawLine(tokenId, [posI, posJ])
 

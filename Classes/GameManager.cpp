@@ -615,13 +615,21 @@ void CGameManager::TimeOut()
 
 void CGameManager::SetPlayReady()
 {
-    CGameLogic::GetInstance()->SetPlayReady(true);
+    if (m_IsOnlineGame)
+	{
+		// Logic
+        PlayReady();
+	}
+	else
+	{
+		CGameLogic::GetInstance()->SetPlayReady(true);
+    }
 }
+
 void CGameManager::PausePlayReady()
 {
     CGameLogic::GetInstance()->SetPlayReady(false);
 }
-
 
 std::string CGameManager::GetUsersName()
 {
