@@ -228,7 +228,6 @@
 		AF46EB5118ADF81000AEDC11 /* Sound in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4E18ADF81000AEDC11 /* Sound */; };
 		AF58430B19227BA5006295A1 /* ContactScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF58430919227BA5006295A1 /* ContactScene.cpp */; };
 		AF96E3F418D98014002877BF /* TutorialScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF96E3F318D98014002877BF /* TutorialScene.cpp */; };
-		AFCE936E1938B66C005E1AAD /* CMO_score.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFCE936C1938B66C005E1AAD /* CMO_score.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -783,8 +782,6 @@
 		AF88B93A192F423A00F909EB /* landscape_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_retina.png; path = ../proj.ios/landscape_retina.png; sourceTree = "<group>"; };
 		AF96E3F218D98007002877BF /* TutorialScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TutorialScene.h; sourceTree = "<group>"; };
 		AF96E3F318D98014002877BF /* TutorialScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialScene.cpp; sourceTree = "<group>"; };
-		AFCE936C1938B66C005E1AAD /* CMO_score.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CMO_score.cpp; sourceTree = "<group>"; };
-		AFCE936D1938B66C005E1AAD /* CMO_score.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMO_score.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -2091,8 +2088,6 @@
 				E7CD626618C8A54F005F6E88 /* DisconnectedLayer.h */,
 				AF37D14318DF2A150018FE15 /* TutorialBoardLayer.cpp */,
 				AF37D14418DF2A150018FE15 /* TutorialBoardLayer.h */,
-				AFCE936C1938B66C005E1AAD /* CMO_score.cpp */,
-				AFCE936D1938B66C005E1AAD /* CMO_score.h */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -2127,7 +2122,7 @@
 				LastUpgradeCheck = 0430;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = 68C9J95H54;
+						DevelopmentTeam = 39WT95YDMW;
 					};
 				};
 			};
@@ -2272,7 +2267,6 @@
 				15A3D99F1682F7F9002FB0C5 /* cpRotaryLimitJoint.c in Sources */,
 				15A3D9A01682F7F9002FB0C5 /* cpSimpleMotor.c in Sources */,
 				15A3D9A11682F7F9002FB0C5 /* cpSlideJoint.c in Sources */,
-				AFCE936E1938B66C005E1AAD /* CMO_score.cpp in Sources */,
 				E7F5194A18C49C7B002530DC /* CMO_dot.cpp in Sources */,
 				AF37D14518DF2A150018FE15 /* TutorialBoardLayer.cpp in Sources */,
 				15A3D9A21682F7F9002FB0C5 /* cpArbiter.c in Sources */,
@@ -2511,7 +2505,7 @@
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 					"$(PROJECT_DIR)",
 					"$(SRCROOT)/../../../external/",
-					"\"$(SRCROOT)/../Classes/GoogleAdMobAdsSdkiOS-6.8.0",
+					"/Users/blastingzone/Desktop/NHN_NEXT/1_3/cocos2d-x-2.2.2/MS/Monsc/Classes/GoogleAdMobAdsSdkiOS-6.8.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-O2";
@@ -2565,7 +2559,7 @@
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 					"$(PROJECT_DIR)",
 					"$(SRCROOT)/../../../external/",
-					"\"$(SRCROOT)/../Classes/GoogleAdMobAdsSdkiOS-6.8.0",
+					"/Users/blastingzone/Desktop/NHN_NEXT/1_3/cocos2d-x-2.2.2/MS/Monsc/Classes/GoogleAdMobAdsSdkiOS-6.8.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
