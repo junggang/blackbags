@@ -35,6 +35,8 @@ void CMO_score::update( float delta )
 		CCDelayTime *dt = CCDelayTime::create(delayTime);
         m_isTaken = true;
         
+        
+        
         switch (tempItem) {
             case ITEM_NOTHING:
                 pScore = CCSprite::create(PLAYSCENE_SCORE_LAND.c_str());
@@ -49,11 +51,13 @@ void CMO_score::update( float delta )
                 break;
         }
         
-        CCFadeOut* FadeIn = CCFadeOut::create(0.8f);
-        CCAction *Fadeactions = CCSequence::create(dt, FadeIn, NULL);
+        CCFadeOut* FadeOut = CCFadeOut::create(0.8f);
+        CCMoveBy* actionBy = CCMoveBy::create(0.8f, ccp(0.0f,80.0f));
+        CCAction* simul = CCSpawn::create(dt,FadeOut,actionBy);
+        //CCAction *Fadeactions = CCSequence::create(dt, FadeOut, NULL);
         pScore->setOpacity(0);
         pScore->setAnchorPoint( ccp(0, 0.5f) );
-        pScore->runAction(Fadeactions);
+        pScore->runAction(simul);
         addChild(pScore,1);
     }
     
