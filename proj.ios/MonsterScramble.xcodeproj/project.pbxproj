@@ -227,6 +227,7 @@
 		AF46EB5018ADF81000AEDC11 /* image in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4D18ADF81000AEDC11 /* image */; };
 		AF46EB5118ADF81000AEDC11 /* Sound in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4E18ADF81000AEDC11 /* Sound */; };
 		AF58430B19227BA5006295A1 /* ContactScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF58430919227BA5006295A1 /* ContactScene.cpp */; };
+		AF6EC176193C40EC005DC2C0 /* CMO_score.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF6EC174193C40EC005DC2C0 /* CMO_score.cpp */; };
 		AF96E3F418D98014002877BF /* TutorialScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF96E3F318D98014002877BF /* TutorialScene.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
@@ -776,6 +777,8 @@
 		AF46EB4E18ADF81000AEDC11 /* Sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sound; sourceTree = "<group>"; };
 		AF58430919227BA5006295A1 /* ContactScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContactScene.cpp; sourceTree = "<group>"; };
 		AF58430A19227BA5006295A1 /* ContactScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactScene.h; sourceTree = "<group>"; };
+		AF6EC174193C40EC005DC2C0 /* CMO_score.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CMO_score.cpp; sourceTree = "<group>"; };
+		AF6EC175193C40EC005DC2C0 /* CMO_score.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMO_score.h; sourceTree = "<group>"; };
 		AF88B935192F40D500F909EB /* icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-76.png"; path = "../proj.ios/icon-76.png"; sourceTree = "<group>"; };
 		AF88B936192F40F400F909EB /* icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-152.png"; path = "../proj.ios/icon-152.png"; sourceTree = "<group>"; };
 		AF88B939192F423100F909EB /* landscape_nonretina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_nonretina.png; path = ../proj.ios/landscape_nonretina.png; sourceTree = "<group>"; };
@@ -2014,6 +2017,8 @@
 		E7F5198918C6FB29002530DC /* Layer */ = {
 			isa = PBXGroup;
 			children = (
+				AF6EC174193C40EC005DC2C0 /* CMO_score.cpp */,
+				AF6EC175193C40EC005DC2C0 /* CMO_score.h */,
 				E7F5197D18C5A011002530DC /* LayerWebView.h */,
 				E7F5197E18C5A011002530DC /* LayerWebView.mm */,
 				E7F5197F18C5A011002530DC /* UIWebViewBridge.h */,
@@ -2267,6 +2272,7 @@
 				15A3D99F1682F7F9002FB0C5 /* cpRotaryLimitJoint.c in Sources */,
 				15A3D9A01682F7F9002FB0C5 /* cpSimpleMotor.c in Sources */,
 				15A3D9A11682F7F9002FB0C5 /* cpSlideJoint.c in Sources */,
+				AF6EC176193C40EC005DC2C0 /* CMO_score.cpp in Sources */,
 				E7F5194A18C49C7B002530DC /* CMO_dot.cpp in Sources */,
 				AF37D14518DF2A150018FE15 /* TutorialBoardLayer.cpp in Sources */,
 				15A3D9A21682F7F9002FB0C5 /* cpArbiter.c in Sources */,
