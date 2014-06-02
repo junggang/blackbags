@@ -84,6 +84,7 @@ bool CGameBoardLayer::init()
                 CMO_score* pScore = CMO_score::create();
                 pScore->setImage(pos);
                 pScore->setPosition(ccp(m_OriginX+m_DeltaX*(j/2-1),m_OriginY+m_DeltaY*(j/2-1)));
+                m_Board->addChild(pScore, 6);
                 
                 //add item
                 if (CGameManager::GetInstance()->GetItem(IndexedPosition(i,j))!= ITEM_NOTHING)

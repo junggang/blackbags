@@ -15,5 +15,6 @@ public:
 private:
 	IndexedPosition		m_Index;
 	cocos2d::CCSprite*	pScore;
+    bool m_isTaken;
 };
 
