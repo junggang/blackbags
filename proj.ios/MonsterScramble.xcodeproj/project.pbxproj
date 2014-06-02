@@ -2505,7 +2505,7 @@
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 					"$(PROJECT_DIR)",
 					"$(SRCROOT)/../../../external/",
-					"/Users/blastingzone/Desktop/NHN_NEXT/1_3/cocos2d-x-2.2.2/MS/Monsc/Classes/GoogleAdMobAdsSdkiOS-6.8.0",
+					"$(SRCROOT)/Classes/GoogleAdMobAdsSdkiOS-6.8.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-O2";
@@ -2559,7 +2559,7 @@
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 					"$(PROJECT_DIR)",
 					"$(SRCROOT)/../../../external/",
-					"/Users/blastingzone/Desktop/NHN_NEXT/1_3/cocos2d-x-2.2.2/MS/Monsc/Classes/GoogleAdMobAdsSdkiOS-6.8.0",
+					"$(SRCROOT)/Classes/GoogleAdMobAdsSdkiOS-6.8.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";

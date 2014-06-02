@@ -637,6 +637,8 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 
 	std::string stringData = streamData.str();
     
+    CCLog(stringData.c_str());
+    
     // disconnected
     if (strcmp(stringData.c_str(), "disconnected") == 0)
     {
