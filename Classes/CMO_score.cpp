@@ -51,13 +51,20 @@ void CMO_score::update( float delta )
                 break;
         }
         
+        //점수 애니메이션 부분
+        
         CCFadeOut* FadeOut = CCFadeOut::create(0.8f);
         CCMoveBy* actionBy = CCMoveBy::create(0.8f, ccp(0.0f,80.0f));
-        CCAction* simul = CCSpawn::create(dt,FadeOut,actionBy);
+        CCAction* simul = CCSequence::create(dt,FadeOut,NULL);
         //CCAction *Fadeactions = CCSequence::create(dt, FadeOut, NULL);
         pScore->setOpacity(0);
         pScore->setAnchorPoint( ccp(0, 0.5f) );
         pScore->runAction(simul);
+        
+        CCAction* simul1 = CCSequence::create(dt,actionBy,NULL);
+        pScore->runAction(simul1);
+        
+        
         addChild(pScore,1);
     }
     
