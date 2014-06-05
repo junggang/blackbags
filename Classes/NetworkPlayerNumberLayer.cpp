@@ -20,6 +20,7 @@ bool CNetworkPlayerNumberLayer::init()
 	CreateNumberOfPlayerMenu(visibleSize);
 	CreateNextButtonMenu(visibleSize);
     CreateBackButtonMenu(visibleSize);
+    CreateTitle();
 
 	return true;
 }
@@ -206,4 +207,17 @@ void CNetworkPlayerNumberLayer::update(float dt)
 			pTempPlayerNumber->unselected();
 		}
 	}
+}
+
+void CNetworkPlayerNumberLayer::CreateTitle()
+{
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    
+    CCSprite* pTitle = CCSprite::create(PLAYER_NUMBER_TITLE.c_str());
+    pTitle->setPosition( CCPoint(PLAYER_NUMBER_TITLE_POS) );
+	this->addChild(pTitle);
+    
+    CCSprite* pDescription = CCSprite::create(GAMESET01_ONLINE_DES.c_str());
+    pDescription->setPosition(ccp(visibleSize.width/2,GAMESET01_ONLINE_DES_POS));
+    this->addChild(pDescription);
 }

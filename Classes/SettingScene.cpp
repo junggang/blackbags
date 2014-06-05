@@ -29,7 +29,8 @@ bool CSettingScene::init(void)
 
 	//add Setting Title
 	CCSprite* pTitle = CCSprite::create(SETTING_TITLE.c_str());
-	pTitle->setPosition(ccp(visibleSize.width/2,SETTING_TITLE_POS));
+    pTitle->setAnchorPoint(ccp(0,0));
+	pTitle->setPosition(CCPoint(SETTING_TITLE_POS));
 	addChild(pTitle,1);
 
 

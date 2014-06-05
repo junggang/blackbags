@@ -54,7 +54,7 @@ void CMO_score::update( float delta )
         
         if (tempItem != ITEM_NOTHING)
         {
-            CCSprite* pItem;
+            CCSprite* pItem = CCSprite::create();
             
             switch (tempItem) {
                 case ITEM_GOLD:
@@ -64,8 +64,10 @@ void CMO_score::update( float delta )
                     pItem = CCSprite::create(PLAYSCENE_SCORE_TRASH.c_str());
                     break;
                 default:
-                    break;
+                    CCLog("FAILED TO LOAD ITEM TEXTURE");
+                    return;
             }
+            
             
             CCDelayTime *dtItem = CCDelayTime::create(delayTime+0.4f);
             
@@ -73,6 +75,7 @@ void CMO_score::update( float delta )
             CCMoveBy* actionByItem = CCMoveBy::create(0.8f, ccp(0.0f,80.0f));
             CCAction* simulItem = CCSequence::create(dtItem,FadeOutItem,NULL);
             //CCAction *Fadeactions = CCSequence::create(dt, FadeOut, NULL);
+            
             pItem->setOpacity(0);
             pItem->setAnchorPoint( ccp(0, 0.5f) );
             pItem->runAction(simulItem);

@@ -359,6 +359,9 @@ const std::string MAIN_MENU3_ANI_PLIST = "image/main_menu03_img_ani.plist";
 const std::string PLAYER_NUMBER_TITLE = "image/gameset01_title.png";
 #define PLAYER_NUMBER_TITLE_POS 1022,1390
 
+const std::string GAMESET01_ONLINE_DES = "image/gameset01_description_eng.png";
+#define GAMESET01_ONLINE_DES_POS 1231
+
 const std::string PLAYER_NUMBER_TWO_TXT = "image/gameset01_menu01_img.png";
 const std::string PLAYER_NUMBER_THREE_TXT = "image/gameset01_menu02_img.png";
 const std::string PLAYER_NUMBER_FOUR_TXT = "image/gameset01_menu03_img.png";
@@ -475,7 +478,7 @@ const std::string ResultTrashImage[3] =
 
 /*	setting scene */
 const std::string SETTING_TITLE = "image/setting_title.png";
-#define SETTING_TITLE_POS 1390
+#define SETTING_TITLE_POS 811,1317
 
 const std::string SETTING_BG = "image/setting_menu_background.png";
 #define SETTING_BG_POS 113,200

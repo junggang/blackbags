@@ -10,6 +10,7 @@ public:
 	void CreateNumberOfPlayerMenu(cocos2d::CCSize visibleSize);
 	void CreateNextButtonMenu(cocos2d::CCSize visibleSize);
     void CreateBackButtonMenu(cocos2d::CCSize visibleSize);
+    void CreateTitle();
 
 	void NumberOfPlayerCallBack(cocos2d::CCObject* pSender);
 	void NextButtonCallBack(cocos2d::CCObject* pSender);
