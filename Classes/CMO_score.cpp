@@ -35,21 +35,7 @@ void CMO_score::update( float delta )
 		CCDelayTime *dt = CCDelayTime::create(delayTime);
         m_isTaken = true;
         
-        
-        
-        switch (tempItem) {
-            case ITEM_NOTHING:
-                pScore = CCSprite::create(PLAYSCENE_SCORE_LAND.c_str());
-                break;
-            case ITEM_GOLD:
-                pScore = CCSprite::create(PLAYSCENE_SCORE_CAKE.c_str());
-                break;
-            case ITEM_TRASH:
-                pScore = CCSprite::create(PLAYSCENE_SCORE_TRASH.c_str());
-                break;
-            default:
-                break;
-        }
+        pScore = CCSprite::create(PLAYSCENE_SCORE_LAND.c_str());
         
         //점수 애니메이션 부분
         
@@ -64,8 +50,41 @@ void CMO_score::update( float delta )
         CCAction* simul1 = CCSequence::create(dt,actionBy,NULL);
         pScore->runAction(simul1);
         
-        
         addChild(pScore,1);
+        
+        if (tempItem != ITEM_NOTHING)
+        {
+            CCSprite* pItem;
+            
+            switch (tempItem) {
+                case ITEM_GOLD:
+                    pItem = CCSprite::create(PLAYSCENE_SCORE_CAKE.c_str());
+                    break;
+                case ITEM_TRASH:
+                    pItem = CCSprite::create(PLAYSCENE_SCORE_TRASH.c_str());
+                    break;
+                default:
+                    break;
+            }
+            
+            CCDelayTime *dtItem = CCDelayTime::create(delayTime+0.4f);
+            
+            CCFadeOut* FadeOutItem = CCFadeOut::create(0.8f);
+            CCMoveBy* actionByItem = CCMoveBy::create(0.8f, ccp(0.0f,80.0f));
+            CCAction* simulItem = CCSequence::create(dtItem,FadeOutItem,NULL);
+            //CCAction *Fadeactions = CCSequence::create(dt, FadeOut, NULL);
+            pItem->setOpacity(0);
+            pItem->setAnchorPoint( ccp(0, 0.5f) );
+            pItem->runAction(simulItem);
+            
+            CCAction* simulItem1 = CCSequence::create(dtItem,actionByItem,NULL);
+            pItem->runAction(simulItem1);
+            addChild(pItem,1);
+
+
+        }
+        
+ 
     }
     
 }
