@@ -562,6 +562,9 @@ const std::string PLAYSCENE_TIMER_MONSTER = "image/playscene_timer_monster.png";
 #define PLAYSCENE_TIMER_POS 728,1322
 #define PLAYSCENE_TIMER_MONSTER_POS 900,1380
 
+const std::string PLAYSCENE_TIMER_OUT = "image/playscene_timer_out.png";
+#define PLAYSCENE_TIMER_OUT_POS 678,1236
+
 const std::string PLAYSCENE_BOARD = "image/playscene_board.png";
 
 const std::string PLAYSCENE_LAND_01 = "image/playscene_land_character01.png";
