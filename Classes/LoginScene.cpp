@@ -24,6 +24,8 @@ bool CLoginScene::init(void)
 		return false;
 	}
     
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    
     // 광고 끄기
     gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
     admob->hideAdMob();
@@ -33,6 +35,11 @@ bool CLoginScene::init(void)
     
 	// send request for authentication
     CGameManager::GetInstance()->AuthenticationCheck();
+    
+    CCSprite* pWaitingScreen = CCSprite::create(WAITING_ONLINE_IMAGE.c_str());
+	pWaitingScreen->setAnchorPoint(ccp(0.5f,0.5f));
+	pWaitingScreen->setPosition(CCPoint(visibleSize.width/2, visibleSize.height/2 ));
+    this->addChild(pWaitingScreen, 1);
     
     m_LoginLayer = nullptr;
     
