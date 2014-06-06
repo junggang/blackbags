@@ -36,7 +36,7 @@ bool CTimerLayer::init()
     
 	addChild(m_progressTimeBar,1);
 
-	//�����ϸ鼭 �� �� ������Ʈ �ؾߵǴµ�.
+	//Ω√¿€«œ∏Èº≠ «— π¯ æ˜µ•¿Ã∆Æ «ÿæﬂµ«¥¬µ•.
 	CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
 	CCFiniteTimeAction* pAction = CCSequence::create(progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
 
@@ -64,7 +64,7 @@ void CTimerLayer::update( float dt )
             CCDelayTime* delayAction = CCDelayTime::create(delayTime);
             
             m_progressTimeBar->stopAllActions();
-            //�ٸ� �ִϸ��̼ǵ� ���� �� ���� ��ٷȴٰ� Ÿ�̸Ӹ� ������ֵ��� ����.
+            //¥Ÿ∏• æ÷¥œ∏ﬁ¿Ãº«µÈ ≥°≥Ø ∂ß ±Ó¡ˆ ±‚¥Ÿ∑»¥Ÿ∞° ≈∏¿Ã∏”∏¶ ¿Áª˝«ÿ¡÷µµ∑œ «œ¿⁄.
             CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
             CCFiniteTimeAction* pAction = CCSequence::create(delayAction,progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
             m_progressTimeBar->runAction(pAction);
@@ -77,7 +77,7 @@ void CTimerLayer::update( float dt )
         CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		   
 		m_progressTimeBar->stopAllActions();
-		//�ٸ� �ִϸ��̼ǵ� ���� �� ���� ��ٷȴٰ� Ÿ�̸Ӹ� ������ֵ��� ����.
+		//¥Ÿ∏• æ÷¥œ∏ﬁ¿Ãº«µÈ ≥°≥Ø ∂ß ±Ó¡ˆ ±‚¥Ÿ∑»¥Ÿ∞° ≈∏¿Ã∏”∏¶ ¿Áª˝«ÿ¡÷µµ∑œ «œ¿⁄.
 		CCProgressFromTo *progressToZero = CCProgressFromTo::create(20, 100, 0);
 		CCFiniteTimeAction* pAction = CCSequence::create(delayAction,progressToZero, CCCallFunc::create(this, callfunc_selector(CTimerLayer::timerEndFunc)),NULL);
 		m_progressTimeBar->runAction(pAction);
@@ -87,7 +87,19 @@ void CTimerLayer::update( float dt )
 void CTimerLayer::timerEndFunc()
 {
 	CCLog("Timer Ended!");
-	//Ÿ�̸Ӱ� ���� �� ������ �׼�
+    
+    //타임아웃 애니메이션
+    CCSprite* pTimeOut = CCSprite::create(PLAYSCENE_TIMER_OUT.c_str());
+    pTimeOut->setAnchorPoint(ccp(0,0));
+    pTimeOut->setPosition(CCPoint(PLAYSCENE_TIMER_OUT_POS));
+    CCActionInterval* jumpAction=CCJumpBy::create(1, ccp(0, 0), 50, 2);
+    CCFadeOut* FadeOut = CCFadeOut::create(0.4f);
+    CCAction* sequence = CCSequence::create(CCDelayTime::create(0.6f),FadeOut,NULL);
+	pTimeOut->runAction(jumpAction);
+    pTimeOut->runAction(sequence);
+    addChild(pTimeOut,2);
+    
+	//≈∏¿Ã∏”∞° ≥°≥≠ »ƒ √Î«ÿ¡˙ æ◊º«
 	CGameManager::GetInstance()->TimeOut();
 }
 

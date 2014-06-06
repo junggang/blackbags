@@ -22,36 +22,35 @@ bool CGameBoardLayer::init()
 	// 2. add resources
 	m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
-	int rowNum = 0;
-	int columnNum = 0;
-
-	switch (CGameManager::GetInstance()->GetSelectedMapSize() )
+    switch (CGameManager::GetInstance()->GetSelectedMapSize() )
 	{
 	case MS_5X5:
-		rowNum = 5;
-		columnNum = 5;
+		m_RowNum = 5;
+		m_ColNum = 5;
 		break;
 	case MS_6X6:
-		rowNum = 6;
-		columnNum = 6;
+		m_RowNum = 6;
+		m_ColNum = 6;
 		break;
 	case MS_7X7:
-		rowNum = 7;
-		columnNum = 7;
+		m_RowNum = 7;
+		m_ColNum = 7;
 		break;
 	default:
+            m_RowNum = 0;
+            m_ColNum = 0;
 		break;
 	}
     
     	m_Board = CCSprite::create(
 		PLAYSCENE_BOARD.c_str(), 
-		CCRect(0, 0, columnNum * DEFAULT_TILE_WIDTH, rowNum * DEFAULT_TILE_HEIGHT)
+		CCRect(0, 0, m_ColNum * DEFAULT_TILE_WIDTH, m_RowNum * DEFAULT_TILE_HEIGHT)
 		);
 	m_Board->setAnchorPoint(ccp(0.5f, 0.5f));
 	m_Board->setPosition(ccp(m_VisibleSize.width / 2, m_VisibleSize.height / 2) );
 	this->addChild(m_Board);
 
-	m_BoardOrigin.x = m_VisibleSize.width/2 - (float(columnNum)/2 * DEFAULT_TILE_WIDTH);
+	m_BoardOrigin.x = m_VisibleSize.width/2 - (float(m_ColNum)/2 * DEFAULT_TILE_WIDTH);
 	m_BoardOrigin.y = m_VisibleSize.height/2;	
 
 	float m_OriginX = 0.0f;
@@ -63,9 +62,9 @@ bool CGameBoardLayer::init()
 	float m_DeltaX = DEFAULT_TILE_WIDTH/2;
 	float m_DeltaY = DEFAULT_TILE_HEIGHT/2;
 
-	for (int i = 1; i < rowNum * 2 + 2; ++i)
+	for (int i = 1; i < m_RowNum * 2 + 2; ++i)
 	{
-		for (int j = 1; j < columnNum * 2 + 2; ++j)
+		for (int j = 1; j < m_ColNum * 2 + 2; ++j)
 		{
 			IndexedPosition pos;
 			pos.m_PosI = i;
@@ -180,6 +179,17 @@ void CGameBoardLayer::DrawLine()
     
 	IndexedPosition startIndex = ConvertCoordinate(m_StartPoint);
 	IndexedPosition endIndex = ConvertCoordinate(m_EndPoint);
+    
+    CCLog("%d,%d",m_RowNum,m_ColNum);
+    
+    //마름모 범위를 벗어날 경우, 그냥 종료
+    if (startIndex.m_PosI <= 0 ||
+        startIndex.m_PosJ <=0||
+        startIndex.m_PosI > m_RowNum*2+1||
+        startIndex.m_PosJ > m_ColNum*2+1)
+    {
+        return;
+    }
 	
 	if (startIndex.m_PosI == endIndex.m_PosI)
 	{
@@ -318,6 +328,15 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
     IndexedPosition indexedPosition = ConvertCoordinate(point);
     point.y = m_VisibleSize.height - point.y - m_BoardOrigin.y;
 	point.x -= m_BoardOrigin.x;
+    
+    //마름모 범위를 벗어날 경우, 그냥 종료
+    if (indexedPosition.m_PosI <= 0 ||
+        indexedPosition.m_PosJ <= 0||
+        indexedPosition.m_PosI > m_RowNum*2+1||
+        indexedPosition.m_PosJ > m_ColNum*2+1)
+    {
+        return;
+    }
     
     //범위를 벗어날 경우. 그냥 종료.
 	if ( point.x > m_Board->getContentSize().width + TOUCH_AREA ||

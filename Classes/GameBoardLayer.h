@@ -31,6 +31,9 @@ private:
 	cocos2d::CCPoint m_EndPoint;
 	cocos2d::CCPoint m_BoardOrigin;
 	cocos2d::CCSprite * m_Board;
+    
+    int m_RowNum;
+    int m_ColNum;
 
 	Direction m_LineDirection;
 };
