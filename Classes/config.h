@@ -237,13 +237,13 @@ struct MapObject
 #define CREDIT_TITLE_POSITION 842,1317
 
 #define CREDIT_MEMBER_IMAGE "image/credit_members.png"
-#define CREDIT_MEMBER_POSITION 113,200
+#define CREDIT_MEMBER_POSITION 96,200
 
 #define CREDIT_BACK_BUTTON_POSITION 90,94
 
 /* contact scene */
 const std::string CONTACT_TITLE="image/contact_title.png";
-#define CONTACT_TITLE_POS 842,1317
+#define CONTACT_TITLE_POS 812,1317
 const std::string CONTACT_MAIL = "image/contact_mail.png";
 
 
@@ -478,7 +478,7 @@ const std::string ResultTrashImage[3] =
 
 /*	setting scene */
 const std::string SETTING_TITLE = "image/setting_title.png";
-#define SETTING_TITLE_POS 811,1317
+#define SETTING_TITLE_POS 811,1277
 
 const std::string SETTING_BG = "image/setting_menu_background.png";
 #define SETTING_BG_POS 113,200
