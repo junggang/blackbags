@@ -52,13 +52,27 @@ bool CGameManager::init()
 		m_GameData->setBoolForKey("three", true);
 		m_GameData->setBoolForKey("four", true);
 
+        m_GameData->setBoolForKey("seenFirstTutorial", false);
+        
 		m_GameData->setBoolForKey("initialized", true);
         m_GameData->flush();
+        
+        return false;
 	}
     
     return true;
 }
 
+void CGameManager::SetSeenFirstTutorialFlag(bool flag)
+{
+    m_GameData->setBoolForKey("seenFirstTutorial", flag);
+    m_GameData->flush();
+}
+
+bool CGameManager::GetSeenFirstTutorialFlag()
+{
+    return m_GameData->getBoolForKey("seenFirstTutorial");
+}
 
 void CGameManager::SetPlayerName(int playerId,  const std::string& playerName )
 {

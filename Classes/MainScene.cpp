@@ -19,7 +19,7 @@ bool CMainScene::init(void)
     }
     
     CGameManager::GetInstance()->init();
-
+    
     // 광고 켜기
     gene::AdMobObjectCPP * admob = new gene::AdMobObjectCPP();
     admob->showAdMob();
@@ -42,9 +42,6 @@ bool CMainScene::init(void)
 
 	this->addChild(mainMenuLayer, 2);
 
-	CGameManager::GetInstance()->init();
-    
-    
     /////////////////////////////
 	// 4. play music
     CAudioManager::GetInstance()->StopBGM();

@@ -4,6 +4,9 @@
 #include "IntroBackgroundLayer.h"
 #include "AdMobObjectCPP.h"
 
+#include "GameManager.h"
+#include "TutorialScene.h"
+
 USING_NS_CC;
 
 bool CIntroScene::init(void)
@@ -39,6 +42,19 @@ bool CIntroScene::init(void)
 
 void CIntroScene::endIntro()
 {
-	CCScene* newScene = CMainScene::create();
-	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+    CGameManager::GetInstance()->init();
+    
+    if ( CGameManager::GetInstance()->GetSeenFirstTutorialFlag() )
+    {
+        // 그냥 실행
+        CCScene* newScene = CMainScene::create();
+        CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+    }
+    else
+    {
+        // 첫 실행이다
+        // 튜토리얼을 보여주자
+        CCScene* newScene = CTutorialScene::create();
+        CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+    }
 }

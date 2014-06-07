@@ -101,7 +101,7 @@ void CMainMenuLayer::newgameCallback(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
-	//newgame load
+   //newgame load
     CGameManager::GetInstance()->SetOnlineMode(false);
     
 	CCScene* newScene = CGameSettingScene::create();
@@ -134,8 +134,7 @@ void CMainMenuLayer::settingCallback(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
-	//for test
-	CCScene* newScene = CSettingScene::create();
+    CCScene* newScene = CSettingScene::create();
 	CCDirector::sharedDirector()->pushScene( newScene );
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     //exit(0);

@@ -37,11 +37,21 @@ bool CTutorialScene::init(void)
                                                                  this,
                                                                  menu_selector(CTutorialScene::SettingSceneCallback)
                                                                  );
-    
-	pBackToMainButton->setAnchorPoint(ccp(0,0));
-	CCMenu* pMenu = CCMenu::create(pBackToMainButton, NULL);
-	pMenu->setPosition(SHARED_BTN_BACK_POS);
-	addChild(pMenu, 2);
+    if (CGameManager::GetInstance()->GetSeenFirstTutorialFlag())
+    {
+        pBackToMainButton->setAnchorPoint(ccp(0,0));
+        CCMenu* pMenu = CCMenu::create(pBackToMainButton, NULL);
+        pMenu->setPosition(SHARED_BTN_BACK_POS);
+        addChild(pMenu, 2);
+    }
+    else
+    {
+        // 첫 실행에 의한 튜토리얼이다
+        // 스킵버튼 만들까?
+        
+        // 이제 첫 튜토리얼은 본 걸로 처리하자
+    }
+	
     
     //4.add board layer
     CCLayer* BoardLayer = CTutorialBoardLayer::create();

@@ -1,5 +1,6 @@
 #include "TutorialBoardLayer.h"
-
+#include "GameManager.h"
+#include "MainScene.h"
 #include "config.h"
 
 USING_NS_CC;
@@ -152,7 +153,19 @@ void CTutorialBoardLayer::ShowNextAnimation(int num)
         }
             break;
         case 9:
-            CCDirector::sharedDirector()->popScene();
+            if (CGameManager::GetInstance()->GetSeenFirstTutorialFlag())
+            {
+                CCDirector::sharedDirector()->popScene();
+            }
+            else
+            {
+                // 지금 막 첫 튜토리얼을 다 봤으므로 플래그 바꾸고 메인씬 호출
+                CGameManager::GetInstance()->SetSeenFirstTutorialFlag(true);
+                
+                CCScene* newScene = CMainScene::create();
+                CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5, newScene) );
+
+            }
             break;
             
     }

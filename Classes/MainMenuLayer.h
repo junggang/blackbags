@@ -12,7 +12,7 @@ public:
 	void settingCallback(CCObject* pSender);
     
     void drawAnimation();
-
+    
 	// implement the "static node()" method manually
     CREATE_FUNC(CMainMenuLayer);
 };

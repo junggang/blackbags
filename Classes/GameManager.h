@@ -133,6 +133,9 @@ public:
 	bool IsReady(int playerId);
 	bool IsAllReady();
 	bool GetCurrentTimerStatus();
+    
+    void SetSeenFirstTutorialFlag(bool flag);
+    bool GetSeenFirstTutorialFlag();
 
 private:
 	static CGameManager*	m_pInstance; //singleton instance
@@ -144,6 +147,7 @@ private:
     bool m_ConnectionStatus;
 
 	float m_AnimationDelay;
+    
 	//CCUserDefault m_SharedData;
 
 	//캐릭터 이름이나 맵 상태 정보들은 매니저가 캐싱해서 가지고 있는 것이 좋을 듯
