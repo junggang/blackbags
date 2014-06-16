@@ -148,6 +148,8 @@ bool CSettingMenuLayer::init()
     showCurrentBGMVolume();
     showCurrentSEVolume();
     
+    m_previousSEvolume = CAudioManager::GetInstance()->GetSEVolume();
+    
     m_LoginLayer = nullptr;
 
 	return true;
@@ -245,6 +247,19 @@ void CSettingMenuLayer::update( float dt )
     }
 }
 
+bool CSettingMenuLayer::IsSEVolumeChanged()
+{
+    if(m_previousSEvolume == CAudioManager::GetInstance()->GetSEVolume())
+    {
+        return false;
+    }
+    else
+    {
+        m_previousSEvolume = CAudioManager::GetInstance()->GetSEVolume();
+        return true;
+    }
+}
+
 void CSettingMenuLayer::ccTouchEnded( CCTouch *pTouch, CCEvent *pEvent )
 {
 	CGameManager::GetInstance()->SetUpdateFlag(true);
@@ -252,6 +267,12 @@ void CSettingMenuLayer::ccTouchEnded( CCTouch *pTouch, CCEvent *pEvent )
     // update Music & SE Volume
 	CAudioManager::GetInstance()->SetBGMVolume( getCurrentBGMVolume() );
 	CAudioManager::GetInstance()->SetSEVolume( getCurrentSEVolume() );
+    
+    if ( IsSEVolumeChanged() )
+    {
+        CAudioManager::GetInstance()->ChangeSE(SE_DRAW_LINE_1);
+        CAudioManager::GetInstance()->PlaySE();
+    }
 }
 
 bool CSettingMenuLayer::ccTouchBegan( CCTouch *pTouch, CCEvent *pEvent )
