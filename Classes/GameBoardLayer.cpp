@@ -37,12 +37,12 @@ bool CGameBoardLayer::init()
 		m_ColNum = 7;
 		break;
 	default:
-            m_RowNum = 0;
-            m_ColNum = 0;
+        m_RowNum = 0;
+        m_ColNum = 0;
 		break;
 	}
     
-    	m_Board = CCSprite::create(
+    m_Board = CCSprite::create(
 		PLAYSCENE_BOARD.c_str(), 
 		CCRect(0, 0, m_ColNum * DEFAULT_TILE_WIDTH, m_RowNum * DEFAULT_TILE_HEIGHT)
 		);
@@ -183,11 +183,12 @@ void CGameBoardLayer::DrawLine()
     CCLog("%d,%d",m_RowNum,m_ColNum);
     
     //마름모 범위를 벗어날 경우, 그냥 종료
-    if (startIndex.m_PosI <= 0 ||
-        startIndex.m_PosJ <=0||
-        startIndex.m_PosI > m_RowNum*2+1||
-        startIndex.m_PosJ > m_ColNum*2+1)
+    if ( ( startIndex.m_PosI <= 0 ) ||
+        ( startIndex.m_PosJ <=0 ) ||
+        ( startIndex.m_PosI > ( m_RowNum * 2 ) + 1 ) ||
+        ( startIndex.m_PosJ > ( m_ColNum * 2 ) + 1 ) )
     {
+        CCLog("bad position");
         return;
     }
 	
@@ -260,12 +261,13 @@ IndexedPosition CGameBoardLayer::ConvertCoordinate(CCPoint point)
 
 	//먼저, 범위를 벗어났는지 확인한다.
 	if ( point.x > m_Board->getContentSize().width + TOUCH_AREA ||
-		point.x< - TOUCH_AREA||
+		point.x < - TOUCH_AREA ||
 		point.y > m_Board->getContentSize().height/2 + TOUCH_AREA ||
-		point.y < -m_Board->getContentSize().height/2- TOUCH_AREA)
+		point.y < -m_Board->getContentSize().height/2 - TOUCH_AREA)
 	{
 		indexedPosition.m_PosI = 0;
 		indexedPosition.m_PosJ = 0;
+        
 		return indexedPosition;
 	}
 
@@ -331,9 +333,9 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
     
     //마름모 범위를 벗어날 경우, 그냥 종료
     if (indexedPosition.m_PosI <= 0 ||
-        indexedPosition.m_PosJ <= 0||
-        indexedPosition.m_PosI > m_RowNum*2+1||
-        indexedPosition.m_PosJ > m_ColNum*2+1)
+        indexedPosition.m_PosJ <= 0 ||
+        indexedPosition.m_PosI > m_RowNum * 2 + 1 ||
+        indexedPosition.m_PosJ > m_ColNum * 2 + 1 )
     {
         return;
     }
@@ -353,12 +355,13 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
     }
     
     //line
-    if(isClicked==0)
+    if( isClicked == 0 )
     {
-        if(getChildByTag(3)!=nullptr)
+        if( getChildByTag(3) != nullptr)
         {
             //removeChildByTag(3);
         }
+        
         float scaleFactor = sqrt(powf(m_middlePoint.x-m_StartPoint.x,2)+powf(m_middlePoint.y-m_StartPoint.y,2));
         
         if (scaleFactor >= (DEFAULT_TILE_DIAGONAL+TOUCH_AREA))
