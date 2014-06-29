@@ -331,11 +331,17 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
     point.y = m_VisibleSize.height - point.y - m_BoardOrigin.y;
 	point.x -= m_BoardOrigin.x;
     
-    //마름모 범위를 벗어날 경우, 그냥 종료
-    if (indexedPosition.m_PosI <= 0 ||
-        indexedPosition.m_PosJ <= 0 ||
-        indexedPosition.m_PosI > m_RowNum * 2 + 1 ||
-        indexedPosition.m_PosJ > m_ColNum * 2 + 1 )
+    // convert는 그냥 변환만 하고
+    // 유효성 검증을 그 값을 이용하는 곳에서 할 것
+    // 바로 여기서!!!!
+    // 마름모 범위를 벗어날 경우, 그냥 종료
+    
+    CCLog("I : %d, J : %d", indexedPosition.m_PosI, indexedPosition.m_PosJ );
+    
+    if ( ( indexedPosition.m_PosI <= 0 ) ||
+        ( indexedPosition.m_PosJ <= 0 ) ||
+        ( indexedPosition.m_PosI > ( m_RowNum * 2 ) + 1 ) ||
+        ( indexedPosition.m_PosJ > ( m_ColNum * 2 ) + 1 ) )
     {
         return;
     }
@@ -348,6 +354,7 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
 	{
 		return;
 	}
+    
     ///
     if(getChildByTag(0)!=nullptr)
     {
@@ -357,10 +364,19 @@ void CGameBoardLayer::Highlight(cocos2d::CCPoint point,int isClicked)
     //line
     if( isClicked == 0 )
     {
+        // 방어코드 추가
+        // 일단 이걸로 죽는 현상은 없어짐
+        if ( getChildByTag( 3 ) == nullptr)
+            return;
+        
+        /*
+        // 무슨 코드인지 잘 모르겠어요
+        // getChildByTag(3)를 아래에서 사용하는데 nullptr 체크해서 있으면 삭제(주석이 되어 있긴 하지만) -> 아래에서 nullptr에 접근하는 거 아닌가?
         if( getChildByTag(3) != nullptr)
         {
             //removeChildByTag(3);
         }
+        */
         
         float scaleFactor = sqrt(powf(m_middlePoint.x-m_StartPoint.x,2)+powf(m_middlePoint.y-m_StartPoint.y,2));
         
