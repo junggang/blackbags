@@ -40,7 +40,7 @@ waitingChannelTTL = 60
 # 리스트는 redis안에 저장된 player data에 접근하는 key value를 가지고 있다
 # 리스트의 값들은 추가된 순서를 유지한다
 
-def createChannel(playerPool, playerNumber, playerData, tokenId):
+def createChannel(playerPool, playerNumber, playerData, tokenId, currentWaitingList):
 	if playerData.getPlayerNumber(playerNumber) == 1:
 		playerPool.append(tokenId)
 
@@ -52,15 +52,15 @@ def createChannel(playerPool, playerNumber, playerData, tokenId):
 
 			# 플레이어 추가 
 			for player in playerPool:
-				print 'player number ' + str(playerNumber) + ' : ' + player
-				playerData = getPlayerDataNoTTLReset(player)
-				gameData.addPlayer(playerData)
-				waitingList.remove(player)
+				# print 'player number ' + str(playerNumber) + ' : ' + player
+				tempPlayerData = getPlayerDataNoTTLReset(player)
+				gameData.addPlayer(tempPlayerData)
+				currentWaitingList.remove(player)
 
 				# print playerData.data[3]
 
 				# player data 저장
-				memcache.set(player, json.dumps(playerData.data), playerDataTTL)
+				memcache.set(player, json.dumps(tempPlayerData.data), playerDataTTL)
 
 			if playerNumber == 2:
 				gameData.setMapSize(1) # MS_5X5
@@ -117,13 +117,13 @@ def playerMatching():
 			waitingList.remove(each)
 			continue
 
-		if createChannel(player_2, 2, playerData, each):
+		if createChannel(player_2, 2, playerData, each, waitingList):
 			break
 
-		if createChannel(player_3, 3, playerData, each):
+		if createChannel(player_3, 3, playerData, each, waitingList):
 			break
 
-		if createChannel(player_4, 4, playerData, each):
+		if createChannel(player_4, 4, playerData, each, waitingList):
 			break
 
 	# 변경된 데이터 저장
