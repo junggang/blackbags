@@ -670,7 +670,9 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 	}
 	else if (strcmp(response->getHttpRequest()->getTag(), "POST joinUpdate") == 0)
 	{
-        if (strcmp(stringData.c_str(), "player not found") == 0)
+        CCLog("%s", stringData.c_str());
+        
+        if (strcmp(stringData.c_str(), "channel not found") == 0)
 		{
 			// 대기열에 있다가 타임 아웃된 경우
             // 연결 끊고 타임 아웃 플래그 설정하고, 업데이트 할 수 있도록 플래그 변경
@@ -678,14 +680,16 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
             CGameManager::GetInstance()->SetFindingChannelTimeOut(true);
             CGameManager::GetInstance()->SetUpdateFlag(true);
 		}
-        
-		CNetworkLogic::GetInstance()->SetMyPlayerId(atoi(stringData.c_str() ) );
+        else
+        {
+            CNetworkLogic::GetInstance()->SetMyPlayerId(atoi(stringData.c_str() ) );
 
-		if (CNetworkLogic::GetInstance()->GetMyPlayerId() != -1)
-		{
-			// send getInitializedGameData request
-			CNetworkLogic::GetInstance()->getInitializedGameData();
-		}
+            if (CNetworkLogic::GetInstance()->GetMyPlayerId() != -1)
+            {
+                // send getInitializedGameData request
+                CNetworkLogic::GetInstance()->getInitializedGameData();
+            }
+        }
 	}
 	else if (strcmp(response->getHttpRequest()->getTag(), "POST getInitializedGameData") == 0)
 	{

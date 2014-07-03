@@ -25,12 +25,13 @@ app = Flask(__name__)
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-global watingList
+global waitingList
 
-watingList = []
-gameDataTTL = 600
+waitingList = []
+gameDataTTL = 60
 playerDataTTL = 10
-playerTableTTL = 3600
+playerTableTTL = 600
+waitingChannelTTL = 60
 
 #################################################
 #				matching thread 관련				#
@@ -39,7 +40,7 @@ playerTableTTL = 3600
 # 리스트는 redis안에 저장된 player data에 접근하는 key value를 가지고 있다
 # 리스트의 값들은 추가된 순서를 유지한다
 
-def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
+def createChannel(playerPool, playerNumber, playerData, tokenId):
 	if playerData.getPlayerNumber(playerNumber) == 1:
 		playerPool.append(tokenId)
 
@@ -52,11 +53,11 @@ def createAvailableChannel(playerPool, playerNumber, playerData, tokenId):
 			# 플레이어 추가 
 			for player in playerPool:
 				print 'player number ' + str(playerNumber) + ' : ' + player
-				playerData = getPlayerData(player)
+				playerData = getPlayerDataNoTTLReset(player)
 				gameData.addPlayer(playerData)
-				watingList.remove(player)
+				waitingList.remove(player)
 
-				print playerData.data[3]
+				# print playerData.data[3]
 
 				# player data 저장
 				memcache.set(player, json.dumps(playerData.data), playerDataTTL)
@@ -93,37 +94,47 @@ def playerMatching():
 	# 누군가 로그인하면 불려진다
 	# 리스트에 있는 사람들이 바뀔 때마다 현재 리스트에 있는 사람들을 가지고 게임 채널 생성하고 채널 테이블을 레디스에 생성
 
-	player_2 = []
-	player_3 = []
-	player_4 = []
-
 	# 	각 참여 인원에 대한 가상의 풀을 만든다
 	# 	대기 시간이 긴 플레이어부터 선택한 참여 인원의 풀에 추가
 	#	추가와 함께 해당하는 참여인원이 모두 모이면 추가된 플레이어들로 채널 생성
 	#	앞에서 생성된 채널에 추가된 플레이어는 리스트에서 삭제
-	for each in watingList:
-		playerData = getPlayerData(each)
+	waitingListData = memcache.get("waiting_list")
+	
+	if waitingListData == None:
+		return
+
+	waitingList = json.loads(waitingListData)
+
+	player_2 = []
+	player_3 = []
+	player_4 = []
+
+	for each in waitingList:
+		playerData = getPlayerDataNoTTLReset(each)
 
 		if playerData == None:
 			# 로그인 되어있지 않음 
-			watingList.remove(each)
+			waitingList.remove(each)
 			continue
 
-		if createAvailableChannel(player_2, 2, playerData, each):
+		if createChannel(player_2, 2, playerData, each):
 			break
 
-		if createAvailableChannel(player_3, 3, playerData, each):
+		if createChannel(player_3, 3, playerData, each):
 			break
 
-		if createAvailableChannel(player_4, 4, playerData, each):
+		if createChannel(player_4, 4, playerData, each):
 			break
+
+	# 변경된 데이터 저장
+	memcache.set("waiting_list", json.dumps(waitingList))
 
 
 def getNewChannelId():
 	newChannelId = ''
 
 	while True:
-		newChannelId = str(random.randint(1, 1024) )
+		newChannelId = str( random.randint(1, 4294967295) )
 		
 		if memcache.get(newChannelId) == None:
 			return newChannelId
@@ -145,6 +156,18 @@ def getPlayerData(tokenId):
 
 		jsonData = json.dumps(playerData.data)
 		memcache.set(tokenId, jsonData, playerDataTTL)
+
+		return playerData
+
+	return None
+
+
+def getPlayerDataNoTTLReset(tokenId):
+	playerData = dataStructure.PlayerData()
+	tempData = memcache.get(tokenId)
+
+	if tempData is not None:
+		playerData.insertData(json.loads(tempData))
 
 		return playerData
 
@@ -275,18 +298,12 @@ def SCReady(tokenId):
 	if gameData.isAllReady():
 		gameData.startGame()
 
-		print '*** START ***'
-		print '****GAME*****'
-		print gameData
-
 	# request를 보낸 클라이언트는 바로 응답을 받으므로 update flag를 false로 바꿔준다
 	gameData.setUpdateFlag()
 	gameData.setPlayerUpdateFlag(playerId, False)
 
 	jsonData = json.dumps(gameData.data)
 	memcache.set(channelId, jsonData, gameDataTTL)
-
-	print jsonData
 
 	return jsonData
 
@@ -345,6 +362,7 @@ def PCDrawLine(tokenId, lineIdx):
 	if gameData.getWaitingReadyFlag():
 		return 'not updated'
 
+	# 이번에 그을 플레이어가 맞는지 턴 확인
 	if gameData.getCurrentTurnId() == playerId:
 		# 입력한 좌표로 긋기
 		if gameData.drawLine(lineIdx[0], lineIdx[1]):
@@ -419,61 +437,6 @@ def PCUpdateGameResult(gameChannelId):
 #					flask 관련 					#
 #################################################
 
-# dev codes
-@app.route('/')
-def hello():
-    """Return a friendly HTTP greeting."""
-    return 'Hello World!'
-
-
-@app.route('/test')
-def test():
-    """Return a friendly HTTP greeting."""
-    return 'Hello test!'
-
-
-@app.route('/please')
-def plz():
-    """Return a friendly HTTP greeting."""
-
-    tokenId = 'test tokenId'
-    channelId = 'temp channelId'
-
-    playerData = dataStructure.PlayerData()
-    playerData.initData(tokenId, 'test name')
-
-    jsonData = json.dumps(playerData.data)
-
-    tempData = memcache.get(tokenId)
-    if tempData is not None:
-    	memcache.set(tokenId, jsonData, 5)
-    else:
-    	memcache.add(tokenId, jsonData, 5)
-
-    # memcache.delete(tokenId)
-
-    if memcache.get(tokenId) == None:
-    	return 'deleted'
-    else:
-    	return 'still alive'
-
-    return 'hell...'
-
-@app.route('/ttl_check')
-def ttl_check():
-    """Return a friendly HTTP greeting."""
-    
-    tokenId = 'test tokenId'
-
-    if memcache.get(tokenId) == None:
-    	return 'deleted'
-    else:
-    	return 'failed'
-
-    return 'hell...'
-
-
-
 # game server
 @app.route('/authentication')
 def authentication():
@@ -515,7 +478,7 @@ def login():
 			three = int(request.form['three'])
 			four = int(request.form['four'])
 
-			# 플레이어 데이터 생성 (생성 전에 이미 redis안에 중복 데이터 있는지 확인)
+			# 플레이어 데이터 생성
 			playerData = dataStructure.PlayerData()
 			playerData.initData(tokenId, name)
 			playerData.setPlayerNumber(two, three, four)
@@ -526,13 +489,20 @@ def login():
 			# 생성한 데이터 redis에 저장 
 			jsonData = json.dumps(playerData.data)
 			if memcache.get(tokenId) == None:
-				memcache.add(tokenId, jsonData, playerDataTTL)
+				memcache.add(tokenId, jsonData, waitingChannelTTL)
 			else:
-				memcache.set(tokenId, jsonData, playerDataTTL)
+				memcache.set(tokenId, jsonData, waitingChannelTTL)
 
 			# 대기열에 추가 및 바뀐 대기열 상태로 매칭 시도
-			if not tokenId in watingList:
-				watingList.append(tokenId)
+			if memcache.get("waiting_list") == None:
+				waitingList = [tokenId]
+				waitingListData = json.dumps(waitingList)
+				memcache.add("waiting_list", waitingListData)
+			else:
+				waitingList = json.loads(memcache.get("waiting_list"))
+				if not tokenId in waitingList:
+					waitingList.append(tokenId)
+					memcache.set("waiting_list", json.dumps(waitingList))
 
 			playerMatching()
 
@@ -565,7 +535,10 @@ def logout():
 
 			if channelId == 'no channel':
 				# 게임 중 아니면 대기 리스트에서 삭제
-				watingList.remove(tokenId)
+				waitingListData = memcache.get("waiting_list")
+				waitingList = json.loads(waitingListData)
+				waitingList.remove(tokenId)
+				memcache.set("waiting_list", json.dumps(waitingList))
 			else:
 				# 게임 중이면 게임 채널에서 삭제
 				gameData = getGameData(channelId)
@@ -607,18 +580,23 @@ def joinUpdate():
 			tokenId = user.user_id()
 
 			# player data 불러오기 
-			playerData = getPlayerData(tokenId)
+			playerData = getPlayerDataNoTTLReset(tokenId)
 
+			# time out : 적합한 상대를 못 찾음
 			if playerData is None:
-				return 'disconnected'
+				return 'channel not found'
 
-			# timestamp 갱신
+			# 일단 스탬프는 갱신
 			playerData.setTimestamp(time.time() )
 
 			playerId = playerData.getPlayerId()
 
-			jsonData = json.dumps(playerData.data)
-			memcache.set(tokenId, jsonData, playerDataTTL)
+			if playerId is not -1:
+				# 채널 할당 받았으므로 id를 memcache에 업데이트
+				# 그렇지 않을 때 업데이트 하지 않는 이유는 TTL 초기화 안 하려고
+				# 채널 대기 시간 지나면 타임아웃해야 되므로 여기서 계속 초기화하면 안 끝남
+				jsonData = json.dumps(playerData.data)
+				memcache.set(tokenId, jsonData, playerDataTTL)
 
 			# print playerId
 			return str(playerId)
@@ -838,19 +816,18 @@ def gameEnd():
 			jsonData = json.dumps(playerData.data)
 			memcache.set(tokenId, jsonData, playerDataTTL)
 
-			# 게임 채널에서 삭제
 			gameData = getGameData(channelId)
-			if gameData is None:
-				return 'end'
+			if gameData is not None:
+				# 게임 채널에서 삭제
+				gameData.removePlayer(playerData.getPlayerId())
 
-			gameData.removePlayer(playerData.getPlayerId())
+				# redis에서 플레이어 삭제
+				memcache.delete(tokenId, 0)
 
-			if gameData.getCurrentPlayerNumber() == 0:
-				# redis에서 채널 삭제 
-				memcache.delete(channelId, 0)
+				if gameData.getCurrentPlayerNumber() == 0:
+					# redis에서 채널 삭제 
+					memcache.delete(channelId, 0)
 
-			# redis에서 플레이어 삭제
-			memcache.delete(tokenId, 0)
 			return 'end'
 
 	except KeyError, err:	#parameter name을 잘못 인식한 경우에 

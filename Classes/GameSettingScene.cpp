@@ -75,6 +75,10 @@ void CGameSettingScene::update(float dt)
 	{
         if (!CGameManager::GetInstance()->GetConnectionStatus())
         {
+            // 접속 확인은 그만 보내라
+            // this->unschedule(schedule_selector(CGameManager::JoinUpdate) );
+            this->unscheduleAllSelectors();
+            
             // 메인 메뉴로
             // 나중에는 접속 종료 관련 레이어 하나 추가하고 거기서 버튼 누르면 돌아가도록 만들기
             this->removeAllChildren();

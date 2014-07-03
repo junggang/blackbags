@@ -243,6 +243,7 @@
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
 		D56D272E1913916B00A06389 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D56D272D1913916B00A06389 /* libGoogleAdMobAds.a */; };
+		E7225AAA1964F7910015F92E /* TimeOutLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7225AA81964F7910015F92E /* TimeOutLayer.cpp */; };
 		E751DE4A18F92CC20001879E /* AdMobObjectCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */; };
 		E7B3F36718E5DB3600024DDF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36618E5DB3600024DDF /* AdSupport.framework */; };
 		E7B3F36918E5DB5800024DDF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36818E5DB5800024DDF /* MessageUI.framework */; };
@@ -800,6 +801,8 @@
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		D56D272D1913916B00A06389 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "../Classes/GoogleAdMobAdsSdkiOS-6.8.0/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
+		E7225AA81964F7910015F92E /* TimeOutLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimeOutLayer.cpp; sourceTree = "<group>"; };
+		E7225AA91964F7910015F92E /* TimeOutLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeOutLayer.h; sourceTree = "<group>"; };
 		E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdMobObjectCPP.mm; sourceTree = "<group>"; };
 		E751DE4918F92CC20001879E /* AdMobObjectCPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdMobObjectCPP.h; sourceTree = "<group>"; };
 		E7B3F35B18E5DB0800024DDF /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
@@ -1973,11 +1976,11 @@
 		E7F5198718C6FAA8002530DC /* Logic */ = {
 			isa = PBXGroup;
 			children = (
+				E7F518E518C49C7A002530DC /* AudioManager.cpp */,
+				E7F518E618C49C7A002530DC /* AudioManager.h */,
 				E7F518FC18C49C7A002530DC /* GameLogic.cpp */,
 				E7F518FD18C49C7A002530DC /* GameLogic.h */,
 				E7F518FE18C49C7A002530DC /* GameManager.cpp */,
-				E7F518E518C49C7A002530DC /* AudioManager.cpp */,
-				E7F518E618C49C7A002530DC /* AudioManager.h */,
 				E7F518FF18C49C7A002530DC /* GameManager.h */,
 				E7F5191E18C49C7B002530DC /* NetworkLogic.cpp */,
 				E7F5191F18C49C7B002530DC /* NetworkLogic.h */,
@@ -1988,14 +1991,18 @@
 		E7F5198818C6FAEF002530DC /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				E7F5190818C49C7A002530DC /* HelpScene.cpp */,
-				E7F5190918C49C7A002530DC /* HelpScene.h */,
+				AF58430919227BA5006295A1 /* ContactScene.cpp */,
+				AF58430A19227BA5006295A1 /* ContactScene.h */,
 				E7F518F618C49C7A002530DC /* CreditScene.cpp */,
 				E7F518F718C49C7A002530DC /* CreditScene.h */,
 				E7F5190018C49C7A002530DC /* GameSettingScene.cpp */,
 				E7F5190118C49C7A002530DC /* GameSettingScene.h */,
+				E7F5190818C49C7A002530DC /* HelpScene.cpp */,
+				E7F5190918C49C7A002530DC /* HelpScene.h */,
 				E7F5191418C49C7A002530DC /* IntroScene.cpp */,
 				E7F5191518C49C7A002530DC /* IntroScene.h */,
+				E7F5198418C6F3F9002530DC /* LoginScene.cpp */,
+				E7F5198518C6F3F9002530DC /* LoginScene.h */,
 				E7F5191818C49C7A002530DC /* MainScene.cpp */,
 				E7F5191918C49C7A002530DC /* MainScene.h */,
 				E7F5192618C49C7B002530DC /* PlayScene.cpp */,
@@ -2004,12 +2011,8 @@
 				E7F5192B18C49C7B002530DC /* ResultScene.h */,
 				E7F5193818C49C7B002530DC /* SettingScene.cpp */,
 				E7F5193918C49C7B002530DC /* SettingScene.h */,
-				E7F5198418C6F3F9002530DC /* LoginScene.cpp */,
-				E7F5198518C6F3F9002530DC /* LoginScene.h */,
-				AF96E3F218D98007002877BF /* TutorialScene.h */,
 				AF96E3F318D98014002877BF /* TutorialScene.cpp */,
-				AF58430919227BA5006295A1 /* ContactScene.cpp */,
-				AF58430A19227BA5006295A1 /* ContactScene.h */,
+				AF96E3F218D98007002877BF /* TutorialScene.h */,
 			);
 			name = Scene;
 			sourceTree = "<group>";
@@ -2017,12 +2020,6 @@
 		E7F5198918C6FB29002530DC /* Layer */ = {
 			isa = PBXGroup;
 			children = (
-				AF6EC174193C40EC005DC2C0 /* CMO_score.cpp */,
-				AF6EC175193C40EC005DC2C0 /* CMO_score.h */,
-				E7F5197D18C5A011002530DC /* LayerWebView.h */,
-				E7F5197E18C5A011002530DC /* LayerWebView.mm */,
-				E7F5197F18C5A011002530DC /* UIWebViewBridge.h */,
-				E7F5198018C5A011002530DC /* UIWebViewBridge.mm */,
 				E7F518E718C49C7A002530DC /* BackgroundAnimation.cpp */,
 				E7F518E818C49C7A002530DC /* BackgroundAnimation.h */,
 				E7F518E918C49C7A002530DC /* BackgroundLayer.cpp */,
@@ -2033,10 +2030,14 @@
 				E7F518EE18C49C7A002530DC /* CMO_item.h */,
 				E7F518EF18C49C7A002530DC /* CMO_line.cpp */,
 				E7F518F018C49C7A002530DC /* CMO_line.h */,
+				AF6EC174193C40EC005DC2C0 /* CMO_score.cpp */,
+				AF6EC175193C40EC005DC2C0 /* CMO_score.h */,
 				E7F518F118C49C7A002530DC /* CMO_tile.cpp */,
 				E7F518F218C49C7A002530DC /* CMO_tile.h */,
 				E7F518F418C49C7A002530DC /* CreditLayer.cpp */,
 				E7F518F518C49C7A002530DC /* CreditLayer.h */,
+				E7CD626518C8A54F005F6E88 /* DisconnectedLayer.cpp */,
+				E7CD626618C8A54F005F6E88 /* DisconnectedLayer.h */,
 				E7F518F818C49C7A002530DC /* GameBoardLayer.cpp */,
 				E7F518F918C49C7A002530DC /* GameBoardLayer.h */,
 				E7F518FA18C49C7A002530DC /* GameEndLayer.cpp */,
@@ -2053,6 +2054,8 @@
 				E7F5191118C49C7A002530DC /* IntroBackgroundLayer.h */,
 				E7F5191218C49C7A002530DC /* IntroLayer.cpp */,
 				E7F5191318C49C7A002530DC /* IntroLayer.h */,
+				E7F5197D18C5A011002530DC /* LayerWebView.h */,
+				E7F5197E18C5A011002530DC /* LayerWebView.mm */,
 				E7F5191618C49C7A002530DC /* MainMenuLayer.cpp */,
 				E7F5191718C49C7A002530DC /* MainMenuLayer.h */,
 				E7F5191A18C49C7A002530DC /* MainTitleLayer.cpp */,
@@ -2083,16 +2086,18 @@
 				E7F5193D18C49C7B002530DC /* SettingTitleLayer.h */,
 				E7F5193E18C49C7B002530DC /* StartAndHelpButtonLayer.cpp */,
 				E7F5193F18C49C7B002530DC /* StartAndHelpButtonLayer.h */,
+				E7225AA81964F7910015F92E /* TimeOutLayer.cpp */,
+				E7225AA91964F7910015F92E /* TimeOutLayer.h */,
 				E7F5194018C49C7B002530DC /* TimerLayer.cpp */,
 				E7F5194118C49C7B002530DC /* TimerLayer.h */,
 				E7F5194218C49C7B002530DC /* TroubleshootingLayer.cpp */,
 				E7F5194318C49C7B002530DC /* TroubleshootingLayer.h */,
-				E7F5194418C49C7B002530DC /* WaitingChannelId.cpp */,
-				E7F5194518C49C7B002530DC /* WaitingChannelId.h */,
-				E7CD626518C8A54F005F6E88 /* DisconnectedLayer.cpp */,
-				E7CD626618C8A54F005F6E88 /* DisconnectedLayer.h */,
 				AF37D14318DF2A150018FE15 /* TutorialBoardLayer.cpp */,
 				AF37D14418DF2A150018FE15 /* TutorialBoardLayer.h */,
+				E7F5197F18C5A011002530DC /* UIWebViewBridge.h */,
+				E7F5198018C5A011002530DC /* UIWebViewBridge.mm */,
+				E7F5194418C49C7B002530DC /* WaitingChannelId.cpp */,
+				E7F5194518C49C7B002530DC /* WaitingChannelId.h */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -2379,6 +2384,7 @@
 				1A8F3B72175E05DA00049216 /* AtlasAttachmentLoader.cpp in Sources */,
 				1A8F3B73175E05DA00049216 /* Attachment.cpp in Sources */,
 				1A8F3B74175E05DA00049216 /* AttachmentLoader.cpp in Sources */,
+				E7225AAA1964F7910015F92E /* TimeOutLayer.cpp in Sources */,
 				1A8F3B75175E05DA00049216 /* Bone.cpp in Sources */,
 				1A8F3B76175E05DA00049216 /* BoneData.cpp in Sources */,
 				1A8F3B77175E05DA00049216 /* CCSkeleton.cpp in Sources */,
