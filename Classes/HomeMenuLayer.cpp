@@ -39,7 +39,17 @@ bool CHomeMenuLayer::init()
 
 void CHomeMenuLayer::homeMenuCallback(CCObject* pSender)
 {
-	CCDirector::sharedDirector()->pause();
-	CCLayer* popUp = CHomeMenuPopUp::create();
-	addChild(popUp,1);
+    if(IsOn)
+    {
+        CCDirector::sharedDirector()->resume();
+        removeChildByTag(100);
+        IsOn = false;
+    }
+    else
+    {
+        CCDirector::sharedDirector()->pause();
+        CCLayer* popUp = CHomeMenuPopUp::create();
+        addChild(popUp,1, 100);
+        IsOn = true;
+    }
 }
