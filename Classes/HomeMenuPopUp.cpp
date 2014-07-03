@@ -17,6 +17,18 @@ bool CHomeMenuPopUp::init()
 	}
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    
+    CCTouchDispatcher* touchDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
+    if(touchDispatcher)
+    {
+        CCTouchHandler* handler = touchDispatcher->findHandler(this);
+        
+        //if is not already added to the touch dispatcher - then lets add it
+        if(!handler)
+        {
+            touchDispatcher->addTargetedDelegate( this, 128, true );
+        }
+    }
 
 	/////////////////////////////
 	// 2. add a background image
@@ -102,6 +114,7 @@ void CHomeMenuPopUp::HelpIconCallback(CCObject* pSender)
 
 void CHomeMenuPopUp::ResumeIconCallback(CCObject* pSender)
 {
+    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
 	//home menu popup
 	CCDirector::sharedDirector()->resume();
 	removeAllChildrenWithCleanup(true);
@@ -152,4 +165,29 @@ void CHomeMenuPopUp::BackToPopUp( CCObject* pSender )
 	//exit(0);
 #endif
 #endif
+}
+
+bool CHomeMenuPopUp::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent* event)
+{
+    return true;
+}
+
+void CHomeMenuPopUp::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent* event)
+{
+    
+}
+
+void CHomeMenuPopUp::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent* event)
+{
+    
+}
+
+void CHomeMenuPopUp::onEnter()
+{
+    CCLayer::onEnter();
+}
+
+void CHomeMenuPopUp::onExit()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
 }
