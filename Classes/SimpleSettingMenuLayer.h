@@ -3,18 +3,10 @@
 #include "cocos-ext.h"
 #include "AudioManager.h"
 
-class LayerWebView;
-
-class CSettingMenuLayer : public cocos2d::CCLayer
+class CSimpleSettingMenuLayer : public cocos2d::CCLayer
 {
 public:
 	virtual bool init();
-
-	// a selector callback
-	void GoogleLoginCallback(CCObject* pSender);
-	void TutorialCallback(CCObject* pSender);
-	void CreditCallback(CCObject* pSender);
-    void ContactCallback(CCObject* pSender);
 
 	float getCurrentBGMVolume() { return m_pBGMVolume->getValue(); };
 	float getCurrentSEVolume() { return m_pSEVolume->getValue(); };
@@ -31,16 +23,13 @@ public:
 	virtual void ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
 
 	// implement the "static node()" method manually
-    CREATE_FUNC(CSettingMenuLayer);
+    CREATE_FUNC(CSimpleSettingMenuLayer);
     
 private:
     bool IsSEVolumeChanged();
     
 	cocos2d::extension::CCControlSlider *m_pBGMVolume;
 	cocos2d::extension::CCControlSlider *m_pSEVolume;
-    cocos2d::CCMenu* m_pLoginMenu;
-    LayerWebView* m_LoginLayer;
-    std::string m_Name;
     
     float m_previousSEvolume;
 };

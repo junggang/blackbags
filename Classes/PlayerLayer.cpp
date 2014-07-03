@@ -38,7 +38,27 @@ bool CPlayerLayer::init()
         
         if ( !CGameManager::GetInstance()->IsOnlineMode() )
         {
-            position = 3 - position;
+            //position = 3 - position;
+            // If offline => player id == original position
+            // 출시가 코앞인데 별 수 있나 하드코딩해야지! 하하하^^
+            switch(playerId)
+            {
+                case 0:
+                    position = 2;
+                    break;
+                case 1:
+                    position = 3;
+                    break;
+                case 2:
+                    position = 0;
+                    break;
+                case 3:
+                    position = 1;
+                    break;
+                default:
+                    break;
+            }
+            
             CCLog("%d",position);
         }
         
@@ -111,7 +131,26 @@ void CPlayerLayer::update( float dt )
     
     if ( !CGameManager::GetInstance()->IsOnlineMode() )
     {
-        position = 3 - position;
+        //position = 3 - position;
+        
+        switch(m_CurrentPlayerId)
+        {
+            case 0:
+                position = 2;
+                break;
+            case 1:
+                position = 3;
+                break;
+            case 2:
+                position = 0;
+                break;
+            case 3:
+                position = 1;
+                break;
+            default:
+                break;
+        }
+        CCLog("%d",position);
     }
     
     

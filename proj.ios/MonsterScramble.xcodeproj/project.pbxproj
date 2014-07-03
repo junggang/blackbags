@@ -242,6 +242,7 @@
 		D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949B15BD2D8E00D803EB /* Icon-114.png */; };
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
+		D51EE9A91964775C0023E1D1 /* SimpleSettingMenuLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D51EE9A71964775C0023E1D1 /* SimpleSettingMenuLayer.cpp */; };
 		D56D272E1913916B00A06389 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D56D272D1913916B00A06389 /* libGoogleAdMobAds.a */; };
 		E751DE4A18F92CC20001879E /* AdMobObjectCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */; };
 		E7B3F36718E5DB3600024DDF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36618E5DB3600024DDF /* AdSupport.framework */; };
@@ -799,6 +800,8 @@
 		D4EF949D15BD2D9600D803EB /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../proj.ios/Icon-72.png"; sourceTree = "<group>"; };
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		D51EE9A71964775C0023E1D1 /* SimpleSettingMenuLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleSettingMenuLayer.cpp; sourceTree = "<group>"; };
+		D51EE9A81964775C0023E1D1 /* SimpleSettingMenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleSettingMenuLayer.h; sourceTree = "<group>"; };
 		D56D272D1913916B00A06389 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "../Classes/GoogleAdMobAdsSdkiOS-6.8.0/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
 		E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdMobObjectCPP.mm; sourceTree = "<group>"; };
 		E751DE4918F92CC20001879E /* AdMobObjectCPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdMobObjectCPP.h; sourceTree = "<group>"; };
@@ -2017,6 +2020,8 @@
 		E7F5198918C6FB29002530DC /* Layer */ = {
 			isa = PBXGroup;
 			children = (
+				D51EE9A71964775C0023E1D1 /* SimpleSettingMenuLayer.cpp */,
+				D51EE9A81964775C0023E1D1 /* SimpleSettingMenuLayer.h */,
 				AF6EC174193C40EC005DC2C0 /* CMO_score.cpp */,
 				AF6EC175193C40EC005DC2C0 /* CMO_score.h */,
 				E7F5197D18C5A011002530DC /* LayerWebView.h */,
@@ -2397,6 +2402,7 @@
 				1A8F3B80175E05DA00049216 /* Slot.cpp in Sources */,
 				1A8F3B81175E05DA00049216 /* SlotData.cpp in Sources */,
 				1A8F3B82175E05DA00049216 /* spine-cocos2dx.cpp in Sources */,
+				D51EE9A91964775C0023E1D1 /* SimpleSettingMenuLayer.cpp in Sources */,
 				1AB87035175E0A84005D39BF /* WebSocket.cpp in Sources */,
 				375BD4C51868411B0024609E /* TriggerMng.cpp in Sources */,
 				1A9CE8781765A12C000E3062 /* AssetsManager.cpp in Sources */,
