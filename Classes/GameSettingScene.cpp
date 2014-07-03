@@ -6,6 +6,7 @@
 #include "SettingSecondStepLayer.h"
 #include "WaitingChannelId.h"
 #include "DisconnectedLayer.h"
+#include "TimeOutLayer.h"
 #include "GameManager.h"
 #include "AdMobObjectCPP.h"
 
@@ -81,8 +82,18 @@ void CGameSettingScene::update(float dt)
             CCLayer* BackgroundLayer = CBackgroundLayer::create();
             this->addChild(BackgroundLayer, 0);
             
-            CCLayer* DisconnectedLayer = CDisconnectedLayer::create();
-            this->addChild(DisconnectedLayer, 1);
+            if ( CGameManager::GetInstance()->GetFindingChannelTimeOut() )
+            {
+                // 대기열에 있다가 타임아웃
+                // 해당하는 메시지를 표시해주자
+                CCLayer* TimeOutLayer = CTimeOutLayer::create();
+                this->addChild(TimeOutLayer, 1);
+            }
+            else
+            {
+                CCLayer* DisconnectedLayer = CDisconnectedLayer::create();
+                this->addChild(DisconnectedLayer, 1);
+            }
             
             return;
 

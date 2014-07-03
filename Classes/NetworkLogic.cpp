@@ -91,11 +91,11 @@ LoginPhase CNetworkLogic::GetCurrentLoginPhase()
 
 void CNetworkLogic::GetNetworkInfo()
 {
-	// shared data¿¡ ÀúÀåµÈ ÀÌ¸§ °¡Á®¿Â´Ù
+	// shared dataÃ¸Â° Â¿Ë™Â¿Ã‚ÂµÂ» Â¿ÃƒâˆÃŸ âˆžÂ°Â¡Ã†Ã¸Â¬Â¥Å¸
 	m_UserName.clear();
 	m_UserName = CGameManager::GetInstance()->GetUsersName();
 
-	// shared data¿¡ ÀúÀåµÈ °ÔÀÓ ¼³Á¤À» °¡Á®¿Â´Ù
+	// shared dataÃ¸Â° Â¿Ë™Â¿Ã‚ÂµÂ» âˆžâ€˜Â¿â€ Âºâ‰¥Â¡Â§Â¿Âª âˆžÂ°Â¡Ã†Ã¸Â¬Â¥Å¸
 	m_TwoFlag = CGameManager::GetInstance()->GetPlayerNumberSelection(2);
 	m_ThreeFlag = CGameManager::GetInstance()->GetPlayerNumberSelection(3);
 	m_FourFlag = CGameManager::GetInstance()->GetPlayerNumberSelection(4);
@@ -231,11 +231,11 @@ bool CNetworkLogic::IsAllReady()
 
 	for (int i = 0; i < MAX_PLAYER_NUM; ++i)
 	{
-		// ¹æÀåÀÎ ¾Æ´Ñµ¥ ·¹µðÀÎ »óÅÂÀÌ¸é 
+		// Ï€ÃŠÂ¿Ã‚Â¿Å’ Ã¦âˆ†Â¥â€”Âµâ€¢ âˆ‘Ï€Âµï£¿Â¿Å’ ÂªÃ›â‰ˆÂ¬Â¿ÃƒâˆÃˆ 
 		if ( !(*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(i)][SizeType(GDP_MASTER_FLAG)].GetBool() 
 			&& (*m_NetworkGameData)[SizeType(GD_PLAYER_LIST)][SizeType(i)][SizeType(GDP_READY)].GetBool() )
 		{
-			// Ä«¿îÆ® Áõ°¡
+			// Æ’Â´Ã¸Ã“âˆ†Ã† Â¡Ä±âˆžÂ°
 			++readyCount;
 		}
 	}
@@ -254,7 +254,7 @@ void CNetworkLogic::Login()
 	// make http request
 	m_Request = new CCHttpRequest();
 
-	// ¿äÃ» º¸³¾ µ¥ÀÌÅÍ¸¦ ÃÖ½Å »óÅÂ·Î ¾÷µ¥ÀÌÆ®
+	// Ã¸â€°âˆšÂª âˆ«âˆâ‰¥Ã¦ Âµâ€¢Â¿Ãƒâ‰ˆÃ•âˆÂ¶ âˆšÃ·Î©â‰ˆ ÂªÃ›â‰ˆÂ¬âˆ‘Å’ Ã¦ËœÂµâ€¢Â¿Ãƒâˆ†Ã†
 	GetNetworkInfo();
 
 	std::string url = m_ServerAddr;
@@ -295,7 +295,7 @@ void CNetworkLogic::Logout()
 	// make http request
 	m_Request = new CCHttpRequest();
 
-	// ¿äÃ» º¸³¾ µ¥ÀÌÅÍ¸¦ ÃÖ½Å »óÅÂ·Î ¾÷µ¥ÀÌÆ®
+	// Ã¸â€°âˆšÂª âˆ«âˆâ‰¥Ã¦ Âµâ€¢Â¿Ãƒâ‰ˆÃ•âˆÂ¶ âˆšÃ·Î©â‰ˆ ÂªÃ›â‰ˆÂ¬âˆ‘Å’ Ã¦ËœÂµâ€¢Â¿Ãƒâˆ†Ã†
 	GetNetworkInfo();
 
 	std::string url = m_ServerAddr;
@@ -322,7 +322,7 @@ void CNetworkLogic::GameEnd()
     // make http request
 	m_Request = new CCHttpRequest();
     
-	// ¿äÃ» º¸³¾ µ¥ÀÌÅÍ¸¦ ÃÖ½Å »óÅÂ·Î ¾÷µ¥ÀÌÆ®
+	// Ã¸â€°âˆšÂª âˆ«âˆâ‰¥Ã¦ Âµâ€¢Â¿Ãƒâ‰ˆÃ•âˆÂ¶ âˆšÃ·Î©â‰ˆ ÂªÃ›â‰ˆÂ¬âˆ‘Å’ Ã¦ËœÂµâ€¢Â¿Ãƒâˆ†Ã†
 	GetNetworkInfo();
     
 	std::string url = m_ServerAddr;
@@ -637,7 +637,7 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 
 	std::string stringData = streamData.str();
     
-    CCLog(stringData.c_str());
+    // CCLog(stringData.c_str());
     
     // disconnected
     if (strcmp(stringData.c_str(), "disconnected") == 0)
@@ -665,11 +665,20 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 	{
 		if (strcmp(stringData.c_str(), "logout") == 0)
 		{
-			// logoutÇÒ ¶§ networkLogic¿¡¼­ Ã³¸® ÇÒ ÀÏ ÀÖÀ¸¸é Ãß°¡
+			// logoutÂ«â€œ âˆ‚ÃŸ networkLogicÃ¸Â°Âºâ‰  âˆšâ‰¥âˆÃ† Â«â€œ Â¿Å“ Â¿Ã·Â¿âˆâˆÃˆ âˆšï¬‚âˆžÂ°
 		}
 	}
 	else if (strcmp(response->getHttpRequest()->getTag(), "POST joinUpdate") == 0)
 	{
+        if (strcmp(stringData.c_str(), "player not found") == 0)
+		{
+			// ëŒ€ê¸°ì—´ì— ìžˆë‹¤ê°€ íƒ€ìž„ ì•„ì›ƒëœ ê²½ìš°
+            // ì—°ê²° ëŠê³  íƒ€ìž„ ì•„ì›ƒ í”Œëž˜ê·¸ ì„¤ì •í•˜ê³ , ì—…ë°ì´íŠ¸ í•  ìˆ˜ ìžˆë„ë¡ í”Œëž˜ê·¸ ë³€ê²½
+            CGameManager::GetInstance()->SetConnectionStatus(false);
+            CGameManager::GetInstance()->SetFindingChannelTimeOut(true);
+            CGameManager::GetInstance()->SetUpdateFlag(true);
+		}
+        
 		CNetworkLogic::GetInstance()->SetMyPlayerId(atoi(stringData.c_str() ) );
 
 		if (CNetworkLogic::GetInstance()->GetMyPlayerId() != -1)
@@ -714,25 +723,25 @@ void CNetworkLogic::OnHttpRequestCompleted(cocos2d::CCNode* sender, CCHttpRespon
 	}
 	else
 	{
-		// updateµÈ ³»¿ë ¾øÀ¸´Ï±î ±×³É Á¾·á
+		// updateÂµÂ» â‰¥ÂªÃ¸ÃŽ Ã¦Â¯Â¿âˆÂ¥Å“Â±Ã“ Â±â—Šâ‰¥â€¦ Â¡Ã¦âˆ‘Â·
 		if (strcmp(stringData.c_str(), "not updated") == 0)
 		{
 			return;
 		}
 		else if(strcmp(stringData.c_str(), "disconnected") == 0)
 		{
-			// Á¢¼Ó Á¾·áÀÇ °æ¿ì¿¡ ´ëÇÑ Ã³¸®
+			// Â¡Â¢Âºâ€ Â¡Ã¦âˆ‘Â·Â¿Â« âˆžÃŠÃ¸ÃÃ¸Â° Â¥ÃŽÂ«â€” âˆšâ‰¥âˆÃ†
 
 			CGameManager::GetInstance()->SetUpdateFlag(true);
 		}
 		else if(strcmp(stringData.c_str(), "ready") == 0)
 		{
-			// ·¹µð ¼º°øÇÏ¸é ÇÒ ÀÏ 
-			// Áö±ÝÀº ¾øÀ½
+			// âˆ‘Ï€Âµï£¿ Âºâˆ«âˆžÂ¯Â«Å“âˆÃˆ Â«â€œ Â¿Å“ 
+			// Â¡Ë†Â±â€ºÂ¿âˆ« Ã¦Â¯Â¿Î©
 		}
 		else
 		{
-			// gameData¿¡ ÀÖ´Â ÀÚ·á¸¦ ¸Å´ÏÀú°¡ °¡Áø ÀÚ·á¿¡ ¾÷µ¥ÀÌÆ®ÇØÁÖÀÚ
+			// gameDataÃ¸Â° Â¿Ã·Â¥Â¬ Â¿â„âˆ‘Â·âˆÂ¶ âˆâ‰ˆÂ¥Å“Â¿Ë™âˆžÂ° âˆžÂ°Â¡Â¯ Â¿â„âˆ‘Â·Ã¸Â° Ã¦ËœÂµâ€¢Â¿Ãƒâˆ†Ã†Â«Ã¿Â¡Ã·Â¿â„
 			if (m_NetworkGameData != nullptr)
 			{
 				//CNetworkLogic::GetInstance()->m_NetworkGameData->Clear();
