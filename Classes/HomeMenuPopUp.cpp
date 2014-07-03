@@ -32,9 +32,8 @@ bool CHomeMenuPopUp::init()
 
 	/////////////////////////////
 	// 2. add a background image
-	m_backLayer = CCSprite::create(SHARED_POPUP_BG.c_str());
+	m_backLayer = CCSprite::create(SHARED_POPUP_BG_OPA.c_str());
 	m_backLayer->setAnchorPoint(ccp(0,0));
-	m_backLayer->setPosition(CCPoint(SHARED_POPUP_BG_POS));
 	addChild(m_backLayer,0);
 
 	float centerX =visibleSize.width/2;
