@@ -2,7 +2,7 @@
 #include "MainScene.h"
 #include "config.h"
 #include "HelpScene.h"
-#include "SettingScene.h"
+#include "SimpleSettingMenuLayer.h"
 #include "HelpPopuplLayer.h"
 
 USING_NS_CC;
@@ -113,7 +113,7 @@ void CHomeMenuPopUp::SettingIconCallback(CCObject* pSender)
 //  	CCDirector::sharedDirector()->pushScene(CCTransitionFade::create(0.5, newScene) );
 	
 	//그냥 팝업안에서 넘어가도록 하고 싶은데..?
- 	CCLayer* settingPopUp = CSettingMenuLayer::create();
+ 	CCLayer* settingPopUp = CSimpleSettingMenuLayer::create();
 	settingPopUp->setTag(0);
  	addChild(settingPopUp,2);
 
