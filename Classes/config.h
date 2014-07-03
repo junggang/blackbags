@@ -593,6 +593,7 @@ const std::string PLAYSCENE_SCORE_TRASH = "image/playscene_score_trash.png";
 
 /* shared images */
 const std::string SHARED_BACKGROUND = "image/shared_background.png";
+const std::string SHARED_BACKGROUND_DRAW = "image/shared_background_draw.png";
 const std::string SHARED_PLAYERUI_GREY = "image/shared_playerui_background_unselected.png";
 const std::string SHARED_PLAYERUI_BLUE = "image/shared_playerui_background_selected.png";
 
@@ -917,6 +918,7 @@ const std::string SHARED_BTN_OK = "image/shared_okButton.png";
 #define SHARED_BTN_OK_POS 1403,94
 
 const std::string SHARED_POPUP_BG = "image/shared_popup_background.png";
+const std::string SHARED_POPUP_BG_OPA = "image/shared_popup_background_opa.png";
 const std::string SHARED_POPUP_TITLE = "image/shared_popup_paused.png";
 const std::string SHARED_POPUP_RESUME = "image/shared_popup_resume.png";
 const std::string SHARED_POPUP_HELP = "image/shared_popup_help.png";
@@ -926,6 +928,14 @@ const std::string SHARED_POPUP_QUIT = "image/shared_popup_quit.png";
 #define SHARED_POPUP_TITLE_POS 1045
 #define SHARED_POPUP_MENU_MARGIN 130
 #define SHARED_POPUP_BOTTOM_MARGIN 533
+
+const std::string SHARED_POPUP_HELP_TITLE = "image/shared_popup_help_title.png";
+const std::string SHARED_POPUP_HELP_CON = "image/shared_popup_help_con.png";
+const std::string SHARED_POPUP_HELP_ANI = "image/ani_help_hand.png";
+const std::string SHARED_POPUP_HELP_ANI_PLIST = "image/ani_help_hand.plist";
+#define SHARED_POPUP_HELP_TITLE_POS 888,1045
+#define SHARED_POPUP_HELP_CON_POS 460,454
+
 
 const std::string SHARED_MENU1_UNSELECTED = "image/shared_menu01_unselected.png";
 const std::string SHARED_MENU2_UNSELECTED = "image/shared_menu02_unselected.png";
