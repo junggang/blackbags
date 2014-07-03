@@ -1,4 +1,5 @@
 #include "HelpPopuplLayer.h"
+#include "config.h"
 
 USING_NS_CC;
 
@@ -13,12 +14,27 @@ bool CHelpPopupLayer::init()
 
 	CCSize m_VisibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
-	CCSprite* LayerFullPage = CCSprite::create("image/HelpLayerImage.png");
+	CCSprite* LayerFullPage = CCSprite::create(SHARED_POPUP_BG.c_str());
+    CCSprite* helpTitle = CCSprite::create(SHARED_POPUP_HELP_TITLE.c_str());
+    CCSprite* helpContents = CCSprite::create(SHARED_POPUP_HELP_CON.c_str());
 
 	if ( LayerFullPage != NULL )
 	{
-		LayerFullPage->setPosition( ccp(m_VisibleSize.width / 2, m_VisibleSize.height / 2) );
+        LayerFullPage->setAnchorPoint(CCPointZero);
+		LayerFullPage->setPosition(CCPoint(SHARED_POPUP_BG_POS));
 		this->addChild(LayerFullPage);
+	}
+    if ( helpTitle != NULL )
+	{
+        helpTitle->setAnchorPoint(CCPointZero);
+		helpTitle->setPosition(CCPoint(SHARED_POPUP_HELP_TITLE_POS));
+		this->addChild(helpTitle);
+	}
+    if ( helpContents != NULL )
+	{
+        helpContents->setAnchorPoint(CCPointZero);
+		helpContents->setPosition(CCPoint(SHARED_POPUP_HELP_CON_POS));
+		this->addChild(helpContents);
 	}
 
 	return true;
