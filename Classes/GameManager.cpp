@@ -10,6 +10,7 @@ CGameManager::CGameManager(void)
 	m_IsUpdated = false;
 	m_GameData = nullptr;
     m_ConnectionStatus = false;
+    m_IsFindingChannelTimeOut = false;
 }
 
 CGameManager::~CGameManager(void)
@@ -37,6 +38,7 @@ bool CGameManager::init()
 	m_IsUpdated = false;
 	m_GameData = nullptr;
     m_ConnectionStatus = false;
+    m_IsFindingChannelTimeOut = false;
     
 	CGameLogic::GetInstance()->init();
 	m_GameData = cocos2d::CCUserDefault::sharedUserDefault();

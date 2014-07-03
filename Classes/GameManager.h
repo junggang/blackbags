@@ -136,6 +136,9 @@ public:
     
     void SetSeenFirstTutorialFlag(bool flag);
     bool GetSeenFirstTutorialFlag();
+    
+    void SetFindingChannelTimeOut(bool flag) { m_IsFindingChannelTimeOut = flag; }
+    bool GetFindingChannelTimeOut() { return m_IsFindingChannelTimeOut; }
 
 private:
 	static CGameManager*	m_pInstance; //singleton instance
@@ -147,6 +150,8 @@ private:
     bool m_ConnectionStatus;
 
 	float m_AnimationDelay;
+    
+    bool m_IsFindingChannelTimeOut;
     
 	//CCUserDefault m_SharedData;
 
