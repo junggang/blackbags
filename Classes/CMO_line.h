@@ -32,6 +32,8 @@ private:
 	bool				m_Connected;
 	int					m_ImageFileIdx;
 	Direction			m_LineDirection;
+    
+    bool                m_RecentConnection;
 };
 
 

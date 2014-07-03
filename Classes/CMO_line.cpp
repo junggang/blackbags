@@ -29,7 +29,7 @@ CMO_line* CMO_line::create(const char* pszFileName, const CCRect& rect)
 
 CMO_line* CMO_line::Create(IndexedPosition indexedPosition)
 {
-	//�����ֿ� ���� �׸� ���� ��
+	//º“¿Ø¡÷ø° µ˚∏• ±◊∏≤ ∆ƒ¿œ µÈ
 	static std::string objectNames[4] =
 	{
 		"image/MO_line_vertical.png",
@@ -38,9 +38,9 @@ CMO_line* CMO_line::Create(IndexedPosition indexedPosition)
 		"image/MO_line_horizontal_c.png",
 	};
 
-	//i�� Ȧ���� j�� ¦���� ���� �ִ�.
-	//i�� ¦���� j�� Ȧ���� �� �ִ�.
-	//¦������ ��� �������� �� ����. Ȧ������ ��� �������� �� ����.
+	//i∞° »¶ºˆ∞Ì j∞° ¬¶ºˆ∏È ¥©øˆ ¿÷¥Ÿ.
+	//i∞° ¬¶ºˆ∞Ì j∞° »¶ºˆ∏È º≠ ¿÷¥Ÿ.
+	//¬¶ºˆ«‡¿Œ ∞ÊøÏ ºˆ∆Ú¿∏∑Œ ±‰ ∂Û¿Œ. »¶ºˆ«‡¿Œ ∞ÊøÏ ºˆ¡˜¿∏∑Œ ±‰ ∂Û¿Œ.
 	int width = (indexedPosition.m_PosI % 2 == 0)? DEFAULT_LINE_WEIGHT : DEFAULT_TILE_SIZE ;
 	int height = (indexedPosition.m_PosI % 2 == 0)? DEFAULT_TILE_SIZE : DEFAULT_LINE_WEIGHT  ;
 
@@ -50,7 +50,7 @@ CMO_line* CMO_line::Create(IndexedPosition indexedPosition)
 
 	m_Index = indexedPosition;
 
-	//���� ����� ��� �׸��� �ٲ� ��.
+	//º±¿Ã ø¨∞·µ» ∞ÊøÏ ±◊∏≤∏∏ πŸ≤„ ¡‹.
 	if (CGameManager::GetInstance()->GetMapType(indexedPosition) == MO_LINE_CONNECTED)
 	{
 		pMapObejct->m_Connected = true;
@@ -72,6 +72,7 @@ bool CMO_line::init()
 	pLine = NULL;
 	m_Connected = false;
 	m_ImageFileIdx = 0;
+    m_RecentConnection = false;
 
 	return true;
 }
@@ -85,14 +86,14 @@ void CMO_line::setImage(IndexedPosition indexedPosition)
 
 	m_ImageFileIdx = indexedPosition.m_PosI % 2;
 
-	//���� ����� ��� �׸��� �ٲ� ��.
+	//º±¿Ã ø¨∞·µ» ∞ÊøÏ ±◊∏≤∏∏ πŸ≤„ ¡‹.
 	if (CGameManager::GetInstance()->GetMapType(indexedPosition) == MO_LINE_CONNECTED)
 	{
 		m_Connected = true;
 		m_ImageFileIdx += 2;
 	}
 	
-	//������ �̹����� �־��ش�.
+	//¿˚¿˝«— ¿ÃπÃ¡ˆ∏¶ ≥÷æÓ¡ÿ¥Ÿ.
 	//pLine = CCSprite::create(lineImageFileList[m_ImageFileIdx].c_str(), CCRectMake(0.0f, 0.0f, width,  height) );
 	
 	if (indexedPosition.m_PosI%2==0 &&indexedPosition.m_PosJ%2==1)
@@ -115,13 +116,16 @@ void CMO_line::update( float delta )
 {
     if ( !m_Connected && CGameManager::GetInstance()->IsConnected(m_Index) == MO_LINE_CONNECTED)
 	{
+        // 처음으로 연결되는 시점
+        // 이미지를 바꿔주고, 연결상태 플래그 변경
         changeImage();
 		m_Connected = true;
+        m_RecentConnection = true;
         
+        // 애니메이션 관련
         CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(LineAnimationFileList[m_ImageFileIdx % 2].c_str());
         CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
         cache->addSpriteFramesWithFile(LineAnimationFileListPlist[m_ImageFileIdx % 2].c_str());
-        
         
         CCArray* animFrames = CCArray::createWithCapacity(48);
         
@@ -142,6 +146,7 @@ void CMO_line::update( float delta )
             animFrames->addObject(frame);
         }
         
+        // 최근 연결 라인 강조 관련
         CCSprite*pElement;
         if(m_ImageFileIdx % 2==0)
         {
@@ -154,16 +159,21 @@ void CMO_line::update( float delta )
             pElement->setAnchorPoint(ccp(0,0));
         }
         
+        // 강조하는 라인으로 기존 라인을 덮어버림 ??
         spritebatch->addChild(pElement);
         addChild(spritebatch,2);
         spritebatch->setTag(0);
         
+        // 애니메이션 재생
         CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames,PLAYSCENE_ANIMATION_TIME/48);
         CCAction* myLine = CCAnimate::create(animation);
         pElement->runAction(myLine);
     }
-    else if( m_Connected )
+    else if( m_Connected && m_RecentConnection )
     {
+        // 연결된 상태
+        // 업데이트가 있어야만 진입하므로 실제로는 다른 선이 새로 그어질 때 호출
+        m_RecentConnection = false;
         removeChildByTag(0);
         pLine->setVisible(true);
     }
