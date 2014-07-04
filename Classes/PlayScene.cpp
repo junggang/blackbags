@@ -1,5 +1,5 @@
 #include "PlayScene.h"
-#include "BackgroundLayer.h"
+#include "BackgroundDrawLayer.h"
 #include "GameBoardLayer.h"
 #include "GameEndLayer.h"
 #include "HelpButtonLayer.h"
@@ -27,7 +27,7 @@ bool CPlayScene::init(void)
     
 	/////////////////////////////
     // 2. add layers
-	CCLayer* BackgroundLayer = CBackgroundLayer::create();
+	CCLayer* BackgroundLayer = CBackgroundDrawLayer::create();
 	this->addChild(BackgroundLayer, 0);
 
 	gameBoard = CGameBoardLayer::create();
@@ -97,7 +97,7 @@ void CPlayScene::update(float dt)
             // 오류 레이어 생성
             this->removeAllChildren();
             
-            CCLayer* BackgroundLayer = CBackgroundLayer::create();
+            CCLayer* BackgroundLayer = CBackgroundDrawLayer::create();
             this->addChild(BackgroundLayer, 0);
             
             CCLayer* DisconnectedLayer = CDisconnectedLayer::create();
