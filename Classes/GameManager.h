@@ -139,6 +139,12 @@ public:
     
     void SetFindingChannelTimeOut(bool flag) { m_IsFindingChannelTimeOut = flag; }
     bool GetFindingChannelTimeOut() { return m_IsFindingChannelTimeOut; }
+    
+    void SetLineStateChanged(bool flag) { m_IsLineStateChanged = flag; }
+    bool GetLineStateChanged() { return m_IsLineStateChanged; }
+    
+    void SetRecentConnectedLine( IndexedPosition position ) { m_RecentConnectedLine = position; m_IsLineStateChanged = true; }
+    IndexedPosition GetRecentConnectedLine() { return m_RecentConnectedLine; }
 
 private:
 	static CGameManager*	m_pInstance; //singleton instance
@@ -152,6 +158,8 @@ private:
 	float m_AnimationDelay;
     
     bool m_IsFindingChannelTimeOut;
+    IndexedPosition m_RecentConnectedLine;
+    bool m_IsLineStateChanged;
     
 	//CCUserDefault m_SharedData;
 

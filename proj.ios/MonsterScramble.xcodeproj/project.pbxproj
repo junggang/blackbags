@@ -1979,11 +1979,11 @@
 		E7F5198718C6FAA8002530DC /* Logic */ = {
 			isa = PBXGroup;
 			children = (
+				E7F518E518C49C7A002530DC /* AudioManager.cpp */,
+				E7F518E618C49C7A002530DC /* AudioManager.h */,
 				E7F518FC18C49C7A002530DC /* GameLogic.cpp */,
 				E7F518FD18C49C7A002530DC /* GameLogic.h */,
 				E7F518FE18C49C7A002530DC /* GameManager.cpp */,
-				E7F518E518C49C7A002530DC /* AudioManager.cpp */,
-				E7F518E618C49C7A002530DC /* AudioManager.h */,
 				E7F518FF18C49C7A002530DC /* GameManager.h */,
 				E7F5191E18C49C7B002530DC /* NetworkLogic.cpp */,
 				E7F5191F18C49C7B002530DC /* NetworkLogic.h */,

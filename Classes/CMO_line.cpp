@@ -122,6 +122,8 @@ void CMO_line::update( float delta )
 		m_Connected = true;
         m_RecentConnection = true;
         
+        CGameManager::GetInstance()->SetRecentConnectedLine(m_Index);
+        
         // 애니메이션 관련
         CCSpriteBatchNode* spritebatch = CCSpriteBatchNode::create(LineAnimationFileList[m_ImageFileIdx % 2].c_str());
         CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
@@ -169,16 +171,14 @@ void CMO_line::update( float delta )
         CCAction* myLine = CCAnimate::create(animation);
         pElement->runAction(myLine);
     }
-    else if( m_Connected && m_RecentConnection )
+    else if( m_Connected && m_RecentConnection && !(CGameManager::GetInstance()->GetRecentConnectedLine() == m_Index) )
     {
-        // 연결된 상태
+        // 연결된 상태 + 강조된 상태 + 하지만 실제로 최근어 그어진 라인은 다른 라인 = 강조 상태 되돌리기
         // 업데이트가 있어야만 진입하므로 실제로는 다른 선이 새로 그어질 때 호출
         m_RecentConnection = false;
         removeChildByTag(0);
         pLine->setVisible(true);
     }
-  
-    
 }
 
 void CMO_line::setAnchorPoint()

@@ -187,6 +187,14 @@ struct IndexedPosition
 		m_PosJ = inputIndexedPosition.m_PosJ;
 		return *this ;
 	}
+    
+    bool operator==(const IndexedPosition& rhs)
+    {
+        if ( m_PosI == rhs.m_PosI && m_PosJ == rhs.m_PosJ )
+            return true;
+        
+        return false;
+    }
 
 	IndexedPosition(int PosI, int PosJ)
 	{
