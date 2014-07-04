@@ -5,7 +5,6 @@
 #include "CMO_line.h"
 #include "CMO_item.h"
 #include "CMO_score.h"
-#include "AudioManager.h"
 
 USING_NS_CC;
 
@@ -199,18 +198,12 @@ void CGameBoardLayer::DrawLine()
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI, endIndex.m_PosJ - 1) );
 			m_LineDirection = DI_UP;
             
-            // play SE
-            CAudioManager::GetInstance()->PlayLineDrawRandomSE();
-            
             return;
 		}
 		else if (startIndex.m_PosJ - endIndex.m_PosJ == 2)
 		{
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI, startIndex.m_PosJ - 1) );
 			m_LineDirection = DI_DOWN;
-            
-            // play SE
-            CAudioManager::GetInstance()->PlayLineDrawRandomSE();
             
             return;
 		}
@@ -222,9 +215,6 @@ void CGameBoardLayer::DrawLine()
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(endIndex.m_PosI - 1, startIndex.m_PosJ) );
 			m_LineDirection = DI_DOWN;
             
-            // play SE
-            CAudioManager::GetInstance()->PlayLineDrawRandomSE();
-            
             return;
 		}
 		else if (startIndex.m_PosI - endIndex.m_PosI == 2)
@@ -232,16 +222,9 @@ void CGameBoardLayer::DrawLine()
 			CGameManager::GetInstance()->DrawLine( IndexedPosition(startIndex.m_PosI - 1, startIndex.m_PosJ) );
 			m_LineDirection = DI_UP;
             
-            // play SE
-            CAudioManager::GetInstance()->PlayLineDrawRandomSE();
-            
             return;
 		}
 	}
-    
-    // play SE
-    CAudioManager::GetInstance()->ChangeSE(SE_LINE_DRAW_FAIL);
-    CAudioManager::GetInstance()->PlaySE();
     
     return;
 }

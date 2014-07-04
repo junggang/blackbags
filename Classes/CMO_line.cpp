@@ -1,5 +1,6 @@
 #include "CMO_line.h"
 #include "GameManager.h"
+#include "AudioManager.h"
 
 USING_NS_CC;
 
@@ -116,6 +117,8 @@ void CMO_line::update( float delta )
 {
     if ( !m_Connected && CGameManager::GetInstance()->IsConnected(m_Index) == MO_LINE_CONNECTED)
 	{
+        CAudioManager::GetInstance()->PlayLineDrawRandomSE();
+        
         // 처음으로 연결되는 시점
         // 이미지를 바꿔주고, 연결상태 플래그 변경
         changeImage();
