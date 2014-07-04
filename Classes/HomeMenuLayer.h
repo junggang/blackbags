@@ -13,6 +13,6 @@ public:
 	CREATE_FUNC(CHomeMenuLayer);
 
 private:
-
+    bool IsOn = false;
 };
 

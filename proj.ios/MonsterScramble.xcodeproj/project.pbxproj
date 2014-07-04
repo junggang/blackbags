@@ -244,6 +244,7 @@
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
 		D51EE9A91964775C0023E1D1 /* SimpleSettingMenuLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D51EE9A71964775C0023E1D1 /* SimpleSettingMenuLayer.cpp */; };
 		D51EE9AC196524C30023E1D1 /* TimeOutLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D51EE9AA196524C30023E1D1 /* TimeOutLayer.cpp */; };
+		D51F5A0619664D8E00E6E7EF /* BackgroundDrawLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D51F5A0419664D8E00E6E7EF /* BackgroundDrawLayer.cpp */; };
 		D56D272E1913916B00A06389 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D56D272D1913916B00A06389 /* libGoogleAdMobAds.a */; };
 		E751DE4A18F92CC20001879E /* AdMobObjectCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */; };
 		E7B3F36718E5DB3600024DDF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B3F36618E5DB3600024DDF /* AdSupport.framework */; };
@@ -805,6 +806,8 @@
 		D51EE9A81964775C0023E1D1 /* SimpleSettingMenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleSettingMenuLayer.h; sourceTree = "<group>"; };
 		D51EE9AA196524C30023E1D1 /* TimeOutLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimeOutLayer.cpp; sourceTree = "<group>"; };
 		D51EE9AB196524C30023E1D1 /* TimeOutLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeOutLayer.h; sourceTree = "<group>"; };
+		D51F5A0419664D8E00E6E7EF /* BackgroundDrawLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BackgroundDrawLayer.cpp; sourceTree = "<group>"; };
+		D51F5A0519664D8E00E6E7EF /* BackgroundDrawLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundDrawLayer.h; sourceTree = "<group>"; };
 		D56D272D1913916B00A06389 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = "../Classes/GoogleAdMobAdsSdkiOS-6.8.0/libGoogleAdMobAds.a"; sourceTree = "<group>"; };
 		E751DE4818F92CC20001879E /* AdMobObjectCPP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdMobObjectCPP.mm; sourceTree = "<group>"; };
 		E751DE4918F92CC20001879E /* AdMobObjectCPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdMobObjectCPP.h; sourceTree = "<group>"; };
@@ -2023,6 +2026,8 @@
 		E7F5198918C6FB29002530DC /* Layer */ = {
 			isa = PBXGroup;
 			children = (
+				D51F5A0419664D8E00E6E7EF /* BackgroundDrawLayer.cpp */,
+				D51F5A0519664D8E00E6E7EF /* BackgroundDrawLayer.h */,
 				D51EE9AA196524C30023E1D1 /* TimeOutLayer.cpp */,
 				D51EE9AB196524C30023E1D1 /* TimeOutLayer.h */,
 				D51EE9A71964775C0023E1D1 /* SimpleSettingMenuLayer.cpp */,
@@ -2405,6 +2410,7 @@
 				1A8F3B7D175E05DA00049216 /* SkeletonData.cpp in Sources */,
 				1A8F3B7E175E05DA00049216 /* SkeletonJson.cpp in Sources */,
 				1A8F3B7F175E05DA00049216 /* Skin.cpp in Sources */,
+				D51F5A0619664D8E00E6E7EF /* BackgroundDrawLayer.cpp in Sources */,
 				1A8F3B80175E05DA00049216 /* Slot.cpp in Sources */,
 				1A8F3B81175E05DA00049216 /* SlotData.cpp in Sources */,
 				1A8F3B82175E05DA00049216 /* spine-cocos2dx.cpp in Sources */,
