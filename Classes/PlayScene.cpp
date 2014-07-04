@@ -70,26 +70,35 @@ bool CPlayScene::init(void)
 
 void CPlayScene::update(float dt)
 {
-	if (!CGameManager::GetInstance()->IsUpdated() || m_GameEndFlag)
+    CGameManager* gameManager = CGameManager::GetInstance();
+    
+	if (!gameManager->IsUpdated() || m_GameEndFlag)
 	{
 		return;
 	}
     
-    CGameManager::GetInstance()->PausePlayReady();
+    gameManager->PausePlayReady();
 
     if (m_GameEndFlag)
         return;
     
     // 종료가 아닌 경우 각종 업데이트 실행
 	gameBoard->update(dt);
+    if (gameManager->GetLineStateChanged())
+    {
+        // 라인 상태에 변화가 있었다면 모든 라인들이 다시 그 변화를 확인해서 자신의 상태에 적용
+        gameManager->SetLineStateChanged(false);
+        gameBoard->update(dt);
+    }
+    
 	player->update(dt);
 	timer->update(dt);
 
-	if (CGameManager::GetInstance()->IsOnlineMode() )
+	if (gameManager->IsOnlineMode() )
 	{
         // 접속 상태 확인
-        if (!CGameManager::GetInstance()->GetConnectionStatus()
-            && !CGameManager::GetInstance()->IsEnd())
+        if (!gameManager->GetConnectionStatus()
+            && !gameManager->IsEnd())
         {
             // 업데이트 중단
             this->unscheduleAllSelectors();
@@ -108,7 +117,7 @@ void CPlayScene::update(float dt)
         }
 		// 라인 재생 시간과 타일 재생 시간이 같으므로 아래의 코드에서 0.8의 상수는
         // 라인 재생만 있을 경우에는 라인 재생 시간을, 타일 애니메이션이 포함되는 경우에는 마지막 재생되는 타일 애니메이션 재생 시간을 의미
-		float delayTime = CGameManager::GetInstance()->GetAnimationDelay();
+		float delayTime = gameManager->GetAnimationDelay();
         delayTime = ( delayTime == 0.0f ) ? PLAYSCENE_ANIMATION_TIME : delayTime;
         
 		// 애니메이션 끝나면 레디 전송하는 코드 삽입!
@@ -117,12 +126,12 @@ void CPlayScene::update(float dt)
 		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
 
 		// 애니메이션 전송 지연값 초기화
-		CGameManager::GetInstance()->InitAnimationDelay();
+		gameManager->InitAnimationDelay();
 	}
     else
     {
         CCLog("playScene");
-        float delayTime = CGameManager::GetInstance()->GetAnimationDelay();
+        float delayTime = gameManager->GetAnimationDelay();
         delayTime = ( delayTime == 0.0f ) ? PLAYSCENE_ANIMATION_TIME : delayTime;
         
 		// 애니메이션 끝내고 다음 턴 시작
@@ -130,11 +139,11 @@ void CPlayScene::update(float dt)
 		CCDelayTime* delayAction = CCDelayTime::create(delayTime);
 		this->runAction(CCSequence::create(delayAction, readyRequestCallback, NULL));
         
-        CGameManager::GetInstance()->InitAnimationDelay();
+        gameManager->InitAnimationDelay();
     }
 
 	// 모든 업데이트가 완료되었으므로 플래그 초기화
-	CGameManager::GetInstance()->SetUpdateFlag(false);
+	gameManager->SetUpdateFlag(false);
 }
 
 void CPlayScene::startNewTurn()

@@ -11,6 +11,9 @@ CGameManager::CGameManager(void)
 	m_GameData = nullptr;
     m_ConnectionStatus = false;
     m_IsFindingChannelTimeOut = false;
+    m_RecentConnectedLine.m_PosI = 0;
+    m_RecentConnectedLine.m_PosJ = 0;
+    m_IsLineStateChanged = false;
 }
 
 CGameManager::~CGameManager(void)
@@ -39,6 +42,9 @@ bool CGameManager::init()
 	m_GameData = nullptr;
     m_ConnectionStatus = false;
     m_IsFindingChannelTimeOut = false;
+    m_RecentConnectedLine.m_PosI = 0;
+    m_RecentConnectedLine.m_PosJ = 0;
+    m_IsLineStateChanged = false;
     
 	CGameLogic::GetInstance()->init();
 	m_GameData = cocos2d::CCUserDefault::sharedUserDefault();
