@@ -228,6 +228,7 @@
 		AF46EB5118ADF81000AEDC11 /* Sound in Resources */ = {isa = PBXBuildFile; fileRef = AF46EB4E18ADF81000AEDC11 /* Sound */; };
 		AF58430B19227BA5006295A1 /* ContactScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF58430919227BA5006295A1 /* ContactScene.cpp */; };
 		AF6EC176193C40EC005DC2C0 /* CMO_score.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF6EC174193C40EC005DC2C0 /* CMO_score.cpp */; };
+		AF90F04419656E4900A58A9B /* BackgroundDrawLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF90F04219656E4900A58A9B /* BackgroundDrawLayer.cpp */; };
 		AF96E3F418D98014002877BF /* TutorialScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF96E3F318D98014002877BF /* TutorialScene.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
@@ -785,6 +786,8 @@
 		AF88B936192F40F400F909EB /* icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-152.png"; path = "../proj.ios/icon-152.png"; sourceTree = "<group>"; };
 		AF88B939192F423100F909EB /* landscape_nonretina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_nonretina.png; path = ../proj.ios/landscape_nonretina.png; sourceTree = "<group>"; };
 		AF88B93A192F423A00F909EB /* landscape_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landscape_retina.png; path = ../proj.ios/landscape_retina.png; sourceTree = "<group>"; };
+		AF90F04219656E4900A58A9B /* BackgroundDrawLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BackgroundDrawLayer.cpp; sourceTree = "<group>"; };
+		AF90F04319656E4900A58A9B /* BackgroundDrawLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundDrawLayer.h; sourceTree = "<group>"; };
 		AF96E3F218D98007002877BF /* TutorialScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TutorialScene.h; sourceTree = "<group>"; };
 		AF96E3F318D98014002877BF /* TutorialScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialScene.cpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -2103,6 +2106,8 @@
 				E7CD626618C8A54F005F6E88 /* DisconnectedLayer.h */,
 				AF37D14318DF2A150018FE15 /* TutorialBoardLayer.cpp */,
 				AF37D14418DF2A150018FE15 /* TutorialBoardLayer.h */,
+				AF90F04219656E4900A58A9B /* BackgroundDrawLayer.cpp */,
+				AF90F04319656E4900A58A9B /* BackgroundDrawLayer.h */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -2405,6 +2410,7 @@
 				1A8F3B7D175E05DA00049216 /* SkeletonData.cpp in Sources */,
 				1A8F3B7E175E05DA00049216 /* SkeletonJson.cpp in Sources */,
 				1A8F3B7F175E05DA00049216 /* Skin.cpp in Sources */,
+				AF90F04419656E4900A58A9B /* BackgroundDrawLayer.cpp in Sources */,
 				1A8F3B80175E05DA00049216 /* Slot.cpp in Sources */,
 				1A8F3B81175E05DA00049216 /* SlotData.cpp in Sources */,
 				1A8F3B82175E05DA00049216 /* spine-cocos2dx.cpp in Sources */,
