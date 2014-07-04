@@ -113,7 +113,7 @@ void CHomeMenuPopUp::HelpIconCallback(CCObject* pSender)
 
 void CHomeMenuPopUp::ResumeIconCallback(CCObject* pSender)
 {
-    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    onExit();
 	//home menu popup
 	CCDirector::sharedDirector()->resume();
 	removeAllChildrenWithCleanup(true);
@@ -189,4 +189,5 @@ void CHomeMenuPopUp::onEnter()
 void CHomeMenuPopUp::onExit()
 {
     CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    CCLayer::onExit();
 }
