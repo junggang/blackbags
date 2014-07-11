@@ -15,18 +15,14 @@ bool CSettingTitleLayer::init()
 
 	// Create sprite
 	CCSprite* pTitle = CCSprite::create(CHARACTER_SELECT_TITLE.c_str());
-	CCSprite* pKorTitle = CCSprite::create(CHARACTER_SELECT_TITLE_KOR.c_str());
     
 	// Title Position : X Center + Y
 	pTitle->setPosition(CCPoint(GAME_SETTING_CHARACTER_SELECT_TITLE_POS));
-    pKorTitle->setPosition(CCPoint(GAME_SETTING_CHARACTER_SELECT_TITLE_KOR_POS));
-    
+  
     // set anchor point 0
     pTitle->setAnchorPoint(ccp(0,0));
-    pKorTitle->setAnchorPoint(ccp(0,0));
     
 	this->addChild(pTitle, 1);
-    this->addChild(pKorTitle);
 
 	return true;
 }
