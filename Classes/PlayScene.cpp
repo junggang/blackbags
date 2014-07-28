@@ -152,6 +152,7 @@ void CPlayScene::startNewTurn()
 	if (CGameManager::GetInstance()->IsEnd() && !m_GameEndFlag)
 	{
 		m_GameEndFlag = true; // 다음 루프에서 다시 진입하지 않도록 플래그 설정
+        // CGameManager::GetInstance()->SetGameEndFlag(true);
         removeChild(timer);
         player->stopAllActions();
         

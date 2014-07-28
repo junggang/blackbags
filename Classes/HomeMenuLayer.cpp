@@ -4,6 +4,7 @@
 #include "HelpScene.h"
 #include "GameSettingScene.h"
 #include "HomeMenuPopUp.h"
+#include "GameManager.h"
 
 USING_NS_CC;
 
@@ -39,6 +40,12 @@ bool CHomeMenuLayer::init()
 
 void CHomeMenuLayer::homeMenuCallback(CCObject* pSender)
 {
+    /*
+        결과 버튼이 전체 화면을 덮어서 여기서 따로 처리할 필요없음
+    if (CGameManager::GetInstance()->GetGameEndFlag())
+        return;
+    */
+    
     if(IsOn)
     {
         CCDirector::sharedDirector()->resume();

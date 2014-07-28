@@ -39,7 +39,7 @@ static BannerViewController* instance;
     if (self != nil) {
         _bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerLandscape];
         // Mediation ID or Publisher ID
-        _bannerView.adUnitID = @"a1533baec6aa47d";
+        _bannerView.adUnitID = @"ca-app-pub-3026183848909483/5919152858";
         _bannerView.delegate = self;
         _contentController = contentController;
         _bannerLoaded = NO;

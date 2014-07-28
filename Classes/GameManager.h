@@ -145,6 +145,9 @@ public:
     
     void SetRecentConnectedLine( IndexedPosition position ) { m_RecentConnectedLine = position; m_IsLineStateChanged = true; }
     IndexedPosition GetRecentConnectedLine() { return m_RecentConnectedLine; }
+    
+    // void SetGameEndFlag(bool flag) { m_IsGameEnd = flag; }
+    // bool GetGameEndFlag() { return m_IsGameEnd; }
 
 private:
 	static CGameManager*	m_pInstance; //singleton instance
@@ -160,6 +163,8 @@ private:
     bool m_IsFindingChannelTimeOut;
     IndexedPosition m_RecentConnectedLine;
     bool m_IsLineStateChanged;
+    
+    // bool m_IsGameEnd;
     
 	//CCUserDefault m_SharedData;
 
