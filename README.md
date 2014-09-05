@@ -1,5 +1,9 @@
 blackbags
 =========
 
-넥스트 blackbags팀 방학 프로젝트 (멤버: 정서경, 문진상, 최경욱, feat. sm9) 
+Team Blackbags, NHN NEXT
+
+*App store link: https://itunes.apple.com/us/app/monscramble/id896145195?mt=8
+
+*멤버: 정서경, 문진상, 최경욱, feat. sm9) 
 
