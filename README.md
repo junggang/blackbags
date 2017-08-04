@@ -8,3 +8,6 @@ blackbags
 
  * Team Blackbags, NHN NEXT: 정서경, 문진상, 최경욱, (feat. sm9) 
 
+
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3a7e229e91244c3899760219f74353f1)](https://www.codacy.com/app/wooq17/blackbags?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=junggang/blackbags&amp;utm_campaign=Badge_Grade)
